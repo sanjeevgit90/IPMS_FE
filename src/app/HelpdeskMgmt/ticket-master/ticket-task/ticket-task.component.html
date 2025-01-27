@@ -1,0 +1,164 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form>
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                      
+                            <div class="col-auto float-right ml-auto">
+                                <button mat-flat-button color="warn" (click)="getHistoryTask()" *ngIf="!history">
+                                    <mat-icon aria-hidden="false">history</mat-icon> Ticket Action History
+                                </button>
+
+                                <button mat-flat-button color="accent" (click)="search()" *ngIf="history">
+                                    <mat-icon aria-hidden="false">search</mat-icon> Pending Tickets
+                                </button>
+                            </div>
+                       
+                        <!--   <div class="col-auto float-right ml-auto">
+                            <button mat-flat-button color="warn" (click)="filterFunc()">
+                                <mat-icon aria-hidden="false">filter</mat-icon> Filter</button>
+                           <button mat-flat-button color="accent" (click)="addTask()">
+                                <mat-icon aria-hidden="false">add</mat-icon> Ticket Task</button>
+                           
+                        </div> -->
+
+
+
+
+
+                    </div>
+                </div>
+                <!-- /Page Header -->
+
+
+                <div class="tab-content">
+
+                    <!-- Add Family -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                           
+                            <!-- Search Table -->
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <div class="total-rec">Total Records: {{totalRecords}}</div>
+                                </div>
+                                <div class="col-auto float-right ml-auto">
+                                    <mat-form-field class="search-input">
+                                        <input matInput (keyup)="applyFilter($event)" placeholder="Search..." #input>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+
+                            <table mat-table [dataSource]="TicketTaskData" matSort class="mat-elevation-z8">
+
+                                <!--  Ticket No. Column -->
+                                <ng-container matColumnDef="ticketNo">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Ticket No. </th>
+                                    <td mat-cell *matCellDef="let TicketTaskData " data-label="Ticket No.">
+                                        <div class="block">
+                                            <a [routerLink]="['/viewTicket', TicketTaskData.ticketId,'viewTask']"
+                                                title="Edit"> {{TicketTaskData.ticketNo}}</a>
+                                        </div>
+                                        <div class="block">
+                                            {{TicketTaskData.ticketTitle}}
+                                        </div>
+                                    </td>
+                                </ng-container>
+
+                                <!--  Asset Column -->
+                                <ng-container matColumnDef="assetName">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Asset Name </th>
+                                    <td mat-cell *matCellDef="let TicketTaskData " data-label="Asset Name">
+                                        {{TicketTaskData.assetName}}
+                                    </td>
+                                </ng-container>
+                                <!--  Type Column -->
+                                <ng-container matColumnDef="ticketType">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Ticket Type </th>
+                                    <td mat-cell *matCellDef="let TicketTaskData" data-label="Ticket Type">
+                                        {{TicketTaskData.ticketType}}
+                                    </td>
+                                </ng-container>
+
+                                <!--  Status Column -->
+                                <ng-container matColumnDef="approvalStatus">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Status/Priority </th>
+                                    <td mat-cell *matCellDef="let TicketTaskData" data-label="Status&#xa;Priority">
+                                        <div class="block">
+                                            {{TicketTaskData.approvalStatus}}
+                                        </div>
+                                        <div class="block"
+                                            [ngStyle]="TicketTaskData.priority=='High'?{'color':'red'} : {'color': '#1b00ff'}">
+
+                                            {{TicketTaskData.priority}}
+                                        </div>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="ticketOwnerName">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Owner/Assign To </th>
+                                    <td mat-cell *matCellDef="let TicketTaskData" data-label="Owner&#xa;Assign To">
+                                        <div class="block strong">
+                                            {{TicketTaskData.ticketOwnerName}}
+                                        </div>
+
+                                        <div class="block">
+                                            {{TicketTaskData.assignToUser}}
+                                        </div>
+                                    </td>
+                                </ng-container>
+
+                                <!-- Action Column -->
+
+                                <ng-container matColumnDef="action">
+
+                                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                                    <td mat-cell *matCellDef="let TicketTaskData">
+                                        <a mat-raised-button color="primary" matTooltip="Action"
+                                            *ngIf="TicketTaskData.ticketStatus != 'CLOSED'"
+                                            [routerLink]="['/updateTicketTask', TicketTaskData.entityId,'edit']">
+                                            <mat-icon aria-hidden="false">search</mat-icon> Action
+                                        </a>
+
+                                        <!-- <button class="btn btn-danger" (click)="onDelete(HSNMasterData)"
+                                            title="Delete">
+                                            <i class="fa fa-trash"></i>Delete
+                                        </button> -->
+                                    </td>
+
+                                </ng-container>
+
+                                <div *ngIf="!history">
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                </div>
+                                <div *ngIf="history">
+                                    <tr mat-header-row *matHeaderRowDef="historyColumns"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: historyColumns;"></tr>
+                                </div>
+                            </table>
+                            <mat-paginator [pageSize]="pageSizedisplay" [pageSizeOptions]="itemPerPage"
+                                showFirstLastButtons>
+                            </mat-paginator>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

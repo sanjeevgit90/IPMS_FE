@@ -1,0 +1,295 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form [formGroup]="addProductForm">
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /Page Header -->
+
+                <div class="tab-content">
+
+                    <!-- Add User -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="col-md-12 mandatory">*Fields are Mandatory</div>
+
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.productname.errors }">
+                                                <input matInput name="productname" type="text"
+                                                    placeholder="Product Name" [(ngModel)]="ProductData.productname"
+                                                    formControlName="productname" maxlength="60" required>
+                                                <div *ngIf="isSubmitted && formControls.productname.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.productname.errors.required">Product
+                                                        name is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.serialno.errors }">
+                                                <input matInput name="serialno" type="text" placeholder="Serial No"
+                                                    [(ngModel)]="ProductData.serialno" formControlName="serialno"
+                                                    maxlength="60" required>
+                                                <div *ngIf="isSubmitted && formControls.serialno.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.serialno.errors.required">Serial No is
+                                                        required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="barcode" type="text" placeholder="barcode"
+                                                    [(ngModel)]="ProductData.barcode" formControlName="barcode" maxlength="60" 
+                                                    >
+                                                
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.producttype.errors }">
+                                                <mat-select [(ngModel)]="ProductData.producttype" name="producttype"
+                                                    formControlName="producttype" placeholder="Select Product type" required>
+                                                    <mat-option value="Non-IT-Asset">Non IT Asset</mat-option>
+                                                    <mat-option value="IT-Asset">IT Asset</mat-option>
+                                                    <mat-option value="License">License</mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.producttype.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.producttype.errors.required">Product Type
+                                                        is
+                                                        required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.category.errors }">
+                                                <mat-select [(ngModel)]="ProductData.category" name="category"
+                                                    formControlName="category" placeholder="Category" 
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    (ngModelChange)="getActiveSubCategoryfromcategory(ProductData.category)" required>
+                                                    <mat-option [value]="">-Select-</mat-option>
+                                                    <mat-option *ngFor="let category of categoryList"
+                                                        [value]="category.selectionvalue">
+                                                        {{ category.selectionvalue }}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.category.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.category.errors.required">Category
+                                                        is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-select [(ngModel)]="ProductData.subcategory"
+                                                    formControlName="subcategory" name="subcategory" 
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    placeholder="Sub Category" >
+                                                    <mat-option [value]="">-Select-</mat-option>
+                                                    <mat-option *ngFor="let category of subcategoryList"
+                                                        [value]="category.selectionvalue">
+                                                        {{ category.selectionvalue }}
+                                                    </mat-option>
+                                                </mat-select>
+                                                
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-select [(ngModel)]="ProductData.manufacturer" name="manufacturer"
+                                                    formControlName="manufacturer" placeholder="Manufacturer" 
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    (ngModelChange)="getActiveModelfrommanufacturer(ProductData.manufacturer)" >
+                                                    <mat-option [value]="">-Select-</mat-option>
+                                                    <mat-option *ngFor="let manufacturer of manufacturerList"
+                                                        [value]="manufacturer.selectionvalue">
+                                                        {{ manufacturer.selectionvalue }}
+                                                    </mat-option>
+                                                </mat-select>
+                                               
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-select [(ngModel)]="ProductData.model" name="model" 
+                                                [typeaheadDebounceInterval]="matSelectDuration"
+                                                    placeholder="Model" formControlName="model" >
+                                                    <mat-option [value]="">-Select-</mat-option>
+                                                    <mat-option *ngFor="let model of modelList"
+                                                        [value]="model.selectionvalue">
+                                                        {{ model.selectionvalue }}
+                                                    </mat-option>
+                                                </mat-select>
+                                              
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                   
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.hsncode.errors }">
+                                                <mat-select [(ngModel)]="ProductData.hsncode" [compareWith]="compareObjects" formControlName="hsncode"
+                                                    name="hsncode" placeholder="Hsncode" 
+                                                    [typeaheadDebounceInterval]="matSelectDuration" required>
+                                                    <mat-option [value]="">-Select-</mat-option>
+                                                    <mat-option *ngFor="let hsncode of hsnList"
+                                                        [value]="hsncode.selectionid">
+                                                        {{ hsncode.selectionvalue }}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.hsncode.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.hsncode.errors.required">Hsncode
+                                                        is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                 
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.baseuom.errors }">
+                                                <mat-select [(ngModel)]="ProductData.baseuom"  
+                                                [typeaheadDebounceInterval]="matSelectDuration" name="baseuom"
+                                                    formControlName="baseuom" placeholder="Base UOM" required>
+                                                    <mat-option [value]="">-Select-</mat-option>
+                                                    <mat-option *ngFor="let baseuom of baseUomList"
+                                                        [value]="baseuom.value">
+                                                        {{ baseuom.value}}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.baseuom.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.baseuom.errors.required">Base UOM
+                                                        is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <textarea matInput maxlength="200" formControlName="description"
+                                                    [(ngModel)]="ProductData.description"
+                                                    placeholder="Enter description"></textarea>
+                                            </mat-form-field>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <textarea matInput maxlength="200" formControlName="hsndescription"
+                                                    [(ngModel)]="ProductData.hsndescription"
+                                                    placeholder="Enter HSN description"></textarea>
+                                            </mat-form-field>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-checkbox class="block" formControlName="ishazardous"
+                                                [(ngModel)]="ProductData.ishazardous" (selectionChange)="hazardousChange()">is hazardous?
+                                            </mat-checkbox>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3" *ngIf="ProductData.ishazardous">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width" 
+                                            [ngClass]="{ 'has-error': isSubmitted && formControls.hazardousgoodtype.errors }">
+                                                 <mat-select [(ngModel)]="ProductData.hazardousgoodtype" name="hazardousgoodtype"
+                                                    formControlName="hazardousgoodtype" placeholder="Select hazardous good type" required>
+                                                    <mat-option value="High Danger">High Danger</mat-option>
+                                                    <mat-option value="Medium Danger">Medium Danger</mat-option>
+                                                    <mat-option value="Low Danger">Low Danger</mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.hazardousgoodtype.errors"
+                                                class="error-text">
+                                                <div *ngIf="formControls.hazardousgoodtype.errors.required">Hazardous Good Type
+                                                    is required</div>
+                                            </div> 
+                                            </mat-form-field>
+                                        </div>
+
+                                    </div>
+
+                                    
+
+                                </div>
+                            </div>
+
+
+
+                            <div class="submit-section">
+
+
+                                <button mat-flat-button color="accent" (click)="addProduct('save')" *ngIf="add">
+                                    <mat-icon aria-hidden="false">save</mat-icon> Save
+                                </button>
+
+
+                                <button mat-flat-button color="warn" (click)="back()">
+                                    <mat-icon aria-hidden="false">cancel</mat-icon> Back
+                                </button>
+
+                                <button mat-flat-button color="accent" (click)="addProduct('update')" *ngIf="edit">
+                                    <mat-icon aria-hidden="false">update</mat-icon> Update
+                                </button>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

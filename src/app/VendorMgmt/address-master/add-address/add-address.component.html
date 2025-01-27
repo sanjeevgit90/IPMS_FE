@@ -1,0 +1,241 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form [formGroup]="addAddressForm">
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /Page Header -->
+                <div>
+                    <app-vendortab highlightedtab="addresstab"> </app-vendortab>
+                </div>
+                <div class="tab-content">
+
+                    <!-- Add Address -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="col-md-12 mandatory">*Fields are Mandatory</div>
+
+                                <div class="row">
+                                    
+
+                                   
+                                  
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field>
+                                                <mat-label>Address Type</mat-label>
+                                                <mat-select [(ngModel)]="PartyAddressData.addressType"
+                                                    formControlName="addressType" required>
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option value="Head Office">Head Office</mat-option>
+                                                    <mat-option value="Regional Office">Regional Office</mat-option>
+                                                    <mat-option value="Branch Office">Branch Office </mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.addressType.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.addressType.errors.required">Address type is
+                                                        required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.address1.errors }">
+                                                <input matInput name="address1" type="text" placeholder="Address Line 1"
+                                                    [(ngModel)]="PartyAddressData.address1"
+                                                    formControlName="address1" maxlength="100" required>
+                                                <div *ngIf="isSubmitted && formControls.address1.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.address1.errors.required">Address Line 1 is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="address2" type="text" placeholder="Address Line 2"
+                                                    [(ngModel)]="PartyAddressData.address2"
+                                                    formControlName="address2" maxlength="100">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="landmark" type="text" placeholder="Landmark"
+                                                    [(ngModel)]="PartyAddressData.landmark"
+                                                    formControlName="landmark" maxlength="100">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.state.errors }">
+                                                <mat-label>State</mat-label>
+                                                <mat-select [(ngModel)]="PartyAddressData.state" 
+                                                [typeaheadDebounceInterval]="matSelectDuration" formControlName="state"
+                                                    (ngModelChange)="getAllDistrictByState(PartyAddressData.state)" required>
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let stateData of stateList"
+                                                        value="{{stateData.selectionid}}">
+                                                        {{stateData.selectionvalue}}</mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.state.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.state.errors.required">State is required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.district.errors }">
+                                                <mat-label>District</mat-label>
+                                                <mat-select [(ngModel)]="PartyAddressData.district" 
+                                                [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="district" (selectionChange)="getActiveCityFromDistrict(PartyAddressData.district)" required>
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let districtData of districtList"
+                                                        value="{{districtData.selectionid}}">
+                                                        {{districtData.selectionvalue}}</mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.district.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.district.errors.required">District is
+                                                        required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field>
+                                                <mat-label>City</mat-label>
+                                                <mat-select [(ngModel)]="PartyAddressData.city" 
+                                                [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="city" >
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let cityData of cityList"
+                                                        value="{{cityData.selectionid}}">
+                                                        {{cityData.selectionvalue}}</mat-option>
+                                                    <!-- <mat-option value="25">
+                                                    Rabale</mat-option> -->
+                                                </mat-select>
+                                              
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.country.errors }">
+                                                <input matInput name="country" type="text" placeholder="Country"
+                                                    [(ngModel)]="PartyAddressData.country"
+                                                    formControlName="country" maxlength="100" required>
+                                                <div *ngIf="isSubmitted && formControls.country.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.country.errors.required">Country is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.pinCode.errors }">
+                                                <input matInput name="pinCode" type="text" placeholder="Pincode"
+                                                    [(ngModel)]="PartyAddressData.pinCode"
+                                                    formControlName="pinCode" maxlength="6" minlength="6" numbersOnly required>
+                                                <div *ngIf="isSubmitted && formControls.pinCode.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.pinCode.errors.required">PinCode is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Contact Person</mat-label>
+                                                <input matInput name="contactPerson" type="text"
+                                                    placeholder="Please enter contact person."
+                                                    [(ngModel)]="PartyAddressData.contactPerson"
+                                                    formControlName="contactPerson" maxlength="100" >
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Contact No.</mat-label>
+                                                <input matInput name="contactNo" type="text"
+                                                    placeholder="Please enter contact no."
+                                                    [(ngModel)]="PartyAddressData.contactNo" formControlName="contactNo"
+                                                    maxlength="10" minlength="10" numbersOnly >
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+                               
+                                    </div>
+
+                                  
+
+                                <div class="submit-section">
+                                  
+
+                                    <button mat-flat-button color="accent" (click)="addAddress('save')" *ngIf="add">
+                                        <mat-icon aria-hidden="false">save</mat-icon> Save</button>
+                                   
+                                    
+                                    <button mat-flat-button color="warn" (click)="back()">
+                                        <mat-icon aria-hidden="false">cancel</mat-icon> Back</button>
+
+                                    <button mat-flat-button color="accent" (click)="addAddress('update')" *ngIf="edit">
+                                        <mat-icon aria-hidden="false">update</mat-icon> Update</button>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,146 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form>
+    <h2 mat-dialog-title>Asset Audit Trial</h2>
+    <mat-dialog-content class="mat-typography">
+        <div class="content container-fluid">
+            <div class="tab-content">
+
+                <!-- Add Family -->
+                <div class="pro-overview tab-pane fade show active">
+                    <div *ngIf="AssetAuditRecord.filteredData.length == 0">
+                        <h3> No Record Found</h3>
+                    </div>
+                    <div class="card" *ngIf="AssetAuditRecord.filteredData.length != 0">
+                        <table *ngIf="AssetAuditRecord" mat-table [dataSource]="AssetAuditRecord" matSort
+                            class="mat-elevation-z8">
+
+                            <ng-container matColumnDef="assetname">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Asset Name / Serial No </th>
+                                <td mat-cell *matCellDef="let AssetAuditRecord">
+                                    <div class="block strong"> {{AssetAuditRecord.assetname}}</div>
+                                    <div class="block"> {{AssetAuditRecord.serialno}} </div>
+                                </td>
+                            </ng-container>
+                            <!--                 
+                                <ng-container matColumnDef="serialno">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Serial No</th>
+                                    <td mat-cell *matCellDef="let AssetAuditRecord">
+                                        <div class="block"> {{AssetAuditRecord.serialno}} </div>
+                
+                                    </td>
+                                </ng-container> -->
+
+
+                            <!-- <ng-container matColumnDef="assettag">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Asset Tag </th>
+                                    <td mat-cell *matCellDef="let AssetAuditRecord ">
+                                        <div class="block"> {{AssetAuditRecord.assettag}} </div>
+                                    </td>
+                                </ng-container> -->
+
+                            <ng-container matColumnDef="product">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Product Name </th>
+                                <td mat-cell *matCellDef="let AssetAuditRecord ">
+                                    <div class="block"> {{AssetAuditRecord.product}} </div>
+
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="project">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Project Name </th>
+                                <td mat-cell *matCellDef="let AssetAuditRecord ">
+                                    <div class="block"> {{AssetAuditRecord.project}} </div>
+
+                                </td>
+                            </ng-container>
+                            <!-- <ng-container matColumnDef="vendor">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Vendor Name </th>
+                                    <td mat-cell *matCellDef="let AssetAuditRecord ">
+                                        <div class="block"> {{AssetAuditRecord.vendor}} </div>
+                
+                                    </td>
+                                </ng-container> -->
+                            <ng-container matColumnDef="orderno">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Order No. / PO Date </th>
+                                <td mat-cell *matCellDef="let AssetAuditRecord ">
+                                    <div class="block strong"> {{AssetAuditRecord.orderno}} </div>
+                                    <div class="block" *ngIf="AssetAuditRecord.purchasedate > 0"> {{AssetAuditRecord.purchasedate| date:'dd-MM-yyyy'}} </div>
+                                    <div class="block" *ngIf="AssetAuditRecord.purchasedate == 0"> </div>
+
+                                </td>
+                            </ng-container>
+                            <!-- <ng-container matColumnDef="purchasedate">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Purchase Date </th>
+                                <td mat-cell *matCellDef="let AssetAuditRecord ">
+                                    <div class="block"> {{AssetAuditRecord.purchasedate| date:'dd-MM-yyyy'}} </div>
+
+                                </td>
+                            </ng-container> -->
+                            <!-- <ng-container matColumnDef="warrantytilldate">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Warranty Till Date </th>
+                                    <td mat-cell *matCellDef="let AssetAuditRecord ">
+                                        <div class="block"> {{AssetAuditRecord.warrantytilldate| date:'dd-MM-yyyy'}} </div>
+                
+                                    </td>
+                                </ng-container> -->
+                            <!-- <ng-container matColumnDef="depreciation">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Depreciation </th>
+                                    <td mat-cell *matCellDef="let AssetAuditRecord ">
+                                        <div class="block"> {{AssetAuditRecord.depreciation}} </div>
+                
+                                    </td>
+                                </ng-container> -->
+                            <!-- <ng-container matColumnDef="eol">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> End of Life (EOL) </th>
+                                    <td mat-cell *matCellDef="let AssetAuditRecord ">
+                                        <div class="block"> {{AssetAuditRecord.eol}} </div>
+                
+                                    </td>
+                                </ng-container> -->
+                            <ng-container matColumnDef="assetstatus">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Asset Status </th>
+                                <td mat-cell *matCellDef="let AssetAuditRecord ">
+                                    <div class="block"> {{AssetAuditRecord.assetstatus}} </div>
+
+                                </td>
+                            </ng-container>
+
+                            <!-- <ng-container matColumnDef="deliverychallanno">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Delivery challan No </th>
+                                    <td mat-cell *matCellDef="let AssetAuditRecord ">
+                                        <div class="block"> {{AssetAuditRecord.deliverychallanno}} </div>
+                                    </td>
+                                </ng-container> -->
+
+
+                            <ng-container matColumnDef="location">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Location </th>
+                                <td mat-cell *matCellDef="let AssetAuditRecord ">
+                                    <div class="block"> {{AssetAuditRecord.location}} </div>
+                                </td>
+                            </ng-container>
+
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+                        <mat-paginator [pageSize]="pageSizedisplay" [pageSizeOptions]="itemPerPage"
+                            showFirstLastButtons>
+                        </mat-paginator>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </mat-dialog-content>
+    <div class="clearfix"></div>
+    <mat-dialog-actions>
+        <div class="button-area-popup">
+
+            <button mat-flat-button color="warn" (click)="closeDialog()">
+                <mat-icon>close</mat-icon>
+                Close
+            </button>
+        </div>
+    </mat-dialog-actions>
+</form>

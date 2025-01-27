@@ -1,0 +1,101 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form>
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                        <div class="col-auto float-right ml-auto">
+                            <button mat-raised-button color="warn" (click)="back()">
+                                <mat-icon>arrow_back_ios</mat-icon>Back
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Page Header -->
+
+                <div class="tab-content">
+
+                    <!-- Add Family -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div *ngIf="totalRecords == 0">
+                                Not Sent For Approval
+                            </div>
+
+                            <!-- Search Table -->
+                            <div *ngIf="totalRecords != 0">
+                            <div class="total-rec">Total Records: {{totalRecords}}</div>
+
+                            <table mat-table [dataSource]="WorkflowHistoryData" matSort class="mat-elevation-z8"
+                                 matSortActive="updatedDate" matSortDirection="desc" matSortDisableClear>
+
+                                <!--  PO No. Column -->
+                                <ng-container matColumnDef="stageName">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Level </th>
+                                    <td mat-cell *matCellDef="let WorkflowHistoryData">
+                                        <div class="block strong"> {{WorkflowHistoryData.stageName}} </div>
+                                        <div class="block" *ngFor="let item of WorkflowHistoryData.email"> {{item}} </div>
+                                    </td>
+                                </ng-container>
+
+                                <!--  Approval Status Column -->
+                                <ng-container matColumnDef="approvalStatus">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Action Taken </th>
+                                    <td mat-cell *matCellDef="let WorkflowHistoryData">
+                                        <div class="block"> {{WorkflowHistoryData.approvalStatus}} </div>
+                                    </td>
+                                </ng-container>
+
+                                <!--  Stage Name Column -->
+                                <ng-container matColumnDef="updatedBy">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Actioned By </th>
+                                    <td mat-cell *matCellDef="let WorkflowHistoryData">
+                                        <div class="block"> {{WorkflowHistoryData.updatedBy}} </div>
+                                    </td>
+                                </ng-container>
+
+                                <!--  Stage Name Column -->
+                                <ng-container matColumnDef="updatedDate">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Actioned On </th>
+                                    <td mat-cell *matCellDef="let WorkflowHistoryData">
+                                        <div class="block"> {{WorkflowHistoryData.updatedDate | date : 'dd/MM/yyyy HH:mm'}} </div>
+                                    </td>
+                                </ng-container>
+
+                                <!--  Stage Name Column -->
+                                <ng-container matColumnDef="remark">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Remarks </th>
+                                    <td mat-cell *matCellDef="let WorkflowHistoryData">
+                                        <div class="block" *ngIf="!(WorkflowHistoryData.stageName=='PO TEAM' || WorkflowHistoryData.stageName=='PO TEAM SCSOFT')"> {{WorkflowHistoryData.remark}} </div>
+                                        <div class="block" *ngIf="(WorkflowHistoryData.stageName=='PO TEAM' || WorkflowHistoryData.stageName=='PO TEAM SCSOFT')"> {{WorkflowHistoryData.remark}} <a href="{{baseUrl}}{{WorkflowHistoryData.url}}" target="_blank"> Download Draft</a></div>
+                                    </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+                            </div>
+                            <!-- <mat-paginator [pageSize]="pageSizedisplay" [pageSizeOptions]="itemPerPage"
+                                showFirstLastButtons>
+                            </mat-paginator> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

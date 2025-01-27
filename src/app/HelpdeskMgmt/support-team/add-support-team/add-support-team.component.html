@@ -1,0 +1,253 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form [formGroup]="addSupportTeamForm">
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /Page Header -->
+
+                
+
+                <div class="tab-content">
+
+                    <!-- Add User -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="col-md-12 mandatory">*Fields are Mandatory</div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <strong>Add Support</strong>
+                                    </div>
+
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.firstName.errors }">
+                                                <input matInput name="firstName" type="text" placeholder="First Name" [(ngModel)]="SupportTeamData.firstName" formControlName="firstName"
+                                                    maxlength="60" required>
+                                                <div *ngIf="isSubmitted && formControls.firstName.errors" class="error-text">
+                                                    <div *ngIf="formControls.firstName.errors.required">First Name is required
+                                                    </div>
+
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.lastName.errors }">
+                                                <input matInput name="lastName" type="text" placeholder="Last Name" [(ngModel)]="SupportTeamData.lastName" formControlName="lastName"
+                                                    maxlength="60" required>
+                                                <div *ngIf="isSubmitted && formControls.lastName.errors" class="error-text">
+                                                    <div *ngIf="formControls.lastName.errors.required">Last Name is required
+                                                    </div>
+
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+
+
+
+
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field>
+                                                <mat-label>Vehicle Support Type</mat-label>
+                                                <mat-select [(ngModel)]="SupportTeamData.vehicleSupportType" formControlName="vehicleSupportType" name="vehicleSupportType" required>
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option value="Driver">Driver</mat-option>
+                                                    <mat-option value="Service Engineer">Service Engineer</mat-option>
+                                                    <mat-option value="Support Engineer">Support Engineer</mat-option>
+
+
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.vehicleSupportType.errors" class="error-text">
+                                                    <div *ngIf="formControls.vehicleSupportType.errors.required">Vehicle Support Type is required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.address.errors }">
+                                                <input matInput name="address" type="text" placeholder="Address" [(ngModel)]="SupportTeamData.address" formControlName="address"
+                                                    maxlength="60">
+
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.pincode.errors }">
+                                                <input matInput name="pincode" type="text" placeholder="Pin code" [(ngModel)]="SupportTeamData.pincode" formControlName="pincode"
+                                                    maxlength="60" numberOnly>
+
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <mat-form-field
+                                                    [ngClass]="{ 'has-error': isSubmitted && formControls.state.errors }">
+                                                    <mat-label>State</mat-label>
+                                                    <mat-select [(ngModel)]="SupportTeamData.state" formControlName="state" 
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                        (selectionChange)="getAllDistrictByState(SupportTeamData.state)">
+                                                        <mat-option>-Select-</mat-option>
+                                                        <mat-option *ngFor="let stateData of stateList"
+                                                            value="{{stateData.selectionid}}">
+                                                            {{stateData.selectionvalue}}</mat-option>
+                                                    </mat-select>
+                                                    
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+    
+    
+                                        <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <mat-form-field
+                                                        [ngClass]="{ 'has-error': isSubmitted && formControls.district.errors }">
+                                                        <mat-label>District</mat-label>
+                                                        <mat-select [(ngModel)]="SupportTeamData.district" formControlName="district" 
+                                                        [typeaheadDebounceInterval]="matSelectDuration"
+                                                            (selectionChange)="getActiveLocationsFromDistrict(SupportTeamData.district)">
+                                                            <mat-option>-Select-</mat-option>
+                                                            <mat-option *ngFor="let districtData of districtList"
+                                                                value="{{districtData.selectionid}}">
+                                                                {{districtData.selectionvalue}}</mat-option>
+                                                        </mat-select>
+                                                        
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+    
+    
+                                            <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <mat-form-field
+                                                            [ngClass]="{ 'has-error': isSubmitted && formControls.usid.errors }">
+                                                            <mat-label>USID</mat-label>
+                                                            <mat-select [(ngModel)]="SupportTeamData.usid" 
+                                                            [typeaheadDebounceInterval]="matSelectDuration"  formControlName="usid">
+                                                                <mat-option>-Select-</mat-option>
+                                                                <mat-option *ngFor="let locationData of locationList"
+                                                                    value="{{locationData.selectionid}}">
+                                                                    {{locationData.selectionvalue}}</mat-option>
+                                                            </mat-select>
+                                                            
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="col-sm-3">
+                                                        <div class="form-group">
+                                                            <mat-form-field class="example-full-width">
+                                                                <input matInput name="serviceStartDate" placeholder="Service Start Date " type="text" [matDatepicker]="picker1" [(ngModel)]="SupportTeamData.serviceStartDate"
+                                                                    formControlName="serviceStartDate" name="serviceStartDate">
+                                                                <div *ngIf="isSubmitted && formControls.serviceStartDate.errors" class="error-text">
+                                                                    <div *ngIf="formControls.serviceStartDate.errors.required">Service Start Date is required
+                                                                    </div>
+                                                                </div>
+                                                                <mat-datepicker-toggle matSuffix [for]="picker1">
+                                                                </mat-datepicker-toggle>
+                                                                <mat-datepicker #picker1></mat-datepicker>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    <div class="col-sm-3">
+                                                            <div class="form-group">
+                                                                <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.employeeId.errors }">
+                                                                    <input matInput name="employeeId" type="text" placeholder="Employee Id" [(ngModel)]="SupportTeamData.employeeId" formControlName="employeeId"
+                                                                        maxlength="60" required>
+                                                                    <div *ngIf="isSubmitted && formControls.employeeId.errors" class="error-text">
+                                                                        <div *ngIf="formControls.employeeId.errors.required">Employee Id is required
+                                                                        </div>
+                    
+                                                                    </div>
+                                                                </mat-form-field>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-sm-6">
+
+                                                                <div class="col-sm-12">
+                                                                    <app-fileupload [files]="supportIdFiles" maxSize="2048" labelname="Id Proof" modulename="idProof" required></app-fileupload>
+                                                                </div>
+                                                            </div>
+                        
+                        
+                        
+                                                            <div class="col-sm-6">
+                        
+                                                                <div class="col-sm-12">
+                                                                    <app-fileupload [files]="supportAddressFiles" maxSize="2048" labelname="Address Proof" modulename="addressProof" required></app-fileupload>
+                                                                </div>
+                                                            </div>
+    
+
+
+                                 </div>
+
+
+                              <div class="submit-section">
+
+
+                                    <button mat-flat-button color="accent" (click)="addSupportTeam('save')" *ngIf="!edit">
+                                        <mat-icon aria-hidden="false">save</mat-icon> Save</button>
+
+
+                                    <button mat-flat-button color="warn" (click)="back()">
+                                        <mat-icon aria-hidden="false">cancel</mat-icon> Back</button>
+
+                                    <button mat-flat-button color="accent" (click)="addSupportTeam('update')" *ngIf="edit">
+                                        <mat-icon aria-hidden="false">update</mat-icon> Update</button>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>

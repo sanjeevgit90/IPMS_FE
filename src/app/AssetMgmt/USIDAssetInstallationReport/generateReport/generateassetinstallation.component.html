@@ -1,0 +1,331 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form [formGroup]="addCityForm">
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Page Header -->
+
+                <div class="tab-content">
+
+                    <!-- Add User -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-2">
+
+                                        <div class="scroll-content boxshadow">
+
+                                            <!--  <div class="col-md-12 heading-reportParent">
+                                                <input type='text' name="searchCity" [(ngModel)]='searchCity'
+                                                    placeholder="Search by City Name" />
+                                            </div>-->
+
+                                           
+                                            <div class="row align-items-center">
+                                                <div class="col">
+                                                    <div class="total-rec">Total Records: {{CityMasterData.filteredData.length}}</div>
+                                                </div>
+                                                <div class="col-auto float-right ml-auto">
+                                                    <mat-form-field class="search-input">
+                                                        <input matInput (keyup)="applyFilterCity($event)" placeholder="Search..." #input>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                            <div class="city-scroll">
+                                            <table mat-table [dataSource]="CityMasterData" matSort class="mat-elevation-z8">
+                                            
+                                                <ng-container matColumnDef="selectionvalue">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> City </th>
+                                                    <td mat-cell *matCellDef="let CityMasterData"> 
+                                                    <a (click)="getActiveLocationFromCity(CityMasterData.selectionid)">    
+                                                        {{CityMasterData.selectionvalue}} 
+                                                    </a>
+                                                    </td>
+                                                </ng-container>
+
+                                                <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+                                                <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+
+                                            </table>   
+                                          </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" [hidden]="!enableLocation">
+
+                                        
+                                        <div class="row align-items-center">
+                                            <div class="col">
+                                                <div class="total-rec">Total Records: {{LocationMasterData.filteredData.length}}</div>
+                                            </div>
+                                            <div class="col-auto float-right ml-auto">
+                                                <mat-form-field class="search-input">
+                                                    <input matInput (keyup)="applyFilterLoc($event)" placeholder="Search..." #input>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="city-scroll">
+                                        <table mat-table [dataSource]="LocationMasterData" matSort class="mat-elevation-z8">
+                                        
+                                            <ng-container matColumnDef="selectionvalue">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Location </th>
+                                                <td mat-cell *matCellDef="let LocationMasterData"> 
+                                                <a (click)="getAssetDataFromLocation(LocationMasterData.selectionid)">    
+                                                    {{LocationMasterData.selectionvalue}} 
+                                                </a>
+                                                </td>
+                                            </ng-container>
+
+                                            <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                                            <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+
+                                        </table>  
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-8">
+
+                                        <div class="scroll-content boxshadow" [hidden]="!enableReport">
+
+                                            <h4>Generate Report</h4>
+                                            <div class="col-md-12 mandatory">*Fields are Mandatory</div>
+
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <mat-form-field class="example-full-width">
+                                                            <input matInput name="location" type="text"
+                                                                placeholder="USID Name"
+                                                                [(ngModel)]="ReportData.location"
+                                                                formControlName="location" maxlength="60" readonly=true>
+
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <mat-form-field class="example-full-width">
+                                                            <input matInput name="policestation" type="text"
+                                                                placeholder="Police Station Name"
+                                                                [(ngModel)]="ReportData.policestation"
+                                                                formControlName="policestation" maxlength="60"
+                                                                readonly=true>
+
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <mat-form-field class="example-full-width">
+                                                            <input matInput name="locationaddress" type="text"
+                                                                placeholder="Address with pincode"
+                                                                [(ngModel)]="ReportData.locationaddress"
+                                                                formControlName="locationaddress" maxlength="60" readonly=true>
+
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+
+
+
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <mat-form-field class="example-full-width">
+                                                            <input matInput name="installationdate"
+                                                                placeholder="Installation Date" type="text"
+                                                                [matDatepicker]="installationdate"
+                                                                [(ngModel)]="ReportData.installationdate"
+                                                                formControlName="installationdate" required>
+                                                            <div *ngIf="isSubmitted && formControls.installationdate.errors"
+                                                                class="error-text">
+                                                                <div
+                                                                    *ngIf="formControls.installationdate.errors.required">
+                                                                    Installation Date is
+                                                                    required</div>
+                                                            </div>
+                                                            <mat-datepicker-toggle matSuffix [for]="installationdate">
+                                                            </mat-datepicker-toggle>
+                                                            <mat-datepicker #installationdate></mat-datepicker>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <mat-form-field class="example-full-width"
+                                                            [ngClass]="{ 'has-error': isSubmitted && formControls.project.errors }">
+                                                            <mat-select [compareWith]="compareObjects" 
+                                                            [typeaheadDebounceInterval]="matSelectDuration"
+                                                                [(ngModel)]="ReportData.project" name="project"
+                                                                placeholder="Project name" formControlName="project"
+                                                                required>
+                                                                <mat-option>-Select-</mat-option>
+                                                                <mat-option *ngFor="let project of projectList"
+                                                                    [value]="project.selectionid">
+                                                                    {{ project.selectionvalue }}
+                                                                </mat-option>
+                                                            </mat-select>
+                                                            <div *ngIf="isSubmitted && formControls.project.errors"
+                                                                class="error-text">
+                                                                <div *ngIf="formControls.project.errors.required">
+                                                                    Project Name
+                                                                    is required</div>
+                                                            </div>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <h4>Assets List</h4>
+                                            <div class="col-md-12">
+                                                <p>Below are the details of items installed at site. [List of Inventory
+                                                    should only show the items installed at that Unique site id]</p>
+                                            </div>
+
+                                            <div class="tab-content">
+
+                                                <!-- Add Family -->
+                                                <div class="pro-overview tab-pane fade show active">
+
+                                                    <table mat-table [dataSource]="AssetRecord" matSort
+                                                        class="mat-elevation-z8">
+                                                        <ng-container matColumnDef="sno">
+                                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> S No. </th>
+                                                            <td mat-cell *matCellDef="let AssetRecord ;let i=index;">
+                                                                <div class="block"> {{i+1}}</div>
+
+                                                            </td>
+                                                        </ng-container>
+
+                                                        <!--  Name Column -->
+                                                        <ng-container matColumnDef="product">
+                                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Item
+                                                                Name </th>
+                                                            <td mat-cell *matCellDef="let AssetRecord ">
+                                                                <div class="block"> {{AssetRecord.product}}</div>
+
+                                                            </td>
+                                                        </ng-container>
+
+                                                        <!--  address Column -->
+                                                        <ng-container matColumnDef="manufacturer">
+                                                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                                                Manufacturer Name </th>
+                                                            <td mat-cell *matCellDef="let AssetRecord ">
+                                                                <div class="block"> {{AssetRecord.manufacturer}} </div>
+
+                                                            </td>
+                                                        </ng-container>
+
+                                                        <!--  Email Column -->
+                                                        <ng-container matColumnDef="model">
+                                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Model
+                                                                Name
+
+                                                            </th>
+                                                            <td mat-cell *matCellDef="let AssetRecord ">
+                                                                <div class="block"> {{AssetRecord.model}} </div>
+                                                            </td>
+                                                        </ng-container>
+                                                        <ng-container matColumnDef="serialno">
+                                                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                                                Serial No
+
+                                                            </th>
+                                                            <td mat-cell *matCellDef="let AssetRecord ">
+                                                                <div class="block"> {{AssetRecord.serialno}} </div>
+                                                            </td>
+                                                        </ng-container>
+                                                        <ng-container matColumnDef="count">
+                                                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                                                Quantity
+
+                                                            </th>
+                                                            <td mat-cell *matCellDef="let AssetRecord ">
+                                                                <div class="block"> {{AssetRecord.count}} </div>
+                                                            </td>
+                                                        </ng-container>
+                                                        <ng-container matColumnDef="status">
+                                                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                                                Status
+
+                                                            </th>
+                                                            <td mat-cell *matCellDef="let AssetRecord ">
+                                                                <div class="block"> {{AssetRecord.status}} </div>
+                                                            </td>
+                                                        </ng-container>
+                                                        <!-- Action Column -->
+
+                                                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                                        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                                                        </tr>
+                                                    </table>
+                                                    <mat-paginator [pageSize]="pageSizedisplay"
+                                                        [pageSizeOptions]="itemPerPage" showFirstLastButtons>
+                                                    </mat-paginator>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+
+                                                <div class="col-sm-8">
+                                                    <div class="form-group">
+                                                        <mat-form-field class="example-full-width">
+                                                            <textarea matInput name="remark" maxlength="200"
+                                                                [(ngModel)]="ReportData.remark" formControlName="remark"
+                                                                placeholder="Enter Remark"></textarea>
+                                                        </mat-form-field>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="submit-section">
+
+
+                                                <button mat-flat-button color="accent" (click)="addReport('generate')"
+                                                    *ngIf="add">
+                                                    <mat-icon aria-hidden="false">save</mat-icon> Generate
+                                                </button>
+
+
+                                                <button mat-flat-button color="warn" (click)="back()">
+                                                    <mat-icon aria-hidden="false">cancel</mat-icon> Back
+                                                </button>
+
+                                                <button mat-flat-button color="accent" (click)="addReport('update')"
+                                                    *ngIf="edit">
+                                                    <mat-icon aria-hidden="false">update</mat-icon> Update
+                                                </button>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

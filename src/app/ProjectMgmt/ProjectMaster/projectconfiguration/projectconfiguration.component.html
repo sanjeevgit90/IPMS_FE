@@ -1,0 +1,129 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<div class="main-wrapper">
+    <app-header> </app-header>
+    <app-leftmenu></app-leftmenu>
+    <div class="page-wrapper">
+        <div class="content container-fluid">
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h3 class="page-title">{{PageTitle}}</h3>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a routerLink="/Dashboard"> Dashboard</a>
+                            </li>
+                            <li class="breadcrumb-item active">{{PageTitle}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /Page Header -->
+
+            <div>
+                <app-projecttab highlightedtab="configurationtab" > </app-projecttab>
+            </div>
+
+            <form [formGroup]="addProjectForm">
+                <div class="tab-content">
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="col-md-12 mandatory">*Fields are Mandatory</div>
+                                <div class="row">
+                                    <ng-container>
+                                        <div class="col-sm-3" *ngFor="let item of levelList;let i = index">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width">
+                                                    <button class="close" (click)="deleteLevel(item)"><span
+                                                            aria-hidden="true">&times;</span></button>
+                                                    <mat-label>{{item.workflowlevel}} </mat-label>
+                                                    <mat-select [compareWith]="compareUser"
+                                                        [typeaheadDebounceInterval]="matSelectDuration"
+                                                        [(ngModel)]="item.userid" placeholder="Users"
+                                                        [ngModelOptions]="{standalone: true}">
+                                                        <mat-option>-Select-</mat-option>
+                                                        <mat-option *ngFor="let type of userList"
+                                                            [value]="type.selectionid">
+                                                            {{ type.selectionvalue }}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                                <div class="submit-section" *ngIf='newLevelList.length==0'>
+                                    <button mat-button (click)="addMoreLevel()">Add more level +</button>
+                                </div>
+                                <div class="row" *ngFor="let item of newLevelList">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-select [(ngModel)]="item.workflowlevel"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    placeholder="Select workflow level"
+                                                    [ngModelOptions]="{standalone: true}">
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let type of AlllevelList"
+                                                        [value]="type.workflowlevel">
+                                                        {{ type.workflowlevel }}
+                                                    </mat-option>
+                                                </mat-select>
+
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-select [(ngModel)]="item.userid" placeholder="Users"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    [ngModelOptions]="{standalone: true}">
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let type of userList"
+                                                        [value]="type.selectionid">
+                                                        {{ type.selectionvalue }}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <button mat-flat-button color="warn" mat-button (click)="removeLevel(item)">
+                                                <mat-icon aria-hidden="false">delete</mat-icon>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="submit-section" *ngIf='newLevelList.length !=0'>
+                                    <button mat-button (click)="addMoreLevel()">Add more level
+                                        +</button>
+                                </div>
+                                 <div class="submit-section">
+                                       <button mat-flat-button color="accent" (click)="addLevel('save')"
+                                            *ngIf="!actionFlag">
+                                            <mat-icon aria-hidden="false">save</mat-icon> Save
+                                        </button>
+                                        <button mat-flat-button color="accent" (click)="addLevel('update')"
+                                            *ngIf="actionFlag">
+                                            <mat-icon aria-hidden="false">update</mat-icon> Update
+                                        </button>
+                                   
+                                    <button mat-flat-button color="accent" *ngIf='submitToFlag && actionFlag'
+                                        (click)="sendForApproval()">
+                                        <mat-icon aria-hidden="false">update</mat-icon> Submit For Approval
+                                    </button>
+                                    <button mat-flat-button color="warn" mat-button (click)="back()">
+                                        <mat-icon aria-hidden="false">cancel</mat-icon> Back To Search
+                                    </button>
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

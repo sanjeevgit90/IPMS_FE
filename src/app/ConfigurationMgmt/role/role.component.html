@@ -1,0 +1,125 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form>
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                        <div class="col-auto float-right ml-auto">
+                            <!-- <button mat-flat-button color="warn" (click)="filterFunc()">
+                                <mat-icon aria-hidden="false">filter</mat-icon> Filter
+                            </button> -->
+                            <button mat-flat-button color="accent" *ngIf="roleAdd" (click)="addRole('add')">
+                                <mat-icon aria-hidden="false">add</mat-icon> Add Role
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Page Header -->
+                <div class="filter-box" *ngIf="filterDiv">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput name="rolename" type="text" placeholder="Search by name"
+                                        [(ngModel)]="FilterData.rolename">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="submit-section">
+
+                        <button mat-flat-button color="primary" (click)="search()">
+                            <mat-icon aria-hidden="false">search</mat-icon> Search
+                        </button>
+                        <button mat-flat-button color="warn" (click)="cancel()">
+                            <mat-icon aria-hidden="false">cancel</mat-icon> Cancel
+                        </button>
+                    </div>
+                </div>
+
+                <div class="tab-content">
+
+                    <!-- Role List -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+
+
+                            <!-- Search Table -->
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <div class="total-rec">Total Records: {{totalRecords}}</div>
+                                </div>
+                                <div class="col-auto float-right ml-auto">
+                                    <mat-form-field class="search-input">
+                                        <input matInput (keyup)="applyFilter($event)" placeholder="Search..." #input>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <mat-table [dataSource]="RoleMasterData" matSort class="mat-elevation-z8">
+
+                                <!--  Name Column -->
+                                <ng-container matColumnDef="rolename">
+                                    <mat-header-cell *matHeaderCellDef mat-sort-header> Role Name </mat-header-cell>
+                                    <mat-cell *matCellDef="let RoleMasterData" data-label=" Role Name">
+                                        {{RoleMasterData.rolename}}
+                                    </mat-cell>
+                                </ng-container>
+
+                                <!-- Action Column -->
+                                <ng-container matColumnDef="maction">
+                                    <mat-header-cell mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+                                    <mat-cell *matCellDef="let RoleMasterData">
+                                        <a mat-flat-button color="accent" matTooltip="View this record"
+                                            [routerLink]="['/updateRole', RoleMasterData.rolename,'view']"
+                                            *ngIf="roleView">
+                                            <mat-icon aria-hidden="false">visibility</mat-icon>
+                                        </a>
+                                        <a mat-flat-button color="primary" matTooltip="Edit this record"
+                                            *ngIf="roleEdit"
+                                            [routerLink]="['/updateRole', RoleMasterData.rolename,'edit']"
+                                            [disabled]="RoleMasterData.deleted">
+                                            <mat-icon aria-hidden="false">edit</mat-icon>
+                                        </a>
+                                        <button mat-flat-button color="warn" matTooltip="Activate this record"
+                                            *ngIf="RoleMasterData.deleted && roleDelete">
+                                            <mat-icon aria-hidden="false">check_circle</mat-icon>
+                                        </button>
+                                        <button mat-flat-button color="warn" class="green-btn"
+                                            (click)="onDelete(RoleMasterData.rolename)"
+                                            matTooltip="Deactivate this record"
+                                            *ngIf="!RoleMasterData.deleted && roleDelete">
+                                            <mat-icon aria-hidden="false">block</mat-icon>
+                                        </button>
+                                    </mat-cell>
+                                </ng-container>
+
+                                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                                <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                            </mat-table>
+                            <mat-paginator [pageSize]="pageSizedisplay" [pageSizeOptions]="itemPerPage"
+                                showFirstLastButtons>
+                            </mat-paginator>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

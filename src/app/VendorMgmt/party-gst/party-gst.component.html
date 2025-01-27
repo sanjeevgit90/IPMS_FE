@@ -1,0 +1,182 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form [formGroup]="addGstForm">
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /Page Header -->
+
+
+                <div>
+                    <app-vendortab highlightedtab="gsttab"> </app-vendortab>
+                </div>
+                <div class="tab-content">
+
+                    <!-- Add organization -->
+                    <div id="organization" class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="col-md-12 mandatory">*Fields are Mandatory</div>
+
+                                <div class="row">
+
+                                    <div class="col-sm-3">
+                                        <div class="col-sm-12 padding-zero">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width"
+                                                    [ngClass]="{ 'has-error': isSubmitted && formControls.gstNo.errors }">
+                                                    <input matInput name="gstNo" type="text" placeholder="GST No"
+                                                        [(ngModel)]="GSTData.gstNo" formControlName="gstNo"
+                                                        maxlength="15" minlength="15" (input)="gstChange()" required>
+                                                    <div *ngIf="isSubmitted && formControls.gstNo.errors"
+                                                        class="error-text">
+                                                        <div *ngIf="formControls.gstNo.errors.required">GST No.
+                                                            is required</div>
+                                                    </div>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-12 padding-zero">
+                                            <div class="form-group">
+                                                <mat-form-field
+                                                    [ngClass]="{ 'has-error': isSubmitted && formControls.state.errors }">
+                                                    <mat-label>State</mat-label>
+                                                    <mat-select [(ngModel)]="GSTData.state"
+                                                        [typeaheadDebounceInterval]="matSelectDuration"
+                                                        formControlName="state"
+                                                        (selectionChange)="checkGst(GSTData.state)">
+                                                        <mat-option [value]="undefined">-Select-</mat-option>
+                                                        <mat-option *ngFor="let stateData of stateList"
+                                                            value="{{stateData.selectionid}}">
+                                                            {{stateData.selectionvalue}}</mat-option>
+                                                    </mat-select>
+                                                    <div *ngIf="isSubmitted && formControls.state .errors"
+                                                        class="error-text">
+                                                        <div *ngIf="formControls.state.errors.required">State is
+                                                            required
+                                                        </div>
+                                                    </div>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <!-- <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="gstNoAttachment" type="text"
+                                                    placeholder="GST No. Attachment" [(ngModel)]="GSTData.gstNoAttachment"
+                                                    formControlName="gstNoAttachment">
+                                            </mat-form-field>
+                                        </div> -->
+                                        <app-fileupload [files]="gstNoAttachment" maxSize="2048"
+                                            labelname="GST Certificate Attachment" modulename="gstattach">
+                                        </app-fileupload>
+                                    </div>
+
+                                </div>
+
+                                <div class="submit-section">
+
+                                    <button mat-flat-button color="accent" (click)="addGst('save')" *ngIf="list">
+                                        <mat-icon aria-hidden="false">save</mat-icon> Save
+                                    </button>
+
+                                    <button mat-flat-button color="accent" (click)="addGst('update')" *ngIf="edit">
+                                        <mat-icon aria-hidden="false">update</mat-icon> Update
+                                    </button>
+
+                                    <button mat-flat-button color="warn" (click)="cancel()">
+                                        <mat-icon aria-hidden="false">close</mat-icon> Cancel
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                            <!-- Search Table -->
+                            <div class="total-rec">Total Records: {{totalRecords}}</div>
+
+                            <table mat-table [dataSource]="GstMasterData" matSort class="mat-elevation-z8">
+
+                                <!-- Gst No Column -->
+                                <ng-container matColumnDef="gstNo">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> GST No. </th>
+                                    <td mat-cell *matCellDef="let GstMasterData" data-label="GST No.">
+                                        {{GstMasterData.gstNo}} </td>
+                                </ng-container>
+                                <!-- State Column -->
+                                <ng-container matColumnDef="state">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> State </th>
+                                    <td mat-cell *matCellDef="let GstMasterData" data-label="State">
+                                        {{GstMasterData.state}} </td>
+                                </ng-container>
+
+                                <!-- Attachment Column -->
+                                <ng-container matColumnDef="gstNoAttachment">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> GST Attachment </th>
+                                    <td mat-cell *matCellDef="let GstMasterData" data-label="GST Attachment">
+                                        <div *ngIf="GstMasterData.gstNoAttachment != null">
+                                             <a href="{{baseUrl}}{{GstMasterData.gstNoAttachment}}" target="_blank" *ngIf="containsUUID(GstMasterData.gstNoAttachment.substring(GstMasterData.gstNoAttachment.lastIndexOf('/')+1,GstMasterData.gstNoAttachment.length))">
+                                                {{GstMasterData.gstNoAttachment.substring(GstMasterData.gstNoAttachment.lastIndexOf('/')+38,GstMasterData.gstNoAttachment.length)}}
+                                            </a>
+                                            <a href="{{baseUrl}}{{GstMasterData.gstNoAttachment}}" target="_blank" *ngIf="!containsUUID(GstMasterData.gstNoAttachment.substring(GstMasterData.gstNoAttachment.lastIndexOf('/')+1,GstMasterData.gstNoAttachment.length))">
+                                                {{GstMasterData.gstNoAttachment.substring(GstMasterData.gstNoAttachment.lastIndexOf('/')+1,GstMasterData.gstNoAttachment.length)}}
+                                            </a> 
+                                        </div>
+                                    </td>
+                                </ng-container>
+                                <!-- Action Column -->
+                                <ng-container matColumnDef="action">
+                                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                                    <td mat-cell *matCellDef="let GstMasterData">
+                                        <button mat-flat-button color="primary" (click)="editData(GstMasterData.gstNo)"
+                                            matTooltip="Edit this record">
+                                            <mat-icon aria-hidden="false">edit</mat-icon>
+                                        </button>
+
+                                        <button mat-flat-button color="warn"
+                                            (click)="onDelete(GstMasterData.entityId,GstMasterData.isDeleted)"
+                                            matTooltip="Deactivate this record" *ngIf="!GstMasterData.isDeleted">
+                                            <mat-icon aria-hidden="false">delete</mat-icon>
+                                        </button>
+                                        <button mat-flat-button color="basic" class="green-btn"
+                                            (click)="onDelete(GstMasterData.entityId,GstMasterData.isDeleted)"
+                                            matTooltip="Activate this record" *ngIf="GstMasterData.isDeleted">
+                                            <mat-icon aria-hidden="false">delete</mat-icon>
+                                        </button>
+                                    </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+                            <mat-paginator [pageSize]="pageSizedisplay" [pageSizeOptions]="itemPerPage"
+                                showFirstLastButtons>
+                            </mat-paginator>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

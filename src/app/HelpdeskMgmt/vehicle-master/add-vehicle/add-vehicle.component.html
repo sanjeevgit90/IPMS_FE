@@ -1,0 +1,451 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form [formGroup]="addVehicleMasterForm">
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /Page Header -->
+
+                <div class="tab-content">
+
+                    <!-- Add User -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="col-md-12 mandatory">*Fields are Mandatory</div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <strong>Basic Vehicle Details</strong>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field>
+                                                <mat-label>Vehicle Type</mat-label>
+                                                <mat-select [(ngModel)]="VehicleData.vehicleType" formControlName="vehicleType" name="vehicleType" required>
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option value="Pay-Loader">Pay-Loader</mat-option>
+                                                    <mat-option value="Crane">Crane</mat-option>
+                                                    <mat-option value="Pick-Up">Pick-Up</mat-option>
+                                                    <mat-option value="Any Other">Any Other</mat-option>
+
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.vehicleType.errors" class="error-text">
+                                                    <div *ngIf="formControls.vehicleType.errors.required">Vehicle Type is required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.vehicleName.errors }">
+                                                <input matInput name="vehicleName" type="text" placeholder="Vehicle Name" [(ngModel)]="VehicleData.vehicleName" formControlName="vehicleName"
+                                                    maxlength="60" required>
+                                                <div *ngIf="isSubmitted && formControls.vehicleName.errors" class="error-text">
+                                                    <div *ngIf="formControls.vehicleName.errors.required">Vehicle Type is required
+                                                    </div>
+
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field [ngClass]="{ 'has-error': isSubmitted && formControls.errors }">
+                                                <mat-label>Vehicle Make</mat-label>
+                                                <mat-select [(ngModel)]="VehicleData.vehicleMake" 
+                                                [typeaheadDebounceInterval]="matSelectDuration" formControlName="vehicleMake" name="vehicleMake" required>
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let vehicleMakeData of manufactureList" value="{{vehicleMakeData.selectionid}}">
+                                                        {{vehicleMakeData.selectionvalue}}</mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.vehicleMake.errors" class="error-text">
+                                                    <div *ngIf="formControls.vehicleMake.errors.required">Vehicle Make is required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.vendorName.errors }">
+                                                <input matInput name="vendorName" name="vendorName" type="text"
+                                                    placeholder="Vendor Name"
+                                                    [(ngModel)]="VehicleData.vendorName"
+                                                    formControlName="vendorName" maxlength="60" required>
+                                                    <div *ngIf="isSubmitted && formControls.vendorName.errors" class="error-text">
+                                                            <div *ngIf="formControls.vendorName.errors.required">Vendor Name is required
+                                                            </div>
+                                                        </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+                                    <!-- <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field>
+                                                <mat-label>Vehicle Insurance</mat-label>
+                                                <mat-select [(ngModel)]="VehicleData.vendorName" formControlName="vendorName" name="vendorName" required>
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option value="AurionPro">AurionPro</mat-option>
+                                                    <mat-option value="IBM">IBM</mat-option>
+
+
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.vendorName.errors" class="error-text">
+                                                    <div *ngIf="formControls.vendorName.errors.required">Vehicle Insurance required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div> -->
+
+
+
+
+
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field [ngClass]="{ 'has-error': isSubmitted && formControls.errors }">
+                                                <mat-label>Vehicle Category</mat-label>
+                                                <mat-select [(ngModel)]="VehicleData.vehicleCateory" 
+                                                [typeaheadDebounceInterval]="matSelectDuration" formControlName="vehicleCateory" name="vehicleCateory" required>
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let categoryData of categoryList" value="{{categoryData.selectionid}}">
+                                                        {{categoryData.selectionvalue}}</mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.vehicleCateory.errors"
+                                                        class="error-text">
+                                                        <div *ngIf="formControls.vehicleCateory.errors.required">Vehicle Category is
+                                                            required</div>
+                                                    </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.vehicleRegNumber.errors }">
+                                                <input matInput name="vehicleRegNumber" type="text" placeholder="Vehicle Reg Number" [(ngModel)]="VehicleData.vehicleRegNumber"
+                                                    formControlName="vehicleRegNumber" name="vehicleRegNumber" maxlength="60"
+                                                    required>
+                                                <div *ngIf="isSubmitted && formControls.vehicleRegNumber.errors" class="error-text">
+                                                    <div *ngIf="formControls.vehicleRegNumber.errors.required">Vehicle Register Number is required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="vehiclepurchaseDate" placeholder="Vehicle Purchase Date " type="text" [matDatepicker]="picker1" [(ngModel)]="VehicleData.vehiclepurchaseDate"
+                                                    formControlName="vehiclepurchaseDate" name="vehiclepurchaseDate" required>
+                                                <div *ngIf="isSubmitted && formControls.vehiclepurchaseDate.errors" class="error-text">
+                                                    <div *ngIf="formControls.vehiclepurchaseDate.errors.required">Vehicle Purchase Date required
+                                                    </div>
+                                                </div>
+                                                <mat-datepicker-toggle matSuffix [for]="picker1">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #picker1></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="deliveryDate" placeholder="Vehicle Delivery Date " type="text" [matDatepicker]="picker2" [(ngModel)]="VehicleData.deliveryDate"
+                                                    formControlName="deliveryDate" name="deliveryDate" required>
+                                                <div *ngIf="isSubmitted && formControls.deliveryDate.errors" class="error-text">
+                                                    <div *ngIf="formControls.deliveryDate.errors.required">Vehicle delivery Date required
+                                                    </div>
+                                                </div>
+                                                <mat-datepicker-toggle matSuffix [for]="picker2">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #picker2></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field [ngClass]="{ 'has-error': isSubmitted && formControls.projectName.errors }">
+                                                <mat-label>Project Name</mat-label>
+                                                <mat-select [(ngModel)]="VehicleData.projectName" 
+                                                [typeaheadDebounceInterval]="matSelectDuration" formControlName="projectName" name="projectName">
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let projectData of projectList" value="{{projectData.selectionid}}" matTooltip="{{projectData.selectionvalue}}">
+                                                        {{projectData.selectionvalue}}</mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.projectName.errors" class="error-text">
+                                                    <div *ngIf="formControls.projectName.errors.required">Project is required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <strong>Insurance Details</strong>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field>
+                                                <mat-label>Vehicle Insurance</mat-label>
+                                                <mat-select [(ngModel)]="VehicleData.vehicleInsurance" formControlName="vehicleInsurance" name="vehicleInsurance" required>
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option value="YES">YES</mat-option>
+                                                    <mat-option value="NO">NO</mat-option>
+
+
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.vehicleInsurance.errors" class="error-text">
+                                                    <div *ngIf="formControls.vehicleInsurance.errors.required">Vehicle Insurance required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+
+
+                                </div>
+
+
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <strong>Other Details</strong>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field>
+                                                <mat-label>Pollution Clearance Details</mat-label>
+                                                <mat-select [(ngModel)]="VehicleData.pollutionClearanceDone" formControlName="pollutionClearanceDone" name="pollutionClearanceDone"
+                                                    required>
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option value="YES">YES</mat-option>
+                                                    <mat-option value="NO">NO</mat-option>
+
+
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.pollutionClearanceDone.errors" class="error-text">
+                                                    <div *ngIf="formControls.pollutionClearanceDone.errors.required">Vehicle Insurance required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field [ngClass]="{ 'has-error': isSubmitted && formControls.state.errors }">
+                                                <mat-label>State</mat-label>
+                                                <mat-select [(ngModel)]="VehicleData.state" 
+                                                [typeaheadDebounceInterval]="matSelectDuration" formControlName="state" name="state" (selectionChange)="getAllDistrictByState(VehicleData.state)" required>
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let stateData of stateList" value="{{stateData.selectionid}}">
+                                                        {{stateData.selectionvalue}}</mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.state.errors" class="error-text">
+                                                    <div *ngIf="formControls.state.errors.required">State is required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field [ngClass]="{ 'has-error': isSubmitted && formControls.district.errors }">
+                                                <mat-label>District</mat-label>
+                                                <mat-select [(ngModel)]="VehicleData.district" 
+                                                [typeaheadDebounceInterval]="matSelectDuration" formControlName="district" (selectionChange)="getActiveLocationsFromDistrict(VehicleData.district)" required>
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let districtData of districtList" value="{{districtData.selectionid}}">
+                                                        {{districtData.selectionvalue}}</mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.district.errors" class="error-text">
+                                                    <div *ngIf="formControls.district.errors.required">District is required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+
+
+
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field [ngClass]="{ 'has-error': isSubmitted && formControls.errors }">
+                                                <mat-label>USID</mat-label>
+                                                <mat-select [(ngModel)]="VehicleData.usid" 
+                                                [typeaheadDebounceInterval]="matSelectDuration" formControlName="usid" name="usid" required>
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let locationData of locationList" value="{{locationData.selectionid}}">
+                                                        {{locationData.selectionvalue}}</mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.usid.errors" class="error-text">
+                                                    <div *ngIf="formControls.usid.errors.required">Location is required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+
+
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="remarks" type="text" placeholder="Remark" [(ngModel)]="VehicleData.remarks" formControlName="remarks"
+                                                    maxlength="60">
+
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <strong>Upload Documents/Ceritficates</strong>
+                                    </div>
+                                    <div class="col-sm-6">
+
+                                        <div class="col-sm-12">
+                                            <app-fileupload [files]="vehRegFiles" maxSize="2048" labelname="Vehicle Registration Certificate" modulename="vehicleReg"></app-fileupload>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-sm-6">
+
+                                        <div class="col-sm-12">
+                                            <app-fileupload [files]="vehInsFiles" maxSize="2048" labelname="Vehicle Insurance Certificate" modulename="vehicleIns"></app-fileupload>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+
+                                        <div class="col-sm-12">
+                                            <app-fileupload [files]="vehPollFiles" maxSize="2048" labelname="Pollution Clearance Certificate" modulename="vehiclePoll"></app-fileupload>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+
+                                        <div class="col-sm-12">
+                                            <app-fileupload [files]="vehOtherFiles" maxSize="2048" labelname="Any other Documents" modulename="vehicleOthDoc"></app-fileupload>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="col-sm-6">
+
+                                        <div class="col-sm-12">
+                                            <app-fileupload [files]="vehLetterFiles" maxSize="2048" labelname="Letter of Intent" modulename="vehicleLetter"></app-fileupload>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-sm-6">
+
+                                        <div class="col-sm-12">
+                                            <app-fileupload [files]="vehInvoiceFiles" maxSize="2048" labelname="Vehicle Invoice" modulename="vehicleInvoice"></app-fileupload>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-sm-6">
+
+                                        <div class="col-sm-12">
+                                            <app-fileupload [files]="vehReleaseFiles" maxSize="2048" labelname="Vehicle Release Document" modulename="vehicleRelease"></app-fileupload>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+
+
+
+                                <div class="submit-section">
+
+
+                                    <button mat-flat-button color="accent" (click)="addVehicle('save')" *ngIf="!edit">
+                                        <mat-icon aria-hidden="false">save</mat-icon> Save</button>
+
+
+                                    <button mat-flat-button color="warn" (click)="back()">
+                                        <mat-icon aria-hidden="false">cancel</mat-icon> Back</button>
+
+                                    <button mat-flat-button color="accent" (click)="addVehicle('update')" *ngIf="edit">
+                                        <mat-icon aria-hidden="false">update</mat-icon> Update</button>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>

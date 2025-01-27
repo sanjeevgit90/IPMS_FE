@@ -1,0 +1,221 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form>
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Page Header -->
+
+                <div class="tab-content">
+
+                    <!-- Add User -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+
+                                    <div class="col-md-3">
+
+                                        <div class="scroll-content boxshadow">
+
+                                            <h4>City Name</h4>
+                                            <!--  <div class="col-md-12 heading-reportParent">
+                                                <input type='text' name="searchCity" [(ngModel)]='searchCity'
+                                                    placeholder="Search by City Name" />
+                                            </div>-->
+
+                                            <!-- <div class="row align-items-center">
+                                               
+                                                <div class="col-auto float-right ml-auto">
+                                                    <mat-form-field class="search-input">
+                                                        <input matInput (keyup)="applyFilterCity($event)" placeholder="Search..." #input>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                            <div class="total-rec">Total Records: {{cityList.length}}</div>
+                                            <div class="col-md-12" *ngFor="let city of cityList">
+                                                <a class="btn"
+                                                    (click)="getActiveLocationFromCity(city.selectionid)">{{city.selectionvalue}}</a>
+                                            </div> -->
+
+                                            <div class="row align-items-center">
+                                                <div class="col">
+                                                    <div class="total-rec">Total Records:
+                                                        {{citycount}}</div>
+                                                </div>
+                                                <div class="col-auto float-right ml-auto">
+                                                    <mat-form-field class="search-input">
+                                                        <input matInput (keyup)="applyFilterCity($event)"
+                                                            placeholder="Search..." #input>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+
+                                            <div class="city-scroll">
+                                                <table mat-table [dataSource]="CityMasterData" matSort
+                                                    class="mat-elevation-z8">
+
+                                                    <ng-container matColumnDef="selectionvalue">
+                                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> City
+                                                        </th>
+                                                        <td mat-cell *matCellDef="let CityMasterData">
+                                                            <a
+                                                                (click)="getActiveLocationFromCity(CityMasterData.selectionid)">
+                                                                {{CityMasterData.selectionvalue}}
+                                                            </a>
+                                                        </td>
+                                                    </ng-container>
+
+                                                    <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+                                                    <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+
+                                                </table>
+                                            </div>
+                                            <!-- <mat-paginator [pageSize]="pageSizedisplay" [pageSizeOptions]="itemPerPage"
+                                            showFirstLastButtons>
+                                        </mat-paginator> -->
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-3">
+
+                                        <div class="scroll-content boxshadow" [hidden]="!enableLocation">
+                                            <h4>Unique Site ID Name</h4>
+                                            <!--    <div class="col-md-12 heading-reportParent">
+                                                
+                                           <input type='text' name="searchCity" [(ngModel)]='searchLocation'
+                                                    placeholder="Search by Location Name" />
+                                            </div>-->
+
+                                            <!-- <div class="row align-items-center">
+                                               
+                                                <div class="col-auto float-right ml-auto">
+                                                    <mat-form-field class="search-input">
+                                                        <input matInput (keyup)="applyFilterLoc($event)" placeholder="Search..." #input>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                            <div class="total-rec">Total Records: {{locationList.length}}</div>
+
+                                            <div class="col-md-12" *ngFor="let location of locationList">
+                                                <a class="btn"
+                                                    (click)="getAssetsFromLocation(location.selectionid)">{{location.selectionvalue}}</a>
+                                            </div> -->
+
+
+                                            <div class="row align-items-center">
+                                                <div class="col">
+                                                    <div class="total-rec">Total Records:
+                                                        {{usidcount}}</div>
+                                                </div>
+                                                <div class="col-auto float-right ml-auto">
+                                                    <mat-form-field class="search-input">
+                                                        <input matInput (keyup)="applyFilterLoc($event)"
+                                                            placeholder="Search..." #input>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                            <div class="city-scroll">
+                                            <table mat-table [dataSource]="LocationMasterData" matSort
+                                                class="mat-elevation-z8">
+
+                                                <ng-container matColumnDef="selectionvalue">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Location
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let LocationMasterData">
+                                                        <a
+                                                            (click)="getAssetsFromLocation(LocationMasterData.selectionid)">
+                                                            {{LocationMasterData.selectionvalue}}
+                                                        </a>
+                                                    </td>
+                                                </ng-container>
+
+                                                <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                                                <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+
+                                            </table>
+                                            <!-- <mat-paginator [pageSize]="pageSizedisplay" [pageSizeOptions]="itemPerPage"
+                                            showFirstLastButtons>
+                                        </mat-paginator> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" [hidden]="!enableAsset">
+                                        <h4>Assets List</h4>
+                                        <div class="row align-items-center">
+                                            <div class="col">
+                                                <div class="total-rec">Total Records:
+                                                    {{totalRecords}}</div>
+                                            </div>
+                                            <div class="col-auto float-right ml-auto">
+                                                <mat-form-field class="search-input">
+                                                    <input matInput (keyup)="applyFilterAsset($event)"
+                                                        placeholder="Search..." #input>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <table mat-table [dataSource]="AssetRecord" matSort class="mat-elevation-z8">
+
+
+                                            <!--  Name Column -->
+                                            <ng-container matColumnDef="assetname">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Asset Name </th>
+                                                <td mat-cell *matCellDef="let AssetRecord ">
+                                                    <a href="#" (click)="updateAsset(AssetRecord.entityId)">
+                                                        {{AssetRecord.assetname}}</a>
+
+                                                </td>
+                                            </ng-container>
+
+                                            <!--  address Column -->
+                                            <ng-container matColumnDef="category">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Category </th>
+                                                <td mat-cell *matCellDef="let AssetRecord ">
+                                                    <div class="block"> {{AssetRecord.category}} </div>
+
+                                                </td>
+                                            </ng-container>
+
+                                            <!--  Email Column -->
+                                            <ng-container matColumnDef="subcategory">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Sub Category
+                                                </th>
+                                                <td mat-cell *matCellDef="let AssetRecord ">
+                                                    <div class="block"> {{AssetRecord.subcategory}} </div>
+                                                </td>
+                                            </ng-container>
+
+                                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                        </table>
+                                        <mat-paginator [pageSize]="pageSizedisplay" [pageSizeOptions]="itemPerPage"
+                                            showFirstLastButtons>
+                                        </mat-paginator>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

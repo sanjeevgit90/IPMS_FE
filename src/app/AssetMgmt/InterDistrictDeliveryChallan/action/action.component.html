@@ -1,0 +1,140 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form [formGroup]="addAssetForm">
+    <!-- Page Header -->
+    <mat-dialog-content class="mat-typography">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">{{PageTitle}}</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a routerLink="/Dashboard"> Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item active">{{PageTitle}}</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+        <!-- /Page Header -->
+
+        <div class="tab-content">
+
+            <!-- Add User -->
+            <div class="pro-overview tab-pane fade show active">
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="col-md-12 mandatory">*Fields are Mandatory</div>
+
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group" class="example-full-width"
+                                    [ngClass]="{ 'has-error': isSubmitted && formControls.approvalStatus.errors }">
+                                    <mat-radio-group aria-label="Select an action"
+                                        [(ngModel)]="ActionData.approvalStatus" formControlName="approvalStatus"
+                                        required>
+                                        <mat-radio-button value="APPROVED" *ngIf="project||invoice">Approve
+                                        </mat-radio-button>
+                                        <mat-radio-button value="RECEIVED" *ngIf="dc">Receive</mat-radio-button>
+                                        <mat-radio-button value="REJECTED">Reject</mat-radio-button>
+                                    </mat-radio-group>
+                                    <div *ngIf="isSubmitted && formControls.approvalStatus.errors" class="error-text">
+                                        <div *ngIf="formControls.approvalStatus.errors.required">Action is Required
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row" *ngIf="ActionData.assignToRole == 'ACCOUNT HEAD'">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput name="invoicedate" placeholder="Invoice Date" type="text"
+                                            [matDatepicker]="picker" [(ngModel)]="invoicedate"
+                                            formControlName="invoicedate" required>
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput name="invoiceno" type="text" placeholder="Invoice No"
+                                            [(ngModel)]="invoiceno" formControlName="invoiceno">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="ActionData.assignToRole == 'ACCOUNT HEAD'">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <app-fileupload [files]="accountFiles" maxSize="2048" labelname="Upload Excel"
+                                        modulename="accountExcel"></app-fileupload>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" *ngIf="ActionData.assignToRole == 'BILLING TEAM'">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <app-fileupload [files]="signedFiles" maxSize="2048" labelname="Upload Excel"
+                                        modulename="invoicesignedexcel"></app-fileupload>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width"
+                                        [ngClass]="{ 'has-error': isSubmitted && formControls.remark.errors }">
+                                        <textarea matInput name="remark" maxlength="200" [(ngModel)]="ActionData.remark"
+                                            formControlName="remark" placeholder="Enter Remark"></textarea>
+                                        <div *ngIf="isSubmitted && formControls.remark.errors" class="error-text">
+                                            <div *ngIf="formControls.remark.errors.required">Remark is Required
+                                            </div>
+                                        </div>
+                                    </mat-form-field>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <div class="clearfix"></div>
+    <mat-dialog-actions>
+        <div class="submit-section">
+
+            <button mat-flat-button color="accent" (click)="processDC(ActionData.approvalStatus)" *ngIf="dc">
+                <mat-icon aria-hidden="false">update</mat-icon> Action
+            </button>
+            <button mat-flat-button color="accent" (click)="processProject(ActionData.approvalStatus)" *ngIf="project">
+                <mat-icon aria-hidden="false">update</mat-icon> Action
+            </button>
+
+            <button mat-flat-button color="accent" (click)="processInvoice(ActionData.approvalStatus)" *ngIf="invoice">
+                <mat-icon aria-hidden="false">update</mat-icon> Action
+            </button>
+
+            <button mat-flat-button color="warn" (click)="back()">
+                <mat-icon aria-hidden="false">cancel</mat-icon> Back
+            </button>
+
+        </div>
+    </mat-dialog-actions>
+</form>

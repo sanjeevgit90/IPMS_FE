@@ -1,0 +1,116 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form>
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                        </div>
+
+
+                </div>
+                <!-- /Page Header -->
+
+
+                <div class="tab-content">
+
+                    <!-- Add Family -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+
+
+                                <!-- <div class="submit-section">
+    
+                                        <button type="submit" class="btn btn-danger" (click)="search()" *ngIf="list">
+                                            <mat-icon aria-hidden="false">search</mat-icon> Search
+                                        </button>
+    
+                                        <button type="submit" class="btn btn-danger" (click)="cancel()" *ngIf="edit">
+                                            <mat-icon aria-hidden="false">close</mat-icon> Cancel
+                                        </button>
+   
+                                    </div> -->
+
+
+                            <!-- Search Table -->
+                            <div class="total-rec">Total Records: {{totalRecords}}</div>
+
+                            <table mat-table [dataSource]="TripData" matSort class="mat-elevation-z8">
+
+                                <!--  Name Column -->
+                                <ng-container matColumnDef="tripId">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Trip Id </th>
+                                    <td mat-cell *matCellDef="let TripData ">
+                                        <div class="block strong"> {{TripData.tripId}}
+                                            </div>
+                                       
+                                    </td>
+                                </ng-container>
+
+                                <!--  Email Column -->
+                                <ng-container matColumnDef="sourceAdd">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Source </th>
+                                    <td mat-cell *matCellDef="let TripData ">
+                                        <div class="block strong"> {{TripData.sourceAdd}} </div>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="destAdd">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Destination </th>
+                                    <td mat-cell *matCellDef="let TripData ">
+                                        <div class="block strong"> {{TripData.destAdd}} </div>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="startTime">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Start Time </th>
+                                    <td mat-cell *matCellDef="let TripData ">
+                                        <div class="block strong"> {{TripData.startTime}} </div>
+                                    </td>
+                                </ng-container>
+
+                                
+
+                                <ng-container matColumnDef="endTime">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> End Time </th>
+                                    <td mat-cell *matCellDef="let TripData ">
+                                        <div class="block strong"> {{TripData.endTime}} </div>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="distance">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Distance </th>
+                                    <td mat-cell *matCellDef="let TripData ">
+                                        <div class="block strong"> {{TripData.distance}} </div>
+                                    </td>
+                                </ng-container>
+                                
+
+                                
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+                            <mat-paginator [pageSize]="pageSizedisplay" [pageSizeOptions]="itemPerPage"
+                                showFirstLastButtons>
+                            </mat-paginator>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

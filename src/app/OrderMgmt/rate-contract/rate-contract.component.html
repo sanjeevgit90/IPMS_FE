@@ -1,0 +1,251 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form>
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                        <div class="col-auto float-right ml-auto">
+
+                            <button mat-flat-button color="warn" (click)="filterFunc()" *ngIf="!result">
+                                <mat-icon aria-hidden="false">filter</mat-icon> Filter
+                            </button>
+                            <button mat-flat-button color="primary" (click)="filterFunc()" *ngIf="result">
+                                <mat-icon aria-hidden="false">check_circle</mat-icon> Filter Applied
+                            </button>
+
+                            <button mat-flat-button color="accent" (click)="addRC()" *ngIf="rcAdd">
+                                <mat-icon aria-hidden="false">add</mat-icon> Add RC
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Page Header -->
+
+                <div class="filter-box" *ngIf="filterDiv">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput name="rateContractNo" type="text" placeholder="Search by RC no."
+                                        [(ngModel)]="FilterData.rateContractNo">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-select [(ngModel)]="FilterData.accountName" name="accountName" [typeaheadDebounceInterval]="matSelectDuration"
+ 
+                                        placeholder="Search by Project">
+                                        <mat-option>-Search By Project-</mat-option>
+                                        <mat-option *ngFor="let p of projectList" value="{{p.selectionid}}" matTooltip="{{p.selectionvalue}}">
+                                            {{p.selectionvalue}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-select [(ngModel)]="FilterData.organisationId" [typeaheadDebounceInterval]="matSelectDuration"
+                                     name="organisationId"
+                                        placeholder="Search by Organisation">
+                                        <mat-option>-Search By Organisation-</mat-option>
+                                        <mat-option *ngFor="let org of orgList" value="{{org.selectionid}}">
+                                            {{org.selectionvalue}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-select [(ngModel)]="FilterData.supplierName" [typeaheadDebounceInterval]="matSelectDuration"
+                                     name="supplierName"
+                                        placeholder="Search by Vendor">
+                                        <mat-option>-Search By Vendor-</mat-option>
+                                        <mat-option *ngFor="let supp of supplierPartyList" value="{{supp.selectionid}}">
+                                            {{supp.selectionvalue}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-select [(ngModel)]="FilterData.department"  [typeaheadDebounceInterval]="matSelectDuration"
+                                     name="department"
+                                        placeholder="Search by Department">
+                                        <mat-option>-Search By Department-</mat-option>
+                                        <mat-option *ngFor="let d of deptList" value="{{d.selectionid}}">
+                                            {{d.selectionvalue}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="submit-section">
+                        <button mat-flat-button color="primary" (click)="search()">
+                            <mat-icon aria-hidden="false">search</mat-icon> Search
+                        </button>
+                        <button mat-flat-button color="warn" (click)="cancel()">
+                            <mat-icon aria-hidden="false">cancel</mat-icon> Cancel
+                        </button>
+                    </div>
+                </div>
+
+                <div class="tab-content">
+
+                    <!-- Add Family -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+
+
+                            <!-- Search Table -->
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <div class="total-rec">Total Records: {{totalRecords}}</div>
+                                </div>
+                                <div class="col-auto float-right ml-auto">
+                                    <mat-form-field class="search-input">
+                                        <input matInput (keyup)="applyFilter($event)" placeholder="Search..." #input>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <table mat-table [dataSource]="RCListData" matSort class="mat-elevation-z8">
+
+                                <!--  PO No. Column -->
+                                <ng-container matColumnDef="rateContractNo">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> RC No. </th>
+                                    <td mat-cell *matCellDef="let RCListData" data-label="RC No.">
+                                        <div class="block"> {{RCListData.rateContractNo}} </div>
+                                    </td>
+                                </ng-container>
+
+                                <!--  Order date Column -->
+                                <ng-container matColumnDef="contractDate">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Contract Date </th>
+                                    <td mat-cell *matCellDef="let RCListData" data-label="Contract Date">
+                                        <div class="block"> {{RCListData.contractDate | date : 'dd/MM/yyyy'}} </div>
+                                    </td>
+                                </ng-container>
+
+                                <!--  Dept Column -->
+                                <ng-container matColumnDef="departmentName">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Department </th>
+                                    <td mat-cell *matCellDef="let RCListData" data-label="Department">
+                                        <div class="block"> {{RCListData.departmentName}} </div>
+                                    </td>
+                                </ng-container>
+
+                                <!--  Project Column -->
+                                <ng-container matColumnDef="accName">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Project </th>
+                                    <td mat-cell *matCellDef="let RCListData" data-label="Project">
+                                        <div class="block"> {{RCListData.accName}} </div>
+                                    </td>
+                                </ng-container>
+
+                                <!--  Approval Status Column -->
+                                <ng-container matColumnDef="approvalStatus">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Approval Status </th>
+                                    <td mat-cell *matCellDef="let RCListData" data-label="Approval Status">
+                                        <div class="block"> {{RCListData.approvalStatus}} </div>
+                                    </td>
+                                </ng-container>
+
+
+                                <!-- Action Column -->
+                                <ng-container matColumnDef="action">
+                                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                                    <td mat-cell *matCellDef="let RCListData">
+
+                                        <button mat-flat-button color="accent" [matMenuTriggerFor]="menu">
+                                            <mat-icon>mouse</mat-icon> Action
+                                        </button>
+
+                                        <mat-menu #menu="matMenu" class="actionmenu">
+                                            <a mat-menu-item [routerLink]="['/ViewRcById', RCListData.entityId, 'RC']"
+                                                *ngIf="rcView">
+                                                <mat-icon aria-hidden="false">visibility</mat-icon> View
+                                            </a>
+                                            <a mat-menu-item
+                                                [routerLink]="['editRateContract', RCListData.entityId,'edit']"
+                                                *ngIf="RCListData.approvalStatus=='PENDING' && rcEdit">
+                                                <mat-icon aria-hidden="false">edit</mat-icon> Edit
+                                            </a>
+                                            <a mat-menu-item
+                                                [routerLink]="['uploadSignCopy', RCListData.entityId,'view']"
+                                                *ngIf="RCListData.approvalStatus=='APPROVED'">
+                                                <mat-icon aria-hidden="false">cloud_upload</mat-icon> Upload Signed Copy
+                                            </a>
+
+                                            <button mat-menu-item (click)="deleteRc(RCListData.entityId)" title="Delete"
+                                                *ngIf="RCListData.approvalStatus=='PENDING' && rcDelete">
+                                                <mat-icon aria-hidden="false">delete</mat-icon> Delete
+                                            </button>
+                                            <button mat-menu-item (click)="generateDuplicateOrder(RCListData.entityId)">
+                                                <mat-icon aria-hidden="false">control_point_duplicate</mat-icon>
+                                                Duplicate
+                                            </button>
+
+                                        </mat-menu>
+                                        <!-- <a mat-flat-button color="accent" matTooltip="View this record"
+                                            [routerLink]="['/ViewRcById', RCListData.entityId, 'RC']" *ngIf="rcView">
+                                            <mat-icon aria-hidden="false">visibility</mat-icon>
+                                        </a>
+
+                                        <a mat-flat-button color="primary" matTooltip="Edit this record"
+                                            [routerLink]="['editRateContract', RCListData.entityId,'edit']"
+                                            *ngIf="RCListData.approvalStatus=='PENDING' && rcEdit">
+                                            <mat-icon aria-hidden="false">edit</mat-icon>
+                                        </a>
+
+                                        <a mat-flat-button color="primary" class="red-btn"
+                                            matTooltip="Upload signed copy"
+                                            [routerLink]="['uploadSignCopy', RCListData.entityId,'view']" *ngIf="RCListData.approvalStatus=='APPROVED'">
+                                            <mat-icon aria-hidden="false">cloud_upload</mat-icon>
+                                        </a>
+
+                                        <button mat-flat-button color="warn" matTooltip="Delete this record"
+                                            (click)="deleteRc(RCListData.entityId)" title="Delete" *ngIf="RCListData.approvalStatus=='PENDING' && rcDelete">
+                                            <mat-icon aria-hidden="false">delete</mat-icon>
+                                        </button>
+
+                                        <button mat-flat-button color="warn" class="blue-btn"
+                                            matTooltip="Duplicate this record"
+                                            (click)="generateDuplicateOrder(RCListData.entityId)" title="Delete">
+                                            <mat-icon aria-hidden="false">control_point_duplicate</mat-icon>
+                                        </button> -->
+
+                                    </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+                            <mat-paginator [pageSize]="pageSizedisplay" [pageSizeOptions]="itemPerPage"
+                                showFirstLastButtons>
+                            </mat-paginator>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

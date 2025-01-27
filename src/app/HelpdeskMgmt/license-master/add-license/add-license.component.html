@@ -1,0 +1,430 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form [formGroup]="addLicenseMasterForm">
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /Page Header -->
+
+                <div class="tab-content">
+
+                    <!-- Add User -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="col-md-12 mandatory">*Fields are Mandatory</div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <strong>Add License</strong>
+                                    </div>
+
+                                    
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.licenseTag.errors }">
+                                                <input matInput name="licenseTag" type="text"
+                                                    placeholder="License Tag"
+                                                    [(ngModel)]="LicenseData.licenseTag"
+                                                    formControlName="licenseTag" maxlength="60" required>
+                                                <div *ngIf="isSubmitted && formControls.licenseTag.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.licenseTag.errors.required">License Tag is
+                                                        required</div>    
+                                                    
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.softwareName.errors }">
+                                                <input matInput name="softwareName" type="text"
+                                                    placeholder="Software Name"
+                                                    [(ngModel)]="LicenseData.softwareName"
+                                                    formControlName="softwareName" maxlength="60" required>
+                                                <div *ngIf="isSubmitted && formControls.softwareName.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.softwareName.errors.required">Software Name is
+                                                        required</div>    
+                                                    
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.serialNo.errors }">
+                                                <input matInput name="serialNo" type="text"
+                                                    placeholder="Serial No"
+                                                    [(ngModel)]="LicenseData.serialNo"
+                                                    formControlName="serialNo" maxlength="60" required>
+                                                <div *ngIf="isSubmitted && formControls.serialNo.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.serialNo.errors.required">Serial No is
+                                                        required</div>    
+                                                    
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.licenseToName.errors }">
+                                                <input matInput name="licenseToName" type="text"
+                                                    placeholder="License To Name"
+                                                    [(ngModel)]="LicenseData.licenseToName"
+                                                    formControlName="licenseToName" maxlength="60" required>
+                                                <div *ngIf="isSubmitted && formControls.licenseToName.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.licenseToName.errors.required">License To Name is
+                                                        required</div>    
+                                                    
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.licenseToEmail.errors }">
+                                                <input matInput name="licenseToEmail" type="text"
+                                                    placeholder="License To Email"
+                                                    [(ngModel)]="LicenseData.licenseToEmail"
+                                                    formControlName="licenseToEmail" maxlength="60" required>
+                                                <div *ngIf="isSubmitted && formControls.licenseToEmail.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.licenseToEmail.errors.required">License To Email is
+                                                        required</div>    
+                                                    
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.seats.errors }">
+                                                <input matInput name="seats" type="text"
+                                                    placeholder="Seats"
+                                                    [(ngModel)]="LicenseData.seats"
+                                                    formControlName="seats" maxlength="60" required>
+                                                <div *ngIf="isSubmitted && formControls.seats.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.seats.errors.required">Seat is
+                                                        required</div>    
+                                                    
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.orderNo.errors }">
+                                                <input matInput name="orderNo" type="text"
+                                                    placeholder="Order No"
+                                                    [(ngModel)]="LicenseData.orderNo"
+                                                    formControlName="orderNo" maxlength="60" required>
+                                                <div *ngIf="isSubmitted && formControls.orderNo.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.orderNo.errors.required">Order No is
+                                                        required</div>    
+                                                    
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width"
+                                                    [ngClass]="{ 'has-error': isSubmitted && formControls.category.errors }">
+                                                   <mat-select [(ngModel)]="LicenseData.category" name="category"  
+                                                   [typeaheadDebounceInterval]="matSelectDuration" placeholder="Category" formControlName="category" 
+                                                   (ngModelChange)="getActiveSubCategoryfromcategory(LicenseData.category)" required>
+                                                        <mat-option >-Select-</mat-option>
+                                                        <mat-option *ngFor="let category of categoryList" [value]="category.selectionvalue">
+                                                        {{ category.selectionvalue }}
+                                                    </mat-option>
+                                                    </mat-select>
+                                                    <div *ngIf="isSubmitted && formControls.category.errors"
+                                                        class="error-text">
+                                                        <div *ngIf="formControls.category.errors.required">Category
+                                                            is required</div>
+                                                    </div>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="col-sm-3">
+                                         <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.subCategory.errors }">
+                                               <mat-select [(ngModel)]="LicenseData.subCategory" name="subCategory" formControlName="subCategory" 
+                                               placeholder="Sub Category">
+                                                    <mat-option >-Select-</mat-option>
+                                                    <mat-option *ngFor="let subcategory of subcategoryList" [value]="subcategory.selectionvalue">
+                                                    {{ subcategory.selectionvalue }}
+                                                </mat-option>
+                                                </mat-select>
+                                                
+                                            </mat-form-field>
+                                        </div>
+                                    </div> -->
+
+
+                                    <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <mat-form-field>
+                                                    <mat-label>Subcategory</mat-label>
+                                                    <mat-select  [(ngModel)]="LicenseData.subCategory"  
+                                                    [typeaheadDebounceInterval]="matSelectDuration" 
+                                                    formControlName="subCategory">
+                                                        <mat-option>-Select-</mat-option>
+                                                        <mat-option *ngFor="let categoryData of subcategoryList"
+                                                            value="{{categoryData.selectionid}}">
+                                                            {{categoryData.selectionvalue}}</mat-option>
+                                                    </mat-select>
+                                                    
+                                                </mat-form-field>
+                                            </div>
+                                        </div> 
+
+                                    
+                                    
+                                        <!-- <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <mat-form-field [ngClass]="{ 'has-error': isSubmitted && formControls.category.errors }">
+                                                        <mat-label>category</mat-label>
+                                                        <mat-select  [(ngModel)]="LicenseData.category" 
+                                                        formControlName="category">
+                                                            <mat-option>-Select-</mat-option>
+                                                            <mat-option *ngFor="let categoryData of CategoryList"
+                                                                value="{{categoryData.selectionid}}">
+                                                                {{categoryData.selectionvalue}}</mat-option>
+                                                        </mat-select>
+
+                                                        <div *ngIf="isSubmitted && formControls.category.errors"
+                                                        class="error-text">
+                                                        <div *ngIf="formControls.category.errors.required">category is
+                                                            required</div>
+                                                    </div>
+                                                        
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+
+                                          <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <mat-form-field>
+                                                        <mat-label>Subcategory</mat-label>
+                                                        <mat-select  [(ngModel)]="LicenseData.subCategory" 
+                                                        formControlName="subCategory">
+                                                            <mat-option>-Select-</mat-option>
+                                                            <mat-option *ngFor="let categoryData of subCategoryList"
+                                                                value="{{categoryData.selectionid}}">
+                                                                {{categoryData.selectionvalue}}</mat-option>
+                                                        </mat-select>
+                                                        
+                                                    </mat-form-field>
+                                                </div>
+                                            </div> -->
+
+
+
+
+
+                                    
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="purchaseDate" placeholder="Purchase Date " type="text"
+                                                    [matDatepicker]="picker1" [(ngModel)]="LicenseData.purchaseDate"
+                                                    formControlName="purchaseDate" name="purchaseDate">
+                                                <div *ngIf="isSubmitted && formControls.purchaseDate.errors" class="error-text">
+                                                    <div *ngIf="formControls.purchaseDate.errors.required">Purchase Date
+                                                        required</div>
+                                                </div>
+                                                <mat-datepicker-toggle matSuffix [for]="picker1">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #picker1></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.purchaseCost.errors }">
+                                                <input matInput name="purchaseCost" type="number"
+                                                    placeholder="Purchase Cost"
+                                                    [(ngModel)]="LicenseData.purchaseCost"
+                                                    formControlName="purchaseCost" maxlength="60" required>
+                                                <div *ngIf="isSubmitted && formControls.purchaseCost.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.purchaseCost.errors.required">Purchase Cost is
+                                                        required</div>    
+                                                    
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                        
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field>
+                                                <mat-label>Depreciation</mat-label>
+                                                <mat-select [(ngModel)]="LicenseData.depreciation" 
+                                                [typeaheadDebounceInterval]="matSelectDuration" 
+                                                    formControlName="depreciation" name="depreciation" required>
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option value="Standard">Pay-Loader</mat-option>
+                                                    
+
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.depreciation.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.depreciation.errors.required">Vehicle Type is
+                                                        required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="warranty" placeholder="Warrenty Date" type="text"
+                                                    [matDatepicker]="picker2" [(ngModel)]="LicenseData.warranty"
+                                                    formControlName="warranty" name="warranty">
+                                                <div *ngIf="isSubmitted && formControls.warranty.errors" class="error-text">
+                                                    <div *ngIf="formControls.warranty.errors.required">Warrenty Date
+                                                        required</div>
+                                                </div>
+                                                <mat-datepicker-toggle matSuffix [for]="picker2">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #picker2></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field>
+                                                <mat-label>End Of Life</mat-label>
+                                                <mat-select [(ngModel)]="LicenseData.eol"
+                                                    formControlName="eol" name="eol">
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option value="EOL Asseus">EOL Asseus</mat-option>
+                                                    <mat-option value="General">General</mat-option>
+                                                    <mat-option value="Standard">Standard</mat-option>
+
+                                                </mat-select>
+                                                <!-- <div *ngIf="isSubmitted && formControls.eol.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.eol.errors.required">EOL is
+                                                        required</div>
+                                                </div> -->
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+<!--   <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="uploadedAttachment" type="text"
+                                                    placeholder="Attachment"
+                                                    [(ngModel)]="LicenseData.uploadedAttachment"
+                                                    formControlName="uploadedAttachment" maxlength="60" >
+                                                
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+-->
+                                  
+                                    <div class="col-sm-6">
+
+                                        <div class="col-sm-12">
+                                            <app-fileupload [files]="uploadFiles" maxSize="2048" labelname="uploadedAttachment" modulename="vehicleIns"></app-fileupload>
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="notes" type="text"
+                                                    placeholder="Notes"
+                                                    [(ngModel)]="LicenseData.notes"
+                                                    formControlName="notes" maxlength="60" >
+                                                
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                   
+                           
+                                    </div>
+                                    
+
+
+
+                                <div class="submit-section">
+                                  
+
+                                    <button mat-flat-button color="accent" (click)="addLicense('save')" *ngIf="add">
+                                        <mat-icon aria-hidden="false">save</mat-icon> Save</button>
+                                   
+                                    
+                                    <button mat-flat-button color="warn" (click)="back()">
+                                        <mat-icon aria-hidden="false">cancel</mat-icon> Back</button>
+
+                                    <button mat-flat-button color="accent" (click)="addLicense('update')" *ngIf="edit">
+                                        <mat-icon aria-hidden="false">update</mat-icon> Update</button>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,27 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<div class="main-wrapper">
+    <app-header> </app-header>
+    <app-leftmenu></app-leftmenu>
+    <div class="page-wrapper">
+        <div class="content container-fluid">
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h3 class="page-title">{{PageTitle}}</h3>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a routerLink="/Dashboard"> Dashboard</a>
+                            </li>
+                            <li class="breadcrumb-item active">{{PageTitle}}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- /Page Header -->
+            <div>
+                <app-projecttab highlightedtab="attachmenttab" > </app-projecttab>
+            </div>
+        </div>
+    </div>
+</div>

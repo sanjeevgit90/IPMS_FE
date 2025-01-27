@@ -1,0 +1,238 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form>
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                        <div class="col-auto float-right ml-auto">
+                           <button mat-flat-button color="warn" (click)="filterFunc()">
+                                <mat-icon aria-hidden="false">filter</mat-icon> Filter</button>
+                           </div>
+                           <div class="filter-box" *ngIf="filterDiv">
+                            <div class="row">
+                              
+        
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <mat-form-field class="example-full-width">
+                                            <mat-select [(ngModel)]="FilterData.vehicleNo" name="vehicleNo"
+                                                placeholder="Search by Vehicle Number" 
+                                                [typeaheadDebounceInterval]="matSelectDuration" >
+                                                <mat-option>-Select-</mat-option>
+                                                <mat-option *ngFor="let v of vehicleList" [value]="v.selectionid">
+                                                    {{ v.selectionvalue }}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+        
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput name="fromdate" placeholder="Trip Start Date)" type="text"
+                                                [matDatepicker]="picker" [(ngModel)]="FilterData.startTime">
+        
+                                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <mat-form-field class="example-full-width">
+                                            <input matInput name="dcdate" placeholder="Trip End Date" type="text"
+                                                [matDatepicker]="picker1" [(ngModel)]="FilterData.endTime">
+        
+                                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                            <mat-datepicker #picker1></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="submit-section">
+        
+                                <button mat-flat-button color="primary" (click)="search()">
+                                    <mat-icon aria-hidden="false">search</mat-icon> Search
+                                </button>
+                                <button mat-flat-button color="warn" (click)="cancel()">
+                                    <mat-icon aria-hidden="false">cancel</mat-icon> Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Page Header -->
+
+
+                <div class="tab-content">
+
+                    <!-- Add Family -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                         
+                            <!-- Search Table -->
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <div class="total-rec">Total Records: {{totalRecords}}</div>
+                                </div>
+                                <div class="col-auto float-right ml-auto">
+                                    <mat-form-field class="search-input">
+                                        <input matInput (keyup)="applyFilter($event)" placeholder="Search..." #input>
+                                    </mat-form-field>
+                                    <button mat-flat-button color="accent" class="export-btn"
+                                    (click)="exporter.exportTable('xlsx', {fileName:'Orphan Trip Report'})"
+                                    matTooltip="Export to Excel">
+                                    <mat-icon>send</mat-icon> Export
+                                </button>
+                                </div>
+                            </div>
+
+                            <div style="overflow-x:auto;">
+                            <table mat-table [dataSource]="TripData" matSort class="mat-elevation-z8">
+
+                                 <ng-container matColumnDef="tripId">
+                                   <th mat-header-cell *matHeaderCellDef mat-sort-header> Trip Id </th>
+                                   <td mat-cell *matCellDef="let TripData ">
+                                    <div class="block strong">  {{TripData.tripId}}     </div>                               
+                                   </td>
+                               </ng-container>
+
+                               <!--  Title Column -->
+                               <ng-container matColumnDef="vehicleNo">
+                                   <th mat-header-cell *matHeaderCellDef mat-sort-header> Vehicle No </th>
+                                   <td mat-cell *matCellDef="let TripData">
+                                    <div class="block strong">   {{TripData.vehicleNo}}</div>
+                                   </td>
+                               </ng-container>
+                                <!--  Asset Column -->
+                               <ng-container matColumnDef="distance">
+                                   <th mat-header-cell *matHeaderCellDef mat-sort-header> Distance </th>
+                                   <td mat-cell *matCellDef="let TripData ">
+                                    <div class="block strong">  {{TripData.distance}}</div>
+                                   </td>
+                               </ng-container>
+                                <!--  Type Column -->
+                               <ng-container matColumnDef="startTime">
+                                   <th mat-header-cell *matHeaderCellDef mat-sort-header> Start Time/ End Time</th>
+                                   <td mat-cell *matCellDef="let TripData ">
+                                    <div class="block strong">   {{TripData.startTime| date:'dd-MM-yyyy HH:mm'}} 
+                                  </div>
+                                  <div class="block">   {{TripData.endTime|date:'dd-MM-yyyy HH:mm'}} </div>
+                                   </td>
+                               </ng-container>
+
+                                <!--  Priority Column -->
+                               <ng-container matColumnDef="Source">
+                                   <th mat-header-cell *matHeaderCellDef mat-sort-header> Source/ Destination </th>
+                                   <td mat-cell *matCellDef="let TripData ">
+                                   <div class="block strong">      <div appTripaddress [lat]="TripData.sourceLat"
+                                             [long]="TripData.sourceLong">Loading...
+                                        </div>
+                                        </div>
+                                        <div class="block ">  
+                                       <div appTripaddress [lat]="TripData.destinationLat"
+                                            [long]="TripData.destinationLong">Loading...
+                                        </div>
+                                        </div>
+                                   </td>
+                               </ng-container>
+                               
+
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+                            </div>
+                            <mat-paginator [pageSize]="pageSizedisplay" [pageSizeOptions]="itemPerPage"
+                                showFirstLastButtons>
+                            </mat-paginator>
+                            <div class="export-div">
+                                <table matTableExporter mat-table [dataSource]="TripDataExport" matSort
+                                    class="mat-elevation-z8" #exporter="matTableExporter">
+                                   <ng-container matColumnDef="tripId">
+                                   <th mat-header-cell *matHeaderCellDef mat-sort-header> Trip Id </th>
+                                   <td mat-cell *matCellDef="let TripData ">
+                                    <div class="block strong">  {{TripData.tripId}}     </div>                               
+                                   </td>
+                               </ng-container>
+
+                               <!--  Title Column -->
+                               <ng-container matColumnDef="vehicleNo">
+                                   <th mat-header-cell *matHeaderCellDef mat-sort-header> Vehicle No </th>
+                                   <td mat-cell *matCellDef="let TripData">
+                                    <div class="block strong">   {{TripData.vehicleNo}}</div>
+                                   </td>
+                               </ng-container>
+                                <!--  Asset Column -->
+                               <ng-container matColumnDef="distance">
+                                   <th mat-header-cell *matHeaderCellDef mat-sort-header> Distance </th>
+                                   <td mat-cell *matCellDef="let TripData ">
+                                    <div class="block strong">  {{TripData.distance}}</div>
+                                   </td>
+                               </ng-container>
+                                <!--  Type Column -->
+                               <ng-container matColumnDef="startTime">
+                                   <th mat-header-cell *matHeaderCellDef mat-sort-header> Start Time</th>
+                                   <td mat-cell *matCellDef="let TripData ">
+                                    <div class="block strong">   {{TripData.startTime| date:'dd-MM-yyyy HH:mm'}} 
+                                  </div>
+                           
+                               </ng-container>
+							    <ng-container matColumnDef="endTime">
+                                   <th mat-header-cell *matHeaderCellDef mat-sort-header> End Time</th>
+                                   <td mat-cell *matCellDef="let TripData ">
+                                   
+                                  <div class="block strong"> {{TripData.endTime| date:'dd-MM-yyyy HH:mm'}} </div>
+                                   </td>
+                               </ng-container>
+
+                                <!--  Priority Column -->
+                               <ng-container matColumnDef="Source">
+                                   <th mat-header-cell *matHeaderCellDef mat-sort-header> Source </th>
+                                   <td mat-cell *matCellDef="let TripData ">
+                                   <div class="block strong">      <div appTripaddress [lat]="TripData.sourceLat"
+                                             [long]="TripData.sourceLong">Loading...
+                                        </div>
+                                        </div>
+                                      
+                                   </td>
+                               </ng-container>
+							    <ng-container matColumnDef="destination">
+                                   <th mat-header-cell *matHeaderCellDef mat-sort-header>  Destination </th>
+                                   <td mat-cell *matCellDef="let TripData ">
+                                   
+                                        <div class="block strong">  
+                                       <div appTripaddress [lat]="TripData.destinationLat"
+                                            [long]="TripData.destinationLong">Loading...
+                                        </div>
+                                        </div>
+                                   </td>
+                               </ng-container>
+
+                                    <tr mat-header-row *matHeaderRowDef="exportColumns"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: exportColumns;"></tr>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

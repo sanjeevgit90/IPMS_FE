@@ -1,0 +1,55 @@
+
+
+    <mat-card class="upload-border">
+
+
+        <mat-card-content class="upload-cont">
+            <ul class="upload-style">
+
+
+                <li>
+                    {{errormsg}}
+                </li>
+
+                <li *ngIf="files != null"> 
+                    <div *ngIf="files.length==0" class="attachment-field">
+                        {{labelname}}
+                    </div>
+                </li>
+
+                <li *ngFor="let file of files">                  
+                    <div class="row">
+                        <div class="col-sm-1">
+                            <img src="assets/Images/file-icon.png" alt="icon"
+                                title="icon">
+                        </div>
+                        <div class="col-sm-11">
+                            <span>
+                                <a href="{{file.uploadedFilePath}}" target="_blank">{{file.data.name}}</a>  &nbsp;&nbsp;&nbsp;
+                                {{(file.data.size/1024) | number:'1.0-0'}} kb
+                            </span>
+                            <span style="float: right;">
+                                <mat-icon class="remove-file" (click)="removeFile(file)"> close</mat-icon>
+                            </span>
+                            <mat-progress-bar [value]="file.progress">
+                            </mat-progress-bar>
+                            <span class="file-label">
+                                {{file.progress}} % done
+                            </span>
+                        </div>
+
+                    </div>
+                </li>
+            </ul>
+        </mat-card-content>
+        <mat-card-actions class="card-action">
+            <a mat-flat-button color="warn" (click)="onClick()" class="attachment-upload">
+                <mat-icon>file_upload</mat-icon>
+                Upload
+            </a>
+        </mat-card-actions>
+    </mat-card>
+    
+    <input type="file" #fileUpload id="fileUpload" name="fileUpload"
+        multiple="multiple" accept="image/*" style="display:none;"/>
+

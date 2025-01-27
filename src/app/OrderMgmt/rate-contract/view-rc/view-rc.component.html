@@ -1,0 +1,498 @@
+<style type="text/css">
+   @media print {
+      table {
+         page-break-after: auto
+      }
+
+      tr {
+         page-break-inside: avoid;
+         page-break-after: auto
+      }
+
+      td {
+         page-break-inside: avoid;
+         page-break-after: auto
+      }
+
+      thead {
+         display: table-header-group;
+      }
+
+      tfoot {
+         display: table-footer-group;
+      }
+   }
+
+   @page {
+      size: auto;
+      margin: 25mm 25mm 125mm 125mm;
+   }
+
+   @media screen {
+      /* thead { display: none; }
+    tfoot { display: none; }*/
+   }
+</style>
+<form name="viewRcform">
+   <div class="row" style="margin: 0px;">
+      <div class="col-sm-10">
+         <div class="container viewPO table-responsive" name="table" id="table">
+            <p class="center-align"><strong class="potitle">
+                  <span *ngIf="rateContract.approvalStatus!='APPROVED'" class="draft">
+                     DRAFT </span> RATE CONTRACT </strong> <span *ngIf="rateContract.approvalStatus!='APPROVED'"
+                  class="draft">
+                  DRAFT </span>
+            </p>
+            <table class="table table-bordered" cellspacing="0px" cellpadding="0px">
+               <thead>
+                  <tr>
+                     <td class="tdwidth"
+                        *ngIf="rateContract.approvalStatus=='PENDING' || rateContract.approvalStatus=='AMENDMENT_APPROVED' || rateContract.approvalStatus.includes('REJECTED')">
+                        <strong class="block-text">Invoice Postal Address:</strong><br />
+                        <span><strong>{{rateContract.buyName}}</strong></span><br />
+                        <span>{{rateContract.buyInvoAddress}}</span><br />
+                        <!-- <span>{{rateContract.buyInvoAddress2}}</span>
+                      <span>{{rateContract.buyInvoLandmark}}</span><br/>
+                      <span>{{rateContract.buyInvoCity}}, {{rateContract.buyInvoDist}}, {{rateContract.buyInvoState}} - {{rateContract.buyInvoPincode}}. {{rateContract.buyInvoCountry}}</span><br/> -->
+                        <span>Contact Person: {{rateContract.buyContactPerson}}</span><br />
+                        <span>Phone No. {{rateContract.buyMobNo}}</span><br />
+                        <span>Email: {{rateContract.buyEmail}}</span><br />
+                     </td>
+                     <td class="tdwidth"
+                        *ngIf="!(rateContract.approvalStatus=='PENDING' || rateContract.approvalStatus=='AMENDMENT_APPROVED' || rateContract.approvalStatus.includes('REJECTED'))">
+                        <strong class="block-text">Invoice Postal Address:</strong><br />
+                        <span><strong>{{rateContract.invoicetoname}}</strong></span><br />
+                        <span>{{rateContract.invoicetoaddressforhistory}}</span><br />
+                        <span>Contact Person: {{rateContract.invoicetocontact}}</span><br />
+                        <span>Phone No. {{rateContract.invoicetophone}}</span><br />
+                        <span>Email: {{rateContract.invoicetoemail}}</span><br />
+                        <!-- <span><div style="white-space:pre-wrap;" ng-bind-html="rateContract.invoiceAddress"></div></span><br/> -->
+                     </td>
+                     <td class="tdwidth">
+                        <table class="borderless" cellspacing="0px" cellpadding="0px">
+                           <tr>
+                              <td style="border:none !important">
+                                 <strong class="block-text">Rate Contract No.:</strong>
+                                 <p class="description-po">
+                                    <span>{{rateContract.rateContractNo}}</span>
+                                 </p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border:none !important">
+                                 <strong class="block-text">Contract Type:</strong>
+                                 <p class="description-po">
+                                    <span>{{rateContract.contractType}}</span>
+                                 </p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border:none !important">
+                                 <strong class="block-text">Supplier's Ref:</strong>
+                                 <p class="description-po suppref">
+                                    {{rateContract.suppliersReference}}
+                                 </p>
+                              </td>
+                           </tr>
+                        </table>
+                     </td>
+                     <td class="tdwidth">
+                        <table class="borderless" cellspacing="0px" cellpadding="0px">
+                           <tr>
+                              <td style="border:none !important">
+                                 <strong class="block-text">Contract Date:</strong>
+                                 <p class="description-po">
+                                    <span>{{rateContract.contractDate  | date : 'dd/MM/yyyy'}}</span>
+                                 </p>
+                              </td>
+                              <td style="border:none !important">
+                                 <strong class="block-text">Valid Till:</strong>
+                                 <p class="description-po">
+                                    <span>{{rateContract.validTill  | date : 'dd/MM/yyyy'}}</span>
+                                 </p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border:none !important">
+                                 <strong class="block-text">Mode / Terms of Payment:</strong>
+                                 <p class="description-po">
+                                    <span>{{rateContract.modeOfPayment}}</span>
+                                 </p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border:none !important">
+                                 <strong class="block-text">Other reference(s):</strong>
+                                 <p class="description-po">
+                                    <span>{{rateContract.otherReference}}</span>
+                                 </p>
+                              </td>
+                           </tr>
+                        </table>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <strong>Delivery Term: </strong>{{rateContract.deliveryTerm}}
+                        <!--  <p class="description-po">
+                      <span>{{rateContract.deliveryTerm}}</span>
+                      </p> -->
+                     </td>
+                     <td>
+                        <strong>Dispatch through: </strong>{{rateContract.dispatchThrough}}
+                        <!--  <p class="description-po">
+                      <span>{{rateContract.dispatchThrough}}</span>
+                      </p> -->
+                     </td>
+                     <td>
+                        <strong>Currency: </strong>{{rateContract.currency}}
+                        <!--  <p class="description-po">
+                      <span>{{rateContract.currency}}</span>
+                      </p> -->
+                     </td>
+                  </tr>
+                  <tr>
+                     <td
+                        *ngIf="rateContract.approvalStatus=='PENDING' || rateContract.approvalStatus=='AMENDMENT_APPROVED' || rateContract.approvalStatus.includes('REJECTED')">
+                        <strong class="block-text">Supplier Address:</strong><br />
+                        <span><strong>{{rateContract.suppName}}</strong></span><br />
+                        <span>{{rateContract.suppAddress}}</span><br />
+                        <!-- <span>{{rateContract.suppAddress2}}</span>
+                      <span>{{rateContract.suppLandmark}}</span><br/>
+                      <span>{{rateContract.suppCity}}, {{rateContract.suppDist}}, {{rateContract.suppState}} - {{rateContract.suppPincode}}. {{rateContract.suppCountry}}</span><br/> -->
+                        <span>Contact Person: {{rateContract.suppContactPerson}}</span><br />
+                        <span>Phone No. {{rateContract.suppMobNo}}</span><br />
+                        <span>Email: {{rateContract.suppEmail}}</span><br />
+                        <!--  <strong class="block-text">Bill From State:</strong> -->
+                        <!-- <p class="description-po">
+                      <span>{{rateContract.suppGstState}}</span>
+                   </p> -->
+                        <strong>GST No.:</strong> {{rateContract.billFromGstNo}}
+                        <!--  <p class="description-po">
+                      <span>{{rateContract.billFromGstNo}}</span>
+                      </p> -->
+                     </td>
+                     <td
+                        *ngIf="!(rateContract.approvalStatus=='PENDING' || rateContract.approvalStatus=='AMENDMENT_APPROVED' || rateContract.approvalStatus.includes('REJECTED'))">
+                        <strong class="block-text">Supplier Address:</strong><br />
+                        <span><strong>{{rateContract.suppliernameforhistory}}</strong></span><br />
+                        <span>{{rateContract.supplieraddress}}</span><br />
+                        <span>Contact Person: {{rateContract.suppliercontact}}</span><br />
+                        <span>Phone No. {{rateContract.supplierphone}}</span><br />
+                        <span>Email: {{rateContract.supplieremail}}</span><br />
+                        <strong>GST No.:</strong> {{rateContract.billFromGstNo}}
+                        <!-- <span><div style="white-space:pre-wrap;" ng-bind-html="rateContract.supplierAddress"></div></span><br/> -->
+                     </td>
+                     <td
+                        *ngIf="rateContract.approvalStatus=='PENDING' || rateContract.approvalStatus=='AMENDMENT_APPROVED' || rateContract.approvalStatus.includes('REJECTED')">
+                        <strong class="block-text">Bill To Address:</strong><br />
+                        <span><strong>{{rateContract.buyName}}</strong></span><br />
+                        <span>{{rateContract.buyBillToAddress}}</span><br />
+                        <!-- <span>{{rateContract.buyBillToAddress2}}</span>
+                      <span>{{rateContract.buyBillToLandmark}}</span><br/>
+                      <span>{{rateContract.buyBillToCity}}, {{rateContract.buyBillToDist}}, {{rateContract.buyBillToState}} - {{rateContract.buyBillToPincode}}. {{rateContract.buyBillToCountry}}</span><br/> -->
+                        <span>Contact Person: {{rateContract.buyContactPerson}}</span><br />
+                        <span>Phone No. {{rateContract.buyMobNo}}</span><br />
+                        <span>Email: {{rateContract.buyEmail}}</span><br />
+                        <strong>GST No.:</strong>
+                        <span *ngIf="rateContract.buyBillToGstNo != null">{{rateContract.buyBillToGstNo}}</span>
+                        <span *ngIf="rateContract.buyBillToGstNo == null">NA</span>
+                     </td>
+                     <td
+                        *ngIf="!(rateContract.approvalStatus=='PENDING' || rateContract.approvalStatus=='AMENDMENT_APPROVED' || rateContract.approvalStatus.includes('REJECTED'))">
+                        <strong class="block-text">Bill To Address:</strong><br />
+                        <span><strong>{{rateContract.billtoname}}</strong></span><br />
+                        <span>{{rateContract.billtoaddressforhistory}}</span><br />
+                        <span>Contact Person: {{rateContract.billtocontact}}</span><br />
+                        <span>Phone No. {{rateContract.billtophone}}</span><br />
+                        <span>Email: {{rateContract.billtoemail}}</span><br />
+                        <strong>GST No.:</strong> {{rateContract.billtogstin}}
+                        <!-- <span><div style="white-space:pre-wrap;" ng-bind-html="rateContract.billingAddress"></div></span><br/> -->
+                     </td>
+                     <td
+                        *ngIf="rateContract.approvalStatus=='PENDING' || rateContract.approvalStatus=='AMENDMENT_APPROVED' || rateContract.approvalStatus.includes('REJECTED')">
+                        <strong class="block-text">Ship To Address:</strong><br />
+                        <span><strong>{{rateContract.buyName}}</strong></span><br />
+                        <span>{{rateContract.buyShipToAddress}}</span>
+                        <!-- <span>{{rateContract.buyShipToAddress2}}</span>
+                      <span> {{rateContract.buyShipToLandmark}}</span><br/>
+                      <span>{{rateContract.buyShipToCity}}, {{rateContract.buyShipToDist}}, {{rateContract.buyShipToState}} - {{rateContract.buyShipToPincode}}. {{rateContract.buyShipToCountry}}</span><br/> -->
+                        <span>Contact Person: {{rateContract.buyContactPerson}}</span><br />
+                        <span>Phone No. {{rateContract.buyMobNo}}</span><br />
+                        <span>Email: {{rateContract.buyEmail}}</span><br />
+                     </td>
+                     <td
+                        *ngIf="!(rateContract.approvalStatus=='PENDING' || rateContract.approvalStatus=='AMENDMENT_APPROVED' || rateContract.approvalStatus.includes('REJECTED'))">
+                        <strong class="block-text">Ship To Address:</strong><br />
+                        <span><strong>{{rateContract.shiptoname}}</strong></span><br />
+                        <span>{{rateContract.shiptoaddressforhistory}}</span><br />
+                        <span>Contact Person: {{rateContract.shiptocontact}}</span><br />
+                        <span>Phone No. {{rateContract.shiptophone}}</span><br />
+                        <span>Email: {{rateContract.shiptoemail}}</span><br />
+                        <!-- <span><div style="white-space:pre-wrap;" ng-bind-html="rateContract.shippingAddress"></div></span> -->
+                     </td>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td colspan="3" style="padding: 0px; margin: 0px" class="product-tbl">
+                        <table class="table table-bordered print-border" style="width: 100%;" cellspacing="0px"
+                           cellpadding="0px">
+                           <tr>
+                              <th style="width: 50px" class="srn">Sr.No.</th>
+                              <th>Product</th>
+                              <th>HSN/SAC</th>
+                              <th>Rate</th>
+                              <th>Qty (UOM)</th>
+                              <th>Amount</th>
+                              <th>Disc.</th>
+                              <th
+                                 *ngIf="rateContract.isHistoricData=='NO' && isSameState && rateContract.currency =='INR'">
+                                 CGST</th>
+                              <th
+                                 *ngIf="rateContract.isHistoricData=='NO' && isSameState && rateContract.currency =='INR'">
+                                 SGST</th>
+                              <th
+                                 *ngIf="(rateContract.isHistoricData=='NO' && rateContract.currency =='INR') && !(isSameState) ">
+                                 IGST</th>
+                              <th *ngIf="rateContract.currency !='INR'">Tax</th>
+                              <th *ngIf="rateContract.isHistoricData=='YES'">Service Tax (Rs.)</th>
+                              <th *ngIf="rateContract.isHistoricData=='YES'">VAT (Rs.)</th>
+                              <th>Final Amt</th>
+                           </tr>
+                           <tr *ngFor="let productdetails of rateContract.rcProductDetailsList; let i = index;">
+                              <td>{{i+1}}</td>
+                              <td
+                                 *ngIf="rateContract.approvalStatus=='PENDING' || rateContract.approvalStatus=='AMENDMENT_APPROVED' || rateContract.approvalStatus.includes('REJECTED')">
+                                 <div *ngIf="productdetails.description!=null || productdetails.productDesc!=null">
+                                    <span *ngIf="productdetails.productDesc!=null && productdetails.description==null"
+                                       style="white-space: pre-line;">{{productdetails.product}}
+                                       ({{productdetails.productDesc}})</span>
+                                    <span *ngIf="productdetails.productDesc==null && productdetails.description!=null"
+                                       style="white-space: pre-line;">{{productdetails.product}}
+                                       ({{productdetails.description}})</span>
+                                    <span *ngIf="productdetails.productDesc!=null && productdetails.description!=null"
+                                       style="white-space: pre-line;">{{productdetails.product}}
+                                       ({{productdetails.productDesc}} - {{productdetails.description}})</span>
+                                 </div>
+                                 <!-- <div *ngIf="productdetails.description!=null || productdetails.productDesc!=null">{{productdetails.product}} (
+                               <span *ngIf="productdetails.description!=null" style="white-space: pre-line;">{{productdetails.description}} - </span>
+                               <span *ngIf="productdetails.productDesc!=null" style="white-space: pre-line;">{{productdetails.productDesc}}</span>)
+                               </div> -->
+                                 <div style="white-space: pre-line;"
+                                    *ngIf="productdetails.description==null && productdetails.productDesc==null">
+                                    {{productdetails.product}}</div>
+                              </td>
+                              <td
+                                 *ngIf="!(rateContract.approvalStatus=='PENDING' || rateContract.approvalStatus=='AMENDMENT_APPROVED' || rateContract.approvalStatus.includes('REJECTED'))">
+                                 {{productdetails.productNameWithDesc}}</td>
+                              <td>{{productdetails.hsnId}}</td>
+                              <td *ngIf="productdetails.rate%1==0">{{productdetails.rate}}.00</td>
+                              <td *ngIf="productdetails.rate%1!=0">{{productdetails.rate | number : '1.2-2'}}</td>
+                              <td
+                                 *ngIf="rateContract.approvalStatus=='PENDING' || rateContract.approvalStatus=='AMENDMENT_APPROVED' || rateContract.approvalStatus.includes('REJECTED')">
+                                 {{productdetails.quantity}} ({{productdetails.baseuom}})</td>
+                              <td
+                                 *ngIf="!(rateContract.approvalStatus=='PENDING' || rateContract.approvalStatus=='AMENDMENT_APPROVED' || rateContract.approvalStatus.includes('REJECTED'))">
+                                 {{productdetails.quantity}} ({{productdetails.baseUomData}})</td>
+                              <td>{{productdetails.amount | number : '1.2-2'}} </td>
+                              <td>{{productdetails.totalDiscount | number : '1.2-2'}}</td>
+                              <td
+                                 *ngIf="rateContract.isHistoricData=='NO' && isSameState && rateContract.currency =='INR'">
+                                 {{productdetails.cgstAmount | number : '1.2-2'}} ({{productdetails.cgst}}%)</td>
+                              <td
+                                 *ngIf="rateContract.isHistoricData=='NO' && isSameState && rateContract.currency =='INR'">
+                                 {{productdetails.sgstAmount | number : '1.2-2'}} ({{productdetails.sgst}}%)</td>
+                              <td
+                                 *ngIf="rateContract.isHistoricData=='NO' && rateContract.currency =='INR' && !(isSameState)">
+                                 {{productdetails.igstAmount | number : '1.2-2'}} ({{productdetails.igst}}%)</td>
+                              <td *ngIf="rateContract.currency !='INR'">{{productdetails.igstAmount | number : '1.2-2'}}
+                                 ({{productdetails.igst}}%)</td>
+                              <td *ngIf="rateContract.isHistoricData=='YES'">
+                                 {{productdetails.serviceTax | number : '1.2-2'}}</td>
+                              <td *ngIf="rateContract.isHistoricData=='YES'">{{productdetails.vat | number : '1.2-2'}}
+                              </td>
+                              <td style="text-align: right;">{{productdetails.finalAmount | number : '1.2-2'}}</td>
+                           </tr>
+                        </table>
+                     </td>
+                  </tr>
+                  <!-- <tr>
+                <td style="text-align: right;" colspan="2">Total excluding Taxes</td>
+                <td style="text-align: right;"> {{rateContract.totalWithoutTaxes}}</td>
+             </tr>
+             <tr>
+                <td style="text-align: right;" colspan="2">Total Taxes</td>
+                <td style="text-align: right;">  {{rateContract.totalTaxes}}</td>
+             </tr>
+             <tr>
+                <td style="text-align: right;" colspan="2"><strong> Grand Total</strong> </td>
+                <td style="text-align: right;"> <strong> {{rateContract.grandTotal}}
+                   </strong> 
+                </td>
+             </tr> -->
+                  <tr>
+                     <td style="text-align: right;" colspan="2">Max Limit</td>
+                     <td style="text-align: right;"> {{rateContract.maxLimit | number : '1.2-2'}}</td>
+                  </tr>
+                  <tr>
+                     <td colspan="3">Max amount in words : 
+                        <!-- <strong style="text-transform: capitalize;">{{finalAmount}} Only.</strong> -->
+                        <strong style="text-transform: capitalize;" *ngIf="rateContract.amountInWords==null || rateContract.amountInWords==''">{{finalAmount}} Only.</strong>
+                        <strong style="text-transform: capitalize;" *ngIf="rateContract.amountInWords!=null || rateContract.amountInWords!=''">{{rateContract.amountInWords}}</strong>
+                     </td>
+                  </tr>
+
+                  <tr>
+                     <td colspan="3">
+                        <strong class="block-text">Terms &amp; Conditions: </strong>
+                        <p class="description-po">
+                           <span style="white-space: pre-line;">{{rateContract.termsConditions}}</span>
+                        </p>
+                     </td>
+                  </tr>
+                  <tr *ngIf="rateContract.additionalTerms!='NA' && rateContract.additionalTerms!=null">
+                     <td colspan="3">
+                        <strong class="block-text">Annexure Terms &amp; Conditions: </strong>
+                        <p class="description-po">
+                           <!-- <span style="white-space: pre-line;" ng-bind-html="rateContract.additionalTerms"></span> -->
+                           <!-- <span style="white-space: pre-line;">{{rateContract.additionalTerms}}</span> -->
+                           <span style="white-space: pre-line;" [innerHTML]="rateContract.additionalTerms"></span>
+                        </p>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td colspan="2">
+                        <p class="description-po">
+                           <span>E. &amp; O. E.</span><br>
+                           <span><strong>For {{rateContract.suppName}},</strong></span><br>
+                           <span style="height: 60px; display: block;">Date:</span><br>
+                           <span>Authorized Signatory</span>
+                        </p>
+                     </td>
+                     <td colspan="1" style="text-align: right;">
+                        <p class="description-po">
+                           <!-- <span style="height: 80px; display: block;"><strong>For
+                                 {{rateContract.organisationName}},</strong></span>
+                           <span>Authorized Signatory</span><br>
+                           <span><strong>{{rateContract.poheadname}}</strong></span><br>
+                           <span>{{rateContract.poheaddesignation}}</span> -->
+                        </p>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td colspan="3">**This is an electronically generated Rate Contract. No signatures are required.**</td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+        
+      </div>
+      <div class="col-sm-2">
+
+         <!-- <button class="btn btn-primary" onclick="printDiv();"><span class="glyphicon glyphicon-print"></span>
+               Print</button>
+            <a mat-flat-button color="warn" matTooltip="Back to search" [routerLink]="['/searchRateContract']">Back</a> -->
+
+         <div class="po-action">
+            <button mat-raised-button color="accent" (click)="printComponent('table')">
+               <mat-icon>print</mat-icon>
+               Print
+            </button>
+
+
+            <button mat-raised-button color="primary" (click)="viewWorkflowHistory()">
+               <mat-icon>history</mat-icon>
+               Workflow History
+            </button>
+
+
+            <button mat-raised-button color="warn" class="blue-btn"
+               [routerLink]="['/searchRateContract/editRateContract', rateContract.entityId,'edit']"
+               *ngIf="rateContract.approvalStatus=='PENDING'">
+               <mat-icon>edit</mat-icon>
+               Edit
+            </button>
+
+            <button mat-raised-button color="primary" class="green-btn"
+               *ngIf="taskId!=null" (click)="takeAction()">
+               <mat-icon>verified_user</mat-icon>
+               Approve/Reject
+            </button>
+
+            <button mat-raised-button color="warn" (click)="back()">
+               <mat-icon>arrow_back_ios</mat-icon>
+               Back
+            </button>
+         </div>
+
+         
+         <div class="container po-action" *ngIf="rateContract.attachments">
+            <h3 class="view-download">Attachments</h3>
+
+            <div  *ngFor="let attach of rateContract.attachments" class="grouped view-attachments">
+               <!-- <a href="{{baseUrl}}{{attach}}" *ngIf="lessThan(attach.substring(attach.lastIndexOf('/')+1,attach.length))"
+                  target="_blank">{{attach.substring(attach.lastIndexOf('/')+1,attach.length)}}</a>
+               <a href="{{baseUrl}}{{attach}}" *ngIf="greaterThan(attach.substring(attach.lastIndexOf('/')+1,attach.length))"
+                  target="_blank">{{attach.substring(attach.lastIndexOf('/')+38,attach.length)}}</a> -->
+
+               <a href="{{baseUrl}}{{attach}}" *ngIf="containsUUID(attach.substring(attach.lastIndexOf('/')+1,attach.length))"
+                  target="_blank">{{attach.substring(attach.lastIndexOf('/')+38,attach.length)}}</a>
+               <a href="{{baseUrl}}{{attach}}" *ngIf="!containsUUID(attach.substring(attach.lastIndexOf('/')+1,attach.length))"
+                  target="_blank">{{attach.substring(attach.lastIndexOf('/')+1,attach.length)}}</a>
+            </div>
+
+            <div *ngIf="rateContract.attachments.length == 0">
+              <p class="text-blue">No Attachments</p>
+            </div>
+
+            <div class="clearfix"></div>
+
+
+         </div>
+         <div class="container po-action" *ngIf="rateContract.uploadedTermsAnnexure != null">
+            <h3 class="view-download">Download Annexure</h3>
+            <div class="grouped view-attachments">
+               <a href="{{baseUrl}}{{rateContract.uploadedTermsAnnexure}}" *ngIf="containsUUID(rateContract.uploadedTermsAnnexure.substring(rateContract.uploadedTermsAnnexure.lastIndexOf('/')+1,rateContract.uploadedTermsAnnexure.length))"
+                  target="_blank">{{rateContract.uploadedTermsAnnexure.substring(rateContract.uploadedTermsAnnexure.lastIndexOf('/')+38,rateContract.uploadedTermsAnnexure.length)}}</a>
+               <a href="{{baseUrl}}{{rateContract.uploadedTermsAnnexure}}" *ngIf="!containsUUID(rateContract.uploadedTermsAnnexure.substring(rateContract.uploadedTermsAnnexure.lastIndexOf('/')+1,rateContract.uploadedTermsAnnexure.length))"
+                  target="_blank">{{rateContract.uploadedTermsAnnexure.substring(rateContract.uploadedTermsAnnexure.lastIndexOf('/')+1,rateContract.uploadedTermsAnnexure.length)}}</a>
+            </div>
+            <div class="clearfix"></div>
+         </div>
+         <div class="container po-action" *ngIf="rateContract.signedCopyPath != null">
+            <h3 class="view-download">Download Signed Copy</h3>
+            <div class="grouped view-attachments">
+               <!-- <a href="{{baseUrl}}{{rateContract.signedCopyPath}}"
+                  target="_blank">{{rateContract.signedCopyPath.substring(rateContract.signedCopyPath.lastIndexOf('/')+38,rateContract.signedCopyPath.length)}}</a> -->
+               <a href="{{baseUrl}}{{rateContract.signedCopyPath}}" *ngIf="containsUUID(rateContract.signedCopyPath.substring(rateContract.signedCopyPath.lastIndexOf('/')+1,rateContract.signedCopyPath.length))"
+                  target="_blank">{{rateContract.signedCopyPath.substring(rateContract.signedCopyPath.lastIndexOf('/')+38,rateContract.signedCopyPath.length)}}</a>
+               <a href="{{baseUrl}}{{rateContract.signedCopyPath}}" *ngIf="!containsUUID(rateContract.signedCopyPath.substring(rateContract.signedCopyPath.lastIndexOf('/')+1,rateContract.signedCopyPath.length))"
+                  target="_blank">{{rateContract.signedCopyPath.substring(rateContract.signedCopyPath.lastIndexOf('/')+1,rateContract.signedCopyPath.length)}}</a>
+            </div>
+            <div class="clearfix"></div>
+         </div>
+
+         <!-- <a  class="btn btn-warning" data-ng-click="callWorkFlowHistory('PO')"><span class="glyphicon glyphicon-eye-open"></span> View WorkFlow History</a>
+        <a  class="btn btn-info" data-ng-click="getVendorComparison()" *ngIf="vendorComparison"> <span class="glyphicon glyphicon-eye-open"></span> View Vendor Comparison</a>
+        <a  class="btn btn-warning" data-ng-click="getFulfilmentDelay()" *ngIf="fulfilmentDelay">View Fulfilment Delay</a>
+            <button class="btn btn-primary" onclick="printDiv();"><span class="glyphicon glyphicon-print"></span> Print</button>
+        
+            <a class="btn btn-info" href="{{rateContract.uploadedTermsAnnexureFileName}}" target="_blank" *ngIf="rateContract.uploadedTermsAnnexureFileName!=null && downloadButtonFlag"><span class="glyphicon glyphicon-download"></span> Download Annexure</a>
+            <button class="btn btn-success" title="Approve/Reject" *ngIf="mainUrl=='searchTask' && approvalLevelFlag!='PO TEAM'" data-ng-click="remark(poAmendFlag)"><span class="glyphicon glyphicon-edit"></span> Approve/Reject
+            </button>
+        
+            <button class="btn btn-danger" ng-click="verificationConf()" *ngIf="(rateContract.approvalStatus=='APPROVED' && poTeamFlag==true)" data-ng-disabled="rateContract.verify != null">
+            <span *ngIf="rateContract.verify == null"> <span class="glyphicon glyphicon-ok"></span> Verify</span>
+            <span *ngIf="rateContract.verify != null"> <span class="glyphicon glyphicon-ok"></span> Verified</span>
+          </button>
+        
+            <button class="btn btn-success" *ngIf="(rateContract.approvalStatus=='APPROVED' && rateContract.verify != null && rateContract.mailSentDate == null && poTeamFlag==true)" ng-click="sendMail()" >
+                <span class="glyphicon glyphicon-send"></span> Send Mail
+            </button>
+        
+            <a class="btn btn-success" href="{{rateContract.poCopy}}" target="_blank" *ngIf="rateContract.poCopy!=null"><span class="glyphicon glyphicon-download"></span> Download PO</a>
+         -->
+      </div>
+   </div>
+</form>

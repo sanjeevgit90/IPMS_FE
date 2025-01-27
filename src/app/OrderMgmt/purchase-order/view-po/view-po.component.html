@@ -1,0 +1,586 @@
+<style type="text/css">
+   @media print {
+
+      /* table {
+         -fs-table-paginate: paginate;
+      }
+
+      thead {
+         display: table-header-group;
+      } */
+      table {
+         page-break-after: auto
+      }
+
+      tr {
+         page-break-inside: avoid;
+         page-break-after: auto
+      }
+
+      td {
+         page-break-inside: avoid;
+         page-break-after: auto
+      }
+
+      thead {
+         display: table-header-group
+      }
+
+      tfoot {
+         display: table-footer-group
+      }
+
+   }
+
+   @page {
+      size: auto;
+      margin: 25mm 25mm 125mm 125mm;
+   }
+</style>
+<form name="viewPoform">
+   <div class="row" style="margin: 0px;">
+      <div class="col-sm-10">
+         <div class="container viewPO table-responsive" name="table" id="table">
+            <p class="pocenter-align"><strong class="potitle">
+                  <span *ngIf="purchaseOrder.approvalStatus!='APPROVED'" class="draft">
+                     DRAFT </span> PURCHASE ORDER </strong> <span *ngIf="purchaseOrder.approvalStatus!='APPROVED'"
+                  class="draft">
+                  DRAFT </span>
+            </p>
+            <table class="table table-bordered" cellspacing="0px" cellpadding="0px">
+               <thead>
+                  <tr>
+                     <td class="tdwidth"
+                        *ngIf="purchaseOrder.approvalStatus=='PENDING' || purchaseOrder.approvalStatus=='AMENDMENT_APPROVED' || purchaseOrder.approvalStatus.includes('REJECTED')">
+                        <strong class="block-text">Invoice Postal Address:</strong><br />
+                        <span><strong>{{purchaseOrder.buyName}}</strong></span><br />
+                        <span>{{purchaseOrder.buyInvoAddress}}</span><br />
+                        <!-- <span>{{purchaseOrder.buyInvoAddress2}}</span>
+                      <span>{{purchaseOrder.buyInvoLandmark}}</span><br/>
+                      <span>{{purchaseOrder.buyInvoCity}}, {{purchaseOrder.buyInvoDist}}, {{purchaseOrder.buyInvoState}} - {{purchaseOrder.buyInvoPincode}}. {{purchaseOrder.buyInvoCountry}}</span><br/> -->
+                        <span>Contact Person: {{purchaseOrder.buyContactPerson}}</span><br />
+                        <span>Phone No. {{purchaseOrder.buyMobNo}}</span><br />
+                        <span>Email: {{purchaseOrder.buyEmail}}</span><br />
+                     </td>
+                     <td class="tdwidth"
+                        *ngIf="!(purchaseOrder.approvalStatus=='PENDING' || purchaseOrder.approvalStatus=='AMENDMENT_APPROVED' || purchaseOrder.approvalStatus.includes('REJECTED'))">
+                        <strong class="block-text">Invoice Postal Address:</strong><br />
+                        <span><strong>{{purchaseOrder.invoicetoname}}</strong></span><br />
+                        <span>{{purchaseOrder.invoicetoaddressforhistory}}</span><br />
+                        <span>Contact Person: {{purchaseOrder.invoicetocontact}}</span><br />
+                        <span>Phone No. {{purchaseOrder.invoicetophone}}</span><br />
+                        <span>Email: {{purchaseOrder.invoicetoemail}}</span>
+                        <!-- <span><div style="white-space:pre-wrap;" ng-bind-html="purchaseOrder.invoiceAddress"></div></span><br/> -->
+                     </td>
+                     <td class="tdwidth">
+                        <table cellspacing="0px" cellpadding="0px" class="borderless">
+                           <tr>
+                              <td style="border:none !important">
+                                 <strong class="block-text">Order No.:</strong>
+                                 <p class="description-po">
+                                    <span>{{purchaseOrder.purchaseOrderNo}}</span>
+                                 </p>
+                              </td>
+                           </tr>
+                           <tr *ngIf="purchaseOrder.isAmendedFlag=='YES'">
+                              <td style="border:none !important">
+                                 <strong class="block-text">Old Order No.:</strong>
+                                 <p class="description-po">
+                                    <span>{{purchaseOrder.oldPoNo}}</span>
+                                 </p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border:none !important">
+                                 <strong class="block-text">Order Type:</strong>
+                                 <p class="description-po">
+                                    <span>{{purchaseOrder.orderType}}</span>
+                                 </p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border:none !important">
+                                 <strong class="block-text">Supplier's Ref:</strong>
+                                 <span class="description-po suppref">
+                                    {{purchaseOrder.suppliersReference}}
+                                 </span>
+                              </td>
+                           </tr>
+                        </table>
+                     </td>
+                     <td class="tdwidth">
+                        <table class="borderless" cellspacing="0px" cellpadding="0px">
+                           <tr>
+                              <td style="border:none !important">
+                                 <strong class="block-text">Order Date:</strong>
+                                 <p class="description-po">
+                                    <span>{{purchaseOrder.orderDate  | date : 'dd/MM/yyyy'}}</span>
+                                 </p>
+                              </td>
+                           </tr>
+                           <tr *ngIf="purchaseOrder.isAmendedFlag=='YES'">
+                              <td style="border:none !important">
+                                 <strong class="block-text">Old Order Date:</strong>
+                                 <p class="description-po">
+                                    <span>{{purchaseOrder.oldPoDate  | date : 'dd/MM/yyyy'}}</span>
+                                 </p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border:none !important">
+                                 <strong class="block-text">Mode / Terms of Payment:</strong>
+                                 <p class="description-po">
+                                    <span>{{purchaseOrder.modeOfPayment}}</span>
+                                 </p>
+                              </td>
+                           </tr>
+                           <tr>
+                              <td style="border:none !important">
+                                 <strong class="block-text">Other reference(s):</strong>
+                                 <p class="description-po">
+                                    <span>{{purchaseOrder.otherReference}}</span>
+                                 </p>
+                              </td>
+                           </tr>
+                        </table>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>
+                        <strong>Delivery Term: </strong>{{purchaseOrder.deliveryTerm}}
+                        <!--  <p class="description-po">
+                      <span>{{purchaseOrder.deliveryTerm}}</span>
+                      </p> -->
+                     </td>
+                     <td>
+                        <strong>Dispatch through: </strong>{{purchaseOrder.dispatchThrough}}
+                        <!--  <p class="description-po">
+                      <span>{{purchaseOrder.dispatchThrough}}</span>
+                      </p> -->
+                     </td>
+                     <td>
+                        <strong>Currency: </strong>{{purchaseOrder.currency}}
+                        <!--  <p class="description-po">
+                      <span>{{purchaseOrder.currency}}</span>
+                      </p> -->
+                     </td>
+                  </tr>
+                  <tr>
+                     <td
+                        *ngIf="purchaseOrder.approvalStatus=='PENDING' || purchaseOrder.approvalStatus=='AMENDMENT_APPROVED' || purchaseOrder.approvalStatus.includes('REJECTED')">
+                        <strong class="block-text">Supplier Address:</strong><br />
+                        <span><strong>{{purchaseOrder.suppName}}</strong></span><br />
+                        <span>{{purchaseOrder.suppAddress}}</span><br />
+                        <!-- <span>{{purchaseOrder.suppAddress2}}</span>
+                      <span>{{purchaseOrder.suppLandmark}}</span><br/>
+                      <span>{{purchaseOrder.suppCity}}, {{purchaseOrder.suppDist}}, {{purchaseOrder.suppState}} - {{purchaseOrder.suppPincode}}. {{purchaseOrder.suppCountry}}</span><br/> -->
+                        <span>Contact Person: {{purchaseOrder.suppContactPerson}}</span><br />
+                        <span>Phone No. {{purchaseOrder.suppMobNo}}</span><br />
+                        <span>Email: {{purchaseOrder.suppEmail}}</span><br />
+                        <!--  <strong class="block-text">Bill From State:</strong> -->
+                        <!-- <p class="description-po">
+                      <span>{{purchaseOrder.suppGstState}}</span>
+                   </p> -->
+                        <strong>GST No.:</strong> {{purchaseOrder.billFromGstNo}}
+                        <!--  <p class="description-po">
+                      <span>{{purchaseOrder.billFromGstNo}}</span>
+                      </p> -->
+                     </td>
+                     <td
+                        *ngIf="!(purchaseOrder.approvalStatus=='PENDING' || purchaseOrder.approvalStatus=='AMENDMENT_APPROVED' || purchaseOrder.approvalStatus.includes('REJECTED'))">
+                        <strong class="block-text">Supplier Address:</strong><br />
+                        <span><strong>{{purchaseOrder.suppliernameforhistory}}</strong></span><br />
+                        <span>{{purchaseOrder.supplieraddress}}</span><br />
+                        <span>Contact Person: {{purchaseOrder.suppliercontact}}</span><br />
+                        <span>Phone No. {{purchaseOrder.supplierphone}}</span><br />
+                        <span>Email: {{purchaseOrder.supplieremail}}</span><br />
+                        <strong>GST No.:</strong> {{purchaseOrder.billFromGstNo}}
+                        <!-- <span><div style="white-space:pre-wrap;" ng-bind-html="purchaseOrder.supplierAddress"></div></span><br/> -->
+                     </td>
+                     <td
+                        *ngIf="purchaseOrder.approvalStatus=='PENDING' || purchaseOrder.approvalStatus=='AMENDMENT_APPROVED' || purchaseOrder.approvalStatus.includes('REJECTED')">
+                        <strong class="block-text">Bill To Address:</strong><br />
+                        <span><strong>{{purchaseOrder.buyName}}</strong></span><br />
+                        <span>{{purchaseOrder.buyBillToAddress}}</span><br />
+                        <!-- <span>{{purchaseOrder.buyBillToAddress2}}</span>
+                      <span>{{purchaseOrder.buyBillToLandmark}}</span><br/>
+                      <span>{{purchaseOrder.buyBillToCity}}, {{purchaseOrder.buyBillToDist}}, {{purchaseOrder.buyBillToState}} - {{purchaseOrder.buyBillToPincode}}. {{purchaseOrder.buyBillToCountry}}</span><br/> -->
+                        <span>Contact Person: {{purchaseOrder.buyContactPerson}}</span><br />
+                        <span>Phone No. {{purchaseOrder.buyMobNo}}</span><br />
+                        <span>Email: {{purchaseOrder.buyEmail}}</span><br />
+                        <strong>GST No.:</strong>
+                        <span *ngIf="purchaseOrder.buyBillToGstNo != null">{{purchaseOrder.buyBillToGstNo}}</span>
+                        <span *ngIf="purchaseOrder.buyBillToGstNo == null">NA</span>
+                     </td>
+                     <td
+                        *ngIf="!(purchaseOrder.approvalStatus=='PENDING' || purchaseOrder.approvalStatus=='AMENDMENT_APPROVED' || purchaseOrder.approvalStatus.includes('REJECTED'))">
+                        <strong class="block-text">Bill To Address:</strong><br />
+                        <span><strong>{{purchaseOrder.billtoname}}</strong></span><br />
+                        <span>{{purchaseOrder.billtoaddressforhistory}}</span><br />
+                        <span>Contact Person: {{purchaseOrder.billtocontact}}</span><br />
+                        <span>Phone No. {{purchaseOrder.billtophone}}</span><br />
+                        <span>Email: {{purchaseOrder.billtoemail}}</span><br />
+                        <strong>GST No.:</strong> {{purchaseOrder.billtogstin}}
+                        <!-- <span><div style="white-space:pre-wrap;" ng-bind-html="purchaseOrder.billingAddress"></div></span><br/> -->
+                     </td>
+                     <td
+                        *ngIf="purchaseOrder.approvalStatus=='PENDING' || purchaseOrder.approvalStatus=='AMENDMENT_APPROVED' || purchaseOrder.approvalStatus.includes('REJECTED')">
+                        <strong class="block-text">Ship To Address:</strong><br />
+                        <span><strong>{{purchaseOrder.buyName}}</strong></span><br />
+                        <span>{{purchaseOrder.buyShipToAddress}}</span>
+                        <!-- <span>{{purchaseOrder.buyShipToAddress2}}</span>
+                      <span> {{purchaseOrder.buyShipToLandmark}}</span><br/>
+                      <span>{{purchaseOrder.buyShipToCity}}, {{purchaseOrder.buyShipToDist}}, {{purchaseOrder.buyShipToState}} - {{purchaseOrder.buyShipToPincode}}. {{purchaseOrder.buyShipToCountry}}</span><br/> -->
+                        <span>Contact Person: {{purchaseOrder.buyContactPerson}}</span><br />
+                        <span>Phone No. {{purchaseOrder.buyMobNo}}</span><br />
+                        <span>Email: {{purchaseOrder.buyEmail}}</span><br />
+                     </td>
+                     <td
+                        *ngIf="!(purchaseOrder.approvalStatus=='PENDING' || purchaseOrder.approvalStatus=='AMENDMENT_APPROVED' || purchaseOrder.approvalStatus.includes('REJECTED'))">
+                        <strong class="block-text">Ship To Address:</strong><br />
+                        <span><strong>{{purchaseOrder.shiptoname}}</strong></span><br />
+                        <span>{{purchaseOrder.shiptoaddressforhistory}}</span><br />
+                        <span>Contact Person: {{purchaseOrder.shiptocontact}}</span><br />
+                        <span>Phone No. {{purchaseOrder.shiptophone}}</span><br />
+                        <span>Email: {{purchaseOrder.shiptoemail}}</span><br />
+                        <!-- <span><div style="white-space:pre-wrap;" ng-bind-html="purchaseOrder.shippingAddress"></div></span> -->
+                     </td>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td colspan="3" style="padding: 0px; margin: 0px" class="product-tbl">
+                        <table class="table table-bordered print-border" cellspacing="0px" cellpadding="0px"
+                           style="width: 100%;">
+                           <tr *ngIf="purchaseOrder.isAmendedFlag=='YES'">
+                              <td colspan="10"><strong>Amendment Details</strong></td>
+                           </tr>
+                           <tr>
+                              <th style="width: 50px" class="srn">Sr.No.</th>
+                              <th>Product</th>
+                              <th>HSN/SAC</th>
+                              <th>Rate</th>
+                              <th>Qty (UOM)</th>
+                              <th>Amount</th>
+                              <th>Disc.</th>
+                              <th
+                                 *ngIf="purchaseOrder.isHistoricData=='NO' && isSameState && purchaseOrder.currency =='INR'">
+                                 CGST</th>
+                              <th
+                                 *ngIf="purchaseOrder.isHistoricData=='NO' && isSameState && purchaseOrder.currency =='INR'">
+                                 SGST</th>
+                              <th
+                                 *ngIf="(purchaseOrder.isHistoricData=='NO' && purchaseOrder.currency =='INR') && !(isSameState) ">
+                                 IGST</th>
+                              <th *ngIf="purchaseOrder.currency !='INR'">Tax</th>
+                              <th *ngIf="purchaseOrder.isHistoricData=='YES'">Service Tax (Rs.)</th>
+                              <th *ngIf="purchaseOrder.isHistoricData=='YES'">VAT (Rs.)</th>
+                              <th>Final Amt</th>
+                           </tr>
+                           <tr *ngFor="let productdetails of purchaseOrder.productDetailsList; let i = index;">
+                              <td>{{i+1}}</td>
+                              <td
+                                 *ngIf="purchaseOrder.approvalStatus=='PENDING' || purchaseOrder.approvalStatus=='AMENDMENT_APPROVED' || purchaseOrder.approvalStatus.includes('REJECTED')">
+                                 <div *ngIf="productdetails.description!=null || productdetails.productDesc!=null">
+                                    <span *ngIf="productdetails.productDesc!=null && productdetails.description==null"
+                                       style="white-space: pre-line;">{{productdetails.product}}
+                                       ({{productdetails.productDesc}})</span>
+                                    <span *ngIf="productdetails.productDesc==null && productdetails.description!=null"
+                                       style="white-space: pre-line;">{{productdetails.product}}
+                                       ({{productdetails.description}})</span>
+                                    <span *ngIf="productdetails.productDesc!=null && productdetails.description!=null"
+                                       style="white-space: pre-line;">{{productdetails.product}}
+                                       ({{productdetails.productDesc}} - {{productdetails.description}})</span>
+                                 </div>
+                                 <!-- <div *ngIf="productdetails.description!=null || productdetails.productDesc!=null">{{productdetails.product}} (
+                               <span *ngIf="productdetails.description!=null" style="white-space: pre-line;">{{productdetails.description}} - </span>
+                               <span *ngIf="productdetails.productDesc!=null" style="white-space: pre-line;">{{productdetails.productDesc}}</span>)
+                               </div> -->
+                                 <div style="white-space: pre-line;"
+                                    *ngIf="productdetails.description==null && productdetails.productDesc==null">
+                                    {{productdetails.product}}</div>
+                              </td>
+                              <td
+                                 *ngIf="!(purchaseOrder.approvalStatus=='PENDING' || purchaseOrder.approvalStatus=='AMENDMENT_APPROVED' || purchaseOrder.approvalStatus.includes('REJECTED'))">
+                                 {{productdetails.productNameWithDesc}}</td>
+                              <td>{{productdetails.hsnId}}</td>
+                              <td *ngIf="productdetails.rate%1==0">{{productdetails.rate}}.00</td>
+                              <td *ngIf="productdetails.rate%1!=0">{{productdetails.rate | number : '1.2-2'}}</td>
+                              <td
+                                 *ngIf="purchaseOrder.approvalStatus=='PENDING' || purchaseOrder.approvalStatus=='AMENDMENT_APPROVED' || purchaseOrder.approvalStatus.includes('REJECTED')">
+                                 {{productdetails.quantity}} ({{productdetails.baseuom}})</td>
+                              <td
+                                 *ngIf="!(purchaseOrder.approvalStatus=='PENDING' || purchaseOrder.approvalStatus=='AMENDMENT_APPROVED' || purchaseOrder.approvalStatus.includes('REJECTED'))">
+                                 {{productdetails.quantity}} ({{productdetails.baseUomData}})</td>
+                              <td>{{productdetails.amount | number : '1.2-2'}} </td>
+                              <td>{{productdetails.totalDiscount | number : '1.2-2'}}</td>
+                              <td
+                                 *ngIf="purchaseOrder.isHistoricData=='NO' && isSameState && purchaseOrder.currency =='INR'">
+                                 {{productdetails.cgstAmount | number : '1.2-2'}} ({{productdetails.cgst}}%)</td>
+                              <td
+                                 *ngIf="purchaseOrder.isHistoricData=='NO' && isSameState && purchaseOrder.currency =='INR'">
+                                 {{productdetails.sgstAmount | number : '1.2-2'}} ({{productdetails.sgst}}%)</td>
+                              <td
+                                 *ngIf="purchaseOrder.isHistoricData=='NO' && purchaseOrder.currency =='INR' && !(isSameState)">
+                                 {{productdetails.igstAmount | number : '1.2-2'}} ({{productdetails.igst}}%)</td>
+                              <td *ngIf="purchaseOrder.currency !='INR'">
+                                 {{productdetails.igstAmount | number : '1.2-2'}}
+                                 ({{productdetails.igst}}%)</td>
+                              <td *ngIf="purchaseOrder.isHistoricData=='YES'">{{productdetails.serviceTax}}</td>
+                              <td *ngIf="purchaseOrder.isHistoricData=='YES'">{{productdetails.vat}}</td>
+                              <td style="text-align: right;">{{productdetails.finalAmount | number : '1.2-2'}}</td>
+                           </tr>
+                        </table>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td style="text-align: right;" colspan="2">Total excluding Taxes</td>
+                     <td style="text-align: right;"> {{purchaseOrder.totalWithoutTaxes | number : '1.2-2'}}</td>
+                  </tr>
+                  <tr>
+                     <td style="text-align: right;" colspan="2">Total Taxes</td>
+                     <td style="text-align: right;"> {{purchaseOrder.totalTaxes | number : '1.2-2'}}</td>
+                  </tr>
+                  <tr *ngIf="purchaseOrder.currency=='USD'">
+                     <td style="text-align: right;" colspan="2">Discount</td>
+                     <td style="text-align: right;"> {{purchaseOrder.discountAmt | number : '1.2-2'}}</td>
+                  </tr>
+                  <tr>
+                     <td style="text-align: right;" colspan="2"><strong> Grand Total</strong> </td>
+                     <td style="text-align: right;"> <strong> {{purchaseOrder.grandTotal | number : '1.2-2'}}
+                        </strong>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td colspan="3">Amount in words :
+                        <strong style="text-transform: capitalize;"
+                           *ngIf="purchaseOrder.amountInWords==null || purchaseOrder.amountInWords==''">{{finalAmount}}
+                           Only.</strong>
+                        <strong style="text-transform: capitalize;"
+                           *ngIf="purchaseOrder.amountInWords!=null || purchaseOrder.amountInWords!=''">{{purchaseOrder.amountInWords}}</strong>
+                     </td>
+                  </tr>
+                  <tr *ngIf="purchaseOrder.isAmendedFlag=='YES'">
+                     <td colspan="3" style="padding: 0px; margin: 0px" class="product-tbl">
+                        <table class="table table-bordered print-border" style="width: 100%;">
+                           <tr>
+                              <td colspan="10"><strong>Old PO Details</strong></td>
+                           </tr>
+                           <tr>
+                              <th style="width: 50px" class="srn">Sr.No.</th>
+                              <th>Product</th>
+                              <th>HSN/SAC</th>
+                              <th>Rate</th>
+                              <th>Qty (UOM)</th>
+                              <th>Amount</th>
+                              <th>Disc.</th>
+                              <th *ngIf="oldPoData.isHistoricData=='NO' && isSameStateOld">CGST</th>
+                              <th *ngIf="oldPoData.isHistoricData=='NO' && isSameStateOld">SGST</th>
+                              <th *ngIf="oldPoData.isHistoricData=='NO' && !(isSameStateOld)">IGST</th>
+                              <th *ngIf="oldPoData.isHistoricData=='YES'">Service Tax (Rs.)</th>
+                              <th *ngIf="oldPoData.isHistoricData=='YES'">VAT (Rs.)</th>
+                              <th>Final Amt</th>
+                           </tr>
+                           <tr *ngFor="let productdetails of oldPoData.productDetailsList; let i = index">
+                              <td>{{i+1}}</td>
+                              <td>{{productdetails.productNameWithDesc}}</td>
+                              <td>{{productdetails.hsnId}}</td>
+                              <td *ngIf="productdetails.rate%1==0">{{productdetails.rate}}.00</td>
+                              <td *ngIf="productdetails.rate%1!=0">{{productdetails.rate | number : '1.2-2'}}</td>
+                              <td>{{productdetails.quantity}} ({{productdetails.baseUomData}})</td>
+                              <td>{{productdetails.amount | number : '1.2-2'}} </td>
+                              <td>{{productdetails.totalDiscount | number : '1.2-2'}}</td>
+                              <td *ngIf="oldPoData.isHistoricData=='NO' && isSameStateOld">
+                                 {{productdetails.cgstAmount | number : '1.2-2'}}
+                                 ({{productdetails.cgst}}%)</td>
+                              <td *ngIf="oldPoData.isHistoricData=='NO' && isSameStateOld">
+                                 {{productdetails.sgstAmount | number : '1.2-2'}}
+                                 ({{productdetails.sgst}}%)</td>
+                              <td *ngIf="oldPoData.isHistoricData=='NO' && !(isSameStateOld)">
+                                 {{productdetails.igstAmount | number : '1.2-2'}} ({{productdetails.igst}}%)</td>
+                              <td *ngIf="oldPoData.isHistoricData=='YES'">
+                                 {{productdetails.serviceTax | number : '1.2-2'}}</td>
+                              <td *ngIf="oldPoData.isHistoricData=='YES'">{{productdetails.vat | number : '1.2-2'}}</td>
+                              <td style="text-align: right;">{{productdetails.finalAmount | number : '1.2-2'}}</td>
+                           </tr>
+                        </table>
+                     </td>
+                  </tr>
+                  <tr *ngIf="purchaseOrder.isAmendedFlag=='YES'">
+                     <td style="text-align: right;" colspan="2">Total excluding Taxes</td>
+                     <td style="text-align: right;"> {{oldPoData.totalWithoutTaxes | number : '1.2-2'}}</td>
+                  </tr>
+                  <tr *ngIf="purchaseOrder.isAmendedFlag=='YES'">
+                     <td style="text-align: right;" colspan="2">Total Taxes</td>
+                     <td style="text-align: right;"> {{oldPoData.totalTaxes | number : '1.2-2'}}</td>
+                  </tr>
+                  <tr *ngIf="oldPoData.currency=='USD' && purchaseOrder.isAmendedFlag=='YES'">
+                     <td style="text-align: right;" colspan="2">Discount</td>
+                     <td style="text-align: right;"> {{oldPoData.discountAmt | number : '1.2-2'}}</td>
+                  </tr>
+                  <tr *ngIf="purchaseOrder.isAmendedFlag=='YES'">
+                     <td style="text-align: right;" colspan="2"><strong> Grand Total</strong> </td>
+                     <td style="text-align: right;"> <strong> {{oldPoData.grandTotal | number : '1.2-2'}}
+                        </strong>
+                     </td>
+                  </tr>
+                  <tr *ngIf="purchaseOrder.isAmendedFlag=='YES'">
+                     <td colspan="3">Amount in words :
+                        <strong style="text-transform: capitalize;"
+                           *ngIf="oldPoData.amountInWords==null || oldPoData.amountInWords==''">{{oldfinalAmount}}
+                           Only.</strong>
+                        <strong style="text-transform: capitalize;"
+                           *ngIf="oldPoData.amountInWords!=null || oldPoData.amountInWords!=''">{{oldPoData.amountInWords}}</strong>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td colspan="3">
+                        <strong class="block-text">Terms &amp; Conditions: </strong>
+                        <p class="description-po">
+                           <span style="white-space: pre-line;">{{purchaseOrder.termsConditions}}</span>
+                        </p>
+                     </td>
+                  </tr>
+                  <tr *ngIf="purchaseOrder.additionalTerms!='NA' && purchaseOrder.additionalTerms!=null">
+                     <td colspan="3">
+                        <strong class="block-text">Annexure Terms &amp; Conditions: </strong>
+                        <p class="description-po">
+
+                           <span style="white-space: pre-line;" [innerHTML]="purchaseOrder.additionalTerms"></span>
+                        </p>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td colspan="2">
+                        <p class="description-po">
+                           <span>E. &amp; O. E.</span><br>
+                           <span><strong>For {{purchaseOrder.suppName}},</strong></span><br>
+                           <span style="height: 60px; display: block;">Date:</span><br>
+                           <span>Authorized Signatory</span>
+                        </p>
+                     </td>
+                     <td colspan="1" style="text-align: right;">
+                        <p class="description-po">
+                           <!-- <span style="height: 80px; display: block;"><strong>For
+                                 {{purchaseOrder.organisationName}},</strong></span>
+                           <span>Authorized Signatory</span><br>
+                           <span><strong>{{purchaseOrder.poheadname}}</strong></span><br>
+                           <span>{{purchaseOrder.poheaddesignation}}</span> -->
+                        </p>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td colspan="3">**This is an electronically generated Purchase Order. No signatures are required.**
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+
+
+
+      </div>
+
+      <div class="col-sm-2">
+         <div class="po-action">
+            <button mat-raised-button color="accent" (click)="printComponent('table')">
+               <mat-icon>print</mat-icon>
+               Print
+            </button>
+
+            <button mat-raised-button color="primary" (click)="viewWorkflowHistory()">
+               <mat-icon>history</mat-icon>
+               Workflow History
+            </button>
+            <button mat-raised-button color="warn" class="red-btn"
+               [routerLink]="['/searchPurchaseOrder/searchVendorComparison', purchaseOrder.entityId,'list']">
+               <mat-icon>compare_arrows</mat-icon>
+               Vendor Comparison
+            </button>
+
+
+            <button mat-raised-button color="warn" class="blue-btn"
+               [routerLink]="['/searchPurchaseOrder/UpdatePO', purchaseOrder.entityId,'edit']"
+               *ngIf="purchaseOrder.approvalStatus=='PENDING'">
+               <mat-icon>edit</mat-icon>
+               Edit
+            </button>
+
+            <!-- <button mat-raised-button color="warn" class="grey-btn" (click)="sendMail()"
+               *ngIf="purchaseOrder.verify!=null && purchaseOrder.approvalStatus=='APPROVED' && purchaseOrder.mailSentDate==null">
+               <mat-icon>send</mat-icon>
+               Send Mail
+            </button>
+
+            <button mat-raised-button color="warn" class="green-btn" (click)="verifyPo()"
+               *ngIf="purchaseOrder.verify==null && purchaseOrder.approvalStatus=='APPROVED'">
+               <mat-icon>verified_user</mat-icon>
+               Verify
+            </button>
+            <button mat-raised-button color="warn" class="green-btn"
+               *ngIf="purchaseOrder.verify!=null && purchaseOrder.approvalStatus=='APPROVED'" [disabled]="true">
+               <mat-icon>verified_user</mat-icon>
+               Verified
+            </button> -->
+            <button mat-raised-button color="primary" class="green-btn" *ngIf="taskId!=null" (click)="takeAction()">
+               <mat-icon>verified_user</mat-icon>
+               Approve/Reject
+            </button>
+
+            <button mat-raised-button color="warn" (click)="back()">
+               <mat-icon>arrow_back_ios</mat-icon>
+               Back
+            </button>
+         </div>
+
+         <div class="container po-action" *ngIf="purchaseOrder.attachments">
+            <h3 class="view-download">Attachments</h3>
+
+            <div *ngFor="let attach of purchaseOrder.attachments" class="grouped view-attachments">
+               <!-- <a href="{{baseUrl}}{{attach}}" *ngIf="lessThan(attach.substring(attach.lastIndexOf('/')+1,attach.length))"
+                  target="_blank">{{attach.substring(attach.lastIndexOf('/')+1,attach.length)}}</a>
+               <a href="{{baseUrl}}{{attach}}" *ngIf="greaterThan(attach.substring(attach.lastIndexOf('/')+1,attach.length))"
+                  target="_blank">{{attach.substring(attach.lastIndexOf('/')+38,attach.length)}}</a> -->
+
+               <a href="{{baseUrl}}{{attach}}"
+                  *ngIf="containsUUID(attach.substring(attach.lastIndexOf('/')+1,attach.length))"
+                  target="_blank">{{attach.substring(attach.lastIndexOf('/')+38,attach.length)}}</a>
+               <a href="{{baseUrl}}{{attach}}"
+                  *ngIf="!containsUUID(attach.substring(attach.lastIndexOf('/')+1,attach.length))"
+                  target="_blank">{{attach.substring(attach.lastIndexOf('/')+1,attach.length)}}</a>
+            </div>
+
+            <div *ngIf="purchaseOrder.attachments.length == 0">
+               <p class="text-blue">No Attachments</p>
+            </div>
+
+            <div class="clearfix"></div>
+         </div>
+         <div class="container po-action" *ngIf="purchaseOrder.uploadedTermsAnnexure != null">
+            <h3 class="view-download">Download Annexure</h3>
+            <div class="grouped view-attachments">
+               <a href="{{baseUrl}}{{purchaseOrder.uploadedTermsAnnexure}}"
+                  *ngIf="containsUUID(purchaseOrder.uploadedTermsAnnexure.substring(purchaseOrder.uploadedTermsAnnexure.lastIndexOf('/')+1,purchaseOrder.uploadedTermsAnnexure.length))"
+                  target="_blank">{{purchaseOrder.uploadedTermsAnnexure.substring(purchaseOrder.uploadedTermsAnnexure.lastIndexOf('/')+38,purchaseOrder.uploadedTermsAnnexure.length)}}</a>
+               <a href="{{baseUrl}}{{purchaseOrder.uploadedTermsAnnexure}}"
+                  *ngIf="!containsUUID(purchaseOrder.uploadedTermsAnnexure.substring(purchaseOrder.uploadedTermsAnnexure.lastIndexOf('/')+1,purchaseOrder.uploadedTermsAnnexure.length))"
+                  target="_blank">{{purchaseOrder.uploadedTermsAnnexure.substring(purchaseOrder.uploadedTermsAnnexure.lastIndexOf('/')+1,purchaseOrder.uploadedTermsAnnexure.length)}}</a>
+            </div>
+            <div class="clearfix"></div>
+         </div>
+         <div class="container po-action" *ngIf="purchaseOrder.signedCopyPath != null">
+            <h3 class="view-download">Download Signed Copy</h3>
+            <div class="grouped view-attachments">
+               <a href="{{baseUrl}}{{purchaseOrder.signedCopyPath}}"
+                  *ngIf="containsUUID(purchaseOrder.signedCopyPath.substring(purchaseOrder.signedCopyPath.lastIndexOf('/')+1,purchaseOrder.signedCopyPath.length))"
+                  target="_blank">{{purchaseOrder.signedCopyPath.substring(purchaseOrder.signedCopyPath.lastIndexOf('/')+38,purchaseOrder.signedCopyPath.length)}}</a>
+               <a href="{{baseUrl}}{{purchaseOrder.signedCopyPath}}"
+                  *ngIf="!containsUUID(purchaseOrder.signedCopyPath.substring(purchaseOrder.signedCopyPath.lastIndexOf('/')+1,purchaseOrder.signedCopyPath.length))"
+                  target="_blank">{{purchaseOrder.signedCopyPath.substring(purchaseOrder.signedCopyPath.lastIndexOf('/')+1,purchaseOrder.signedCopyPath.length)}}</a>
+            </div>
+            <div class="clearfix"></div>
+         </div>
+      </div>
+   </div>
+
+</form>

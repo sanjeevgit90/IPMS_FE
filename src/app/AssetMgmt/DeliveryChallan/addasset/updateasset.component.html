@@ -1,0 +1,442 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form [formGroup]="addAssetForm">
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="row align-items-center">
+            <div class="col">
+                <h3 class="page-title">{{PageTitle}}</h3>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a routerLink="/Dashboard"> Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item active">{{PageTitle}}</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <!-- /Page Header -->
+
+    <div class="tab-content">
+
+        <!-- Add User -->
+        <div class="pro-overview tab-pane fade show active">
+            <div class="card">
+                <div class="card-body">
+
+                    <div class="col-md-12 mandatory">*Fields are Mandatory</div>
+
+                    <div class="row">
+
+                        <div class="col-sm-3" *ngIf="!replace">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput name="assetname" type="text" placeholder="Asset Name"
+                                        [(ngModel)]="AssetData.assetname" formControlName="assetname" maxlength="60"
+                                        required>
+
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3" *ngIf="!replace">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput name="serialno" type="text" placeholder="Serial No"
+                                        [(ngModel)]="AssetData.serialno" formControlName="serialno" maxlength="60"
+                                        required>
+
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3" *ngIf="!replace">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput name="assettag" type="text" placeholder="Asset Tag"
+                                        [(ngModel)]="AssetData.assettag" formControlName="assettag" required>
+
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-3" *ngIf="replace">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput name="assetname1" type="text" placeholder="Asset Name"
+                                        [(ngModel)]="assetname1" formControlName="assetname1" maxlength="60" required>
+                                    <div *ngIf="isSubmitted && formControls.assetname1.errors" class="error-text">
+                                        <div *ngIf="formControls.assetname1.errors.required">Asset
+                                            name is required</div>
+                                    </div>
+                                </mat-form-field>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-3" *ngIf="replace">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput name="serialno1" type="text" placeholder="Serial No"
+                                        [(ngModel)]="serialno1" formControlName="serialno1" maxlength="60" required>
+                                    <div *ngIf="isSubmitted && formControls.serialno1.errors" class="error-text">
+                                        <div *ngIf="formControls.serialno1.errors.required">Serial
+                                            no is required</div>
+                                    </div>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3" *ngIf="replace">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput name="assettag1" type="text" placeholder="Asset Tag"
+                                        [(ngModel)]="assettag1" formControlName="assettag1" required>
+                                    <div *ngIf="isSubmitted && formControls.assettag1.errors" class="error-text">
+                                        <div *ngIf="formControls.assettag1.errors.required">Asset Tag
+                                            is required</div>
+                                    </div>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width"
+                                    [ngClass]="{ 'has-error': isSubmitted && formControls.category.errors }">
+                                    <mat-select [(ngModel)]="category" name="category" placeholder="Category"
+                                        formControlName="category" [typeaheadDebounceInterval]="matSelectDuration" 
+                                        (ngModelChange)="getActiveSubCategoryfromcategory(category)" required>
+                                        <mat-option>-Select-</mat-option>
+                                        <mat-option *ngFor="let category of categoryList"
+                                            [value]="category.selectionvalue">
+                                            {{ category.selectionvalue }}
+                                        </mat-option>
+                                    </mat-select>
+                                    <div *ngIf="isSubmitted && formControls.category.errors" class="error-text">
+                                        <div *ngIf="formControls.category.errors.required">Category
+                                            is required</div>
+                                    </div>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width"
+                                    [ngClass]="{ 'has-error': isSubmitted && formControls.subcategory.errors }">
+                                    <mat-select [(ngModel)]="subcategory" name="subcategory" [typeaheadDebounceInterval]="matSelectDuration" 
+                                        formControlName="subcategory" placeholder="Sub Category"
+                                        (ngModelChange)="getActiveProduct(subcategory)" required>
+                                        <mat-option>-Select-</mat-option>
+                                        <mat-option *ngFor="let category of subcategoryList"
+                                            [value]="category.selectionvalue">
+                                            {{ category.selectionvalue }}
+                                        </mat-option>
+                                    </mat-select>
+                                    <div *ngIf="isSubmitted && formControls.subcategory.errors" class="error-text">
+                                        <div *ngIf="formControls.subcategory.errors.required">Sub Category
+                                            is required</div>
+                                    </div>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width"
+                                    [ngClass]="{ 'has-error': isSubmitted && formControls.productid.errors }">
+                                    <mat-select [compareWith]="compareObjects" [(ngModel)]="AssetData.productid" [typeaheadDebounceInterval]="matSelectDuration" 
+                                        name="productid" placeholder="Product name" formControlName="productid" required>
+                                        <mat-option>-Select-</mat-option>
+                                        <mat-option *ngFor="let product of productList" [value]="product.selectionid">
+                                            {{ product.selectionvalue }}
+                                        </mat-option>
+                                    </mat-select>
+                                    <div *ngIf="isSubmitted && formControls.productid.errors" class="error-text">
+                                        <div *ngIf="formControls.productid.errors.required">Product Name
+                                            is required</div>
+                                    </div>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width"
+                                    [ngClass]="{ 'has-error': isSubmitted && formControls.projectname.errors }">
+                                    <mat-select [compareWith]="compareObjects" [(ngModel)]="AssetData.projectname" [typeaheadDebounceInterval]="matSelectDuration" 
+                                        name="projectname" placeholder="Project name" formControlName="projectname" required>
+                                        <mat-option>-Select-</mat-option>
+                                        <mat-option *ngFor="let project of projectList" [value]="project.selectionid" matTooltip="{{project.selectionvalue}}">
+                                            {{ project.selectionvalue }}
+                                        </mat-option>
+                                    </mat-select>
+                                    <div *ngIf="isSubmitted && formControls.projectname.errors" class="error-text">
+                                        <div *ngIf="formControls.projectname.errors.required">Project Name
+                                            is required</div>
+                                    </div>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width"
+                                    [ngClass]="{ 'has-error': isSubmitted && formControls.vendorname.errors }">
+                                    <mat-select [compareWith]="compareObjects" [(ngModel)]="AssetData.vendorname" [typeaheadDebounceInterval]="matSelectDuration" 
+                                        name="vendorname" placeholder="Vendor name" formControlName="vendorname" required>
+                                        <mat-option>-Select-</mat-option>
+                                        <mat-option *ngFor="let vendor of partyList" [value]="vendor.selectionid">
+                                            {{ vendor.selectionvalue }}
+                                        </mat-option>
+                                    </mat-select>
+                                    <div *ngIf="isSubmitted && formControls.vendorname.errors" class="error-text">
+                                        <div *ngIf="formControls.vendorname.errors.required">Vendor Name
+                                            is required</div>
+                                    </div>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput name="orderno" type="text" placeholder="Order No"
+                                        [(ngModel)]="AssetData.orderno" formControlName="orderno">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput name="deliverychallanno" type="text"
+                                        placeholder="Delivery Challan No" [(ngModel)]="AssetData.deliverychallanno"
+                                        formControlName="deliverychallanno">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput name="purchasedate" placeholder="Purchase Date" type="text"
+                                        [matDatepicker]="picker" [(ngModel)]="AssetData.purchasedate"
+                                        formControlName="purchasedate" required>
+                                    <div *ngIf="isSubmitted && formControls.purchasedate.errors" class="error-text">
+                                        <div *ngIf="formControls.purchasedate.errors.required">Purchase Date is
+                                            required</div>
+                                    </div>
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput name="warrantytilldate" placeholder="Warranty Till Date" type="text"
+                                        [matDatepicker]="picker1" [(ngModel)]="AssetData.warrantytilldate"
+                                        formControlName="warrantytilldate" required>
+                                    <div *ngIf="isSubmitted && formControls.warrantytilldate.errors" class="error-text">
+                                        <div *ngIf="formControls.warrantytilldate.errors.required">Warranty Till Date is
+                                            required</div>
+                                    </div>
+                                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker1></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width"
+                                    [ngClass]="{ 'has-error': isSubmitted && formControls.eol.errors }">
+                                    <mat-select [(ngModel)]="AssetData.eol" name="eol" placeholder="End Of Life (EOL)" [typeaheadDebounceInterval]="matSelectDuration"  required
+                                        formControlName="eol">
+                                        <mat-option>-Select-</mat-option>
+                                        <mat-option *ngFor="let eol of eolList" [value]="eol.selectionvalue">
+                                            {{ eol.selectionvalue }}
+                                        </mat-option>
+                                    </mat-select>
+                                    <div *ngIf="isSubmitted && formControls.eol.errors" class="error-text">
+                                        <div *ngIf="formControls.eol.errors.required">End Of Life (EOL)
+                                            is required</div>
+                                    </div>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width"
+                                    [ngClass]="{ 'has-error': isSubmitted && formControls.depreciation.errors }">
+                                    <mat-select [(ngModel)]="AssetData.depreciation" name="depreciation" [typeaheadDebounceInterval]="matSelectDuration" 
+                                        formControlName="depreciation" placeholder="Depreciation" required>
+                                        <mat-option >-select-</mat-option>
+                                        <mat-option *ngFor="let depreciation of depreciationList"
+                                            [value]="depreciation.selectionvalue">
+                                            {{ depreciation.selectionvalue }}
+                                        </mat-option>
+                                    </mat-select>
+                                    <div *ngIf="isSubmitted && formControls.depreciation.errors" class="error-text">
+                                        <div *ngIf="formControls.depreciation.errors.required">Depreciation
+                                            is required</div>
+                                    </div>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width"
+                                    [ngClass]="{ 'has-error': isSubmitted && formControls.assetstatus.errors }">
+                                    <mat-select [(ngModel)]="AssetData.assetstatus" name="assetstatus" [typeaheadDebounceInterval]="matSelectDuration" 
+                                        formControlName="assetstatus" placeholder="Asset Status" required>
+                                        <mat-option >-Select-</mat-option>
+                                        <mat-option *ngFor="let status of statusList" [value]="status.name">
+                                            {{ status.name }}
+                                        </mat-option>
+                                    </mat-select>
+                                    <div *ngIf="isSubmitted && formControls.assetstatus.errors" class="error-text">
+                                        <div *ngIf="formControls.assetstatus.errors.required">Asset Status
+                                            is required</div>
+                                    </div>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <mat-form-field [ngClass]="{ 'has-error': isSubmitted && formControls.state.errors }">
+                                    <mat-label>State</mat-label>
+                                    <mat-select [(ngModel)]="state" formControlName="state" [typeaheadDebounceInterval]="matSelectDuration" 
+                                        (ngModelChange)="getActiveDistrictFromstate(state)" required>
+                                        <mat-option>-Select-</mat-option>
+                                        <mat-option *ngFor="let stateData of stateList"
+                                            value="{{stateData.selectionid}}">
+                                            {{stateData.selectionvalue}}</mat-option>
+                                    </mat-select>
+                                    <div *ngIf="isSubmitted && formControls.state .errors" class="error-text">
+                                        <div *ngIf="formControls.state.errors.required">State is required
+                                        </div>
+                                    </div>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <mat-form-field
+                                    [ngClass]="{ 'has-error': isSubmitted && formControls.district .errors }">
+                                    <mat-label>District</mat-label> 
+                                    <mat-select [(ngModel)]="district" formControlName="district" [typeaheadDebounceInterval]="matSelectDuration" 
+                                        (ngModelChange)="getActiveCityFromDistrict(district)" required>
+                                        <mat-option>-Select-</mat-option>
+                                        <mat-option *ngFor="let districtData of districtList"
+                                            value="{{districtData.selectionid}}">
+                                            {{districtData.selectionvalue}}</mat-option>
+                                    </mat-select>
+                                    <div *ngIf="isSubmitted && formControls.district.errors" class="error-text">
+                                        <div *ngIf="formControls.district .errors.required">District is
+                                            required</div>
+                                    </div>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width"
+                                    [ngClass]="{ 'has-error': isSubmitted && formControls.city.errors }">
+                                    <mat-select [(ngModel)]="city" name="city" formControlName="city" placeholder="City" [typeaheadDebounceInterval]="matSelectDuration" 
+                                        (ngModelChange)="getActivePoliceStationFromCity(city)" required>
+                                        <mat-option >-Select-</mat-option>
+                                        <mat-option *ngFor="let city of cityList" [value]="city.selectionvalue">
+                                            {{ city.selectionvalue }}
+                                        </mat-option>
+                                    </mat-select>
+                                    <div *ngIf="isSubmitted && formControls.city.errors" class="error-text">
+                                        <div *ngIf="formControls.city.errors.required">City
+                                            is required</div>
+                                    </div>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width"
+                                    [ngClass]="{ 'has-error': isSubmitted && formControls.policestation.errors }">
+                                    <mat-select [(ngModel)]="policestation" name="policestation" [typeaheadDebounceInterval]="matSelectDuration" 
+                                        formControlName="policestation" placeholder="Police Station"
+                                        (ngModelChange)="getActiveLocationFromPoliceStation(policestation)" required>
+                                        <mat-option >-Select-</mat-option>
+                                        <mat-option *ngFor="let policestation of policestationList"
+                                            [value]="policestation.selectionvalue">
+                                            {{ policestation.selectionvalue }}
+                                        </mat-option>
+                                    </mat-select>
+                                    <div *ngIf="isSubmitted && formControls.policestation.errors" class="error-text">
+                                        <div *ngIf="formControls.policestation.errors.required">Police Station
+                                            is required</div>
+                                    </div>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width"
+                                    [ngClass]="{ 'has-error': isSubmitted && formControls.location.errors }">
+                                    <mat-select [(ngModel)]="AssetData.location" name="location" [typeaheadDebounceInterval]="matSelectDuration" 
+                                        formControlName="location" placeholder="Location">
+                                        <mat-option >-Select-</mat-option>
+                                        <mat-option *ngFor="let location of locationList"
+                                            [value]="location.selectionvalue">
+                                            {{ location.selectionvalue }}
+                                        </mat-option>
+                                    </mat-select>
+                                    <div *ngIf="isSubmitted && formControls.location.errors" class="error-text">
+                                        <div *ngIf="formControls.location.errors.required">Location
+                                            is required</div>
+                                    </div>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <textarea matInput name="notes" maxlength="200" [(ngModel)]="AssetData.notes"
+                                        formControlName="notes" placeholder="Enter Notes"></textarea>
+                                </mat-form-field>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="submit-section">
+                        <button mat-flat-button color="accent" (click)="addAsset('update')" *ngIf="add">
+                            <mat-icon aria-hidden="false">add</mat-icon> Replace
+                        </button>
+
+                        <button mat-flat-button color="accent" (click)="addAsset('update')" *ngIf="edit">
+                            <mat-icon aria-hidden="false">update</mat-icon> Update
+                        </button>
+
+                        <button mat-flat-button color="warn" (click)="back()">
+                            <mat-icon aria-hidden="false">cancel</mat-icon> Back
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+</form>

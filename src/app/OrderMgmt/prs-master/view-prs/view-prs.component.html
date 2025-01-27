@@ -1,0 +1,276 @@
+<form name="viewPoform">
+    <div class="row">
+
+        <div class="col-sm-10">
+            <div *ngIf="taskHistoryList.length != 0">
+                <div class="container viewPO table-responsive" style="padding-top: 15px;">
+                    <table class="table table-bordered" style="width: 100%; margin: 0px auto">
+                        <tr>
+                            <td colspan="5"><strong class="potitle">PRS Task History</strong></td>
+                        </tr>
+                        <tr>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Assigned To</th>
+                                        <th>Actioned By</th>
+                                        <th>Actioned On</th>
+                                        <th>Status</th>
+                                        <th>Remark</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let commentsData of taskHistoryList">
+                                        <td>{{commentsData.taskCreatedDate | date : 'dd/MM/yyyy'}}</td>
+                                        <td>{{commentsData.assigntorole}} </td>
+                                        <td>{{commentsData.taskUpdatedBy}}</td>
+                                        <td>{{commentsData.taskUpdatedDate| date : 'dd/MM/yyyy'}}</td> 
+                                        <td>{{commentsData.approvalStatus}}</td>
+                                        <td>{{commentsData.remark}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="container viewPO table-responsive" style="padding-top: 15px;" name="table" id="table">
+                <table class="table table-bordered" style="width: 60%; margin: 0px auto" cellspacing="0px"
+                    cellpadding="0px">
+
+                    <tr>
+                        <td class="pocenter-align" colspan="2"><strong class="potitle"> PAYMENT REQUEST SLIP </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>PRS NO</strong></td>
+                        <td class="data-bind"><strong>{{prs.prsNo}}
+                            </strong> </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Date</strong></td>
+                        <td class="data-bind">{{prs.prsDate| date : 'dd/MM/yyyy'}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Issue Cheque to </strong></td>
+                        <td class="data-bind">{{prs.partyName}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Invoice No</strong></td>
+                        <td class="data-bind">{{prs.invoiceNo}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Invoice Date</strong></td>
+                        <td class="data-bind">{{prs.invoiceDate | date : 'dd/MM/yyyy'}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Invoice Amount</strong></td>
+                        <td class="data-bind">{{prs.invoiceAmount}}
+                        </td>
+                    </tr>
+                    <tr *ngIf="isUtilityPayment == false">
+                        <td><strong>Purchase Order Number</strong></td>
+                        <td class="data-bind">{{prs.purchaseOrderNumber}}
+                        </td>
+                    </tr>
+                    <tr *ngIf="isUtilityPayment == false">
+                        <td><strong>GRN Number</strong></td>
+                        <td class="data-bind">{{prs.grnNo}}
+
+                        </td>
+                    </tr>
+                    <tr *ngIf="isUtilityPayment == true">
+                        <td><strong>Office</strong></td>
+                        <td class="data-bind">{{prs.office}}
+                        </td>
+                    </tr>
+                    <tr *ngIf="isUtilityPayment == true">
+                        <td><strong>Bill/Agreement Type</strong></td>
+                        <td class="data-bind">{{prs.billType}}
+                        </td>
+                    </tr>
+                    <tr *ngIf="isUtilityPayment == true">
+                        <td><strong>Bill/Agreement No.</strong></td>
+                        <td class="data-bind">{{prs.billNo}}
+                        </td>
+                    </tr>
+
+                    <tr *ngIf="isUtilityPayment == true">
+                        <td><strong>Bill/Agreemnt Attachment</strong></td>
+                        <td class="data-bind"><a href="{{baseUrl}}{{prs.attachedBill}}" target="_blank">View Bill
+                                Attachment</a>
+
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Description</strong></td>
+                        <td class="data-bind">{{prs.description}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Note</strong></td>
+                        <td class="data-bind">{{prs.note}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Department</strong></td>
+                        <td class="data-bind">{{prs.department}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Project Name</strong></td>
+                        <td class="data-bind">{{prs.project}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Location</strong></td>
+                        <td class="data-bind">{{prs.location}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Requested By</strong></td>
+                        <td class="data-bind">{{prs.requestedBy}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Approved By</strong></td>
+                        <td class="data-bind">{{prs.approvedBy}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <hr>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td colspan="2"><strong class="potitle">Check list</strong></td>
+
+                    </tr>
+                    <tr>
+                        <td><strong>Quatation</strong></td>
+                        <td class="data-bind" *ngIf="prs.quotation">Yes
+                        </td>
+                        <td class="data-bind" *ngIf="!prs.quotation">No
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Po Copy</strong></td>
+                        <td class="data-bind" *ngIf="prs.poCopy">Yes
+                        </td>
+                        <td class="data-bind" *ngIf="!prs.poCopy">No
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Checked Invoice Copy</strong></td>
+                        <td class="data-bind" *ngIf="prs.checkedInvoiceCopy">Yes
+
+                        </td>
+                        <td class="data-bind" *ngIf="!prs.checkedInvoiceCopy">No
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Approval</strong></td>
+                        <td class="data-bind" *ngIf="prs.approval">Yes
+                        </td>
+                        <td class="data-bind" *ngIf="!prs.approval">No
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Supporting Documents</strong></td>
+                        <td class="data-bind" *ngIf="prs.supportingDocuments">Yes
+
+                        </td>
+                        <td class="data-bind" *ngIf="!prs.supportingDocuments">No
+
+                        </td>
+                    </tr>
+
+                    <!-- <tr>
+      <td><strong>Quotation</strong></td>
+      <td class="data-bind"> <br/> <hr></td>
+  </tr> -->
+                    <tr *ngIf="prs.approvalStatus == 'PRS_APPROVED'">
+                        <td colspan="2">
+                            <hr>
+                        </td>
+                    </tr>
+                    <tr *ngIf="prs.approvalStatus == 'PRS_APPROVED'">
+                        <td colspan="2">This is a digitally approved PRS and does not require signature.</td>
+                    </tr>
+                </table>
+            </div>
+
+
+            <div class="row" *ngIf="prs.invoiceFileUpload!=null">
+                <table class="table table-bordered" style="width: 60%; margin: 0px auto">
+                    <tr *ngIf="prs.invoiceFileUpload!=null">
+                        <td colspan="2"><strong class="potitle">Invoice Attachment</strong></td>
+                    </tr>
+                    <tr *ngIf="prs.invoiceFileUpload!=null">
+                        <td colspan="2"><a href="{{baseUrl}}{{prs.invoiceFileUpload}}" target="_blank">
+                                View Attachment</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+
+            <br>
+
+
+
+
+
+
+        </div>
+        <div class="col-sm-2">
+            <div class="po-action">
+                <button mat-flat-button color="primary" (click)="printComponent('table')">
+                    <mat-icon>print</mat-icon> Print
+                </button>
+                <!-- <button mat-flat-button color="primary" class="green-btn"
+                    *ngIf="prsTaskId!=null" (click)="takeAction()">
+                    <mat-icon>verified_user</mat-icon>
+                    Approve/Reject
+                </button> -->
+                <button mat-flat-button color="warn" (click)="back()">
+                    <mat-icon>chevron_left</mat-icon>
+                    Back
+                </button>
+            </div>
+            <div class="po-action">
+                <div *ngIf="prs.attachments.length>0">
+                    <h3 class="view-download">Additional Documents</h3>
+                    <!-- <div *ngFor="let item of prs.attachments;" class="grouped view-attachments">
+                        <a class="attachments" *ngIf="item" href="{{baseUrl}}{{item}}" target="_blank">
+                            {{item.substring(item.lastIndexOf('/')+38,item.length)}}</a>
+                    </div> -->
+                    <div *ngFor="let attach of prs.attachments" class="grouped view-attachments">
+                        <!-- <a href="{{baseUrl}}{{attach}}" *ngIf="lessThan(attach.substring(attach.lastIndexOf('/')+1,attach.length))"
+                           target="_blank">{{attach.substring(attach.lastIndexOf('/')+1,attach.length)}}</a>
+                        <a href="{{baseUrl}}{{attach}}" *ngIf="greaterThan(attach.substring(attach.lastIndexOf('/')+1,attach.length))"
+                           target="_blank">{{attach.substring(attach.lastIndexOf('/')+38,attach.length)}}</a> -->
+
+                        <a href="{{baseUrl}}{{attach}}" *ngIf="containsUUID(attach.substring(attach.lastIndexOf('/')+1,attach.length))"
+                           target="_blank">{{attach.substring(attach.lastIndexOf('/')+38,attach.length)}}</a>
+                        <a href="{{baseUrl}}{{attach}}" *ngIf="!containsUUID(attach.substring(attach.lastIndexOf('/')+1,attach.length))"
+                           target="_blank">{{attach.substring(attach.lastIndexOf('/')+1,attach.length)}}</a>
+                     </div>
+                </div>
+                <div *ngIf="prs.attachments.length == 0">
+                    <p class="text-blue">No Documents</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

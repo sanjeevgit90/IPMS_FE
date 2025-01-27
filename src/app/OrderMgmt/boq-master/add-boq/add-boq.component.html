@@ -1,0 +1,120 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form [formGroup]="addBoqForm">
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /Page Header -->
+
+                <div class="tab-content">
+
+                    <!-- Add User -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="col-md-12 mandatory">*Fields are Mandatory</div>
+
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.boqNo.errors }">
+                                                <mat-label>BOQ No.</mat-label>
+                                                <input matInput name="boqNo" type="text"
+                                                    placeholder="Please enter boq no."
+                                                    [(ngModel)]="BoqEntityData.boqNo" formControlName="boqNo"
+                                                    maxlength="100" required>
+                                                <div *ngIf="isSubmitted && formControls.boqNo.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.boqNo.errors.required">BOQ No. is
+                                                        required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.accountId.errors }">
+                                                <mat-label>Project</mat-label>
+                                                <mat-select [(ngModel)]="BoqEntityData.accountId"
+                                                    formControlName="accountId">
+                                                    <!-- <mat-option>-Select Project-</mat-option> -->
+                                                    <mat-option *ngFor="let project of projectList"
+                                                        value="{{project.selectionid}}">
+                                                        {{project.selectionvalue}}</mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.accountId.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.accountId.errors.required">Project is required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.boqDate.errors }">
+                                                <input matInput name="boqDate"
+                                                    placeholder="Please enter boq date." type="text"
+                                                    [matDatepicker]="picker" [(ngModel)]="BoqEntityData.boqDate"
+                                                    formControlName="boqDate" required>
+                                                <div *ngIf="isSubmitted && formControls.boqDate.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.boqDate.errors.required">BOQ date
+                                                        is required</div>
+                                                </div>
+                                                <mat-datepicker-toggle matSuffix [for]="picker">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #picker></mat-datepicker>
+                                            </mat-form-field>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="submit-section">
+                                    <button class="btn btn-primary" (click)="saveBoq()" *ngIf="add">
+                                        <mat-icon aria-hidden="false">save</mat-icon> Save
+                                    </button>
+
+                                    <button type="submit" class="btn btn-info" (click)="updateBoq()"
+                                        *ngIf="edit">
+                                        <mat-icon aria-hidden="false">update</mat-icon> Update
+                                    </button>
+
+                                    <button type="submit" class="btn btn-danger" (click)="cancel()">
+                                        <mat-icon aria-hidden="false">close</mat-icon> Cancel
+                                    </button>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,483 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form [formGroup]="addPartyForm">
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /Page Header -->
+                <div *ngIf="edit">
+                    <app-vendortab highlightedtab="partytab"> </app-vendortab>
+                </div>
+                <div class="tab-content">
+
+                    <!-- Add User -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="col-md-12 mandatory">*Fields are Mandatory</div>
+                                <h2 class="blue-gradient blue-text">Basic Details</h2>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.partyType.errors }">
+                                                <mat-label>Party Type</mat-label>
+                                                <mat-select [(ngModel)]="PartyEntityData.partyType"
+                                                    formControlName="partyType">
+                                                    <mat-option>- Select Type -</mat-option>
+                                                    <mat-option value="Client">Client</mat-option>
+                                                    <mat-option value="Vendor">Vendor</mat-option>
+                                                    <mat-option value="Channel Partner">Channel Partner</mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.partyType.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.partyType.errors.required">Party type is
+                                                        required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.partyNo.errors }">
+                                                <mat-label>Party No.</mat-label>
+                                                <input matInput name="partyNo" type="text"
+                                                    placeholder="Please enter party no."
+                                                    [(ngModel)]="PartyEntityData.partyNo" formControlName="partyNo"
+                                                    maxlength="100" required>
+                                                <div *ngIf="isSubmitted && formControls.partyNo.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.partyNo.errors.required">Party no. is
+                                                        required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.partyName.errors }">
+                                                <mat-label>Party Name</mat-label>
+                                                <input matInput name="partyName" type="text"
+                                                    placeholder="Please enter party name."
+                                                    [(ngModel)]="PartyEntityData.partyName" formControlName="partyName"
+                                                    maxlength="100" required>
+                                                <div *ngIf="isSubmitted && formControls.partyName.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.partyName.errors.required">Party name is
+                                                        required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.organisationId.errors }">
+                                                <mat-label>Organisation</mat-label>
+                                                <mat-select [(ngModel)]="PartyEntityData.organisationId" 
+                                                [typeaheadDebounceInterval]="matSelectDuration" 
+                                                    formControlName="organisationId" [compareWith]="compareObjects">
+                                                    <mat-option>- Select Organisation -</mat-option>
+                                                    <!-- <mat-option value=1>Aurionpro Solutions Ltd.</mat-option> -->
+                                                    <mat-option *ngFor="let org of orgList" value="{{org.selectionid}}">
+                                                        {{org.selectionvalue}}</mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.organisationId.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.organisationId.errors.required">
+                                                        Organisation is required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.contactPersonName.errors }">
+                                                <mat-label>Contact Person</mat-label>
+                                                <input matInput name="contactPersonName" type="text"
+                                                    placeholder="Please enter contact person."
+                                                    [(ngModel)]="PartyEntityData.contactPersonName"
+                                                    formControlName="contactPersonName" maxlength="100" required>
+                                                <div *ngIf="isSubmitted && formControls.contactPersonName.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.contactPersonName.errors.required">Contact
+                                                        person is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.mobileNo.errors }">
+                                                <mat-label>Mobile No.</mat-label>
+                                                <input matInput name="mobileNo" type="text"
+                                                    placeholder="Please enter mobile no."
+                                                    [(ngModel)]="PartyEntityData.mobileNo" formControlName="mobileNo"
+                                                    maxlength="10" minlength="10" numbersOnly required>
+                                                <div *ngIf="isSubmitted && formControls.mobileNo.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.mobileNo.errors.required">Mobile no. is
+                                                        required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Landline No.</mat-label>
+                                                <input matInput name="landlineNo" type="text"
+                                                    placeholder="Please enter landline no."
+                                                    [(ngModel)]="PartyEntityData.landlineNo"
+                                                    formControlName="landlineNo" maxlength="12" minlength="10"
+                                                    numbersOnly>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <!-- <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.emailId.errors }">
+                                                <mat-label>Email</mat-label>
+                                                <input matInput name="emailId" type="email"
+                                                    placeholder="Please enter email."
+                                                    [(ngModel)]="PartyEntityData.emailId" formControlName="emailId"
+                                                    maxlength="50" required>
+                                                <div *ngIf="isSubmitted && formControls.emailId.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.emailId.errors.required">Email is required
+                                                    </div>
+                                                    <div *ngIf="formControls.emailId.errors.email">Email must be a valid
+                                                        email
+                                                        address</div>
+                                                </div>
+                                            </mat-form-field> -->
+                                            <mat-form-field class="example-full-width"
+                                                    [ngClass]="{ 'has-error': isSubmitted && formControls.emailId.errors }">
+                                                    <input matInput name="emailId" type="email" placeholder="Email Id"
+                                                        [(ngModel)]="PartyEntityData.emailId" formControlName="emailId"
+                                                        email="true" maxlength="60" required
+                                                        matTooltip="ie. sanjeev.gupta@aurionpro.com">
+                                                    <div *ngIf="isSubmitted && formControls.emailId.errors"
+                                                        class="error-text">
+                                                        <div *ngIf="formControls.emailId.errors.required">Email Id
+                                                            is required</div>
+                                                        <div *ngIf="formControls.emailId.errors.email">Email must be a valid email
+                                                            address</div>
+                                                    </div>
+                                                </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="col-sm-12 padding-zero">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width"
+                                                    [ngClass]="{ 'has-error': isSubmitted && formControls.dateOfIncorporation.errors }">
+                                                    <input matInput name="dateOfIncorporation"
+                                                        placeholder="Please enter date of incorporation." type="text"
+                                                        [matDatepicker]="picker"
+                                                        [(ngModel)]="PartyEntityData.dateOfIncorporation"
+                                                        formControlName="dateOfIncorporation" required>
+                                                    <div *ngIf="isSubmitted && formControls.dateOfIncorporation.errors"
+                                                        class="error-text">
+                                                        <div *ngIf="formControls.dateOfIncorporation.errors.required">
+                                                            Date of incorporation
+                                                            is required</div>
+                                                    </div>
+                                                    <mat-datepicker-toggle matSuffix [for]="picker">
+                                                    </mat-datepicker-toggle>
+                                                    <mat-datepicker #picker></mat-datepicker>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12 padding-zero">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width">
+                                                    <mat-label>Contact Id</mat-label>
+                                                    <input matInput name="contactId" type="text"
+                                                        placeholder="Please enter contact id."
+                                                        [(ngModel)]="PartyEntityData.contactId"
+                                                        formControlName="contactId" maxlength="100">
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <!-- <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Incorporation Certificate Attachment</mat-label>
+                                                <input matInput name="dateOfIncorporationAttachment" type="text" placeholder="select attachment"
+                                                    [(ngModel)]="PartyEntityData.dateOfIncorporationAttachment" formControlName="dateOfIncorporationAttachment">
+                                            </mat-form-field>
+                                        </div> -->
+                                        <app-fileupload [files]="dateOfIncorporationAttachment" maxSize="2048"
+                                            labelname="Incorporation Certificate Attachment"
+                                            modulename="partyincorporationcertificate"></app-fileupload>
+                                    </div>
+                                    <div class="col-sm-3 row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width"
+                                                    [ngClass]="{ 'has-error': isSubmitted && formControls.natureOfServiceProviding.errors }">
+                                                    <mat-label>Nature Of Service Providing</mat-label>
+                                                    <input matInput name="natureOfServiceProviding" type="text"
+                                                        placeholder="Please enter nature of service providing."
+                                                        [(ngModel)]="PartyEntityData.natureOfServiceProviding"
+                                                        formControlName="natureOfServiceProviding" maxlength="100"
+                                                        required>
+                                                    <div *ngIf="isSubmitted && formControls.natureOfServiceProviding.errors"
+                                                        class="error-text">
+                                                        <div
+                                                            *ngIf="formControls.natureOfServiceProviding.errors.required">
+                                                            Nature of service providing is required</div>
+                                                    </div>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width"
+                                                    [ngClass]="{ 'has-error': isSubmitted && formControls.smeRegNo.errors }">
+                                                    <mat-label>SME Reg. No.</mat-label>
+                                                    <input matInput name="smeRegNo" type="text"
+                                                        placeholder="Please enter sme reg. no."
+                                                        [(ngModel)]="PartyEntityData.smeRegNo"
+                                                        formControlName="smeRegNo" maxlength="100" required>
+                                                    <div *ngIf="isSubmitted && formControls.smeRegNo.errors"
+                                                        class="error-text">
+                                                        <div *ngIf="formControls.smeRegNo.errors.required">SME reg. no.
+                                                            is required</div>
+                                                    </div>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                                <h2 class="blue-gradient blue-text">Attachments</h2>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.panNo.errors }">
+                                                <mat-label>PAN No.</mat-label>
+                                                <input matInput name="panNo" type="text"
+                                                    placeholder="Please enter pan no."
+                                                    [(ngModel)]="PartyEntityData.panNo" formControlName="panNo"
+                                                    maxlength="10" required>
+                                                <div *ngIf="isSubmitted && formControls.panNo.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.panNo.errors.required">PAN no. is required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.tanNo.errors }">
+                                                <mat-label>TAN No.</mat-label>
+                                                <input matInput name="tanNo" type="text"
+                                                    placeholder="Please enter tan no."
+                                                    [(ngModel)]="PartyEntityData.tanNo" formControlName="tanNo"
+                                                    maxlength="10" required>
+                                                <div *ngIf="isSubmitted && formControls.tanNo.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.tanNo.errors.required">TAN no. is required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>ARN No.</mat-label>
+                                                <input matInput name="arnNo" type="text"
+                                                    placeholder="Please enter pan no."
+                                                    [(ngModel)]="PartyEntityData.arnNo" formControlName="arnNo"
+                                                    maxlength="15">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <app-fileupload [files]="panNoAttachment" maxSize="2048"
+                                            labelname="PAN Attachment" modulename="partypan"></app-fileupload>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <app-fileupload [files]="tanNoAttachment" maxSize="2048"
+                                            labelname="TAN Certificate Attachment" modulename="partytan">
+                                        </app-fileupload>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <app-fileupload [files]="arnNoAttachment" maxSize="2048"
+                                            labelname="ARN Attachment" modulename="partyarn"></app-fileupload>
+                                    </div>
+                                </div>
+
+                                <h2 class="blue-gradient blue-text">Bank Details</h2>
+                                <div class="row">
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Bank Name</mat-label>
+                                                <input matInput name="bankName" type="text"
+                                                    placeholder="Please enter bank name."
+                                                    [(ngModel)]="PartyEntityData.bankName" formControlName="bankName"
+                                                    maxlength="100">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Branch Name & Address</mat-label>
+                                                <input matInput name="branchNameandAddress" type="text"
+                                                    placeholder="Please enter branch name & address."
+                                                    [(ngModel)]="PartyEntityData.branchNameandAddress"
+                                                    formControlName="branchNameandAddress" maxlength="100">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Account Type</mat-label>
+                                                <input matInput name="accountType" type="text"
+                                                    placeholder="Please enter account type."
+                                                    [(ngModel)]="PartyEntityData.accountType"
+                                                    formControlName="accountType" maxlength="50">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Account No</mat-label>
+                                                <input matInput name="accountNo" type="text"
+                                                    placeholder="Please enter account no."
+                                                    [(ngModel)]="PartyEntityData.accountNo" formControlName="accountNo"
+                                                    maxlength="25">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>MICR Code</mat-label>
+                                                <input matInput name="micrCode" type="text"
+                                                    placeholder="Please enter micr code."
+                                                    [(ngModel)]="PartyEntityData.micrCode" formControlName="micrCode"
+                                                    maxlength="20">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>IFSC/NEFT Code</mat-label>
+                                                <input matInput name="ifscNeftCode" type="text"
+                                                    placeholder="Please enter ifsc neft code."
+                                                    [(ngModel)]="PartyEntityData.ifscNeftCode"
+                                                    formControlName="ifscNeftCode" maxlength="20">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Remarks</mat-label>
+                                                <input matInput name="remarks" type="text"
+                                                    placeholder="Please enter remarks."
+                                                    [(ngModel)]="PartyEntityData.remarks" formControlName="remarks"
+                                                    maxlength="200">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <!-- <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Cancelled Cheque Attachment</mat-label>
+                                                <input matInput name="bankNameAttachment" type="text" placeholder="select attachment"
+                                                    [(ngModel)]="PartyEntityData.bankNameAttachment" formControlName="bankNameAttachment">
+                                            </mat-form-field>
+                                        </div> -->
+                                        <app-fileupload [files]="bankNameAttachment" maxSize="2048"
+                                            labelname="Cancelled Cheque Attachment" modulename="partycancelledcheque">
+                                        </app-fileupload>
+                                    </div>
+                                </div>
+
+                                <div class="submit-section">
+                                    <button mat-flat-button color="accent" (click)="saveParty()" *ngIf="add">
+                                        <mat-icon aria-hidden="false">save</mat-icon> Save
+                                    </button>
+
+                                    <button mat-flat-button color="accent" (click)="updateParty()" *ngIf="edit">
+                                        <mat-icon aria-hidden="false">update</mat-icon> Update
+                                    </button>
+
+                                    <button mat-flat-button color="warn" (click)="cancel()">
+                                        <mat-icon aria-hidden="false">close</mat-icon> Cancel
+                                    </button>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

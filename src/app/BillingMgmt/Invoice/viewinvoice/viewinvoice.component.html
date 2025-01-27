@@ -1,0 +1,197 @@
+
+
+  <!-- <div class="container" >
+	<p></p>
+  <table class="table table-bordered" name="table" id="table">
+  	<tr>
+  		<td class="center-align" colspan="2"><strong class="potitle">Invoice</strong></td>
+  	</tr>
+
+  	<tr>
+  		<td>-- <strong class="block-text">Consignor:</strong>
+  			<p class="description-po">
+  				<span>{{dc.partyname}}</span>
+			</p>
+        <strong class="block-text">Full address:</strong>
+        <p class="description-po">
+          <span>{{dc.address}}</span>
+          <span>{{dc.contactperson}}</span>
+      </p>
+      <strong class="block-text">Contact Detail:</strong>
+        <p class="description-po">
+          <span>{{dc.mobileno}}</span>
+      </p>
+  		</td>
+      <td>
+        <strong class="block-text">DC No:</strong>
+        <p class="description-po">
+          <span>{{dc.dcno}}</span>
+      </p>
+       <strong class="block-text">Date:</strong>
+        <p class="description-po">
+          <span>{{dc.dcdate| date:'dd-MM-yyyy'}}</span>
+      </p>
+       <strong class="block-text">GST No:</strong>
+        <p class="description-po">
+          <span>{{dc.gstno}}</span>
+      </p>
+      </td>
+  		
+  	</tr>
+
+
+      <tr>
+      <td>
+        <strong class="block-text">Consignee Name: </strong>
+        <p class="description-po">
+          <span>{{dc.consigneename}}</span>
+      </p>
+
+       <strong class="block-text">Contact Detail:  </strong>
+        <p class="description-po">
+          <span>{{dc.consigneecontact}}</span>
+      </p>
+       
+      </td>
+      <td>
+        <strong class="block-text">Hand Carry shipment</strong>
+        <p class="description-po">
+          <span></span>
+      </p>
+     
+      </td>
+      </tr>
+      <tr>
+      <td>
+        <strong class="block-text">Ship To</strong>
+        <p class="description-po">
+          <span>{{dc.shippedto}}</span>
+      </p>
+     
+      </td>
+    </tr>
+     <tr>
+      <td colspan="2" style="padding: 0px; margin: 0px">
+          <table style="width: 100%" class="table table-bordered print-dc">
+            <tr>
+              <th>Asset Name</th>
+              <th>Serial No.</th>
+              <th>Category</th>
+              <th>Product</th>
+              <th style="width:300px"> Unique Site ID </th>
+            </tr>
+            <tr *ngFor="let item of dc.asset">
+              <td>{{item.assetname}} </td>
+              <td>{{item.serialno}} </td>
+              <td>{{item.category}}</td>
+              <td>{{item.productname}}</td>
+              <td> </td>
+             </tr>
+           
+            <tr>
+              <td colspan="6">
+                <div class="col-md-4"><strong>Aurionpro Solutions Ltd.</strong>
+                  <br/><br/><br/><br/><br/>
+                                      <strong class="block-text">Signature </strong>
+                  </div>
+                
+                 <div class="col-md-4 center-align"><strong>Support Engineer Signature.</strong>
+                  <br/><br/><br/><br/><br/>
+                                      <strong class="block-text">Signature </strong>
+                  </div>
+
+                <div class="col-md-4 center-align"><strong>Division Coordinator</strong> 
+                  <br/><br/><br/><br/><br/>
+                  <strong class="block-text">Signature </strong></div>
+              </td>
+            </tr>
+
+            <tr>
+              <td colspan="6">
+               <p>There is no consideration received / receivable in cash or kind for the above goods.</p>
+               <p class="block-text" style="margin-top: 40px; font-weight: bold;">** This is a computer generated document, signatures are not required **</p>
+              </td>
+            </tr>
+          </table>
+     </td>       
+   </tr>
+  </table>
+  <div class="clearfix"></div>
+   <div class="button-area"> 
+   <button class="btn btn-warning"  onclick="printDiv();" (click)="disablePrint()" ><span class="glyphicon glyphicon-print"></span> Print</button> 
+   <button  class="btn btn-danger languageText" (click)="back()"><span class="glyphicon glyphicon-chevron-left"></span> Back</button>
+  </div>>			
+  <div class="clearfix"></div>
+ <!-- <div class="col-md-4 printhide" *ngIf="dc.printFlag||printFlag" >
+						<div class="form-group"
+							ng-class="{ 'has-error' : userform.challanAttachment.$invalid && !userform.challanAttachment.$pristine }">
+							<label for="ec" class="languageText" >Upload Delivery Challan Signed copy:</label><span class="view-attachment" ng-if="dc.challanAttachmentFilePath!=null" style="top: 38px; width: 60%"><a href="{{dc.challanAttachmentFilePath}}" target="_blank">View Delivery Challan</a></span>
+							             
+							<input id="fileUpload" class="upload-file form-control" type="file" name="files[]" data-ng-model="dc.challanAttachment"  base-sixty-four-input >																
+							<div ng-messages="userform.challanAttachment.$error" ng-if="userform.challanAttachment.$touched">
+									<div ng-messages-include="app/Shared/template.html"></div>
+								</div>
+						</div>
+					</div>
+					 <div class="clearfix"></div>
+					<div class="col-md-4 marginTop38 printhide" data-ng-if="dc.printFlag||printFlag" >
+						<button type="button" class="btn btn-success" data-ng-click="upload()"><span class="glyphicon glyphicon-upload"></span> Upload</button>
+					</div>--> 
+  <div class="clearfix"></div>
+   <div class="submit-area"> 
+  </div>
+<script type="text/javascript">
+	function printDiv() {
+    var divToPrint = document.getElementById('table');
+    var htmlToPrint = '' +
+        '<style type="text/css">' +
+        '.table-bordered {' +
+        'border:1px solid #000;' +
+        'font-size: 12px;'+
+        '}' +
+        '.center-align {' +
+        'text-align: center;' +
+        '}' +
+        'p {' +
+        'margin:0px 0px 10px;' +
+        '}' +
+         '.marginTop70 {' +
+        'margin-top:70px;' +
+        '}' +
+        '.col-md-4 {' +
+        'width: 33.33333333%;'+
+        '}' +
+         '.col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9 {' +
+        'float: left;'+
+        '}' +
+        '.description-po span {' +
+        'display: block;' +
+        '}' +
+        '.potitle {' +
+        'font-size: 18px;' +
+        '}' +
+        '.right-align {' +
+        'text-align: right;' +
+        '}' +
+        
+        'table {' +
+        'border-collapse:collapse;' +
+        'border-spacing: 0;'+
+        '}' +
+        '.table {' +
+        'width: 100%;' +
+        'margin-bottom: 0px;'+
+        'font-family: Arial;'+
+        '}' +
+        '.table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th {' +
+        'border:1px solid #000;' +
+        'padding:8px 8px;' +
+        '}' +
+        '</style>';
+    htmlToPrint += divToPrint.outerHTML;
+    newWin = window.open("");
+    newWin.document.write(htmlToPrint);
+    newWin.print();
+    newWin.close();
+}
+</script>

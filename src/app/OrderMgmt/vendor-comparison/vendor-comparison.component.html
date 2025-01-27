@@ -1,0 +1,161 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form>
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                        <div class="col-auto float-right ml-auto">
+
+                            <button mat-flat-button color="accent" (click)="addVendorComparison()">
+                                <mat-icon aria-hidden="false">add</mat-icon> Add Vendor Comparison
+                            </button>
+                            <button mat-flat-button color="warn" (click)="goBack()">
+                                <mat-icon aria-hidden="false">chevron_left</mat-icon> Back
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- /Page Header -->
+                <div class="tab-content">
+                    <!-- Add Family -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+
+                            <!-- Search Table -->
+                            <!-- <div class="total-rec">Total Records: {{totalRecords}}</div> -->
+
+                            <div class="cd-products-table" *ngIf="IsVendorComparison.length>0">
+                                <div class="features">
+                                    <ul class="cd-features-list">
+                                        <li>Customer Name</li>
+                                        <li>Amount</li>
+                                        <li>Delivery Date</li>
+                                        <li>Payment Terms</li>
+                                        <li>Quality</li>
+                                        <li>Remarks</li>
+                                        <li style="min-height: 60px;">Action</li>
+                                    </ul>
+                                </div>
+
+                                <div class="cd-products-wrapper">
+                                    <ul class="cd-products-columns">
+                                        <li class="product" *ngFor="let vc of VendorComparisonMasterData.filteredData">
+                                            <ul class="cd-features-list">
+                                                <li class="strong">{{vc.customerName}}</li>
+                                                <li>{{vc.amount}}</li>
+                                                <li>{{vc.deliveryTime | date : 'dd/MM/yyyy'}}</li>
+                                                <li>{{vc.paymentTerms}}</li>
+                                                <li>{{vc.quality}}</li>
+                                                <li>{{vc.remarks}}</li>
+                                                <li>
+                                                    <a mat-flat-button color="primary" matTooltip="Edit this record"
+                                                        [routerLink]="['/searchPurchaseOrder/EditVendorComparison', vc.entityId,'edit']"
+                                                        title="Edit">
+                                                        <mat-icon aria-hidden="false">edit</mat-icon>
+                                                    </a>
+                                                    <button mat-flat-button color="warn" matTooltip="Delete this record"
+                                                        (click)="deleteVendorComparison(vc.entityId)" title="Delete">
+                                                        <mat-icon aria-hidden="false">delete</mat-icon>
+                                                    </button></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+
+                            <div *ngIf="IsVendorComparison.length==0" class="no-compare">
+                                No Comparison Found
+                            </div>
+                            <!-- <table mat-table [dataSource]="VendorComparisonMasterData" matSort
+                                class="mat-elevation-z8">
+                                <ng-container matColumnDef="customerName">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Customer Name</th>
+                                    <td mat-cell *matCellDef="let VendorComparisonMasterData "
+                                        data-label="Customer Name">
+                                        {{VendorComparisonMasterData.customerName}}
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="amount">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Amount</th>
+                                    <td mat-cell *matCellDef="let VendorComparisonMasterData " data-label="Amount">
+                                        {{VendorComparisonMasterData.amount}}
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="deliveryTime">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Delivery Date</th>
+                                    <td mat-cell *matCellDef="let VendorComparisonMasterData "
+                                        data-label="Delivery Date">
+                                        {{VendorComparisonMasterData.deliveryTime | date : 'dd/MM/yyyy'}}
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="paymentTerms">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Payment Terms</th>
+                                    <td mat-cell *matCellDef="let VendorComparisonMasterData "
+                                        data-label="Payment Terms">
+                                        {{VendorComparisonMasterData.paymentTerms}}
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="quality">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Quality</th>
+                                    <td mat-cell *matCellDef="let VendorComparisonMasterData " data-label="Quality">
+                                        {{VendorComparisonMasterData.quality}}
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="remarks">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Remarks</th>
+                                    <td mat-cell *matCellDef="let VendorComparisonMasterData " data-label="Remarks">
+                                        {{VendorComparisonMasterData.remarks}}
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="action">
+                                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                                    <td mat-cell *matCellDef="let VendorComparisonMasterData">
+
+                                        <a mat-flat-button color="primary" matTooltip="Edit this record"
+                                            [routerLink]="['/searchPurchaseOrder/EditVendorComparison', VendorComparisonMasterData.entityId,'edit']"
+                                            title="Edit">
+                                            <mat-icon aria-hidden="false">edit</mat-icon>
+                                        </a>
+                                        <button mat-flat-button color="warn" matTooltip="Delete this record"
+                                            (click)="deleteVendorComparison(VendorComparisonMasterData.entityId)"
+                                            title="Delete">
+                                            <mat-icon aria-hidden="false">delete</mat-icon>
+                                        </button>
+                                    </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+                            <mat-paginator [pageSize]="pageSizedisplay" [pageSizeOptions]="itemPerPage"
+                                showFirstLastButtons>
+                            </mat-paginator> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

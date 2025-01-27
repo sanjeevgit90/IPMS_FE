@@ -1,0 +1,121 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form [formGroup]="addPoFulfilmentForm">
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /Page Header -->
+
+                <div class="tab-content">
+
+                    <!-- Add PO Payment -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="col-md-12 mandatory">*Fields are Mandatory</div>
+
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.fulfilmentDate.errors }">
+                                                <input matInput name="fulfilmentDate" placeholder="Fulfilment Date " type="text"
+                                                    [matDatepicker]="picker" [(ngModel)]="PoFulfilmentData.fulfilmentDate"
+                                                    formControlName="fulfilmentDate">
+                                                <div *ngIf="isSubmitted && formControls.fulfilmentDate.errors" class="error-text">
+                                                    <div *ngIf="formControls.fulfilmentDate.errors.required">Fulfilment date is
+                                                        required</div>
+                                                </div>
+                                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.delayReason.errors }">
+                                                <input matInput name="delayReason" type="text" placeholder="Delay Reason"
+                                                    [(ngModel)]="PoFulfilmentData.delayReason" formControlName="delayReason"
+                                                    maxlength="60">
+                                                <div *ngIf="isSubmitted && formControls.delayReason.errors" class="error-text">
+                                                    <div *ngIf="formControls.delayReason.errors.required">Delay reason is
+                                                        required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.nextdeliveryDate.errors }">
+                                                <input matInput name="nextdeliveryDate" placeholder="Next Delivery Date " type="text"
+                                                    [matDatepicker]="picker1" [(ngModel)]="PoFulfilmentData.nextdeliveryDate"
+                                                    formControlName="nextdeliveryDate">
+                                                <div *ngIf="isSubmitted && formControls.nextdeliveryDate.errors" class="error-text">
+                                                    <div *ngIf="formControls.nextdeliveryDate.errors.required">Next delivery date is
+                                                        required</div>
+                                                </div>
+                                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker1></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Delay Category</mat-label>
+                                                <mat-select [(ngModel)]="PoFulfilmentData.delayCategory"
+                                                    formControlName="delayCategory">
+                                                    <mat-option>- Select -</mat-option>
+                                                    <mat-option value="High">High</mat-option>
+                                                    <mat-option value="Medium">Medium</mat-option>
+                                                    <mat-option value="Low">Low</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                                <div class="submit-section">
+                                  
+
+                                    <button mat-flat-button color="accent" (click)="addPoFulfilment('save')" *ngIf="add">
+                                        <mat-icon aria-hidden="false">save</mat-icon> Save</button>
+
+                                    <button mat-flat-button color="accent" (click)="addPoFulfilment('update')" *ngIf="edit">
+                                        <mat-icon aria-hidden="false">update</mat-icon> Update</button>
+                                    
+                                    <button mat-flat-button color="warn" (click)="back()">
+                                        <mat-icon aria-hidden="false">cancel</mat-icon> Back</button>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

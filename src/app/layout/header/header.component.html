@@ -1,0 +1,101 @@
+
+  <!-- Header -->
+  <div class="header"> 
+    
+    <!-- Logo -->
+    <div class="header-left"> 
+      
+       <img src="assets/Images/home-logo.png"  alt=""> 
+    
+     
+    </div>
+    <!-- /Logo --> 
+
+    <div class="Aurionpro-logo-inner">
+      <img src="assets/Images/Aurionpro-logo.png" alt="Logo" title="Logo">
+
+  </div>
+    
+    <!-- <a id="toggle_btn"> <span class="bar-icon"> <span></span> <span></span> <span></span> </span> </a> <a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="glyphicon glyphicon-menu-hamburger"></i></a> 
+     -->
+    <!-- Header Menu -->
+
+    <div class="tl-district" *ngIf="roleTL">
+      <div class="form-group">
+          <mat-form-field>
+             
+              <mat-select [(ngModel)]="district"  [ngModelOptions]="{standalone: true}"
+              (selectionChange)="selectDistrict(district)">
+                <mat-option *ngFor="let districtdata of tldistict"
+                      value="{{districtdata.id.geographyname}}">
+                      {{districtdata.id.geographyname}}</mat-option>
+              </mat-select>
+          </mat-form-field>
+      </div>
+  </div>
+    <ul class="nav user-menu">
+      
+     
+      
+    
+      
+      <li class="nav-item dropdown has-arrow main-drop"> <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown"> <span class="user-img"><img src="assets/Images/duumy.jpg" alt=""> <span class="status online"></span></span> 
+        <span> {{username}}</span>
+       </a>
+        <div class="dropdown-menu"> 
+          <a class="dropdown-item" routerLink="/profile">My Profile</a>
+          <a class="dropdown-item" routerLink="/changepassword">Change Password</a>
+           <!-- <a class="dropdown-item" href="settings.html">Settings</a>  -->
+           <a class="dropdown-item" (click)="logout()">Logout</a> </div>
+      </li>
+    </ul>
+    <!-- /Header Menu --> 
+    
+    <!-- Mobile Menu -->
+    <div class="dropdown mobile-user-menu"> <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="glyphicon glyphicon-option-vertical"></i></a>
+      <div class="dropdown-menu dropdown-menu-right"> <a class="dropdown-item" href="profile.html">My Profile</a> <a class="dropdown-item" href="settings.html">Settings</a> <a class="dropdown-item" href="http://gsgassetsdev.aurionpro.com/HRMS">Logout</a> </div>
+    </div>
+    <!-- /Mobile Menu --> 
+    
+  </div>
+  <!-- /Header --> 
+
+  <!-- <p class="timeout"><strong>{{idleState}}</strong></p>  -->
+
+
+
+<script type="text/javascript">
+$("#profilepopup").popover({
+  title: '',
+  html: true,
+  placement: 'bottom',
+  trigger: 'manual',
+  delay: {
+      "show": 300,
+      "hide": 500
+  },
+  content: $(".alert_list").html()
+});
+
+$('#profilepopup').mouseover(function() {
+  $('#profilepopup').popover('show');
+});
+
+$(document).on('mouseleave', '.popover', function() {
+  $('#profilepopup').popover('hide');
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+  $('#mobile_btn').click(function(){
+    debugger;
+     $("#sidebar").animate({
+          width: "toggle"
+      });
+    //$('.menu-responsive').addClass('menu-responsive-right');
+  });
+
+
+
+})
+</script>

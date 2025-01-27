@@ -1,0 +1,179 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form [formGroup]="addPoPaymentForm">
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /Page Header -->
+
+                <div class="tab-content">
+
+                    <!-- Add PO Payment -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="col-md-12 mandatory">*Fields are Mandatory</div>
+
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.scheduleDate.errors }">
+                                                <input matInput name="scheduleDate" placeholder="Schedule Date " type="text"
+                                                    [matDatepicker]="picker" [(ngModel)]="PoPaymentData.scheduleDate"
+                                                    formControlName="scheduleDate">
+                                                <div *ngIf="isSubmitted && formControls.scheduleDate.errors" class="error-text">
+                                                    <div *ngIf="formControls.scheduleDate.errors.required">Schedule Date is
+                                                        required</div>
+                                                </div>
+                                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.amount.errors }">
+                                                <input matInput name="amount" type="text" placeholder="Amount"
+                                                    [(ngModel)]="PoPaymentData.amount"
+                                                    formControlName="amount" maxlength="10" numbersOnly required>
+                                                <div *ngIf="isSubmitted && formControls.amount.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.amount.errors.required">Amount is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="paymentMode" type="text" placeholder="Payment Mode"
+                                                    [(ngModel)]="PoPaymentData.paymentMode" formControlName="paymentMode"
+                                                    maxlength="60">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="paymentDate" placeholder="Actual Payment Date" type="text"
+                                                    [matDatepicker]="picker1" [(ngModel)]="PoPaymentData.paymentDate"
+                                                    formControlName="paymentDate">
+                                               
+                                                <mat-datepicker-toggle matSuffix [for]="picker1">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #picker1></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="ddNumber" type="text" placeholder="Cheque / DD number"
+                                                    [(ngModel)]="PoPaymentData.ddNumber" formControlName="ddNumber"
+                                                    maxlength="60">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width" >
+                                                <input matInput name="ddBank" type="text" placeholder="Cheque / DD Bank and Branch"
+                                                    [(ngModel)]="PoPaymentData.ddBank" formControlName="ddBank"
+                                                    maxlength="60">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width" >
+                                                <input matInput name="invoiceNumber" type="text" placeholder="Invoice Number"
+                                                    [(ngModel)]="PoPaymentData.invoiceNumber" formControlName="invoiceNumber"
+                                                    maxlength="60">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="invoiceDate" placeholder="Invoice Date" type="text"
+                                                    [matDatepicker]="picker2" [(ngModel)]="PoPaymentData.invoiceDate"
+                                                    formControlName="invoiceDate">
+                                               
+                                                <mat-datepicker-toggle matSuffix [for]="picker2">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #picker2></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width" >
+                                                <input matInput name="cashBackReceived" type="text" placeholder="CashBack Received"
+                                                    [(ngModel)]="PoPaymentData.cashBackReceived" formControlName="cashBackReceived"
+                                                    maxlength="60">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width" >
+                                                <input matInput name="interestPaid" type="text" placeholder="Interest Paid"
+                                                    [(ngModel)]="PoPaymentData.interestPaid"  formControlName="interestPaid" numbersOnly
+                                                    maxlength="60">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                                <div class="submit-section">
+                                  
+
+                                    <button mat-flat-button color="accent" (click)="addPoPaymnet('save')" *ngIf="add">
+                                        <mat-icon aria-hidden="false">save</mat-icon> Save</button>
+
+                                    <button mat-flat-button color="accent" (click)="addPoPaymnet('update')" *ngIf="edit">
+                                        <mat-icon aria-hidden="false">update</mat-icon> Update</button>
+                                    
+                                    <button mat-flat-button color="warn" (click)="back()">
+                                        <mat-icon aria-hidden="false">chevron_left</mat-icon> Back</button>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,101 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form [formGroup]="addTermsForm">
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /Page Header -->
+                <div>
+                    <app-potab highlightedtab="termstab"> </app-potab>
+                </div>
+                <div class="tab-content">
+
+                    <!-- Add User -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="col-md-12 mandatory">*Fields are Mandatory</div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <!-- <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.uploadedTermsAnnexure.errors }">
+                                                <mat-label>Upload Annexure</mat-label>
+                                                <input matInput name="uploadedTermsAnnexure" type="text"
+                                                    placeholder="Please enter annexure."
+                                                    [(ngModel)]="RCEntityData.uploadedTermsAnnexure" formControlName="uploadedTermsAnnexure"
+                                                    maxlength="250" required>
+                                                <div *ngIf="isSubmitted && formControls.uploadedTermsAnnexure.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.uploadedTermsAnnexure.errors.required">Annexure is
+                                                        required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div> -->
+                                        <app-fileupload [files] = "uploadedTermsAnnexure" maxSize="2048" labelname="Upload Annexure" modulename="rcannexure" [entitydata]="RCEntityData.entityId"></app-fileupload>
+                                    </div>
+
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.additionalTerms.errors }">
+                                                <mat-label>Additional Terms & Conditions</mat-label>
+                                                <input matInput name="additionalTerms" type="text"
+                                                    placeholder="Please enter additional terms & conditions."
+                                                    [(ngModel)]="RCEntityData.additionalTerms" formControlName="additionalTerms"
+                                                    maxlength="2000" required>
+                                                <div *ngIf="isSubmitted && formControls.additionalTerms.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.additionalTerms.errors.required">Annexure is
+                                                        required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="submit-section">
+                                    <button mat-flat-button color="primary" (click)="updateRC()">
+                                        <mat-icon aria-hidden="false">update</mat-icon> Save
+                                    </button>
+
+                                    <!-- <button mat-flat-button color="warn" (click)="cancel()">
+                                        <mat-icon aria-hidden="false">close</mat-icon> Cancel
+                                    </button> -->
+                                </div>
+
+                            </div>
+
+                            <div *ngIf="additionalTerms=='true'">
+                                <button mat-flat-button color="accent" (click)="saveTask()" *ngIf="taskId==null">
+                                     Send For Approval
+                                </button>
+                                <button mat-flat-button color="accent" (click)="reSendTask()" *ngIf="taskId!=null">
+                                    Re-send For Approval
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

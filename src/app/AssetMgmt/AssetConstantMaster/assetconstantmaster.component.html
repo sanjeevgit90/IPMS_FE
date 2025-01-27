@@ -1,0 +1,217 @@
+<app-loader *ngIf="showLoading"></app-loader>
+
+<div class="main-wrapper">
+    <app-header> </app-header>
+    <app-leftmenu></app-leftmenu>
+    <div class="page-wrapper">
+        <div class="content container-fluid">
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h3 class="page-title">{{PageTitle}}</h3>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a routerLink="/Dashboard"> Dashboard</a>
+                            </li>
+                            <li class="breadcrumb-item active">{{PageTitle}}</li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="col-auto float-right ml-auto">
+                            <!-- <button mat-flat-button color="warn" (click)="filterFunc()">
+                                    <mat-icon aria-hidden="false">filter</mat-icon> Filter
+                                </button> -->
+                            <a mat-flat-button color="warn" (click)="filterFunc()" *ngIf="!result && list">
+                                <mat-icon aria-hidden="false">filter</mat-icon> Filter
+                            </a>
+                            <a mat-flat-button color="primary" (click)="filterFunc()" *ngIf="result && list">
+                                <mat-icon aria-hidden="false">check_circle</mat-icon> Filter Applied
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Page Header -->
+            <div class="filter-box" *ngIf="filterDiv">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <mat-form-field class="example-full-width">
+                                <input matInput name="constantname" type="text" placeholder="Search by constant name"
+                                    [(ngModel)]="FilterData.constantname">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="submit-section">
+
+                    <button mat-flat-button color="primary" (click)="search()">
+                        <mat-icon aria-hidden="false">search</mat-icon> Search
+                    </button>
+                    <button mat-flat-button color="warn" (click)="cancelSearch()">
+                        <mat-icon aria-hidden="false">cancel</mat-icon> Cancel
+                    </button>
+                </div>
+            </div>
+            <div class="tab-content">
+                <form [formGroup]="addConstantForm">
+                    <!-- Add constant -->
+                    <div id="assetconstant" class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="col-md-12 mandatory">*Fields are Mandatory</div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.constantnamefor.errors }">
+                                                <mat-select [(ngModel)]="AssetConstantMasterData.constantnamefor"
+                                                    name="constantnamefor" formControlName="constantnamefor"
+                                                    placeholder="Select Asset Constant Type ">
+                                                    <mat-option value="EOL">EOL</mat-option>
+                                                    <mat-option value="DEPRECIATION">Depreciation</mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.constantnamefor.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.constantnamefor.errors.required">Asset
+                                                        Constant Type is
+                                                        required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.constantname.errors }">
+                                                <input matInput name="constantname" type="text"
+                                                    placeholder="Constant Name"
+                                                    [(ngModel)]="AssetConstantMasterData.constantname"
+                                                    formControlName="constantname" maxlength="60" required>
+                                                <div *ngIf="isSubmitted && formControls.constantname.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.constantname.errors.required">Constant name
+                                                        is
+                                                        required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.term.errors }">
+                                                <input matInput name="term" type="text" placeholder="Term"
+                                                    [(ngModel)]="AssetConstantMasterData.term" formControlName="term"
+                                                    maxlength="3" numbersOnly required>
+                                                <div *ngIf="isSubmitted && formControls.term.errors" class="error-text">
+                                                    <div *ngIf="formControls.term.errors.required">Term is
+                                                        required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+                                <div class="submit-section">
+                                    <button mat-flat-button color="accent" (click)="addAssetConstantData('save')"
+                                        *ngIf="list && AssetConstantAdd">
+                                        <mat-icon aria-hidden="false">save</mat-icon> Save
+                                    </button>
+
+
+                                    <button mat-flat-button color="warn" (click)="cancel()">
+                                        <mat-icon aria-hidden="false">close</mat-icon> Cancel
+                                    </button>
+
+                                    <button mat-flat-button color="accent" (click)="addAssetConstantData('update')"
+                                        *ngIf="edit">
+                                        <mat-icon aria-hidden="false">update</mat-icon> Update
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Search Table -->
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <div class="total-rec">Total Records: {{totalRecords}}</div>
+                            </div>
+                            <div class="col-auto float-right ml-auto">
+                                <mat-form-field class="search-input">
+                                    <input matInput (keyup)="applyFilter($event)" placeholder="Search..." #input>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+
+                        <table mat-table [dataSource]="AssetConstantRecordData" matSort class="mat-elevation-z8">
+
+                            <!-- Constant Type Column -->
+
+                            <ng-container matColumnDef="constantnamefor">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Asset Constant Type </th>
+                                <td mat-cell *matCellDef="let AssetConstantRecordData" data-label="Constant Type">
+                                    {{AssetConstantRecordData.constantnamefor}} </td>
+                            </ng-container>
+
+                            <!-- Constant Name Column -->
+
+                            <ng-container matColumnDef="constantname">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Constant Name </th>
+                                <td mat-cell *matCellDef="let AssetConstantRecordData" data-label="Constant Name">
+                                    {{AssetConstantRecordData.constantname}} </td>
+                            </ng-container>
+
+                            <!-- Constant Name Column -->
+
+                            <ng-container matColumnDef="term">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Term </th>
+                                <td mat-cell *matCellDef="let AssetConstantRecordData" data-label="Term">
+                                    {{AssetConstantRecordData.term}} </td>
+                            </ng-container>
+
+
+                            <!-- Action Column -->
+                            <ng-container matColumnDef="action">
+                                <th mat-header-cell *matHeaderCellDef> Action </th>
+                                <td mat-cell *matCellDef="let AssetConstantRecordData">
+                                    <button mat-flat-button color="primary"
+                                        [disabled]="AssetConstantRecordData.isDeleted"
+                                        (click)="editon(AssetConstantRecordData.entityId)" matTooltip="Edit this record"
+                                        *ngIf="AssetConstantEdit">
+                                        <mat-icon aria-hidden="false">edit</mat-icon>
+                                    </button>
+
+                                    <button mat-flat-button color="warn" [disabled]="AssetConstantRecordData.isDeleted"
+                                        (click)="onDelete(AssetConstantRecordData.entityId)"
+                                        matTooltip="Delete this record" *ngIf="AssetConstantDelete">
+                                        <mat-icon aria-hidden="false">delete</mat-icon>
+                                    </button>
+                                </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+                        <mat-paginator [pageSize]="pageSizedisplay" [pageSizeOptions]="itemPerPage"
+                            showFirstLastButtons>
+                        </mat-paginator>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

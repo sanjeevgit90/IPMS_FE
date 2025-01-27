@@ -1,0 +1,84 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form [formGroup]="cancelPoTaskForm">
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /Page Header -->
+
+                <div class="tab-content">
+
+                    <!-- Add User -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="col-md-12 mandatory">*Fields are Mandatory</div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label>Status </label>
+                                        <div class= "form-control">
+                                            <label class="radio-inline">
+                                                <input type="radio" value="CANCELLED" name="approvalStatus" 
+                                                [(ngModel)]="TaskEntityData.approvalStatus" formControlName="approvalStatus">
+                                                CANCELLED
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <br/><br/>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Remarks</mat-label>
+                                                <textarea matInput cols="55" rows="4" name="remark" type="text"
+                                                    placeholder="Please enter remarks." formControlName="remark"
+                                                    [(ngModel)]="TaskEntityData.remark" maxlength="250" required>
+                                                </textarea>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="uploadFile" type="text"
+                                                    placeholder="Upload Attachment"
+                                                    [(ngModel)]="TaskEntityData.uploadFile"
+                                                    formControlName="uploadFile" maxlength="60">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="submit-section">
+                                <button mat-flat-button color="primary" (click)="updateTask()">
+                                    <mat-icon aria-hidden="false">save</mat-icon> Submit</button>
+
+                                <button mat-flat-button color="warn" (click)="cancel()">
+                                    <mat-icon aria-hidden="false">cancel</mat-icon> Cancel</button>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

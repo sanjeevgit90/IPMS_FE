@@ -1,0 +1,454 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form [formGroup]="addPrsForm">
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /Page Header -->
+
+                <div class="tab-content">
+
+                    <!-- Add User -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="col-md-12 mandatory">*Fields are Mandatory</div>
+                                <h3 class="blue-gradient">Basic Details
+                                    <div class="form-group">
+                                        <mat-checkbox class="block" formControlName="isUtilityPayment"
+                                            [(ngModel)]="PrsData.isUtilityPayment">isUtilityPayment
+                                        </mat-checkbox>
+
+                                    </div>
+                                </h3>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.prsNo.errors }">
+                                                <mat-label>PRS No.</mat-label>
+                                                <input matInput name="prsNo" type="text"
+                                                    placeholder="Please enter PRS no." [(ngModel)]="PrsData.prsNo"
+                                                    formControlName="prsNo" maxlength="100" required>
+                                                <div *ngIf="isSubmitted && formControls.prsNo.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.prsNo.errors.required">PRS No. is
+                                                        required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.prsDate.errors }">
+                                                <input matInput name="prsDate" placeholder="Please enter prs date."
+                                                    type="text" [matDatepicker]="picker" [(ngModel)]="PrsData.prsDate"
+                                                    formControlName="prsDate" required>
+                                                <div *ngIf="isSubmitted && formControls.prsDate.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.prsDate.errors.required">PRS date
+                                                        is required</div>
+                                                </div>
+                                                <mat-datepicker-toggle matSuffix [for]="picker">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #picker></mat-datepicker>
+                                            </mat-form-field>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.invoiceNo.errors }">
+                                                <mat-label>Invoice No.</mat-label>
+                                                <input matInput name="invoiceNo" type="text"
+                                                    placeholder="Please enter invoice No."
+                                                    [(ngModel)]="PrsData.invoiceNo" formControlName="invoiceNo"
+                                                    maxlength="100" required>
+                                                <div *ngIf="isSubmitted && formControls.invoiceNo.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.invoiceNo.errors.required">Invoice No. is
+                                                        required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.projectName.errors }">
+                                                <mat-label>Project</mat-label>
+                                                <mat-select [(ngModel)]="PrsData.projectName"
+                                                    placeholder="Please Select Project"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="projectName" [compareWith]="compareObjects">
+                                                    <mat-option>-Select Project-</mat-option>
+                                                    <mat-option *ngFor="let p of projectList" value="{{p.selectionid}}" matTooltip="{{p.selectionvalue}}">
+                                                        {{p.selectionvalue}}</mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.projectName.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.projectName.errors.required">Project is
+                                                        required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4" *ngIf="!PrsData.isUtilityPayment">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Purchase Order No.</mat-label>
+                                                <!-- <mat-select [(ngModel)]="PrsData.purchaseOrderNo"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="purchaseOrderNo"
+                                                    (ngModelChange)="getSelectedPurchaseOrder(PrsData.purchaseOrderNo)"
+                                                    [compareWith]="compareObjects">
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let po of poList" value="{{po.selectionid}}">
+                                                        {{po.selectionvalue}}</mat-option>
+                                                </mat-select> -->
+                                                <input type="text" matInput [matAutocomplete]="Project" 
+                                                    formControlName="purchaseOrderNo" [(ngModel)]="PrsData.purchaseOrderNo" (ngModelChange)="getSelectedPurchaseOrder(PrsData.purchaseOrderNo)"/>
+                                                <mat-autocomplete #Project="matAutocomplete" [displayWith]="getName.bind(this)">
+                                                    <mat-option *ngFor="let option of filteredPoList | async"
+                                                        [value]="option.selectionid">
+                                                        {{option.selectionvalue }}
+                                                    </mat-option>
+                                                </mat-autocomplete>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4" *ngIf="!PrsData.isUtilityPayment">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>GRN No.</mat-label>
+
+                                                <mat-select [(ngModel)]="PrsData.grnId"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="grnId" [compareWith]="compareObjects">
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let grn of grnList" value="{{grn.selectionid}}">
+                                                        {{grn.selectionvalue}}</mat-option>
+                                                </mat-select>
+
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4" *ngIf="PrsData.isUtilityPayment">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Office Location</mat-label>
+
+                                                <mat-select [(ngModel)]="PrsData.office"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="office">
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let office of officeList"
+                                                        value="{{office.value}}">
+                                                        {{office.value}}</mat-option>
+                                                </mat-select>
+
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4" *ngIf="PrsData.isUtilityPayment">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Utility Type</mat-label>
+
+                                                <mat-select [(ngModel)]="PrsData.billType"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="billType">
+                                                    <mat-option>-Select Project-</mat-option>
+                                                    <mat-option *ngFor="let type of billTypeList"
+                                                        value="{{type.value}}">
+                                                        {{type.value}}</mat-option>
+                                                </mat-select>
+
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4" *ngIf="PrsData.isUtilityPayment">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Bill/Agreement No.</mat-label>
+                                                <input matInput name="billNo" type="text"
+                                                    placeholder="Please enter bill no." [(ngModel)]="PrsData.billNo"
+                                                    formControlName="billNo" maxlength="100">
+
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4" *ngIf="PrsData.isUtilityPayment">
+                                        <div class="form-group">
+                                            <app-fileupload [files]="attachedBill" maxSize="15360"
+                                                labelname="Upload Bill Attachment" modulename="billAttachment">
+                                            </app-fileupload>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Issue Cheque To</mat-label>
+                                                <mat-select [(ngModel)]="PrsData.issueChequeTo"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="issueChequeTo" [compareWith]="compareObjects"
+                                                    [disabled]="!PrsData.isUtilityPayment">
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let party of partyList"
+                                                        value="{{party.selectionid}}">
+                                                        {{party.selectionvalue}}</mat-option>
+                                                </mat-select>
+
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.paymentDueDate.errors }">
+                                                <input matInput name="invoiceDate"
+                                                    placeholder="Please enter invoice date." type="text"
+                                                    [matDatepicker]="picker1" [(ngModel)]="PrsData.invoiceDate"
+                                                    formControlName="invoiceDate" required>
+                                                <div *ngIf="isSubmitted && formControls.invoiceDate.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.invoiceDate.errors.required">Invoice Date
+                                                        is required
+                                                    </div>
+                                                </div>
+                                                <mat-datepicker-toggle matSuffix [for]="picker1">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #picker1></mat-datepicker>
+                                            </mat-form-field>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.invoiceAmount.errors }">
+                                                <mat-label>Invoice Amount</mat-label>
+                                                <input matInput name="invoiceAmount" type="number"
+                                                    placeholder="Please enter invoice amount."
+                                                    [(ngModel)]="PrsData.invoiceAmount" formControlName="invoiceAmount"
+                                                    required>
+                                                <div *ngIf="isSubmitted && formControls.invoiceAmount.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.invoiceAmount.errors.required">Invoice
+                                                        amount is
+                                                        required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.paymentDueDate.errors }">
+                                                <input matInput name="paymentDueDate"
+                                                    placeholder="Please enter Payment Due date." type="text"
+                                                    [matDatepicker]="picker2" [(ngModel)]="PrsData.paymentDueDate"
+                                                    formControlName="paymentDueDate" required>
+                                                <div *ngIf="isSubmitted && formControls.paymentDueDate.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.paymentDueDate.errors.required">Payment Due
+                                                        Date is required
+                                                    </div>
+                                                </div>
+                                                <mat-datepicker-toggle matSuffix [for]="picker2">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #picker2></mat-datepicker>
+                                            </mat-form-field>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Description</mat-label>
+                                                <input matInput name="description" type="test"
+                                                    placeholder="Please enter description."
+                                                    [(ngModel)]="PrsData.description" formControlName="description">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Note</mat-label>
+                                                <input matInput name="note" type="text" placeholder="Please enter note."
+                                                    [(ngModel)]="PrsData.note" formControlName="note">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Department</mat-label>
+                                                <mat-select [(ngModel)]="PrsData.department"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="department" [compareWith]="compareObjects">
+                                                    <mat-option>-Select Project-</mat-option>
+                                                    <mat-option *ngFor="let dept of deptList"
+                                                        value="{{dept.selectionvalue}}">
+                                                        {{dept.selectionvalue}}</mat-option>
+                                                </mat-select>
+
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Location</mat-label>
+                                                <input matInput name="location" type="text"
+                                                    placeholder="Please enter location." [(ngModel)]="PrsData.location"
+                                                    formControlName="location">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <app-fileupload [files]="invoiceFileUpload" maxSize="15360"
+                                                labelname="Upload Invoice Attachment" modulename="invoiceFileUpload">
+                                            </app-fileupload>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <h3 class="blue-gradient">CheckList</h3>
+
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-checkbox class="block" formControlName="quotation"
+                                                [(ngModel)]="PrsData.quotation">Quotation
+                                            </mat-checkbox>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-checkbox class="block" formControlName="poCopy"
+                                                [(ngModel)]="PrsData.poCopy">PO Copy
+                                            </mat-checkbox>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-checkbox class="block" formControlName="checkedInvoiceCopy"
+                                                [(ngModel)]="PrsData.checkedInvoiceCopy">Checked Invoice Copy
+                                            </mat-checkbox>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-checkbox class="block" formControlName="approval"
+                                                [(ngModel)]="PrsData.approval">Approval
+                                            </mat-checkbox>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-checkbox class="block" formControlName="supportingDocuments"
+                                                [(ngModel)]="PrsData.supportingDocuments">Supporting Documents
+                                            </mat-checkbox>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <h3 class="blue-gradient">Other Attachment</h3>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <app-fileupload [files]="attachments" maxSize="15360"
+                                                labelname="Upload Attachments" modulename="prsAttachments"
+                                                [isSingle]="false"></app-fileupload>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+                                <div class="submit-section">
+                                    <button mat-flat-button color="primary" (click)="savePrs()" *ngIf="add">
+                                        <mat-icon aria-hidden="false">save</mat-icon> Save
+                                    </button>
+
+                                    <button mat-flat-button color="primary" (click)="updatePrs()" *ngIf="edit">
+                                        <mat-icon aria-hidden="false">update</mat-icon> Update
+                                    </button>
+
+                                    <button mat-flat-button color="primary" (click)="saveTask(PrsData.entityId)"
+                                        *ngIf="edit && !taskFlag">
+                                        <mat-icon aria-hidden="false">update</mat-icon> Submit For Approval
+                                    </button>
+                                    <button mat-flat-button color="primary" (click)="reSendTask()"
+                                    *ngIf="edit && taskFlag">
+                                    <mat-icon aria-hidden="false">update</mat-icon> Re-Submit For Approval
+                                </button>
+
+                                    <button mat-flat-button color="warn" (click)="cancel()">
+                                        <mat-icon aria-hidden="false">close</mat-icon> Cancel
+                                    </button>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,17 @@
+<div class="card tab-box">
+    <div class="row user-tabs">
+      <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
+        <ul class="nav nav-tabs nav-tabs-bottom">
+          <li class="nav-item">
+            <button class="nav-link" (click)="partyTab()" [class.activetab]= "ishighlighted('partytab')">Vendor Details</button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" (click)="addressTab()" [class.activetab]= "ishighlighted('addresstab')">Address Details</button>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" (click)="gstTab()" [class.activetab]= "ishighlighted('gsttab')">GST Details</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>

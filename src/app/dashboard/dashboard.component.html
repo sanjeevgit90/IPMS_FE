@@ -1,0 +1,138 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<div class="main-wrapper">
+    <app-header> </app-header>
+    <app-leftmenu></app-leftmenu>
+    <div class="page-wrapper">
+        <div class="content container-fluid">
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h3 class="page-title">Dashboard</h3>
+                    </div>
+                </div>
+            </div>
+            <!-- /Page Header -->
+
+
+            <div class="tab-content">
+
+                <!-- Add Menu -->
+                <div id="Dashboard" class="pro-overview tab-pane fade show active">
+                    <div class="card card-main">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <mat-card class="example-card dashboard-card dash-accent">
+                                        <mat-card-content>
+                                            <p class="dash-title"> Purchase Order</p>
+                                            <div class="row countandval">
+                                                <div class="col-sm-6">
+                                                    <mat-icon class="approved-icon">check</mat-icon>
+                                                    <label class="dashboard-lbl">Approved</label>
+                                                    <p class="dash-count">{{dashboardData.approvedpo}}</p>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <mat-icon class="pending-icon">settings</mat-icon>
+                                                    <label class="dashboard-lbl">Pending</label>
+                                                    <p class="dash-count">{{dashboardData.pendingpo}}</p>
+                                                </div>
+                                            </div>
+                                        </mat-card-content>
+                                    </mat-card>
+                                </div>
+                                <div class="col-sm-3">
+                                    <mat-card class="example-card dashboard-card dash-accent">
+                                        <mat-card-content>
+                                            <p class="dash-title"> Rate Contract</p>
+                                            <div class="row countandval">
+                                                <div class="col-sm-6">
+                                                    <mat-icon class="approved-icon">check</mat-icon>
+                                                    <label class="dashboard-lbl">Approved</label>
+
+                                                    <p class="dash-count">{{dashboardData.approvedrc}}</p>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <mat-icon class="pending-icon">settings</mat-icon>
+                                                    <label class="dashboard-lbl">Pending</label>
+                                                    <p class="dash-count">{{dashboardData.pendingrc}}</p>
+                                                </div>
+                                            </div>
+                                        </mat-card-content>
+                                    </mat-card>
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <mat-card class="example-card dashboard-card dash-accent">
+                                        <mat-card-content>
+                                            <p class="dash-title"> Vendor Invoice</p>
+                                            <div class="row countandval">
+                                                <div class="col-sm-6">
+                                                    <mat-icon class="approved-icon">check</mat-icon>
+                                                    <label class="dashboard-lbl">Approved</label>
+                                                    <p class="dash-count">{{dashboardData.approvedprs}}</p>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <mat-icon class="pending-icon">settings</mat-icon>
+                                                    <label class="dashboard-lbl">Pending</label>
+                                                    <p class="dash-count">{{dashboardData.pendingprs}}</p>
+                                                </div>
+                                            </div>
+                                        </mat-card-content>
+                                    </mat-card>
+                                </div>
+                                <div class="col-sm-3">
+                                    <mat-card class="example-card dashboard-card dash-primary">
+                                        <mat-card-content>
+                                            <div class="assets-upload">
+                                                <p class="dash-title1"> Assets <br> uploaded</p>
+                                                <div class="row countandval">
+                                                    <div class="col-sm-12">
+                                                        <p class="dash-count">{{dashboardData.assets}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tickets-raised">
+                                                <p class="dash-title1"> Tickets <br>raised</p>
+                                                <div class="row countandval">
+                                                    <div class="col-sm-12">
+                                                        <p class="dash-count">{{dashboardData.tickets}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div style="clear: both;"></div>
+                                        </mat-card-content>
+                                    </mat-card>
+                                </div>
+                                <!-- <div class="col-sm-3">
+                                    <mat-card class="example-card dashboard-card dash-primary">
+                                        <mat-card-content>
+                                            <p class="dash-title1"> Tickets raised</p>
+                                            <div class="row countandval">
+                                                <div class="col-sm-12">
+                                                    <p class="dash-count">{{dashboardData.tickets}}</p>
+                                                </div>
+                                            </div>
+                                        </mat-card-content>
+                                    </mat-card>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card card-main">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <div id="columnChart" style="width:100%; height:350px;"></div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div id="pieChart" style="width:100%; height:350px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

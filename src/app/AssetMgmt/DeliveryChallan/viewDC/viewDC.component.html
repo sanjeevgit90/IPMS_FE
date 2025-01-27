@@ -1,0 +1,194 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form name="viewPoform">
+  <div class="row" style="margin: 0px;">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-9">
+      <div class="viewPO" name="table" id="table">
+
+
+        <table class="table table-bordered" cellspacing="0px" cellpadding="0px">
+          <tr>
+            <td class="center-align" colspan="2"><strong class="potitle">Delivery Challan</strong></td>
+          </tr>
+
+          <tr>
+            <td>
+              <strong class="block-text">Consignor:</strong>
+              <p>
+                <span>{{dc.partyname}}</span>
+              </p>
+              <strong class="block-text">Full address:</strong>
+              <p style="width: 250px;">
+                <span>{{dc.address}}</span>
+                <span>{{dc.contactperson}}</span>
+              </p>
+              <strong class="block-text">Contact Detail:</strong>
+              <p>
+                <span>{{dc.mobileno}}</span>
+              </p>
+            </td>
+            <td>
+              <strong class="block-text">DC No:</strong>
+              <p>
+                <span>{{dc.dcno}}</span>
+              </p>
+              <strong class="block-text">Date:</strong>
+              <p>
+                <span *ngIf="dc.dcdate > 0">{{dc.dcdate| date:'dd-MM-yyyy'}}</span>
+                <span *ngIf="dc.dcdate == 0"> </span>
+              </p>
+              <strong class="block-text">GST No:</strong>
+              <p>
+                <span>{{dc.gstno}}</span>
+              </p>
+            </td>
+
+          </tr>
+
+
+          <tr>
+            <td>
+              <strong class="block-text">Consignee Name: </strong>
+              <p>
+                <span>{{dc.consigneename}}</span>
+              </p>
+
+              <strong class="block-text">Contact Detail: </strong>
+              <p>
+                <span>{{dc.consigneecontact}}</span>
+              </p>
+
+            </td>
+            <td>
+              <p>
+                <strong class="block-text">Courier No: </strong>
+                <span> {{dc.courierno}}</span>
+</p>
+<strong class="block-text">Courier Dispatch Date:</strong>
+          <p>
+                <span *ngIf="dc.courierdate > 0">{{dc.courierdate| date:'dd-MM-yyyy'}}</span>
+                <span *ngIf="dc.courierdate == 0"> </span>
+              </p>
+              <p>
+              <strong class="block-text">Courier Details: </strong>
+              <span> {{dc.courierDetails}}</span>
+</p>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <strong class="block-text">Ship To</strong>
+              <p>
+                <span>{{dc.shippedto}}</span>
+              </p>
+
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" style="padding: 0px; margin: 0px">
+              <table style="width: 100%" class="table table-bordered print-dc" cellspacing="0px" cellpadding="0px">
+                <tr>
+                  <th>Sr. No.</th>
+                  <th>Asset Name</th>
+                  <th>Serial No.</th>
+                  <th>Category</th>
+                  <th>Product</th>
+                  <th>Count</th>
+                  <th style="width:300px"> Unique Site ID </th>
+                </tr>
+                <tr *ngFor="let item of dc.asset; let i = index ">
+                  <td>{{i+1}}</td>
+                  <td>{{item.assetname}} </td>
+                  <td>{{item.serialno}} </td>
+                  <td>{{item.category}}</td>
+                  <td>{{item.productname}}</td>
+                  <td>1</td>
+                  <td> </td>
+                </tr>
+
+                <tr>
+                  <td colspan="7">
+                    <div class="row">
+                      <div class="col-sm-4">
+                        <strong>Total No of. Assets</strong>
+                         <p>
+                          <span>{{totalAssets}}</span>
+                        </p>
+                      </div>
+                      <div class="col-sm-4">
+                        <strong>Total No of. Boxes</strong>
+                        <p>
+                          <span>{{dc.noofboxes}}</span>
+                        </p>
+                      </div>
+                      </div>
+                      </td>
+                      </tr>
+                      <tr>
+                  <td colspan="7">
+                    <div class="row">
+                      <div class="col-sm-4"><strong>Aurionpro Solutions Ltd.</strong>
+                        <br /><br /><br /><br /><br />
+                        <strong class="block-text">Signature </strong>
+                      </div>
+
+                      <div class="col-sm-4 center-align"><strong>Support Engineer Signature.</strong>
+                        <br /><br /><br /><br /><br />
+                        <strong class="block-text">Signature </strong>
+                      </div>
+
+                      <div class="col-sm-4 center-align"><strong>Division Coordinator</strong>
+                        <br /><br /><br /><br /><br />
+                        <strong class="block-text">Signature </strong></div>
+
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td colspan="7">
+                    <p>There is no consideration received / receivable in cash or kind for the above goods.</p>
+                    <p class="block-text" style="margin-top: 40px; font-weight: bold;">** This is a computer generated
+                      document, signatures are not required **</p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="col-sm-2"  *ngIf="deliveryChallanEdit">
+      <div class="po-action">
+        <button *ngIf="!dc.printflag" mat-flat-button color="primary" [disabled]="dc.isDeleted"
+          (click)="printComponent('table');enableUpload(dc.entityId)">
+          <mat-icon>print</mat-icon> Print
+        </button>
+        <div *ngIf="dc.uploadflag">
+          <app-fileupload [files]="attachmentFiles" maxSize="2048" labelname="Upload Attachment" modulename="dc"
+            [entitydata]="dc.entityId">
+          </app-fileupload>
+
+          <button mat-flat-button color="primary" [disabled]="dc.isDeleted" (click)="disablePrint(dc.entityId)">
+            <mat-icon>save</mat-icon>
+            Save
+          </button>
+        </div>
+        <!-- <div *ngIf="dc.uploadflag">
+          <a mat-flat-button class="blue-btn dcedit" color="warn" [disabled]="dc.isDeleted"
+            matTooltip="Edit this record" [routerLink]="['/updateDC', dc.entityId,'edit']" title="Edit">
+            <mat-icon>edit</mat-icon>
+            Edit
+          </a>
+        </div> -->
+
+
+        <button mat-flat-button color="warn" (click)="back()">
+          <mat-icon>chevron_left</mat-icon>
+          Back
+        </button>
+      </div>
+
+    </div>
+  </div>
+</form>

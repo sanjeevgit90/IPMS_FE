@@ -1,0 +1,236 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form>
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                        <div class="col-auto float-right ml-auto">
+                            <!-- <button mat-flat-button color="warn" (click)="filterFunc()">
+                                <mat-icon aria-hidden="false">filter</mat-icon> Filter
+                            </button> -->
+                            <button mat-flat-button color="warn" (click)="filterFunc()" *ngIf="!result">
+                                <mat-icon aria-hidden="false">filter</mat-icon> Filter
+                            </button>
+                            <button mat-flat-button color="primary" (click)="filterFunc()" *ngIf="result">
+                                <mat-icon aria-hidden="false">check_circle</mat-icon> Filter Applied
+                            </button>
+
+                            <button mat-flat-button color="accent" [routerLink]="['/historyTask']">
+                                <mat-icon aria-hidden="false">add</mat-icon> Approval History
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Page Header -->
+
+                <div class="filter-box" *ngIf="filterDiv">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput name="purchaseOrderNo" type="text" placeholder="Search by PO no."
+                                        [(ngModel)]="FilterData.purchaseOrderNo">
+                                </mat-form-field>
+                            </div>
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-select [(ngModel)]="FilterData.accountName" name="accountName" [typeaheadDebounceInterval]="matSelectDuration" 
+                                        placeholder="Search by Project">
+                                        <mat-option>-Search By Project-</mat-option>
+                                        <mat-option *ngFor="let p of projectList" value="{{p.selectionid}}" matTooltip="{{p.selectionvalue}}">
+                                            {{p.selectionvalue}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-select [(ngModel)]="FilterData.supplierName" name="supplierName" [typeaheadDebounceInterval]="matSelectDuration" 
+                                        placeholder="Search by Vendor">
+                                        <mat-option>-Search By Vendor-</mat-option>
+                                        <mat-option *ngFor="let supp of supplierPartyList" value="{{supp.selectionid}}">
+                                            {{supp.selectionvalue}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-select [(ngModel)]="FilterData.stageName" name="stageName" [typeaheadDebounceInterval]="matSelectDuration" 
+                                        placeholder="Search by Level">
+                                        <mat-option>-Search By Level-</mat-option>
+                                        <mat-option value="PO HEAD">PO HEAD</mat-option>
+                                        <mat-option value="DELIVERY HEAD">DELIVERY HEAD</mat-option>
+                                        <mat-option value="FINANCE HEAD">FINANCE HEAD</mat-option>
+                                        <mat-option value="SERVICE HEAD">SERVICE HEAD</mat-option>
+                                        <mat-option value="BU HEAD">BU HEAD</mat-option>
+                                        <mat-option value="PROJECT DIRECTOR INDIA">PROJECT DIRECTOR INDIA</mat-option>
+                                        <mat-option value="PROJECT DIRECTOR SING">PROJECT DIRECTOR SING</mat-option>
+                                        <mat-option value="ACCOUNT HEAD SCSOFT">ACCOUNT HEAD SCSOFT</mat-option>
+                                        <mat-option value="FINANCE HEAD SCSOFT">FINANCE HEAD SCSOFT</mat-option>
+                                        <mat-option value="BU HEAD SCSOFT">BU HEAD SCSOFT</mat-option>
+                                        <mat-option value="PO TEAM">PO TEAM</mat-option>
+                                        <mat-option value="PO TEAM SCSOFT">PO TEAM SCSOFT</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="submit-section">
+                        <button mat-flat-button color="primary" (click)="search()">
+                            <mat-icon aria-hidden="false">search</mat-icon> Search
+                        </button>
+                        <button mat-flat-button color="warn" (click)="cancel()">
+                            <mat-icon aria-hidden="false">cancel</mat-icon> Cancel
+                        </button>
+                    </div>
+                </div>
+
+                <div class="tab-content">
+
+                    <!-- Add Family -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+
+
+                            <!-- Search Table -->
+                            <div class="total-rec">Total Records: {{totalRecords}}</div>
+
+                            <table mat-table [dataSource]="TaskListData" matSort class="mat-elevation-z8">
+
+                                <!--  Approval Status Column -->
+                                <ng-container matColumnDef="poRcFlag">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> PO/RC </th>
+                                    <td mat-cell *matCellDef="let TaskListData" data-label="PO/RC">
+                                        <div class="block"> {{TaskListData.poRcFlag}} </div>
+                                    </td>
+                                </ng-container>
+
+                                <!--  PO No. Column -->
+                                <ng-container matColumnDef="purchaseOrderNo">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> PO/RC No. </th>
+                                    <td mat-cell *matCellDef="let TaskListData" data-label="PO/RC No.">
+                                        <div class="block">
+                                            <a [routerLink]="['/ViewPoById', TaskListData.poId, 'POTASK']"
+                                                *ngIf="TaskListData.poRcFlag=='PO' || TaskListData.poRcFlag=='AMEND'"
+                                                (click)="saveTaskId(TaskListData.entityId)">{{TaskListData.purchaseOrderNo}}</a>
+                                            <a [routerLink]="['/ViewRcById', TaskListData.poId, 'RCTASK']"
+                                                *ngIf="TaskListData.poRcFlag=='RC'"
+                                                (click)="saveTaskId(TaskListData.entityId)">{{TaskListData.purchaseOrderNo}}</a>
+                                        </div>
+                                    </td>
+                                </ng-container>
+
+                                <!--  Approval Status Column -->
+                                <ng-container matColumnDef="grandTotal">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Grand Total </th>
+                                    <td mat-cell *matCellDef="let TaskListData" data-label="Grand Total">
+                                        <div class="block"> {{TaskListData.grandTotal | number : '1.2-2'}} </div>
+                                    </td>
+                                </ng-container>
+
+                                <!--  Approval Status Column -->
+                                <ng-container matColumnDef="projectName">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Project </th>
+                                    <td mat-cell *matCellDef="let TaskListData" data-label="Project">
+                                        <div class="block"> {{TaskListData.projectName}} </div>
+                                    </td>
+                                </ng-container>
+
+                                <!--  Approval Status Column -->
+                                <ng-container matColumnDef="orgName">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Organisation </th>
+                                    <td mat-cell *matCellDef="let TaskListData" data-label="Organisation">
+                                        <div class="block"> {{TaskListData.orgName}} </div>
+                                    </td>
+                                </ng-container>
+
+                                <!--  Approval Status Column -->
+                                <ng-container matColumnDef="approvalStatus">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Approval Status </th>
+                                    <td mat-cell *matCellDef="let TaskListData" data-label="Approval Status">
+                                        <div class="block"> {{TaskListData.approvalStatus}} </div>
+                                    </td>
+                                </ng-container>
+
+                                <!--  Stage Name Column -->
+                                <ng-container matColumnDef="stageName">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Stage Name </th>
+                                    <td mat-cell *matCellDef="let TaskListData" data-label="Stage Name">
+                                        <div class="block"> {{TaskListData.stageName}} </div>
+                                    </td>
+                                </ng-container>
+
+                                <!-- Action Column -->
+                                <ng-container matColumnDef="action">
+                                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                                    <td mat-cell *matCellDef="let TaskListData">
+                                        <a mat-flat-button color="accent" matTooltip="Take Action"
+                                            [routerLink]="['/UpdatePoTask', TaskListData.entityId, 'edit', TaskListData.poRcFlag]"
+                                            *ngIf="TaskListData.stageName!='PO TEAM' && TaskListData.poRcFlag=='PO'">
+                                            Action
+                                        </a>
+                                        <a mat-flat-button color="accent" matTooltip="Take Action"
+                                            [routerLink]="['/UpdatePoTask', TaskListData.entityId, 'edit', 'PO']"
+											*ngIf="TaskListData.stageName!='PO TEAM' && TaskListData.poRcFlag=='AMEND'">
+                                            Action
+                                        </a>
+                                        <a mat-flat-button color="primary" matTooltip="Edit PO"
+                                            [routerLink]="['/searchTask/UpdatePO', TaskListData.poId, 'edit', TaskListData.entityId]"
+                                            *ngIf="TaskListData.stageName=='PO TEAM' && TaskListData.poRcFlag=='PO'">
+                                            <mat-icon aria-hidden="false">edit</mat-icon>
+                                        </a>
+                                        <a mat-flat-button color="warn" matTooltip="Cancel PO"
+                                            [routerLink]="['/CancelPoTask', TaskListData.entityId, 'edit', TaskListData.poRcFlag]"
+                                            *ngIf="TaskListData.stageName=='PO TEAM' && TaskListData.poRcFlag=='PO'">
+                                            <mat-icon aria-hidden="false">delete</mat-icon>
+                                        </a>
+
+                                        <a mat-flat-button color="accent" matTooltip="Take Action"
+                                            [routerLink]="['/UpdatePoTask', TaskListData.entityId, 'edit', TaskListData.poRcFlag]"
+                                            *ngIf="TaskListData.stageName!='PO TEAM' && TaskListData.poRcFlag=='RC'">
+                                            Action
+                                        </a>
+                                        <a mat-flat-button color="primary" matTooltip="Edit RC"
+                                            [routerLink]="['/searchTask/editRateContract', TaskListData.poId, 'edit', TaskListData.entityId]"
+                                            *ngIf="TaskListData.stageName=='PO TEAM' && TaskListData.poRcFlag=='RC'">
+                                            <mat-icon aria-hidden="false">edit</mat-icon>
+                                        </a>
+                                        <a mat-flat-button color="warn" matTooltip="Cancel RC"
+                                            [routerLink]="['/CancelPoTask', TaskListData.entityId, 'edit', TaskListData.poRcFlag]"
+                                            *ngIf="TaskListData.stageName=='PO TEAM' && TaskListData.poRcFlag=='RC'">
+                                            <mat-icon aria-hidden="false">delete</mat-icon>
+                                        </a>
+
+                                        <!-- <button mat-flat-button color="warn" matTooltip="Delete this record" (click)="onDelete(POListData.entityId)"
+                                            title="Delete">
+                                            <mat-icon aria-hidden="false" >delete</mat-icon>
+                                        </button> -->
+                                    </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+                            <mat-paginator [pageSize]="pageSizedisplay" [pageSizeOptions]="itemPerPage"
+                                showFirstLastButtons>
+                            </mat-paginator>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

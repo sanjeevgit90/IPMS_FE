@@ -1,0 +1,138 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form [formGroup]="addPaymentForm">
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /Page Header -->
+                
+                <div class="tab-content">
+
+                    <!-- Add User -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="col-md-12 mandatory">*Fields are Mandatory</div>
+                               
+                                <div class="row">
+                                   
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.paymentDate.errors }">
+                                                <input matInput name="paymentDate"
+                                                    placeholder="Please enter payment date." type="text"
+                                                    [matDatepicker]="picker" [(ngModel)]="PaymentData.paymentDate"
+                                                    formControlName="paymentDate" required>
+                                                <div *ngIf="isSubmitted && formControls.paymentDate.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.paymentDate.errors.required">Payment date
+                                                        is required</div>
+                                                </div>
+                                                <mat-datepicker-toggle matSuffix [for]="picker">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #picker></mat-datepicker>
+                                            </mat-form-field>
+
+                                        </div>
+                                    </div>
+
+                                                                      
+                                    <div class="col-sm-4" >
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                            [ngClass]="{ 'has-error': isSubmitted && formControls.amount.errors }">
+                                                <mat-label> Amount</mat-label>
+                                                <input matInput name="amount" type="number"
+                                                    placeholder="Please enter amount."
+                                                    [(ngModel)]="PaymentData.amount"
+                                                     formControlName="amount" required>
+                                             <div *ngIf="isSubmitted && formControls.amount.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.amount.errors.required">Amount
+                                                        is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4" >
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                            [ngClass]="{ 'has-error': isSubmitted && formControls.paymentReference.errors }">
+                                                <mat-label> Payment Reference No</mat-label>
+                                                <input matInput name="paymentReference" type="text"
+                                                    placeholder="Please enter Payment Reference."
+                                                    [(ngModel)]="PaymentData.paymentReference"
+                                                     formControlName="paymentReference" required>
+                                             <div *ngIf="isSubmitted && formControls.paymentReference.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.paymentReference.errors.required">Payment Reference No
+                                                        is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                 
+                                    <div class="col-sm-4" >
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Remark</mat-label>
+                                                <textarea matInput name="remark" maxlength="200"  
+                                                [(ngModel)]="PaymentData.remark" formControlName="remark" 
+                                                placeholder="Enter Remark" required></textarea>                                         
+                                            <div *ngIf="isSubmitted && formControls.remark.errors"
+                                                class="error-text">
+                                                <div *ngIf="formControls.remark.errors.required">Remark
+                                                    is required</div>
+                                            </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                  
+                                </div>
+
+
+
+
+                                <div class="submit-section">
+                                    <button mat-flat-button color="primary" (click)="savePayments()" *ngIf="add">
+                                        <mat-icon aria-hidden="false">save</mat-icon> Save
+                                    </button>
+
+                                    <button mat-flat-button color="primary" (click)="updatePayments()" *ngIf="edit">
+                                        <mat-icon aria-hidden="false">update</mat-icon> Update
+                                    </button>
+
+
+                                    <button mat-flat-button color="warn" (click)="cancel()">
+                                        <mat-icon aria-hidden="false">close</mat-icon> Cancel
+                                    </button>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,161 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form>
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                        <div class="col-auto float-right ml-auto">
+                            <!-- <button mat-flat-button color="warn" (click)="filterFunc()">
+                                <mat-icon aria-hidden="false">filter</mat-icon> Filter</button> -->
+                            <button mat-flat-button color="accent" (click)="addProduct()">
+                                <mat-icon aria-hidden="false">add</mat-icon> Add Product
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Page Header -->
+
+
+
+                <div>
+                    <app-potab highlightedtab="producttab" [additionalTerms]="!additionalTerms"> </app-potab>
+                </div>
+                <div class="tab-content">
+
+                    <!-- Add Family -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <div class="total-rec">Total Records: {{totalRecords}}</div>
+                                </div>
+                                <div class="col-auto float-right ml-auto">
+                                    <mat-form-field class="search-input">
+                                        <input matInput (keyup)="applyFilter($event)" placeholder="Search..." #input>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row">
+                              
+
+                                <div class="col-sm-6 productlist" *ngFor="let produtcard of ProductDetailsList.filteredData">
+
+                                    <mat-card class="example-card">
+                                        <mat-card-header>
+                                            <mat-card-title>
+                                                {{produtcard.product}}
+                                            </mat-card-title>
+                                        </mat-card-header>
+                                        <mat-card-content>
+                                            <div class="row">
+                                                <div class="col-sm-6"><span>HSN Code:</span>{{produtcard.hsnId}}</div>
+                                                <div class="col-sm-6"><span>CGST:</span>{{produtcard.cgstAmount}} ({{produtcard.cgst}}%)</div>
+                                                <div class="col-sm-6"><span>Rate:</span>{{produtcard.rate}}</div>
+                                                <div class="col-sm-6"><span>SGST:</span>{{produtcard.sgstAmount}} ({{produtcard.sgst}}%)</div>
+                                                <div class="col-sm-6"><span>QTY.:</span>{{produtcard.quantity}}</div>
+                                                <div class="col-sm-6"><span>IGST:</span>{{produtcard.igstAmount}} ({{produtcard.igst}}%)</div>
+                                                <div class="col-sm-6"><span>Amount:</span>{{produtcard.amount}}</div>
+                                                <div class="col-sm-6"><span>Total
+                                                        Dsc.:</span>{{produtcard.totalDiscount}}</div>
+                                                <div class="col-sm-6"><span>Total Amt:</span>{{produtcard.totalAmount}}
+                                                </div>
+                                                <div class="col-sm-6"><span>Final Amt:</span>{{produtcard.finalAmount}}
+                                                </div>
+                                                <div class="col-sm-12"><span>Desc:</span>{{produtcard.description}}
+                                                </div>
+                                            </div>
+                                        </mat-card-content>
+                                        <mat-card-actions>
+                                            <button mat-flat-button color="primary" matTooltip="Edit this record"
+                                                (click)="editProduct(produtcard.entityId)" title="Edit"> Edit
+                                                <mat-icon aria-hidden="false">edit</mat-icon>
+                                            </button>
+
+                                            <button mat-flat-button color="warn" matTooltip="Delete this record"
+                                                (click)="deleteProduct(produtcard.entityId)" title="Delete"> Delete
+                                                <mat-icon aria-hidden="false">delete</mat-icon>
+                                            </button>
+                                        </mat-card-actions>
+                                    </mat-card>
+
+                                </div>
+                            </div>
+                        
+                        </div>
+
+                        <div *ngIf="!additionalTerms && totalRecords>0">
+                            <div class="submit-section1">
+                                <button mat-flat-button color="accent" (click)="openTask()" *ngIf="taskId==null">
+                                    <mat-icon>send</mat-icon> Send For Approval
+                                </button>
+                                <button mat-flat-button color="accent" (click)="openTask()" *ngIf="taskId!=null">
+                                    <mat-icon>send</mat-icon> Re-send For Approval
+                                </button>
+                            </div>
+
+                            <div class="card" *ngIf="workflowDiv">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-4" *ngIf="rcId==null">
+                                            <div class="form-group">
+                                                <mat-form-field>
+                                                    <mat-label>Workflow</mat-label>
+                                                    <mat-select [(ngModel)]="TaskData.workflowName" name="workflowName" [typeaheadDebounceInterval]="matSelectDuration" 
+                                                        required>
+                                                        <mat-option>-Select-</mat-option>
+                                                        <!-- <mat-option value="TYPE A">TYPE A</mat-option>
+                                                            <mat-option value="TYPE B">TYPE B</mat-option> -->
+                                                        <mat-option *ngFor="let work of workflowList"
+                                                            value="{{work.selectionid}}">
+                                                            {{work.selectionvalue}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <mat-form-field class="example-full-width">
+                                                    <mat-label>Remarks</mat-label>
+                                                    <textarea matInput cols="55" rows="4" name="remark" type="text"
+                                                        placeholder="Please enter remarks."
+                                                        [(ngModel)]="TaskData.remark" maxlength="250" required>
+                                                </textarea>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="submit-section">
+                                        <button mat-flat-button color="primary" (click)="saveTask()">
+                                            Submit
+                                        </button>
+                                        <button mat-flat-button color="warn" (click)="closeTask()">
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

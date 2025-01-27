@@ -1,0 +1,370 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form>
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                        <div class="col-auto float-right ml-auto">
+
+                            <button mat-flat-button color="warn" (click)="filterFunc()" *ngIf="!result">
+                                <mat-icon aria-hidden="false">filter</mat-icon> Filter
+                            </button>
+                            <button mat-flat-button color="primary" (click)="filterFunc()" *ngIf="result">
+                                <mat-icon aria-hidden="false">check_circle</mat-icon> Filter Applied
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Page Header -->
+
+                <div class="filter-box" *ngIf="filterDiv">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput name="ticketno" type="text" placeholder="Search by ticketno"
+                                        [(ngModel)]="FilterData.ticketNo">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-label>Priority</mat-label>
+                                    <mat-select [(ngModel)]="FilterData.priority" name="priority"
+                                        placeholder="Search by priority">
+                                        <mat-option>-Select-</mat-option>
+                                        <mat-option value="High">High</mat-option>
+                                        <mat-option value="Medium">Medium</mat-option>
+                                        <mat-option value="Low">Low </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-select [(ngModel)]="FilterData.accountName" name="projectid"
+                                        [typeaheadDebounceInterval]="matSelectDuration"
+                                        placeholder="Search by project name">
+                                        <mat-option>-Select-</mat-option>
+                                        <mat-option *ngFor="let project of projectList" [value]="project.selectionid" matTooltip="{{project.selectionvalue}}">
+                                            {{ project.selectionvalue }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput name="fromdate" placeholder="Ticket Closed(From date)" type="text"
+                                        [matDatepicker]="picker" [(ngModel)]="FilterData.fromDate">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput name="dcdate" placeholder="Ticket Closed(To Date)" type="text"
+                                        [matDatepicker]="picker1" [(ngModel)]="FilterData.toDate">
+                                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker1></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="submit-section">
+                        <button mat-flat-button color="primary" (click)="search()">
+                            <mat-icon aria-hidden="false">search</mat-icon> Search
+                        </button>
+                        <button mat-flat-button color="warn" (click)="cancel()">
+                            <mat-icon aria-hidden="false">cancel</mat-icon> Clear
+                        </button>
+                    </div>
+                </div>
+                <div class="tab-content">
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <!-- Search Table -->
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <div class="total-rec">Total Records: {{totalRecords}}</div>
+                                </div>
+                                <div class="col-auto float-right ml-auto">
+                                    <mat-form-field class="search-input">
+                                        <input matInput (keyup)="applyFilter($event)" placeholder="Search..." #input>
+                                    </mat-form-field>
+                                    <button mat-flat-button color="accent" class="export-btn"
+                                        (click)="exporter.exportTable('xlsx', {fileName:'SLA Report'})"
+                                        matTooltip="Export to Excel">
+                                        <mat-icon>send</mat-icon> Export
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div style="overflow-x:auto;">
+
+                                <table mat-table [dataSource]="TicketMasterData" matSort class="mat-elevation-z8">
+
+                                    <!--  Ticket No. Column -->
+
+
+                                    <ng-container matColumnDef="ticketNo">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Ticket No. / Title </th>
+                                        <td mat-cell *matCellDef="let TicketMasterData ">
+                                            <div class="block strong">
+                                                <a [routerLink]="['/viewTicket', TicketMasterData.entityId,'slaView']"
+                                                    title="Edit"> {{TicketMasterData.ticketNo}} </a>
+                                            </div>
+                                            <div class="block"> {{TicketMasterData.ticketTitle}} </div>
+
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="location">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Unique Site Id / Asset
+                                        </th>
+                                        <td mat-cell *matCellDef="let TicketMasterData ">
+                                            <div class="block strong">
+                                                {{TicketMasterData.location}}
+                                            </div>
+                                            <div class="block"> {{TicketMasterData.assetName}} </div>
+
+                                        </td>
+                                    </ng-container>
+
+
+                                    <ng-container matColumnDef="ticketType">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Ticket Type </th>
+                                        <td mat-cell *matCellDef="let TicketMasterData ">
+                                            {{TicketMasterData.ticketType}}
+                                        </td>
+                                    </ng-container>
+
+
+                                    <ng-container matColumnDef="ticketStatus">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+                                        <td mat-cell *matCellDef="let TicketMasterData ">
+                                            {{TicketMasterData.ticketStatus}}
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="priority">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Priority </th>
+                                        <td mat-cell *matCellDef="let TicketMasterData ">
+                                            {{TicketMasterData.priority}}
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="ticketOwnerName">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Ticket Owner </th>
+                                        <td mat-cell *matCellDef="let TicketMasterData ">
+                                            {{TicketMasterData.ticketOwnerName}}
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="assignName">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Assigned To </th>
+                                        <td mat-cell *matCellDef="let TicketMasterData ">
+                                            {{TicketMasterData.assignName}}
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="createdate">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Created Date </th>
+                                        <td mat-cell *matCellDef="let TicketMasterData ">
+                                            {{TicketMasterData.createdDate | date:'dd-MM-yyyy HH:mm'}}
+                                        </td>
+                                    </ng-container>
+
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                </table>
+                            </div>
+                            <mat-paginator [pageSize]="pageSizedisplay" [pageSizeOptions]="itemPerPage"
+                                showFirstLastButtons>
+                            </mat-paginator>
+
+                            <div class="export-div">
+                                <table matTableExporter mat-table [dataSource]="TicketDataExport" matSort
+                                    class="mat-elevation-z8" #exporter="matTableExporter">
+                                    <ng-container matColumnDef="ticketNo">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Incident ID
+                                        </th>
+                                        <td mat-cell *matCellDef="let TicketData ">
+                                            {{TicketData.ticketNo}}
+                                        </td>
+                                    </ng-container>
+
+                                    <!--  Title Column -->
+                                    <ng-container matColumnDef="ticketCategory">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                            Ticket Category</th>
+                                        <td mat-cell *matCellDef="let TicketData ">
+                                            {{TicketData.ticketCategory}}
+
+                                        </td>
+                                    </ng-container>
+
+                                    <!--  Asset Column -->
+                                    <ng-container matColumnDef="location">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Unique Site ID
+                                        </th>
+                                        <td mat-cell *matCellDef="let TicketData ">
+                                            {{TicketData.location}}
+                                        </td>
+                                    </ng-container>
+
+
+                                    <!--  serialNo Column -->
+                                    <ng-container matColumnDef="category">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                            Category</th>
+                                        <td mat-cell *matCellDef="let TicketData ">
+                                            {{TicketData.category}}
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="productModel">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                            Model No.</th>
+                                        <td mat-cell *matCellDef="let TicketData ">
+                                            {{TicketData.productModel}}
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="modelType">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                            Model Type</th>
+                                        <td mat-cell *matCellDef="let TicketData ">
+                                            {{TicketData.subcategory}}
+                                        </td>
+                                    </ng-container>
+                                    <!--  Status Column -->
+                                    <ng-container matColumnDef="subcategory">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Sub Category</th>
+                                        <td mat-cell *matCellDef="let TicketData">
+                                            {{TicketData.subcategory}}
+                                        </td>
+                                    </ng-container>
+                                    <!--  Type Column -->
+                                    <ng-container matColumnDef="district">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> District
+                                        </th>
+                                        <td mat-cell *matCellDef="let TicketData ">
+                                            {{TicketData.district}}
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="createdBy">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Created By
+                                        </th>
+                                        <td mat-cell *matCellDef="let TicketData ">
+                                            {{TicketData.createdBy}}
+                                        </td>
+                                    </ng-container>
+
+
+                                    <ng-container matColumnDef="assignName">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Assign Name
+                                        </th>
+                                        <td mat-cell *matCellDef="let TicketData">
+                                            {{TicketData.assignName}}
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="ticketType">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                            Ticket Type </th>
+                                        <td mat-cell *matCellDef="let TicketData">
+                                            {{TicketData.ticketType}}
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="priority">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                            Priority</th>
+                                        <td mat-cell *matCellDef="let TicketData">
+                                            {{TicketData.priority}}
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="dueDate">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                            Due Date</th>
+                                        <td mat-cell *matCellDef="let TicketData">
+                                            {{TicketData.dueDate| date:'dd-MM-yyyy HH:mm'}}
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="resolutionDate">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                            Resolution Date</th>
+                                        <td mat-cell *matCellDef="let TicketData">
+                                            {{TicketData.resolutionDate|date:'dd-MM-yyyy HH:mm'}}
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="ticketClosedTime">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                            Closed Date
+                                        </th>
+                                        <td mat-cell *matCellDef="let TicketData">
+                                            {{TicketData.ticketClosedTime| date:'dd-MM-yyyy HH:mm'}}
+                                        </td>
+                                    </ng-container>
+
+
+                                    <ng-container matColumnDef="totalCloserTime">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                            Time To Resolve </th>
+                                        <td mat-cell *matCellDef="let TicketData">
+                                            {{TicketData.totalCloserTime}}
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="updatedBy">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                            Closed By</th>
+                                        <td mat-cell *matCellDef="let TicketData">
+                                            {{TicketData.updatedBy}}
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="ticketStatus">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Ticket Status</th>
+                                        <td mat-cell *matCellDef="let TicketData">
+                                            {{TicketData.ticketStatus}}
+                                        </td>
+                                    </ng-container>
+
+                                    <tr mat-header-row *matHeaderRowDef="exportColumns"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: exportColumns;"></tr>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

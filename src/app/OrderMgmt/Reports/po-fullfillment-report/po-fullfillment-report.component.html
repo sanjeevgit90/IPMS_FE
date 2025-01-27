@@ -1,0 +1,277 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form [formGroup]="addPoCriteriaForm">
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /Page Header -->
+                <div class="tab-content">
+
+                    <!-- Report -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Project</mat-label>
+                                                <mat-select [(ngModel)]="ReportRequest.projectId"
+                                                    formControlName="projectId">
+                                                    <mat-option>-Search By Project-</mat-option>
+                                                    <mat-option *ngFor="let p of projectList" value="{{p.selectionid}}">
+                                                        {{p.selectionvalue}}</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Vendor</mat-label>
+                                                <mat-select [(ngModel)]="ReportRequest.partyId"
+                                                    formControlName="partyId">
+                                                    <mat-option>-Search By Vendor-</mat-option>
+                                                    <mat-option *ngFor="let p of partyList" value="{{p.selectionid}}">
+                                                        {{p.selectionvalue}}</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="fromDate" placeholder="From date." type="text"
+                                                    [matDatepicker]="picker1" [(ngModel)]="ReportRequest.fromDate"
+                                                    formControlName="fromDate">
+                                                <mat-datepicker-toggle matSuffix [for]="picker1">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #picker1></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="toDate" placeholder="To date." type="text"
+                                                    [matDatepicker]="picker2" [(ngModel)]="ReportRequest.toDate"
+                                                    formControlName="toDate">
+                                                <mat-datepicker-toggle matSuffix [for]="picker2">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #picker2></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button mat-flat-button color="accent" (click)="search()" *ngIf="list">
+                                            <mat-icon aria-hidden="false">search</mat-icon> Search
+                                        </button>
+                                        <!-- <button mat-flat-button color="accent" (click)="cancel()" *ngIf="list">
+                                            <mat-icon aria-hidden="false">search</mat-icon> clear
+                                        </button> -->
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- Search Table -->
+
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <div class="total-rec">Total Records: {{totalRecords}}</div>
+                                </div>
+                                <div class="col-auto float-right ml-auto">
+                                    <mat-form-field class="search-input">
+                                        <input matInput (keyup)="applyFilter($event)" placeholder="Search..." #input>
+                                    </mat-form-field>
+                                    <button mat-flat-button color="accent" class="export-btn"
+                                        (click)="exporter.exportTable('csv', {fileName:'Po Fullfillment Report'})"
+                                        matTooltip="Export to Excel">
+                                        <mat-icon>send</mat-icon> Export
+                                    </button>
+                                </div>
+
+
+                            </div>
+
+                            <div style="overflow-x:auto;">
+                            <table mat-table [dataSource]="PoFulfillmentData" matSort
+                                class="mat-elevation-z8" >
+
+
+                                <ng-container matColumnDef="purchaseOrderNo">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Po No. </th>
+                                    <td mat-cell *matCellDef="let PoFulfillmentData">
+                                        <div class="block"> {{PoFulfillmentData.purchaseOrderNo}} </div>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="accName">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Project </th>
+                                    <td mat-cell *matCellDef="let PoFulfillmentData">
+                                        <div class="block"> {{PoFulfillmentData.projectName}} </div>
+                                        <div class="block"> {{PoFulfillmentData.projectPin}} </div>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="vendor">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Vendor</th>
+                                    <td mat-cell *matCellDef="let PoFulfillmentData">
+                                        <div class="block"> {{PoFulfillmentData.partyName}} </div>
+                                    </td>
+                                </ng-container>
+                                <!--  PO No. Column -->
+                                <ng-container matColumnDef="orderDate">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Order Date </th>
+                                    <td mat-cell *matCellDef="let PoFulfillmentData">
+                                        <div class="block">{{PoFulfillmentData.orderDate| date : 'dd/MM/yyyy'}}</div>
+                                    </td>
+                                </ng-container>
+
+                                <!--  Order date Column -->
+                                <ng-container matColumnDef="grandTotal">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Gross Amount </th>
+                                    <td mat-cell *matCellDef="let PoFulfillmentData">
+                                        <div class="block">{{PoFulfillmentData.grandTotal | number : '1.2-2'}}</div>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="invoiceAmount">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Invoice Amount/Paid Amount </th>
+                                    <td mat-cell *matCellDef="let PoFulfillmentData">
+                                        <div class="block">{{PoFulfillmentData.invoiceAmount| number : '1.2-2'}}</div>
+                                        <div class="block">{{PoFulfillmentData.amount| number : '1.2-2'}}</div>
+                                    </td>
+                                </ng-container>
+                               
+                                <ng-container matColumnDef="balanceInvoice">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Balance Invoice/ Balance Payment </th>
+                                    <td mat-cell *matCellDef="let PoFulfillmentData">
+                                        <div class="block">{{PoFulfillmentData.balanceInvoice| number : '1.2-2'}}</div>
+                                        <div class="block">{{PoFulfillmentData.balancePayment| number : '1.2-2'}}</div>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="paymentDueDate">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Payment Due Date </th>
+                                    <td mat-cell *matCellDef="let PoFulfillmentData">
+                                        <div class="block"> {{PoFulfillmentData.paymentDueDate| date : 'dd/MM/yyyy'}} </div>
+                                    </td>
+                                </ng-container>
+                               
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+                            </div>
+                            <mat-paginator [pageSize]="pageSizedisplay" [pageSizeOptions]="itemPerPage"
+                                showFirstLastButtons>
+                            </mat-paginator>
+                              <!-- Export Incident Report -->
+
+                              <div class="export-div" id="printTable">
+                                <table matTableExporter mat-table [dataSource]="PoFulfillment" matSort
+                                class="mat-elevation-z8" #exporter="matTableExporter">
+
+
+                                <ng-container matColumnDef="purchaseOrderNo">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Po No. </th>
+                                    <td mat-cell *matCellDef="let PoFulfillment">
+                                        <div class="block"> {{PoFulfillment.purchaseOrderNo}} </div>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="accName">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Project </th>
+                                    <td mat-cell *matCellDef="let PoFulfillment">
+                                        <div class="block"> {{PoFulfillment.projectName}} </div>
+                                        <div class="block"> {{PoFulfillment.projectPin}} </div>
+                                    </td>
+                                </ng-container>
+
+
+                                <ng-container matColumnDef="vendor">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Vendor</th>
+                                    <td mat-cell *matCellDef="let PoFulfillment">
+                                        <div class="block"> {{PoFulfillment.partyName}} </div>
+                                    </td>
+                                </ng-container>
+                                <!--  PO No. Column -->
+                                <ng-container matColumnDef="orderDate">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Order Date </th>
+                                    <td mat-cell *matCellDef="let PoFulfillment">
+                                        <div class="block"> {{PoFulfillment.orderDate| date : 'dd/MM/yyyy'}} </div>
+                                    </td>
+                                </ng-container>
+
+                                <!--  Order date Column -->
+                                <ng-container matColumnDef="grandTotal">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Gross Amount </th>
+                                    <td mat-cell *matCellDef="let PoFulfillment">
+                                        <div class="block">{{PoFulfillment.grandTotal | number : '1.2-2'}}</div>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="invoiceAmount">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Invoice Amount </th>
+                                    <td mat-cell *matCellDef="let PoFulfillment">
+                                        <div class="block">{{PoFulfillment.invoiceAmount| number : '1.2-2'}}</div>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="amount">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Paid Amount </th>
+                                    <td mat-cell *matCellDef="let PoFulfillment">
+                                        <div class="block">{{PoFulfillment.amount| number : '1.2-2'}}</div>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="balanceInvoice">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Balance Invoice </th>
+                                    <td mat-cell *matCellDef="let PoFulfillment">
+                                        <div class="block">{{PoFulfillment.balanceInvoice| number : '1.2-2'}}</div>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="balancePayment">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Balance Payment </th>
+                                    <td mat-cell *matCellDef="let PoFulfillment">
+                                        <div class="block">{{PoFulfillment.balancePayment| number : '1.2-2'}}</div>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="paymentDueDate">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Payment Due Date </th>
+                                    <td mat-cell *matCellDef="let PoFulfillment">
+                                        <div class="block"> {{PoFulfillment.paymentDueDate| date : 'dd/MM/yyyy'}} </div>
+                                    </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+                            </table>
+                                 </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+    </div>
+</form>

@@ -1,0 +1,145 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form>
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Page Header -->
+
+                <div class="tab-content">
+
+                    <!-- Add User -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+
+                                    <div class="col-md-4">
+
+                                        <div class="scroll-content boxshadow">
+
+                                  <!--  <div class="col-md-12 heading-reportParent">
+                                                <input type='text' name="searchCity" [(ngModel)]='searchCity'
+                                                    placeholder="Search by City Name" />
+                                            </div>-->         
+                                            
+                                            <div class="row align-items-center">
+                                                <div class="col">
+                                                    <div class="total-rec">Total Records: {{ProjectDataFlag}}</div>
+                                                </div>
+                                                <div class="col-auto float-right ml-auto">
+                                                    <mat-form-field class="search-input">
+                                                        <input matInput (keyup)="applyFilterProject($event)" placeholder="Search..." #input>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                            <div class="city-scroll">
+                                            <table mat-table [dataSource]="ProjectData" matSort class="mat-elevation-z8">
+                                            
+                                                <ng-container matColumnDef="selectionvalue">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Project </th>
+                                                    <td mat-cell *matCellDef="let ProjectData"> 
+                                                    <a  (click)="billingComparsionReport(ProjectData.selectionid)">    
+                                                        {{ProjectData.selectionvalue}} 
+                                                    </a>
+                                                    </td>
+                                                </ng-container>
+
+                                                <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+                                                <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+
+                                            </table>  
+                                           </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-8" [hidden]="!enableSchedule">
+                                        <h4>Billing Comparsion Report</h4>
+                                        <div class="row align-items-center">
+                                            <div class="col">
+                                                <div class="total-rec">Total Records: {{totalRecords}}</div>
+                                            </div>
+                                            <div class="col-auto float-right ml-auto">
+                                                <mat-form-field class="search-input">
+                                                    <input matInput (keyup)="applyFilter($event)" placeholder="Search..." #input>
+                                                </mat-form-field>
+                                            </div>
+                                        </div>
+                                        <table mat-table [dataSource]="ScheduleRecord" matSort class="mat-elevation-z8">
+
+
+                                            <!--  Name Column -->
+                                            <ng-container matColumnDef="id">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Milestone No </th>
+                                                <td mat-cell *matCellDef="let ScheduleRecord ">
+                                                    <div class="block"> {{ScheduleRecord.milestoneno}}</div>
+
+                                                </td>
+                                            </ng-container>
+
+                                                        <!--  address Column -->
+                                            <ng-container matColumnDef="amountofbilling">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Amount of Billing </th>
+                                                <td mat-cell *matCellDef="let ScheduleRecord ">
+                                                    <div class="block"> {{ScheduleRecord.amountofbilling}} </div>
+
+                                                </td>
+                                            </ng-container>
+
+                                            <!--  Email Column -->
+                                            <ng-container matColumnDef="invoiceno">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Invoice No
+                                                </th>
+                                                <td mat-cell *matCellDef="let ScheduleRecord ">
+                                                    <div class="block"> {{ScheduleRecord.invoiceno}} </div>
+                                                </td>
+                                            </ng-container>
+                                            <!-- Action Column -->
+                                            
+                                            <ng-container matColumnDef="totalamount">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Amount
+                                                </th>
+                                                <td mat-cell *matCellDef="let ScheduleRecord ">
+                                                    <div class="block"> {{ScheduleRecord.totalamount}} </div>
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="difference">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Difference
+                                                </th>
+                                                <td mat-cell *matCellDef="let ScheduleRecord ">
+                                                    <div class="block"> {{ScheduleRecord.difference}} </div>
+                                                </td>
+                                            </ng-container>
+
+                                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                        </table>
+                                        <mat-paginator [pageSize]="pageSizedisplay" [pageSizeOptions]="itemPerPage"
+                                            showFirstLastButtons>
+                                        </mat-paginator>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

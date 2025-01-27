@@ -1,0 +1,662 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form [formGroup]="addTaskForm">
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /Page Header -->
+
+                <div class="tab-content">
+
+                    <!-- Add User -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="card-body">
+                                <!-- <div class="col-md-12 mandatory">*Fields are Mandatory</div> -->
+                                <div class="ticketInfo">
+                                    <div class="row">
+
+                                        <div class="col-sm-2">
+                                            <label>Ticket No:</label>
+                                            {{TicketData.ticketNo}}
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <label>Ticket Creation Date:</label>
+                                            {{TicketData.dueDate |date : 'dd/MM/yyyy hh:mm:ss'}}
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <label>Location:</label>
+                                            {{TicketData.location}}
+
+                                        </div>
+
+                                        <div class="col-sm-3">
+                                            <label>Problem Identified:</label>
+                                            {{TicketData.resolution}}
+                                        </div>
+                                        <div class="col-sm-3">
+                                            <label>Asset Name:</label>
+                                            {{TicketData.assetName}}
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+
+                                <h2 class="orange-title">HelpDesk/IT Comments</h2>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Actioned By</th>
+                                            <th>Assigned To Role / Assigned To Role</th>
+                                            <th>Status</th>
+                                            <th>Remark</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let commentsData of taskHistoryList">
+                                            <td>
+                                                <div *ngIf="commentsData.createdDate !=null">
+                                                    {{commentsData.createdDate |date : 'dd/MM/yyyy hh:mm:ss'}}</div>
+                                            </td>
+                                            <td>{{commentsData.updatedBy}}</td>
+                                            <td>{{commentsData.assignToRole}}
+                                                <div
+                                                    *ngIf="commentsData.assignToUser != null && commentsData.assignToRole != null">
+                                                    /</div> {{commentsData.assignToUser}}
+                                            </td>
+                                            <td> {{commentsData.approvalStatus}}</td>
+                                            <td>{{commentsData.remark}}
+                                                <br>
+                                                <a href="{{url}}{{commentsData.captureImg}}" target="_blank"
+                                                *ngIf='commentsData.captureImg != null'> View attachment</a>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                                <div>
+                                    <div class="form-group">
+                                        <strong>Action</strong>
+                                        <div class="form-control">
+                                            <label class="radio-inline">
+                                                <input *ngIf='hasRole' type="radio" value="CLOSED" name="approvalStatus"
+                                                    [(ngModel)]="TicketTaskData.approvalStatus"
+                                                    formControlName="approvalStatus" (change)="statusChanged()"> <span
+                                                    *ngIf='hasRole'>Closed</span>
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" value="ESCALATED" name="approvalStatus"
+                                                    *ngIf='vendorList.length != 0'
+                                                    [(ngModel)]="TicketTaskData.approvalStatus"
+                                                    (change)="statusChanged()" formControlName="approvalStatus"> <span
+                                                    *ngIf='vendorList.length != 0'>
+                                                    Escalated
+                                                </span>
+                                            </label>
+
+                                            <label class="radio-inline">
+                                                <input type="radio" value="RESOLVED" name="approvalStatus"
+                                                    [(ngModel)]="TicketTaskData.approvalStatus"
+                                                    (change)="statusChanged()" formControlName="approvalStatus">
+                                                Resolved
+                                            </label>
+
+                                            <label class="radio-inline">
+                                                <input type="radio" value="FORWARDED" name="approvalStatus"
+                                                    (change)="statusChanged()"
+                                                    [(ngModel)]="TicketTaskData.approvalStatus"
+                                                    formControlName="approvalStatus"> Forwarded
+                                            </label>
+
+                                            <label class="radio-inline">
+                                                <input type="radio" value="REASSIGNED" name="approvalStatus"
+                                                    (change)="statusChanged()"
+                                                    [(ngModel)]="TicketTaskData.approvalStatus"
+                                                    formControlName="approvalStatus"> Re-Assigned
+                                            </label>
+
+                                            <label class="radio-inline">
+                                                <input type="radio" value="ONHOLD" name="approvalStatus"
+                                                    (change)="statusChanged()"
+                                                    [(ngModel)]="TicketTaskData.approvalStatus"
+                                                    formControlName="approvalStatus"> On-Hold
+                                            </label>
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                </div>
+
+                                <hr>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <strong>Ticket Task</strong>
+                                    </div>
+
+                                    <div class="col-sm-3" *ngIf="TicketTaskData.approvalStatus == 'ESCALATED'">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.vendorname.errors }">
+                                                <mat-label>Vendor Name</mat-label>
+                                                <mat-select [(ngModel)]="TaskData.vendorname"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="vendorname" required>
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let vendorData of vendorList"
+                                                        value="{{vendorData.vendorName}}">
+                                                        {{vendorData.vendorName}}</mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.vendorname.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.vendorname.errors.required">Vendor Name is
+                                                        required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-sm-3" *ngIf="TicketTaskData.approvalStatus=='RESOLVED'">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <!-- <input matInput name="resolutionDate"
+                                                    placeholder="SLA Resolution Date Time" type="text"
+                                                    [matDatepicker]="picker4" [(ngModel)]="TaskData.resolutionDate"
+                                                    formControlName="resolutionDate" required> -->
+                                                <mat-label>SLA Resolution Date Time </mat-label>
+                                                <input matInput type="datetime-local" name="resolutionDate"
+                                                    [(ngModel)]="TaskData.resolutionDate" [max]="maxDateDisabled" 
+                                                    formControlName="resolutionDate" required>
+                                                <div *ngIf="isSubmitted && formControls.resolutionDate.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.resolutionDate.errors.required">Resolution
+                                                        Date Time
+                                                        required</div>
+                                                </div>
+                                                <!-- <mat-datepicker-toggle matSuffix [for]="picker4">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #picker4></mat-datepicker> -->
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-sm-3" *ngIf="TicketTaskData.approvalStatus=='CLOSED'">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <!-- <input matInput name="ticketClosedTime"
+                                                    placeholder="Ticket Closed Time" type="text"
+                                                    [matDatepicker]="picker5" [(ngModel)]="TaskData.ticketClosedTime"
+                                                    formControlName="ticketClosedTime" required> -->
+                                                <mat-label>Ticket Closed Time </mat-label>
+                                                <input matInput type="datetime-local" name="ticketClosedTime"
+                                                    [(ngModel)]="TaskData.ticketClosedTime" [max]="maxDateDisabled" 
+                                                    formControlName="ticketClosedTime" required>
+                                                <div *ngIf="isSubmitted && formControls.ticketClosedTime.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.ticketClosedTime.errors.required">Ticket
+                                                        Closed Time
+                                                        required</div>
+                                                </div>
+                                                <!-- <mat-datepicker-toggle matSuffix [for]="picker5">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #picker5></mat-datepicker> -->
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                    <div class="col-sm-3"
+                                        *ngIf="((TicketTaskData.approvalStatus == 'REASSIGNED')||(TicketTaskData.approvalStatus == 'FORWARDED'))">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.assignName.errors }">
+                                                <mat-label>Assign To</mat-label>
+                                                <mat-select [(ngModel)]="assignToUser"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="assignName" required>
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let userData of userList"
+                                                        value="{{userData.selectionid}}">
+                                                        {{userData.selectionvalue}}</mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.assignName.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.assignName.errors.required">Assign To is
+                                                        required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.assignName.errors }">
+                                                <mat-label>Ticket Category</mat-label>
+                                                <mat-select [(ngModel)]="TaskData.ticketCategory"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="ticketCategory" name="ticketCategory"
+                                                    (selectionChange)="getAllSubcategoryByCategory(TicketData.ticketCategory)">
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let categoryData of ticketCategoryList"
+                                                        value="{{categoryData.selectionid}}">
+                                                        {{categoryData.selectionvalue}}</mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.ticketCategory.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.ticketCategory.errors.required">Ticket
+                                                        Category is
+                                                        required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.ticketSubcategory.errors }">
+                                                <mat-label>Subcategory</mat-label>
+                                                <mat-select [(ngModel)]="TaskData.ticketSubcategory"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="ticketSubcategory">
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let categoryData of subCategoryList"
+                                                        value="{{categoryData.selectionid}}">
+                                                        {{categoryData.selectionvalue}}</mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.ticketSubcategory.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.ticketSubcategory.errors.required">Ticket
+                                                        Subcategory is
+                                                        required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.assignName.errors }">
+                                                <mat-label>Classification</mat-label>
+                                                <mat-select [(ngModel)]="classifications"
+                                                    [typeaheadDebounceInterval]="matSelectDuration" multiple
+                                                    formControlName="classifications"
+                                                    (selectionChange)="classificationsChange(classifications)">
+
+                                                    <mat-option *ngFor="let classificationData of classificationList"
+                                                        value="{{classificationData.selectionid}}">
+                                                        {{classificationData.selectionvalue}}</mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.classifications.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.classifications.errors.required">
+                                                        Classifications is
+                                                        required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+
+
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width" class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.resolution.errors }">
+                                                <mat-label>Ticket Resolution</mat-label>
+
+                                                <textarea matInput name="resolution" maxlength="500"
+                                                    [(ngModel)]="TaskData.resolution"
+                                                    formControlName="resolution"></textarea>
+
+                                                <div *ngIf="isSubmitted && formControls.resolution.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.resolution.errors.required">
+                                                        Ticket Resolution is
+                                                        required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+                                    <!-- <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="attachment" type="text" placeholder="Attachment"
+                                                    [(ngModel)]="TicketTaskData.attachment" formControlName="attachment"
+                                                    maxlength="60" required>
+                                                
+                                            </mat-form-field>
+                                        </div>
+                                    </div> -->
+
+                                    <div class="col-sm-3">
+
+                                        <div class="col-sm-12">
+                                            <app-fileupload [files]="ticketAttachment" maxSize="2048"
+                                                labelname="attachment" modulename="tickettask"></app-fileupload>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.remark.errors }">
+                                                <textarea matInput name="remark" maxlength="250"
+                                                    [(ngModel)]="TaskData.remark" placeholder="Remark"
+                                                    formControlName="remark" required></textarea>
+
+                                                <div *ngIf="isSubmitted && formControls.remark.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.remark.errors.required">Remark is
+                                                        required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-sm-3" *ngIf="TicketTaskData.approvalStatus=='CLOSED'">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.trip.errors }">
+                                                <mat-label>Trip</mat-label>
+                                                <mat-select [(ngModel)]="TaskData.trip"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    (selectionChange)="tripOption()" formControlName="trip" name="trip"
+                                                    required>
+                                                    <mat-option value="">-Select-</mat-option>
+                                                    <mat-option value="ADD TRIPS">Vehicles Used</mat-option>
+                                                    <mat-option value="NO VEHICLES USED">No vehicles Used</mat-option>
+
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.trip.errors" class="error-text">
+                                                    <div *ngIf="formControls.trip.errors.required">Trip is
+                                                        required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row"
+                                    *ngIf="((TaskData.trip=='ADD TRIPS') && (TicketTaskData.approvalStatus=='CLOSED'))">
+                                    <div class="col-md-12">
+                                        <h2 class="orange-title">
+                                            Add Trips
+                                        </h2>
+                                    </div>
+                                    <!-- <div class="col-md-12">
+                                            <strong>Trip Filter</strong>
+                                        </div> -->
+                                    <br>
+                                    <br>
+                                    <div class="border-trip"
+                                        *ngIf="((TaskData.trip=='ADD TRIPS') && (TicketTaskData.approvalStatus=='CLOSED'))">
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <mat-form-field
+                                                        [ngClass]="{ 'has-error': isSubmitted && formControls.vehicleRegNo.errors }">
+                                                        <mat-label>Vehicle Name</mat-label>
+                                                        <mat-select [(ngModel)]="TicketTaskData.vehicleRegNo"
+                                                            [typeaheadDebounceInterval]="matSelectDuration"
+                                                            formControlName="vehicleRegNo" name="vehicleRegNo">
+                                                            <mat-option>-Select-</mat-option>
+                                                            <mat-option *ngFor="let vehicleData of vehicleList"
+                                                                value="{{vehicleData.selectionid}}">
+                                                                {{vehicleData.selectionvalue}}</mat-option>
+                                                        </mat-select>
+
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <mat-form-field class="example-full-width">
+                                                        <input matInput name="tripFromDate"
+                                                            placeholder="Ticket Created Date Time" type="text"
+                                                            [matDatepicker]="picker1"
+                                                            [(ngModel)]="TicketTaskData.tripFromDate"
+                                                            formControlName="tripFromDate">
+                                                        <div *ngIf="isSubmitted && formControls.tripFromDate.errors"
+                                                            class="error-text">
+                                                            <div *ngIf="formControls.tripFromDate.errors.required">
+                                                                Trip From
+                                                                Date required
+                                                            </div>
+                                                        </div>
+                                                        <mat-datepicker-toggle matSuffix [for]="picker1">
+                                                        </mat-datepicker-toggle>
+                                                        <mat-datepicker #picker1></mat-datepicker>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="button-area">
+                                                    <button mat-flat-button color="primary" (click)="searchTrip(true)">
+                                                        Search</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+
+                                <div
+                                    *ngIf="((TaskData.trip=='ADD TRIPS') && (TicketTaskData.approvalStatus=='CLOSED'))">
+                                    <div class="tab-content">
+
+                                        <!-- Add Family -->
+                                        <div class="pro-overview tab-pane fade show active">
+                                            <div class="card">
+
+
+
+
+                                                <!-- Search Table -->
+                                                <div class="total-rec">Total Records: {{totalRecords}}</div>
+
+                                                <table mat-table [dataSource]="tripSearchResultsFinal" matSort
+                                                    class="mat-elevation-z8">
+
+                                                    <!-- <td>
+                                                                        <input type="checkbox" ng-model="TripData.selected" ng-change="optionToggled(Obj,Obj.selected)">
+                                                                    </td> -->
+
+                                                    <!--  Checkbox Column -->
+                                                    <ng-container matColumnDef="checkbox">
+                                                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                                            Select
+                                                        </th>
+                                                        <td mat-cell *matCellDef="let tripSearchResultsFinal ">
+                                                            <mat-checkbox class="example-margin"
+                                                                [(ngModel)]="tripSearchResultsFinal.selected"
+                                                                (change)="optionToggled(tripSearchResultsFinal,$event.checked)"
+                                                                type="checkbox" formControlName="selected">
+                                                            </mat-checkbox>
+                                                            <!-- <input type="checkbox" ng-model="TripData.selected" ng-change="optionToggled(Obj,Obj.selected)"> -->
+
+                                                        </td>
+                                                    </ng-container>
+
+                                                    <!--  Name Column -->
+                                                    <ng-container matColumnDef="tripId">
+                                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Trip
+                                                            Id
+                                                        </th>
+                                                        <td mat-cell *matCellDef="let tripSearchResultsFinal ">
+                                                            <div class="block strong">
+                                                                {{tripSearchResultsFinal.tripId}}
+                                                            </div>
+
+                                                        </td>
+                                                    </ng-container>
+
+                                                    <!--  Email Column -->
+                                                    <ng-container matColumnDef="sourceAdd">
+                                                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Source
+                                                        </th>
+                                                        <td mat-cell *matCellDef="let tripSearchResultsFinal ">
+                                                            <!-- <div>
+                                                                        <appAddressbylatlong lat="tripSearchResultsFinal.sourceLat" long="tripSearchResultsFinal.sourceLong"> {{tripSearchResultsFinal.sourceAdd}} </appAddressbylatlong>
+                                                                    </div> -->
+                                                            <!-- <div class="block strong"> {{tripSearchResultsFinal.sourceAdd}} </div> -->
+                                                            <div appTripaddress [lat]="tripSearchResultsFinal.sourceLat"
+                                                                [long]="tripSearchResultsFinal.sourceLong">
+                                                                Loading...
+                                                            </div>
+                                                        </td>
+                                                    </ng-container>
+
+                                                    <ng-container matColumnDef="destAdd">
+                                                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                                            Destination </th>
+                                                        <td mat-cell *matCellDef="let tripSearchResultsFinal ">
+                                                            <!-- <div>
+                                                                        <appAddressbylatlong [lat]="tripSearchResultsFinal.destLat" [long]="tripSearchResultsFinal.destLong"> </appAddressbylatlong>
+                                                                    </div> -->
+                                                            <!-- <div class="block strong" appAddressbylatlong [lat]="tripSearchResultsFinal.destLat" [long]="tripSearchResultsFinal.destLong"> </div> -->
+                                                            <div appTripaddress [lat]="tripSearchResultsFinal.destLat"
+                                                                [long]="tripSearchResultsFinal.destLong">Loading...
+                                                            </div>
+
+
+                                                        </td>
+                                                    </ng-container>
+
+                                                    <ng-container matColumnDef="startTime">
+                                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Start
+                                                            Time </th>
+                                                        <td mat-cell *matCellDef="let tripSearchResultsFinal ">
+                                                            <div class="block strong">
+                                                                {{tripSearchResultsFinal.startTime | date}} </div>
+                                                        </td>
+                                                    </ng-container>
+
+
+
+                                                    <ng-container matColumnDef="endTime">
+                                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> End
+                                                            Time
+                                                        </th>
+                                                        <td mat-cell *matCellDef="let tripSearchResultsFinal ">
+                                                            <div class="block strong">
+                                                                {{tripSearchResultsFinal.endTime | date}} </div>
+                                                        </td>
+                                                    </ng-container>
+
+                                                    <ng-container matColumnDef="distance">
+                                                        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                                            Distance
+                                                        </th>
+                                                        <td mat-cell *matCellDef="let tripSearchResultsFinal ">
+                                                            <div class="block strong">
+                                                                {{tripSearchResultsFinal.distance}} </div>
+                                                        </td>
+                                                    </ng-container>
+
+
+
+
+                                                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                                                    </tr>
+                                                </table>
+                                                <mat-paginator [pageSize]="pageSizedisplay"
+                                                    [pageSizeOptions]="itemPerPage" showFirstLastButtons>
+                                                </mat-paginator>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="submit-section" *ngIf="TicketTaskData.approvalStatus == 'CLOSED'">
+
+
+                                        <button mat-flat-button color="warn" (click)="back()">
+                                            <mat-icon aria-hidden="false">cancel</mat-icon> Back
+                                        </button>
+
+                                        <button mat-flat-button color="accent" (click)="saveTripAndUpdateTicket()">
+                                            <mat-icon aria-hidden="false">save</mat-icon> Submit
+                                        </button>
+                                    </div>
+
+
+                                </div>
+
+
+
+
+
+                                <div class="submit-section"
+                                    *ngIf="(TaskData.trip=='NO VEHICLES USED')||(TicketTaskData.approvalStatus != 'CLOSED')">
+
+                                    <button mat-flat-button color="warn" (click)="back()">
+                                        <mat-icon aria-hidden="false">cancel</mat-icon> Back
+                                    </button>
+
+                                    <button mat-flat-button color="accent" (click)="addTask('update')"
+                                        *ngIf="((edit) || (TicketTaskData.approvalStatus != 'CLOSED'))">
+                                        <mat-icon aria-hidden="false">save</mat-icon> Submit
+                                    </button>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

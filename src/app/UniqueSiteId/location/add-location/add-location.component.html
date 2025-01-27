@@ -1,0 +1,280 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form [formGroup]="addLocationForm" autocomplete="off">
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /Page Header -->
+
+                <div class="tab-content">
+
+                    <!-- Add User -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="col-md-12 mandatory">*Fields are Mandatory</div>
+
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width" >
+                                                <input matInput type="text" placeholder="Unique Site ID"
+                                                    formControlName="locationid" maxlength="60" [readonly]="disablefield" required>
+                                                <mat-error *ngIf="hasError('locationid', 'required')">Unique Site Id is
+                                                    required</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>State</mat-label>
+                                                <mat-select formControlName="state" 
+                                                [typeaheadDebounceInterval]="matSelectDuration" 
+                                                    (ngModelChange)="getActiveDistrictFromstate(this.addLocationForm.value.state)"
+                                                    required>
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let stateData of stateList"
+                                                        value="{{stateData.selectionid}}">
+                                                        {{stateData.selectionvalue}}</mat-option>
+                                                </mat-select>
+                                                <mat-error *ngIf="hasError('state', 'required')">State is required
+                                                </mat-error>
+
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>District</mat-label>
+                                                <mat-select formControlName="district" 
+                                                [typeaheadDebounceInterval]="matSelectDuration" 
+                                                    (ngModelChange)="getActiveCityFromDistrict(this.addLocationForm.value.district)"
+                                                    required>
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let districtData of districtList"
+                                                        value="{{districtData.selectionid}}">
+                                                        {{districtData.selectionvalue}}</mat-option>
+                                                </mat-select>
+                                                <mat-error *ngIf="hasError('district', 'required')">District is required
+                                                </mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-select name="city" formControlName="city"
+                                                [typeaheadDebounceInterval]="matSelectDuration"  placeholder="City"
+                                                    (ngModelChange)="getActivePoliceStationFromCity(this.addLocationForm.value.city)"
+                                                    required>
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let city of cityList"
+                                                        [value]="city.selectionvalue">
+                                                        {{ city.selectionvalue }}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <mat-error *ngIf="hasError('city', 'required')">City is required
+                                                </mat-error>
+
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-select name="policestation" 
+                                                [typeaheadDebounceInterval]="matSelectDuration" formControlName="policestation"
+                                                    placeholder="Police Station">
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let policestation of policestationList"
+                                                        [value]="policestation.selectionvalue">
+                                                        {{ policestation.selectionvalue }}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <mat-error *ngIf="hasError('policestation', 'required')">Police Station
+                                                    is required</mat-error>
+
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput type="text" placeholder="Unique Site ID Address"
+                                                    formControlName="locationaddress" maxlength="160" required>
+                                                <mat-error *ngIf="hasError('locationaddress', 'required')">Unique Site
+                                                    ID Address is required</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput type="text" placeholder="Survey Date"
+                                                    formControlName="surveydate" maxlength="60"
+                                                    [matDatepicker]="picker1" required>
+                                                <mat-datepicker-toggle matSuffix [for]="picker1">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #picker1></mat-datepicker>
+                                                <mat-error *ngIf="hasError('surveydate', 'required')">Survey date is
+                                                    required</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput type="text" placeholder="Approval Date"
+                                                    formControlName="approvaldate" maxlength="60"
+                                                    [matDatepicker]="picker2" required>
+                                                <mat-datepicker-toggle matSuffix [for]="picker2">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #picker2></mat-datepicker>
+                                                <mat-error *ngIf="hasError('approvaldate', 'required')">Approval date is
+                                                    required</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput type="text" placeholder="Zip" formControlName="zip"
+                                                    maxlength="6" numbersOnly required>
+                                                    <mat-error *ngIf="hasError('zip', 'required')">Zip code is
+                                                        required</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput type="text" placeholder="Country"
+                                                    formControlName="country" maxlength="60">
+
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput type="text" placeholder="Latitude"
+                                                    formControlName="latitude" numbersOnly maxlength="60">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-1">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput type="text" placeholder="longitude"
+                                                    formControlName="longitude" maxlength="60" numbersOnly>
+
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput type="text" placeholder="Contact Person"
+                                                    formControlName="contactperson" maxlength="60">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput type="text" placeholder="Contact Person"
+                                                    formControlName="contact_person" maxlength="60">
+                                            </mat-form-field>
+                                        </div>
+                                    </div> -->
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput type="text" placeholder="Email"
+                                                    formControlName="emailid" maxlength="60">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput type="text" placeholder="Phone No."
+                                                    formControlName="phoneno" maxlength="10" numbersOnly>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-checkbox class="example-margin" formControlName="isprioritysite">
+                                            </mat-checkbox> IS Priority Site
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-checkbox class="example-margin" formControlName="warehouse">
+                                            </mat-checkbox> Warehouse
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="submit-section">
+                                    <button mat-flat-button color="accent" (click)="addlocation('save')" *ngIf="add">
+                                        <mat-icon aria-hidden="false">save</mat-icon> Save
+                                    </button>
+
+                                    <button mat-flat-button color="accent" (click)="addlocation('update')" *ngIf="edit">
+                                        <mat-icon aria-hidden="false">update</mat-icon> Update
+                                    </button>
+
+                                    
+                                    <button mat-flat-button color="warn" (click)="back()">
+                                        <mat-icon aria-hidden="false">cancel</mat-icon> Back</button>
+
+                                   
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

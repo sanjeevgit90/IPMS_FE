@@ -1,0 +1,293 @@
+<app-loader *ngIf="showLoading"></app-loader>
+
+<div class="main-wrapper">
+    <app-header> </app-header>
+
+    <app-leftmenu></app-leftmenu>
+
+    <!-- Page Wrapper -->
+    <div class="page-wrapper">
+
+        <!-- Page Content -->
+        <div class="content container-fluid">
+
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h3 class="page-title">Profile</h3>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item"><a routerLink="/EmpProfile">Dashboard</a></li>
+                            <li class="breadcrumb-item active">Profile</li>
+                        </ul>
+                    </div>
+                    <div class="col-auto float-right ml-auto">
+                        <!-- <button class="btn add-btn" (click)="SubmitToHR()" *ngIf="ProfileData.approvalStatus=='PENDING'|| ProfileData.approvalStatus=='REJECTED'">
+                  <i class="fa fa-check"></i>  Submit To HR</button> -->
+
+                    </div>
+                </div>
+            </div>
+            <!-- /Page Header -->
+
+            <div class="card mb-0">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="profile-view">
+                                <div class="profile-img-wrap">
+                                    <div class="profile-img" *ngIf="ProfileData.profileImage==null">
+                                        <img alt="" src="assets/Images/duumy.jpg">
+                                    </div>
+                                    <div class="profile-img" *ngIf="ProfileData.profileImage!=null">
+                                        <img alt="" src="{{ProfileData.profileImage}}">
+                                    </div>
+                                </div>
+                                <div class="profile-basic">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div class="profile-info-left">
+                                                <h3 class="user-name m-t-0 mb-0">
+                                                    {{ProfileData.firstName}} {{ProfileData.lastName}}
+
+                                                </h3>
+                                                <small class="text-muted">{{ProfileData.designation}}</small>
+                                                <h6 class="text-muted">{{ProfileData.department}}</h6>
+
+                                                <div class="staff-id">Employee ID : {{ProfileData.employeeCode}}</div>
+                                                <!-- <div class="small doj text-muted" >Date of Join : {{ProfileData.doj | date:'dd-MM-yyyy'}}</div> -->
+
+                                                <div class="staff-msg">
+                                                    <button mat-stroked-button color="primary" [matMenuTriggerFor]="org">
+                            <div>
+                              <span matBadge="{{ProfileData.organizations.length}}" matBadgeOverlap="false"
+                                matTooltip="" class="badge-class" *ngIf="ProfileData.organizations.length>1"></span>
+                                {{ProfileData.organizations[0].orgName}}
+                            </div>
+                          </button>
+                                                    <mat-menu #org="matMenu" class="actionmenu">
+                                                        <a mat-menu-item *ngFor="let org of ProfileData.organizations; let i = index">
+                              {{i+1}}. {{org.orgName}}
+                            </a>
+                                                    </mat-menu>
+                                                </div>
+
+
+                                                <div class="staff-msg">
+                                                    <button class="btn btn-custom" [matMenuTriggerFor]="role">
+                            <div>
+                              <span matBadge="{{ProfileData.roles.length}}" matBadgeOverlap="false"
+                                matTooltip="" class="badge-class" *ngIf="ProfileData.roles.length>1"></span>
+                                {{ProfileData.roles[0].rolename}}
+                            </div>
+                          </button>
+                                                    <mat-menu #role="matMenu" class="actionmenu">
+                                                        <a mat-menu-item *ngFor="let role of ProfileData.roles; let i = index">
+                              {{i+1}}. {{role.rolename}}
+                            </a>
+                                                    </mat-menu>
+
+                                                    <!-- <button class="btn btn-custom">
+                            <span *ngFor="let role of ProfileData.roles; let i = index">
+                              <span>{{i+1}}.</span> {{role.rolename}} &nbsp;
+                            </span>
+                          </button> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <ul class="personal-info">
+                                                <li>
+                                                    <div class="title">Phone:</div>
+                                                    <div class="text"><a href="">{{ProfileData.mobileNumber}}</a></div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">Email:</div>
+                                                    <div class="text"><a href="">{{ProfileData.emailId}}</a></div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">Birthday:</div>
+                                                    <div class="text">{{ProfileData.dob | date:'dd-MM-yyyy'}}</div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">Address:</div>
+                                                    <div class="text">
+                                                        {{ProfileData.address}}, {{ProfileData.district}}, {{ProfileData.state}}
+
+                                                    </div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">Gender:</div>
+                                                    <div class="text">{{ProfileData.gender}}</div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">Reports to:</div>
+                                                    <div class="text">
+                                                        <div class="avatar-box">
+                                                            <div class="avatar avatar-xs">
+                                                                <img src="assets/Images/duumy.jpg" alt="">
+                                                            </div>
+                                                        </div>
+                                                        <div *ngIf="ProfileData.manager!=null">
+                                                            <strong> {{ProfileData.manager.firstName}} {{ProfileData.manager.lastName}}</strong>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="pro-edit">
+                                    <!-- <button mat-flat-button color="accent"  matTooltip="Edit profile">
+                    <mat-icon aria-hidden="false">edit</mat-icon>
+                  </button> -->
+
+                                    <a mat-flat-button color="accent" matTooltip="Edit profile" [routerLink]="['/updateUser', ProfileData.entityId,'editprofile']" *ngIf="profileEdit">
+                                        <mat-icon aria-hidden="false">edit</mat-icon>
+                                    </a>
+
+
+                                    <a mat-flat-button color="primary" matTooltip="Edit user profile" [routerLink]="['/updateUser', ProfileData.entityId,'edit']" *ngIf="adminEdit">
+                                        <mat-icon aria-hidden="false">edit</mat-icon>
+
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card tab-box">
+                <div class="row user-tabs">
+                    <div class="col-lg-12 col-md-12 col-sm-12 line-tabs">
+                        <ul class="nav nav-tabs nav-tabs-bottom">
+                            <li class="nav-item"><a href="#emp_profile" data-toggle="tab" class="nav-link active">Profile</a></li>
+                            <li class="nav-item"><a href="#emp_projects" data-toggle="tab" class="nav-link">Projects</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content">
+
+                <!-- Profile Info Tab -->
+                <div id="emp_profile" class="pro-overview tab-pane fade show active">
+                    <div class="row">
+                        <div class="col-md-6 d-flex">
+                            <div class="card profile-box flex-fill">
+                                <div class="card-body">
+                                    <h3 class="card-title">Medical Informations
+                                    </h3>
+                                    <ul class="personal-info">
+                                        <li>
+                                            <div class="title">Blood Group:</div>
+                                            <div class="text">{{ProfileData.bloodGroup}}</div>
+                                        </li>
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 d-flex">
+                            <div class="card profile-box flex-fill">
+                                <div class="card-body">
+                                    <h3 class="card-title">Emergency Contact
+
+                                    </h3>
+                                    <div>
+                                        <!-- <h5 class="section-title"><strong>Primary</strong></h5> -->
+                                        <ul class="personal-info">
+                                            <li>
+                                                <div class="title">Name</div>
+                                                <div class="text">{{ProfileData.emergencyContactPerson}}</div>
+                                            </li>
+
+                                            <li>
+                                                <div class="title">Phone</div>
+                                                <div class="text">{{ProfileData.emergencyContactMobile}}</div>
+                                            </li>
+
+
+                                        </ul>
+                                        <hr>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="submit-section">
+
+                        <button mat-flat-button color="warn" (click)="back()" *ngIf="adminEdit">
+              <mat-icon aria-hidden="false">cancel</mat-icon> Back
+            </button>
+
+
+                    </div>
+
+                </div>
+                <!-- /Profile Info Tab -->
+
+                <!-- Projects Tab -->
+                <div class="tab-pane fade" id="emp_projects">
+                    <div class="card profile-box flex-fill">
+                        <div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row align-items-center">
+                                        <div class="col">
+                                            <div class="total-rec">Total Records: {{totalRecords}}</div>
+                                        </div>
+                                        <div class="col-auto float-right ml-auto">
+                                            <mat-form-field class="search-input">
+                                                <input matInput (keyup)="applyFilter($event)" placeholder="Search..." #input>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <table mat-table [dataSource]="userProjectMapping" matSort class="mat-elevation-z8">
+
+                                        <!-- Project Name Column -->
+                                        <ng-container matColumnDef="projectname">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Project Name </th>
+                                            <td mat-cell *matCellDef="let userProjectMapping" data-label="Project Name">
+                                                {{userProjectMapping.projectname}} </td>
+                                        </ng-container>
+                                        <!-- Org Column -->
+                                        <ng-container matColumnDef="orgname">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Organisation Name </th>
+                                            <td mat-cell *matCellDef="let userProjectMapping" data-label="Organisation Name">
+                                                {{userProjectMapping.orgname}} </td>
+                                        </ng-container>
+                                        <!-- level Column -->
+                                        <ng-container matColumnDef="workflowlevel">
+                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Level Name </th>
+                                            <td mat-cell *matCellDef="let userProjectMapping" data-label="Level Name">
+                                                {{userProjectMapping.workflowlevel}} </td>
+                                        </ng-container>
+
+
+                                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                    </table>
+                                    <mat-paginator [pageSize]="pageSizedisplay" [pageSizeOptions]="itemPerPage" showFirstLastButtons>
+                                    </mat-paginator>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Projects Tab -->
+
+
+
+            </div>
+        </div>
+        <!-- /Page Content -->
+
+    </div>
+    <!-- /Page Wrapper -->
+</div>

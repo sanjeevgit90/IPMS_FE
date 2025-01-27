@@ -1,0 +1,206 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form [formGroup]="addPoWiseProductForm">
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /Page Header -->
+                <div class="tab-content">
+
+                    <!-- Report -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="poNumber" type="text" placeholder="PO. No"
+                                                    [(ngModel)]="PoWiseData.poNumber" formControlName="poNumber"
+                                                    maxlength="60">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="projectName" type="text" placeholder="Project"
+                                                    [(ngModel)]="PoWiseData.projectName" formControlName="projectName"
+                                                    maxlength="60">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="submit-section">
+                                            <button mat-flat-button color="accent" (click)="search()" *ngIf="list">
+                                                <mat-icon aria-hidden="false">search</mat-icon> Search
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Search Table -->
+
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <div class="total-rec">Total Records: {{totalRecords}}</div>
+                                </div>
+                                <div class="col-auto float-right ml-auto">
+                                    <mat-form-field class="search-input">
+                                        <input matInput (keyup)="applyFilter($event)" placeholder="Search..." #input>
+                                    </mat-form-field>
+
+                                    <button mat-flat-button color="accent" class="export-btn"
+                                        (click)="exporter.exportTable('xlsx', {fileName:'PO Wise Product Report'})"
+                                        matTooltip="Export to Excel">
+                                        <mat-icon>send</mat-icon> Export
+                                    </button>
+                                </div>
+                            </div>
+                            <div style="overflow: auto;">
+                                <table matTableExporter mat-table [dataSource]="PoWiseProductData" matSort
+                                    class="mat-elevation-z8" #exporter="matTableExporter">
+                                    <ng-container matColumnDef="poNumber">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> PO. No. </th>
+                                        <td mat-cell *matCellDef="let PoWiseProductData">
+                                            <div class="block"> {{PoWiseProductData.poNumber}} </div>
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="projectName">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Project </th>
+                                        <td mat-cell *matCellDef="let PoWiseProductData">
+                                            <div class="block"> {{PoWiseProductData.projectName}} </div>
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="projectPin">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Project Pin </th>
+                                        <td mat-cell *matCellDef="let PoWiseProductData">
+                                            <div class="block"> {{PoWiseProductData.projectPin}} </div>
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="partyName">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Vendor </th>
+                                        <td mat-cell *matCellDef="let PoWiseProductData">
+                                            <div class="block"> {{PoWiseProductData.partyName}} </div>
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="orderDate">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Order Dt.</th>
+                                        <td mat-cell *matCellDef="let PoWiseProductData">
+                                            <div class="block"> {{PoWiseProductData.orderDate | date : 'dd/MM/yyyy'}}
+                                            </div>
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="productName">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Product </th>
+                                        <td mat-cell *matCellDef="let PoWiseProductData">
+                                            <div class="block"> {{PoWiseProductData.productName}} </div>
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="hsnCode">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> HSN Code </th>
+                                        <td mat-cell *matCellDef="let PoWiseProductData">
+                                            <div class="block"> {{PoWiseProductData.hsnCode}} </div>
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="rate">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Rate </th>
+                                        <td mat-cell *matCellDef="let PoWiseProductData">
+                                            <div class="block" style="text-align: right;">
+                                                {{PoWiseProductData.rate | number : '1.2-2'}} </div>
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="quantity">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Quatity </th>
+                                        <td mat-cell *matCellDef="let PoWiseProductData">
+                                            <div class="block" style="text-align: right;">
+                                                {{PoWiseProductData.quantity | number : '1.2-2'}} </div>
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="amount">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Amount </th>
+                                        <td mat-cell *matCellDef="let PoWiseProductData">
+                                            <div class="block" style="text-align: right;">
+                                                {{PoWiseProductData.amount | number : '1.2-2'}} </div>
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="cgstAmount">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> CGST </th>
+                                        <td mat-cell *matCellDef="let PoWiseProductData">
+                                            <div class="block" style="text-align: right;">
+                                                {{PoWiseProductData.cgstAmount | number : '1.2-2'}} </div>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="sgstAmount">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> SGST </th>
+                                        <td mat-cell *matCellDef="let PoWiseProductData">
+                                            <div class="block" style="text-align: right;">
+                                                {{PoWiseProductData.sgstAmount | number : '1.2-2'}} </div>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="igstAmount">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> IGST </th>
+                                        <td mat-cell *matCellDef="let PoWiseProductData">
+                                            <div class="block" style="text-align: right;">
+                                                {{PoWiseProductData.igstAmount | number : '1.2-2'}} </div>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="totalDiscount">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Discount </th>
+                                        <td mat-cell *matCellDef="let PoWiseProductData">
+                                            <div class="block" style="text-align: right;">
+                                                {{PoWiseProductData.totalDiscount | number : '1.2-2'}} </div>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="finalAmount">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Final Amt. </th>
+                                        <td mat-cell *matCellDef="let PoWiseProductData">
+                                            <div class="block" style="text-align: right;">
+                                                {{PoWiseProductData.finalAmount | number : '1.2-2'}} </div>
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="poGrandTotal">
+                                        <th mat-header-cell *matHeaderCellDef mat-sort-header> PO Grand Total </th>
+                                        <td mat-cell *matCellDef="let PoWiseProductData">
+                                            <div class="block" style="text-align: right;">
+                                                {{PoWiseProductData.poGrandTotal | number : '1.2-2'}} </div>
+                                        </td>
+                                    </ng-container>
+
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                </table>
+                            </div>
+                            <mat-paginator [pageSize]="pageSizedisplay" [pageSizeOptions]="itemPerPage"
+                                showFirstLastButtons>
+                            </mat-paginator>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,317 @@
+<app-loader *ngIf="showLoading"></app-loader>
+
+<div class="main-wrapper">
+    <app-header> </app-header>
+    <app-leftmenu></app-leftmenu>
+    <div class="page-wrapper">
+        <div class="content container-fluid">
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h3 class="page-title">{{PageTitle}}</h3>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a routerLink="/Dashboard"> Dashboard</a>
+                            </li>
+                            <li class="breadcrumb-item active">{{PageTitle}}</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+            <!-- /Page Header -->
+
+            <form [formGroup]="addProjectForm">
+
+                <div class="tab-content">
+
+                    <!-- Add User -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="col-md-12 mandatory">*Fields are Mandatory</div>
+
+                                <div class="row">
+                                    <div class="col-sm-3" *ngIf="edit && ProjectData.approvalStatus=='APPROVED'">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="projectPin" type="text" placeholder="Project Pin" [(ngModel)]="ProjectData.projectPin" formControlName="projectPin" maxlength="60" readonly=true>
+
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.projectType.errors }">
+                                                <mat-select [(ngModel)]="ProjectData.projectType" [typeaheadDebounceInterval]="matSelectDuration" name="projectType" placeholder="Project Type" formControlName="projectType" required>
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let type of projectTypeList" [value]="type.selectionvalue">
+                                                        {{ type.selectionvalue }}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.projectType.errors" class="error-text">
+                                                    <div *ngIf="formControls.projectType.errors.required">
+                                                        Project Type is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.projectName.errors }">
+                                                <input matInput name="projectName" type="text" placeholder="Project Name" [(ngModel)]="ProjectData.projectName" formControlName="projectName" maxlength="100" required>
+                                                <div *ngIf="isSubmitted && formControls.projectName.errors" class="error-text">
+                                                    <div *ngIf="formControls.projectName.errors.required">
+                                                        Project Name is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.clientName.errors }">
+                                                <input matInput name="clientName" type="text" placeholder="Client Name" [(ngModel)]="ProjectData.clientName" formControlName="clientName" maxlength="60" required>
+                                                <div *ngIf="isSubmitted && formControls.clientName.errors" class="error-text">
+                                                    <div *ngIf="formControls.clientName.errors.required">Client Name is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.organization.errors }">
+                                                <mat-select [compareWith]="compareUser" [typeaheadDebounceInterval]="matSelectDuration" [(ngModel)]="ProjectData.organization" name="organization" placeholder="Organization" formControlName="organization" required>
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let org of organizationsList" [value]="org.selectionid">
+                                                        {{ org.selectionvalue }}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.organization.errors" class="error-text">
+                                                    <div *ngIf="formControls.organization.errors.required">
+                                                        Organization is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.departmentName.errors }">
+                                                <mat-select [compareWith]="compareObjects" [typeaheadDebounceInterval]="matSelectDuration" [(ngModel)]="ProjectData.departmentName" name="departmentName" placeholder="Department Name" formControlName="departmentName" required>
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let dept of departmentList" [value]="dept.selectionvalue">
+                                                        {{ dept.selectionvalue }}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.departmentName.errors" class="error-text">
+                                                    <div *ngIf="formControls.departmentName.errors.required">
+                                                        Department is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.projectManager.errors }">
+                                                <mat-select [compareWith]="compareUser" [typeaheadDebounceInterval]="matSelectDuration" [(ngModel)]="ProjectData.projectManager" name="projectManager" placeholder="Project Manager Name" formControlName="projectManager" required>
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let user of userList" [value]="user.selectionid">
+                                                        {{ user.selectionvalue }}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.projectManager.errors" class="error-text">
+                                                    <div *ngIf="formControls.projectManager.errors.required">
+                                                        Project Manager is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.accountManager.errors }">
+                                                <mat-select [compareWith]="compareUser" [typeaheadDebounceInterval]="matSelectDuration" [(ngModel)]="ProjectData.accountManager" name="accountManager" placeholder="Account Manager Name" formControlName="accountManager" required>
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let user of userList" [value]="user.selectionid">
+                                                        {{ user.selectionvalue }}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.accountManager.errors" class="error-text">
+                                                    <div *ngIf="formControls.accountManager.errors.required">
+                                                        Account Manager is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.practiceName.errors }">
+                                                <input matInput name="practiceName" type="text" placeholder="Practice Name" [(ngModel)]="ProjectData.practiceName" formControlName="practiceName" required>
+                                                <div *ngIf="isSubmitted && formControls.practiceName.errors" class="error-text">
+                                                    <div *ngIf="formControls.practiceName.errors.required">
+                                                        Practice Name is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.projectLocation.errors }">
+                                                <input matInput name="projectLocation" type="text" placeholder="Project Location" [(ngModel)]="ProjectData.projectLocation" formControlName="projectLocation" maxlength="60" required>
+                                                <div *ngIf="isSubmitted && formControls.projectLocation.errors" class="error-text">
+                                                    <div *ngIf="formControls.projectLocation.errors.required">
+                                                        Project Location is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="projectStartDate" placeholder="Project Start Date" type="text" [matDatepicker]="picker" [(ngModel)]="ProjectData.projectStartDate" formControlName="projectStartDate" required>
+                                                <div *ngIf="isSubmitted && formControls.projectStartDate.errors" class="error-text">
+                                                    <div *ngIf="formControls.projectStartDate.errors.required">
+                                                        Project Start Date is required
+                                                    </div>
+                                                </div>
+                                                <mat-datepicker-toggle matSuffix [for]="picker">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #picker></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="projectStopDate" placeholder="Project Stop Date" type="text" [matDatepicker]="picker1" [(ngModel)]="ProjectData.projectStopDate" formControlName="projectStopDate" required>
+                                                <div *ngIf="isSubmitted && formControls.projectStopDate.errors" class="error-text">
+                                                    <div *ngIf="formControls.projectStopDate.errors.required">
+                                                        Project Stop Date is required
+                                                    </div>
+                                                </div>
+                                                <mat-datepicker-toggle matSuffix [for]="picker1">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #picker1></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-select [(ngModel)]="ProjectData.projectStatus" [typeaheadDebounceInterval]="matSelectDuration" name="projectStatus" placeholder="Project Status" formControlName="projectStatus">
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let projectStatus of statusList" [value]="projectStatus.selectionvalue">
+                                                        {{ projectStatus.selectionvalue }}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <textarea matInput name="remark" maxlength="500" [(ngModel)]="ProjectData.remark" formControlName="remark" placeholder="Enter Remark"></textarea>
+                                            </mat-form-field>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-checkbox class="block" formControlName="projectPlan" [(ngModel)]="ProjectData.projectPlan">Project Plan
+                                            </mat-checkbox>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+
+                                            <mat-checkbox class="block" formControlName="poAttached" [(ngModel)]="ProjectData.poAttached">PO Attached
+                                            </mat-checkbox>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.percentagePaymentReceived.errors }">
+                                                <input matInput name="percentagePaymentReceived" type="text" placeholder="Percentage Payment Received" [(ngModel)]="ProjectData.percentagePaymentReceived" formControlName="percentagePaymentReceived" required numbersOnly>
+                                                <div *ngIf="isSubmitted && formControls.percentagePaymentReceived.errors" class="error-text">
+                                                    <div *ngIf="formControls.percentagePaymentReceived.errors.required">
+                                                        Percentage Payment Received is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.percentageCompleted.errors }">
+                                                <input matInput name="percentageCompleted" type="text" placeholder="Percentage Completed" [(ngModel)]="ProjectData.percentageCompleted" formControlName="percentageCompleted" required numbersOnly>
+                                                <div *ngIf="isSubmitted && formControls.percentageCompleted.errors" class="error-text">
+                                                    <div *ngIf="formControls.percentageCompleted.errors.required">
+                                                        Percentage Completed is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="budget" type="text" placeholder="Budget" [(ngModel)]="ProjectData.budget" formControlName="budget">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.completionStatus.errors }">
+                                                <mat-select [(ngModel)]="ProjectData.completionStatus" [typeaheadDebounceInterval]="matSelectDuration" name="completionStatus" placeholder="Completion Status" formControlName="completionStatus" required>
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let status of completionStatusList" [value]="status.name">
+                                                        {{ status.name }}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.departmentName.errors" class="error-text">
+                                                    <div *ngIf="formControls.departmentName.errors.required">
+                                                        Department is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="submit-section">
+
+                                    <button mat-flat-button color="accent" (click)="addProject('save')" *ngIf="add">
+                                                <mat-icon aria-hidden="false">save</mat-icon> Save
+                                            </button>
+
+                                    <button mat-flat-button color="accent" (click)="addProject('update')" *ngIf="edit">
+                                                <mat-icon aria-hidden="false">update</mat-icon> Update
+                                            </button>
+                                    <button mat-flat-button color="accent" *ngIf="(!showUploadFlag) && edit && 
+                                            (ProjectData.approvalStatus == 'PENDING' || backToTask== true)" (click)="sendForApproval()">
+                                                <mat-icon aria-hidden="false">update</mat-icon> Submit For Approval
+                                            </button>
+
+                                    <button mat-flat-button color="warn" (click)="back()">
+                                                <mat-icon aria-hidden="false">cancel</mat-icon> Back
+                                            </button>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

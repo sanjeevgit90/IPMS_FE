@@ -1,0 +1,129 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form [formGroup]="addCurrencyMasterForm">
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/EmpProfile"> Currency Master </a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Page Header -->
+
+                <div class="tab-content">
+                    <!-- Add organization -->
+                    <div id="classification" class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="col-md-12 mandatory">*Fields are Mandatory</div>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.currencyName.errors }">
+                                                <input matInput name="currencyName" type="text"
+                                                    placeholder="Currency Name" [(ngModel)]="CurrencyData.currencyName"
+                                                    formControlName="currencyName" maxlength="60" required>
+                                                <div *ngIf="isSubmitted && formControls.currencyName.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.currencyName.errors.required">Currency name
+                                                        required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.currencySymbol.errors }">
+                                                <input matInput name="currencySymbol" type="text"
+                                                    placeholder="Currency Symbol"
+                                                    [(ngModel)]="CurrencyData.currencySymbol"
+                                                    formControlName="currencySymbol" maxlength="20" required>
+                                                <div *ngIf="isSubmitted && formControls.currencySymbol.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.currencySymbol.errors.required">Currency
+                                                        symbol required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="submit-section">
+                                    <button mat-flat-button color="primary" (click)="addCurrency('save')" *ngIf="list">
+                                        <mat-icon aria-hidden="false">save</mat-icon> Save
+                                    </button>
+
+                                    <button mat-flat-button color="accent" (click)="search()" *ngIf="list">
+                                        <mat-icon aria-hidden="false">search</mat-icon> Search
+                                    </button>
+
+                                    <button mat-flat-button color="warn" (click)="clear()" *ngIf="list">
+                                        <mat-icon aria-hidden="false">close</mat-icon> Clear
+                                    </button>
+                                </div>
+
+                            </div>
+
+                            <!-- Search Table -->
+                            <div class="total-rec">Total Records: {{totalRecords}}</div>
+
+                            <table mat-table [dataSource]="CurrencyMasterData" matSort class="mat-elevation-z8">
+
+                                <!-- Org Name Column -->
+                                <ng-container matColumnDef="currencyName">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Currency Name </th>
+                                    <td mat-cell *matCellDef="let CurrencyMasterData" data-label="Currency Name">
+                                        {{CurrencyMasterData.currencyName}} </td>
+                                </ng-container>
+
+                                <!-- Country Column -->
+                                <ng-container matColumnDef="currencySymbol">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Currency Symbol </th>
+                                    <td mat-cell *matCellDef="let CurrencyMasterData" data-label="Currency Symbol">
+                                        {{CurrencyMasterData.currencySymbol}} </td>
+                                </ng-container>
+
+                                <!-- Action Column -->
+                                <ng-container matColumnDef="action">
+                                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                                    <td mat-cell *matCellDef="let CurrencyMasterData">
+                                        <button mat-flat-button color="warn"
+                                            (click)="onDelete(CurrencyMasterData.currencyName,CurrencyMasterData.isDeleted)"
+                                            matTooltip="Deactivate this record" *ngIf="!CurrencyMasterData.isDeleted">
+                                            <mat-icon aria-hidden="false">delete</mat-icon>
+                                        </button>
+                                        <button mat-flat-button color="basic" class="green-btn"
+                                            (click)="onDelete(CurrencyMasterData.currencyName,CurrencyMasterData.isDeleted)"
+                                            matTooltip="Activate this record" *ngIf="CurrencyMasterData.isDeleted">
+                                            <mat-icon aria-hidden="false">delete</mat-icon>
+                                        </button>
+                                    </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+                            <mat-paginator [pageSize]="pageSizedisplay" [pageSizeOptions]="itemPerPage"
+                                showFirstLastButtons>
+                            </mat-paginator>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

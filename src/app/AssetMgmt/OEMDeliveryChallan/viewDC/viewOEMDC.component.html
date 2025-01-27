@@ -1,0 +1,169 @@
+<form name="viewPoform">
+    <div class="row">
+        <div class="col-sm-10">
+            <div class="container viewPO table-responsive" name="table" id="table">
+                <table class="table table-bordered" name="table" cellspacing="0px" cellpadding="0px">
+                    <tr>
+                        <td class="center-align" colspan="2"><strong class="potitle">Returnable Delivery Challan</strong></td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <strong class="block-text">Consignor:</strong>
+                            <p>
+                              <span>{{dc.partyname}}</span>
+                            </p>
+                            <strong class="block-text">Full address:</strong>
+                            <p style="width: 250px;">
+                              <span>{{dc.address}}</span>
+           </p>
+           </td>              
+                        <td>
+                            <strong class="block-text">Project Name:</strong>
+                            <p class="description-po">
+                                <span>{{dc.projectname}}</span>
+                            </p>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong class="block-text">DC No:</strong>
+                            <p class="description-po">
+                                <span>{{dc.dcno}}</span>
+                            </p>
+                            <strong class="block-text">Date:</strong>
+                            <p class="description-po">
+                                <span *ngIf="dc.dcdate > 0">{{dc.dcdate| date:'dd-MM-yyyy'}}</span>
+                                <span *ngIf="dc.dcdate == 0"> </span>
+                            </p>
+
+                        </td>
+
+                       
+                        <td>
+                            <strong class="block-text">Consignee Name: </strong>
+                            <p class="description-po">
+                                <span>{{dc.consigneename}}</span>
+                            </p>
+
+                            <strong class="block-text">Contact Detail: </strong>
+                            <p class="description-po">
+                                <span>{{dc.consigneecontact}}</span>
+                            </p>
+
+                        </td>
+                        </tr>
+                        <tr>
+                        <td>
+                            <p>
+                              <strong class="block-text">Courier No: </strong>
+                              <span> {{dc.courierno}}</span>
+              </p>
+              <strong class="block-text">Courier Dispatch Date:</strong>
+                        <p>
+                              <span *ngIf="dc.courierdate > 0">{{dc.courierdate| date:'dd-MM-yyyy'}}</span>
+                              <span *ngIf="dc.courierdate == 0"> </span>
+                            </p>
+                            <p>
+                            <strong class="block-text">Courier Details: </strong>
+                            <span> {{dc.courierDetails}}</span>
+              </p>
+                          </td>
+                   
+                        <td>
+                            <strong class="block-text">Ship To</strong>
+                            <p class="description-po">
+                                <span>{{dc.shippedto}}</span>
+                            </p>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="padding: 0px; margin: 0px">
+                            <table style="width: 100%" class="table table-bordered print-dc" cellspacing="0px" cellpadding="0px">
+                                <tr>
+                                    <th>Sr.No.</th>
+                                    <th>Asset Name</th>
+                                    <th>Serial No.</th>
+                                    <th>Category</th>
+                                    <th>Product</th>
+                                    <th>Count</th>
+                                    <th style="width:300px"> Unique Site ID </th>
+                                    <th>Asset Status</th>
+                                </tr>
+                                <tr *ngFor="let item of dc.asset; let i = index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{item.assetname}} </td>
+                                    <td>{{item.serialno}} </td>
+                                    <td>{{item.category}}</td>
+                                    <td>{{item.productname}}</td>
+                                    <td> 1</td>
+                                    <td>{{item.location}} </td>
+                                    <td>{{item.assetstatus}} </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="8">
+                                      <div class="row">
+                                        <div class="col-sm-4">
+                                          <strong>Total No of. Assets</strong>
+                                           <p>
+                                            <span>{{totalAssets}}</span>
+                                          </p>
+                                        </div>
+                                        <div class="col-sm-4">
+                                          <strong>Total No of. Boxes</strong>
+                                          <p>
+                                            <span>{{dc.noofboxes}}</span>
+                                          </p>
+                                        </div>
+                                        </div>
+                                        </td>
+                                        </tr>
+                                <tr>
+                                    <td colspan="8">
+                                        <div class="row">
+                                            <div class="col-md-4"><strong>Aurionpro Solutions Ltd.</strong>
+                                                <br /><br /><br /><br /><br />
+                                                <strong class="block-text">Signature </strong>
+                                            </div>
+
+                                    
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="8">
+                                        <p>There is no consideration received / receivable in cash or kind for the above goods.</p>
+                                        <p class="block-text" style="margin-top: 40px; font-weight: bold;">** This is a computer generated document, signatures are not required **</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="col-sm-2" *ngIf="oemDeliveryChallanEdit">
+            <div class="po-action">
+                <button *ngIf="(dc.dcstatus !='PENDING') && !dc.printflag" mat-flat-button color="primary" [disabled]="deleted" (click)="printComponent('table');enableUpload(dc.entityId)">
+          <mat-icon>print</mat-icon> Print
+        </button>
+                <div *ngIf="enablePrintFlag">
+                    <app-fileupload [files]="attachmentFiles" maxSize="2048" [entitydata]="dc.entityId" labelname="Upload Attachment" modulename="oemdc">
+                    </app-fileupload>
+                    <button mat-flat-button color="primary" [disabled]="deleted" (click)="disablePrint(dc.entityId)">
+            <mat-icon>save</mat-icon>
+            save
+          </button>
+                </div>
+                <button mat-flat-button color="warn" (click)="back()">
+          <mat-icon>close</mat-icon>
+          Close
+        </button>
+            </div>
+
+        </div>
+    </div>
+</form>

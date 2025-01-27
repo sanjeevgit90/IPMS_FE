@@ -1,0 +1,297 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form [formGroup]="addProductDetailsForm">
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /Page Header -->
+                <!-- <div>
+                    <app-potab highlightedtab="producttab"> </app-potab>
+                </div> -->
+                <div class="tab-content">
+
+                    <!-- Add User -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="col-md-12 mandatory">*Fields are Mandatory</div>
+
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.productName.errors }">
+                                                <mat-label>Product</mat-label>
+                                                <mat-select [(ngModel)]="ProductDetailsEntityData.productName"
+                                                    formControlName="productName" [typeaheadDebounceInterval]="matSelectDuration" [compareWith]="compareObjects">
+                                                    <mat-option>- Select Product -</mat-option>
+                                                    <!-- <mat-option value=1>Product001</mat-option> -->
+                                                    <mat-option *ngFor="let p of productList"
+                                                        value="{{p.selectionid}}">
+                                                        {{p.selectionvalue}}</mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.productName.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.productName.errors.required">Product is
+                                                        required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.hsnId.errors }">
+                                                <mat-label>HSN Code</mat-label>
+                                                <mat-select [(ngModel)]="ProductDetailsEntityData.hsnId" [typeaheadDebounceInterval]="matSelectDuration" 
+                                                    formControlName="hsnId" (ngModelChange)="getPerticularHSN(ProductDetailsEntityData.hsnId)">
+                                                    <mat-option>- Select Hsn -</mat-option>
+                                                    <!-- <mat-option value="9997">9997</mat-option> -->
+                                                    <mat-option *ngFor="let h of hsnList"
+                                                        value="{{h.selectionid}}">
+                                                        {{h.selectionvalue}}</mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.hsnId.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.hsnId.errors.required">Hsn code is required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.rate.errors }">
+                                                <mat-label>Rate</mat-label>
+                                                <input matInput name="rate" type="number"
+                                                    [(ngModel)]="ProductDetailsEntityData.rate" formControlName="rate" (input)="cal()" step="any" min="0">
+                                                <div *ngIf="isSubmitted && formControls.rate.errors" class="error-text">
+                                                    <div *ngIf="formControls.rate.errors.required">Rate is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.quantity.errors }">
+                                                <mat-label>Quantity</mat-label>
+                                                <input matInput name="quantity" type="number"
+                                                    [(ngModel)]="ProductDetailsEntityData.quantity" formControlName="quantity" (input)="cal()" step="any" min="0">
+                                                <div *ngIf="isSubmitted && formControls.quantity.errors" class="error-text">
+                                                    <div *ngIf="formControls.quantity.errors.required">Quantity is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.amount.errors }">
+                                                <mat-label>Amount</mat-label>
+                                                <input matInput name="amount" type="number"
+                                                    [(ngModel)]="ProductDetailsEntityData.amount" formControlName="amount">
+                                                <div *ngIf="isSubmitted && formControls.amount.errors" class="error-text">
+                                                    <div *ngIf="formControls.amount.errors.required">Amount is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Discount %</mat-label>
+                                                <input matInput name="discount" type="number"
+                                                    [(ngModel)]="ProductDetailsEntityData.discount" formControlName="discount" (input)="cal()" step="0.01" min="0">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Discount Amount</mat-label>
+                                                <input matInput name="discountAmount" type="number"
+                                                    [(ngModel)]="ProductDetailsEntityData.discountAmount" formControlName="discountAmount" (input)="cal()" step="0.01" min="0">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Total Discount</mat-label>
+                                                <input matInput name="totalDiscount" type="number"
+                                                    [(ngModel)]="ProductDetailsEntityData.totalDiscount" formControlName="totalDiscount" (input)="cal()" min="0">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Total Amount</mat-label>
+                                                <input matInput name="totalAmount" type="number"
+                                                    [(ngModel)]="ProductDetailsEntityData.totalAmount" formControlName="totalAmount" (input)="cal()" min="0">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3" *ngIf="(isHistoricData=='NO') && (currency=='INR')">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>CGST (%)</mat-label>
+                                                <input matInput name="cgst" type="number"
+                                                    [(ngModel)]="ProductDetailsEntityData.cgst" formControlName="cgst">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3" *ngIf="(isHistoricData=='NO') && (currency=='INR')">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>SGST (%)</mat-label>
+                                                <input matInput name="sgst" type="number"
+                                                    [(ngModel)]="ProductDetailsEntityData.sgst" formControlName="sgst">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3" *ngIf="isHistoricData=='NO'">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label *ngIf="currency=='INR'">IGST (%)</mat-label>
+                                                <mat-label *ngIf="currency!='INR'">Tax (%)</mat-label>
+                                                <input matInput name="igst" type="number"
+                                                    [(ngModel)]="ProductDetailsEntityData.igst" formControlName="igst">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3" *ngIf="(isHistoricData=='NO') && (currency=='INR')">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>CGST Amount</mat-label>
+                                                <input matInput name="cgstAmount" type="number"
+                                                    [(ngModel)]="ProductDetailsEntityData.cgstAmount" formControlName="cgstAmount">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3" *ngIf="(isHistoricData=='NO') && (currency=='INR')">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>SGST Amount</mat-label>
+                                                <input matInput name="sgstAmount" type="number"
+                                                    [(ngModel)]="ProductDetailsEntityData.sgstAmount" formControlName="sgstAmount">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3" *ngIf="isHistoricData=='NO'">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label *ngIf="currency=='INR'">IGST Amount</mat-label>
+                                                <mat-label *ngIf="currency!='INR'">IGST Amount</mat-label>
+                                                <input matInput name="igstAmount" type="number"
+                                                    [(ngModel)]="ProductDetailsEntityData.igstAmount" formControlName="igstAmount">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3" *ngIf="isHistoricData=='YES'">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Service Tax Amount (in Rs.)</mat-label>
+                                                <input matInput name="serviceTax" type="number"
+                                                    [(ngModel)]="ProductDetailsEntityData.serviceTax" formControlName="serviceTax" (input)="cal()" step="0.01" min="0">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3" *ngIf="isHistoricData=='YES'">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>VAT Amount (in Rs.)</mat-label>
+                                                <input matInput name="vat" type="number"
+                                                    [(ngModel)]="ProductDetailsEntityData.vat" formControlName="vat" (input)="cal()" step="0.01" min="0">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Final Amount</mat-label>
+                                                <input matInput name="finalAmount" type="number"
+                                                    [(ngModel)]="ProductDetailsEntityData.finalAmount" formControlName="finalAmount">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Description</mat-label>
+                                                <textarea matInput cols="55" rows="4" name="description" type="text"
+                                                    placeholder="Please enter description."
+                                                    [(ngModel)]="ProductDetailsEntityData.description" formControlName="description"
+                                                    maxlength="2000">
+                                                </textarea>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="submit-section">
+                                    <!-- <button class="btn btn-primary" (click)="saveProductDetails()" *ngIf="add">
+                                        <mat-icon aria-hidden="false">save</mat-icon> Save
+                                    </button> -->
+                                    <button mat-flat-button color="primary" (click)="saveProductDetails()" *ngIf="add">
+                                        <mat-icon aria-hidden="false">save</mat-icon> Save
+                                    </button>
+
+                                    <!-- <button type="submit" class="btn btn-info" (click)="updateProductDetails()"
+                                        *ngIf="edit">
+                                        <mat-icon aria-hidden="false">update</mat-icon> Update
+                                    </button> -->
+                                    <button mat-flat-button color="primary" (click)="updateProductDetails()" *ngIf="edit">
+                                        <mat-icon aria-hidden="false">update</mat-icon> Update
+                                    </button>
+
+                                    <!-- <button type="submit" class="btn btn-danger" (click)="cancel()">
+                                        <mat-icon aria-hidden="false">close</mat-icon> Cancel
+                                    </button> -->
+                                    <button mat-flat-button color="warn" (click)="cancel()">
+                                        <mat-icon aria-hidden="false">close</mat-icon> Cancel
+                                    </button>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

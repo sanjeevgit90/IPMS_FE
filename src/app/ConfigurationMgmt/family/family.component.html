@@ -1,0 +1,218 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form [formGroup]="addFamilyForm">
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /Page Header -->
+
+                <div class="tab-content">
+
+                    <!-- Add Family -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="col-md-12 mandatory">*Fields are Mandatory</div>
+
+                                <div class="row">
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.memberName.errors }">
+                                                <input matInput name="memberName" type="text" placeholder="Member Name"
+                                                    [(ngModel)]="FamilyData.memberName" formControlName="memberName"
+                                                    maxlength="60" required>
+                                                <div *ngIf="isSubmitted && formControls.memberName.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.memberName.errors.required">
+                                                        Member name is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.memberContact.errors }">
+                                                <input matInput name="memberContact" type="text"
+                                                    placeholder="Member Contact" [(ngModel)]="FamilyData.memberContact"
+                                                    formControlName="memberContact" maxlength="10" numbersOnly required>
+                                                <div *ngIf="isSubmitted && formControls.memberContact.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.memberContact.errors.required">
+                                                        Member contact is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="dob" placeholder="Date of birth" type="text"
+                                                    [matDatepicker]="picker" [(ngModel)]="FamilyData.dob"
+                                                    formControlName="dob">
+                                                <div *ngIf="isSubmitted && formControls.dob.errors" class="error-text">
+                                                    <div *ngIf="formControls.dob.errors.required">Date of birth is
+                                                        required</div>
+                                                </div>
+                                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.relationship.errors }">
+                                                <input matInput name="relationship" type="text"
+                                                    placeholder="Relationship" [(ngModel)]="FamilyData.relationship"
+                                                    formControlName="relationship" maxlength="60" required>
+                                                <div *ngIf="isSubmitted && formControls.relationship.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.relationship.errors.required">
+                                                        Relationship is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+
+                                <div class="submit-section">
+                                    <button mat-flat-button color="accent" (click)="addFamily('save')"
+                                        *ngIf="familyAdd && list">
+                                        <mat-icon aria-hidden="false">save</mat-icon> Save
+                                    </button>
+
+                                    <button mat-flat-button color="primary" (click)="search()" *ngIf="list">
+                                        <mat-icon aria-hidden="false">search</mat-icon> Search
+                                    </button>
+
+                                    <button mat-flat-button color="warn" (click)="cancel()" *ngIf="edit">
+                                        <mat-icon aria-hidden="false">close</mat-icon> Cancel
+                                    </button>
+
+                                    <button mat-flat-button color="accent" (click)="addFamily('update')" *ngIf="edit">
+                                        <mat-icon aria-hidden="false">update</mat-icon> Update
+                                    </button>
+                                </div>
+
+                            </div>
+
+                            <!-- Search Table -->
+
+
+
+                            <!-- <div class="example-header" fxLayout="row">
+                                <mat-form-field>
+                                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                                </mat-form-field>
+                            </div> -->
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <div class="total-rec">Total Records: {{totalRecords}}</div>
+                                </div>
+                                <div class="col-auto float-right ml-auto">
+                                    <mat-form-field class="search-input">
+                                        <input matInput (keyup)="applyFilter($event)" placeholder="Search..." #input>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="example-container mat-elevation-z8">
+                                <mat-table [dataSource]="FamilyMasterData" matSort>
+
+                                    <!-- Name -->
+                                    <ng-container matColumnDef="memberName">
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header> Member Name
+                                        </mat-header-cell>
+                                        <mat-cell *matCellDef="let FamilyMasterData" data-label="Member Name">
+                                            {{FamilyMasterData.memberName}} </mat-cell>
+                                    </ng-container>
+
+                                    <!-- Contact Column -->
+                                    <ng-container matColumnDef="memberContact">
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header> Member Contact
+                                        </mat-header-cell>
+                                        <mat-cell *matCellDef="let FamilyMasterData" data-label="Member Contact">
+                                            {{FamilyMasterData.memberContact}} </mat-cell>
+                                    </ng-container>
+
+                                    <!--DOB Column -->
+                                    <ng-container matColumnDef="dob">
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header> Date Of Birth
+                                        </mat-header-cell>
+                                        <mat-cell *matCellDef="let FamilyMasterData" data-label=" Date Of Birth">
+                                            {{FamilyMasterData.dob | date:'MM-dd-yyyy'}} </mat-cell>
+                                    </ng-container>
+
+                                    <!-- Relationship Column -->
+                                    <ng-container matColumnDef="relationship">
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header> Relationship
+                                        </mat-header-cell>
+                                        <mat-cell *matCellDef="let FamilyMasterData" data-label=" Relationship">
+                                            {{FamilyMasterData.relationship}} </mat-cell>
+                                    </ng-container>
+
+                                     <!-- Action Column -->
+                                     <ng-container matColumnDef="action">
+                                        <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+                                        <mat-cell *matCellDef="let FamilyMasterData">
+                                            <button mat-flat-button color="primary"
+                                                (click)="editData(FamilyMasterData.entityId)"
+                                                matTooltip="Edit this record" *ngIf="familyEdit">
+                                                <mat-icon aria-hidden="false">edit</mat-icon>
+                                            </button>
+
+                                            <button mat-flat-button color="warn"
+                                                (click)="onDelete(FamilyMasterData.entityId)"
+                                                matTooltip="Delete this user" *ngIf="familyDelete">
+                                                <mat-icon aria-hidden="false">delete</mat-icon>
+                                            </button>
+                                        </mat-cell>
+                                    </ng-container>
+
+                                    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                                    <mat-row *matRowDef="let row; columns: displayedColumns;">
+                                    </mat-row>
+                                </mat-table>
+
+
+                                <mat-paginator [pageSize]="pageSizedisplay" [pageSizeOptions]="itemPerPage"
+                                    showFirstLastButtons>
+                                </mat-paginator>
+                            </div>
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

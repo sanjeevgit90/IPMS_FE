@@ -1,0 +1,347 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form [formGroup]="addGrnForm">
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /Page Header -->
+
+                <div class="tab-content">
+
+                    <!-- Add User -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="col-md-12 mandatory">*Fields are Mandatory</div>
+
+                                <div class="row">
+                                   <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.grnNumber.errors }">
+                                                <input matInput name="grnNumber" type="text" placeholder="GRN No."
+                                                    [(ngModel)]="GrnData.grnNumber" formControlName="grnNumber"
+                                                    maxlength="60" required>
+                                                <div *ngIf="isSubmitted && formControls.grnNumber.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.grnNumber.errors.required">GRN no. is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.grnDate.errors }">
+                                                <input matInput name="grnDate"
+                                                    placeholder="GRN date" type="text"
+                                                    [matDatepicker]="picker1" [(ngModel)]="GrnData.grnDate"
+                                                    formControlName="grnDate" required>
+                                                <div *ngIf="isSubmitted && formControls.grnDate.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.grnDate.errors.required">GRN date is required</div>
+                                                </div>
+                                                <mat-datepicker-toggle matSuffix [for]="picker1">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #picker1></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.deliveryDate.errors }">
+                                                <input matInput name="deliveryDate"
+                                                    placeholder="Delivery date" type="text"
+                                                    [matDatepicker]="picker2" [(ngModel)]="GrnData.deliveryDate"
+                                                    formControlName="deliveryDate" required>
+                                                <div *ngIf="isSubmitted && formControls.deliveryDate.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.deliveryDate.errors.required">Delivery date is required</div>
+                                                </div>
+                                                <mat-datepicker-toggle matSuffix [for]="picker2">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #picker2></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Delivery Challan No.</mat-label>
+                                                <input matInput name="deliveryChallanNo" type="text"
+                                                    placeholder="Please enter delivery challan no."
+                                                    [(ngModel)]="GrnData.deliveryChallanNo" formControlName="deliveryChallanNo" maxlength="100">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="deliveryChallanDate"
+                                                    placeholder="DC date" type="text"
+                                                    [matDatepicker]="picker3" [(ngModel)]="GrnData.deliveryChallanDate"
+                                                    formControlName="deliveryChallanDate">
+                                                <mat-datepicker-toggle matSuffix [for]="picker3">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #picker3></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Invoice No.</mat-label>
+                                                <input matInput name="invoiceNo" type="text"
+                                                    placeholder="Please enter invoice no."
+                                                    [(ngModel)]="GrnData.invoiceNo" formControlName="invoiceNo" maxlength="100">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="invoiceDate"
+                                                    placeholder="Invoice date" type="text"
+                                                    [matDatepicker]="picker4" [(ngModel)]="GrnData.invoiceDate"
+                                                    formControlName="invoiceDate">
+                                                <mat-datepicker-toggle matSuffix [for]="picker4">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #picker4></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Vehicle No.</mat-label>
+                                                <input matInput name="vehicleNo" type="text"
+                                                    placeholder="Please enter vehicle no."
+                                                    [(ngModel)]="GrnData.vehicleNo" formControlName="vehicleNo" maxlength="100">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Transporter Name</mat-label>
+                                                <input matInput name="transporterName" type="text"
+                                                    placeholder="Please enter transporter name"
+                                                    [(ngModel)]="GrnData.transporterName" formControlName="transporterName" maxlength="100">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Description</mat-label>
+                                                <input matInput name="description" type="text"
+                                                    placeholder="Please enter invoice no."
+                                                    [(ngModel)]="GrnData.description" formControlName="description" maxlength="250">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>DC Copy Upload</mat-label>
+                                                <input matInput name="dcCopyUpload" type="text"
+                                                    placeholder="Please enter invoice no."
+                                                    [(ngModel)]="GrnData.dcCopyUpload" formControlName="dcCopyUpload" maxlength="100">
+                                            </mat-form-field>
+                                        </div>
+                                    </div> -->
+                                    <div class="col-sm-4">
+                                        <app-fileupload [files]="dcCopyUpload" maxSize="5120" labelname="Upload DC Copy" modulename="grndccopy" [entitydata]="GrnData.entityId"></app-fileupload>
+                                    </div>
+
+                                    <!-- <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>LR Copy Upload</mat-label>
+                                                <input matInput name="lrCopyUpload" type="text"
+                                                    placeholder="Please enter invoice no."
+                                                    [(ngModel)]="GrnData.lrCopyUpload" formControlName="lrCopyUpload" maxlength="100">
+                                            </mat-form-field>
+                                        </div>
+                                    </div> -->
+                                    <div class="col-sm-4">
+                                        <app-fileupload [files]="lrCopyUpload" maxSize="5120" labelname="Upload LR Copy" modulename="grnlrcopy" [entitydata]="GrnData.entityId"></app-fileupload>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Purchase Order No.</mat-label>
+                                                <!-- <mat-select [(ngModel)]="GrnData.poNo" [typeaheadDebounceInterval]="matSelectDuration" 
+                                                    formControlName="poNo" (ngModelChange)="getProductListByPo(GrnData.poNo)" [compareWith]="compareObjects">
+                                                 <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let po of poList" value="{{po.selectionid}}">
+                                                        {{po.selectionvalue}}</mat-option>
+                                                </mat-select> -->
+                                                <input type="text" matInput [matAutocomplete]="Project" 
+                                                    formControlName="poNo" [(ngModel)]="GrnData.poNo" (ngModelChange)="getProductListByPo(GrnData.poNo)"/>
+                                                <mat-autocomplete #Project="matAutocomplete" [displayWith]="getName.bind(this)">
+                                                    <mat-option *ngFor="let option of filteredPoList | async"
+                                                        [value]="option.selectionid">
+                                                        {{option.selectionvalue }}
+                                                    </mat-option>
+                                                </mat-autocomplete>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="productDetails.length > 0">
+                                    <!-- <table mat-table [dataSource]="productDetails" class="mat-elevation-z8">
+                                        <ng-container matColumnDef="productName">
+                                            <th mat-header-cell *matHeaderCellDef> Product </th>
+                                            <td mat-cell *matCellDef="let productDetails">
+                                                <div class="block"> {{productDetails.productName}} </div>
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="quantity">
+                                            <th mat-header-cell *matHeaderCellDef> Quantity </th>
+                                            <td mat-cell *matCellDef="let productDetails">
+                                                <div class="block"> {{productDetails.quantity}} </div>
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="receivedQuantity">
+                                            <th mat-header-cell *matHeaderCellDef> Received Quantity </th>
+                                            <td mat-cell *matCellDef="let productDetails">
+                                                <div class="block">
+                                                    <input matInput name="receivedQuantity" type="number"
+                                                    placeholder="Received Quantity" formControlName="receivedQuantity"
+                                                    [(ngModel)]="productDetails.receivedQuantity" max="{{productDetails.quantity}}" min="0">
+                                                </div>
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="acceptedQuantity">
+                                            <th mat-header-cell *matHeaderCellDef> Accepted Quantity </th>
+                                            <td mat-cell *matCellDef="let productDetails">
+                                                <div class="block">
+                                                    <input matInput name="acceptedQuantity" type="text"
+                                                    placeholder="Accepted Quantity" formControlName="acceptedQuantity"
+                                                    [(ngModel)]="productDetails.acceptedQuantity" (input)="changeQuantity()" max="{{productDetails.quantity}}" numbersOnly>
+                                                </div>
+                                            </td>
+                                        </ng-container>
+        
+                                        <ng-container matColumnDef="rejectedQuantity">
+                                            <th mat-header-cell *matHeaderCellDef> Rejected Quantity </th>
+                                            <td mat-cell *matCellDef="let productDetails">
+                                                <div class="block">
+                                                    <input matInput name="rejectedQuantity" type="text"
+                                                    placeholder="Rejected Quantity" formControlName="rejectedQuantity"
+                                                    [(ngModel)]="productDetails.rejectedQuantity" formControlName="rejectedQuantity">
+                                                </div>
+                                            </td>
+                                        </ng-container>
+        
+
+                                        <ng-container matColumnDef="action">
+                                            <th mat-header-cell *matHeaderCellDef> Action </th>
+                                            <td mat-cell *matCellDef="let GrnMasterData">
+                                                <a mat-flat-button color="accent" matTooltip="View this record"
+                                                    [routerLink]="['/ViewPrsById', GrnMasterData.entityId]">
+                                                    <mat-icon aria-hidden="false">visibility</mat-icon>
+                                                </a>
+        
+                                                <a mat-flat-button color="primary" matTooltip="Edit this record"
+                                                    [routerLink]="['/updatePrs', GrnMasterData.entityId,'edit']">
+                                                    <mat-icon aria-hidden="false">edit</mat-icon>
+                                                </a>
+        
+                                                <button mat-flat-button color="warn"
+                                                    matTooltip="Delete this record" (click)="onDelete(GrnMasterData.entityId)"
+                                                    title="Delete">
+                                                    <mat-icon aria-hidden="false">delete</mat-icon>
+                                                </button>
+                                            </td>
+                                        </ng-container>
+        
+                                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                    </table> -->
+                                    <table class="table table-bordered print-border" style="width: 100%;">
+                                        <thead>
+                                            <tr>
+                                                <th id="productName"> Product </th>
+                                                <th id="quantity"> Quantity </th>
+                                                <th id="receivedQuantity"> Received Quantity </th>
+                                                <th id="acceptedQuantity"> Accepted Quantity </th>
+                                                <th id="acceptedQuantity"> Rejected Quantity </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let p of productDetails; let i = index;">
+                                                <td> {{p.productName}} </td>
+                                                <td> {{p.quantity}} </td>
+                                                <td>
+                                                    <div class="block">
+                                                        <input matInput type="text" placeholder="Received Quantity" [ngModelOptions]="{standalone: true}"
+                                                        [(ngModel)]="p.receivedQuantity" max="{{p.quantity}}" min="0" numbersOnly [disabled]="view">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="block">
+                                                        <input matInput type="text" placeholder="Accepted Quantity" [ngModelOptions]="{standalone: true}"
+                                                        [(ngModel)]="p.acceptedQuantity" (input)="changeQuantity(i,p)" numbersOnly [disabled]="view">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="block">
+                                                        <input matInput type="text" placeholder="Rejected Quantity" [ngModelOptions]="{standalone: true}"
+                                                        [(ngModel)]="p.rejectedQuantity" [disabled]="true">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="submit-section">
+                                    <button mat-flat-button color="accent" (click)="saveGrn()" *ngIf="add">
+                                        <mat-icon aria-hidden="false">save</mat-icon> Save</button>
+                                    <button mat-flat-button color="accent" (click)="updateGrn()" *ngIf="edit">
+                                        <mat-icon aria-hidden="false">update</mat-icon> Update</button>
+                                    <button mat-flat-button color="warn" (click)="cancel()">
+                                        <mat-icon aria-hidden="false">cancel</mat-icon> Back</button>
+                                    <button mat-flat-button color="accent" (click)="reSendTask()" *ngIf="taskId!=null">
+                                        <mat-icon aria-hidden="false">launch</mat-icon> Re-Send For Approval</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

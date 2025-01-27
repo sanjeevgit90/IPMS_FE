@@ -1,0 +1,379 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form [formGroup]="addCityForm">
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Page Header -->
+
+                <div class="tab-content">
+
+                    <!-- Add User -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-3" *ngIf="!disable" >
+                                        <div class="form-group">
+                                            <mat-form-field
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.state.errors }">
+                                                <mat-label>State</mat-label>
+                                                <mat-select [(ngModel)]="ReportData.state"  formControlName="state" [typeaheadDebounceInterval]="matSelectDuration" 
+                                                    (ngModelChange)="getActiveDistrictFromstate(ReportData.state)" required> 
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let stateData of stateList"
+                                                        value="{{stateData.selectionid}}">
+                                                        {{stateData.selectionvalue}}</mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.state .errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.state.errors.required">State is required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                        <div class="col-sm-4" *ngIf="!disable" >
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <mat-select [(ngModel)]="ReportData.district" name="district" placeholder="Search by district" [typeaheadDebounceInterval]="matSelectDuration" 
+                                    (selectionChange)="getActiveCityFromDistrict(ReportData.district)" formControlName="district" required>
+                                        <mat-option >-Select-</mat-option>
+                                        <mat-option *ngFor="let district of districtList" [value]="district.selectionvalue" >
+                                          {{ district.selectionvalue }}
+                                        </mat-option>
+                                      </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                                </div>
+
+                                <div class="row" [hidden]="!enableCity">
+
+                                    <div class="col-md-4">
+
+                                        <div class="scroll-content boxshadow">
+
+                                            <h4>City Name</h4>
+                                          <!-- <div class="col-md-12 heading-reportParent">
+                                                <input type='text' name="searchCity" [(ngModel)]='searchCity'
+                                                    placeholder="Search by City Name" />
+                                            </div>-->  
+
+                                           
+                                            <div class="row align-items-center">
+                                                <div class="col">
+                                                    <div class="total-rec">Total Records: {{totalRecordsCity}}</div>
+                                                </div>
+                                                <div class="col-auto float-right ml-auto">
+                                                    <mat-form-field class="search-input">
+                                                        <input matInput (keyup)="applyFilterCity($event)" placeholder="Search..." #input>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                            <div class="city-scroll">
+                                            <table mat-table [dataSource]="CityMasterData" matSort class="mat-elevation-z8">
+                                            
+                                                <ng-container matColumnDef="selectionvalue">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> City </th>
+                                                    <td mat-cell *matCellDef="let CityMasterData"> 
+                                                    <a (click)="getAssetDataFromCity(CityMasterData.selectionid)">    
+                                                        {{CityMasterData.selectionvalue}} 
+                                                    </a>
+                                                    </td>
+                                                </ng-container>
+
+                                                <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+                                                <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+
+                                            </table>   
+                                          
+</div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-8">
+
+                                        <div class="scroll-content boxshadow" [hidden]="!enableReport">
+
+                                            <h4>Generate Report</h4>
+                                            <div class="col-md-12 mandatory">*Fields are Mandatory</div>
+
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <mat-form-field class="example-full-width"
+                                                            [ngClass]="{ 'has-error': isSubmitted && formControls.poreferenceno.errors }">
+                                                            <input matInput name="poreferenceno" type="text"
+                                                                placeholder="PO reference No"
+                                                                [(ngModel)]="ReportData.poreferenceno"
+                                                                formControlName="poreferenceno" maxlength="60" required>
+                                                            <div *ngIf="isSubmitted && formControls.poreferenceno.errors"
+                                                                class="error-text">
+                                                                <div *ngIf="formControls.poreferenceno.errors.required">
+                                                                    PO reference No is required</div>
+                                                            </div>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <mat-form-field class="example-full-width"
+                                                            [ngClass]="{ 'has-error': isSubmitted && formControls.pono.errors }">
+                                                            <input matInput name="pono" type="text"
+                                                                placeholder="PO No"
+                                                                [(ngModel)]="ReportData.pono"
+                                                                formControlName="pono" maxlength="60" required>
+                                                            <div *ngIf="isSubmitted && formControls.pono.errors"
+                                                                class="error-text">
+                                                                <div *ngIf="formControls.pono.errors.required">
+                                                                    PO No is required</div>
+                                                            </div>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+
+                                                              
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="podate" placeholder="PO Date" type="text"
+                                                    [matDatepicker]="podate" [(ngModel)]="ReportData.podate"
+                                                    formControlName="podate" required>
+                                                <div *ngIf="isSubmitted && formControls.podate.errors" class="error-text">
+                                                    <div *ngIf="formControls.podate.errors.required">PO Date is
+                                                        required</div>
+                                                </div>
+                                                <mat-datepicker-toggle matSuffix [for]="podate"></mat-datepicker-toggle>
+                                                <mat-datepicker #podate></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <mat-form-field class="example-full-width"
+                                                            [ngClass]="{ 'has-error': isSubmitted && formControls.customerdepartment.errors }">
+                                                            <input matInput name="customerdepartment" type="text"
+                                                                placeholder="Customer Department"
+                                                                [(ngModel)]="ReportData.customerdepartment"
+                                                                formControlName="customerdepartment" maxlength="60" required>
+                                                            <div *ngIf="isSubmitted && formControls.customerdepartment.errors"
+                                                                class="error-text">
+                                                                <div *ngIf="formControls.customerdepartment.errors.required">
+                                                                    Customer Department is required</div>
+                                                            </div>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+
+
+                                                
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="installationdate" placeholder="Installation Date" type="text"
+                                                    [matDatepicker]="installationdate" [(ngModel)]="ReportData.installationdate"
+                                                    formControlName="installationdate" required>
+                                                <div *ngIf="isSubmitted && formControls.installationdate.errors" class="error-text">
+                                                    <div *ngIf="formControls.installationdate.errors.required">Installation Date is
+                                                        required</div>
+                                                </div>
+                                                <mat-datepicker-toggle matSuffix [for]="installationdate"></mat-datepicker-toggle>
+                                                <mat-datepicker #installationdate></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <mat-form-field class="example-full-width"
+                                                            [ngClass]="{ 'has-error': isSubmitted && formControls.contactperson.errors }">
+                                                            <input matInput name="contactperson" type="text"
+                                                                placeholder="Contact Person"
+                                                                [(ngModel)]="ReportData.contactperson"
+                                                                formControlName="contactperson" maxlength="60" required>
+                                                            <div *ngIf="isSubmitted && formControls.contactperson.errors"
+                                                                class="error-text">
+                                                                <div *ngIf="formControls.contactperson.errors.required">
+                                                                    Contact Person is required</div>
+                                                            </div>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <mat-form-field class="example-full-width"
+                                                            [ngClass]="{ 'has-error': isSubmitted && formControls.designation.errors }">
+                                                            <input matInput name="designation" type="text"
+                                                                placeholder="Designation"
+                                                                [(ngModel)]="ReportData.designation"
+                                                                formControlName="designation" maxlength="60" required>
+                                                            <div *ngIf="isSubmitted && formControls.designation.errors"
+                                                                class="error-text">
+                                                                <div *ngIf="formControls.designation.errors.required">
+                                                                    Designation is required</div>
+                                                            </div>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <mat-form-field class="example-full-width"
+                                                        [ngClass]="{ 'has-error': isSubmitted && formControls.address.errors }">
+                                                            <textarea matInput name="address" maxlength="200"  [(ngModel)]="ReportData.address" 
+                                                            formControlName="address" placeholder="Enter Address with Pin code" required></textarea>                                         
+                                                            <div *ngIf="isSubmitted && formControls.address.errors"
+                                                            class="error-text">
+                                                            <div *ngIf="formControls.address.errors.required">
+                                                                Address is required</div>
+                                                        </div>
+                                                        </mat-form-field>
+                                                    </div>
+            
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <mat-form-field class="example-full-width"
+                                                            [ngClass]="{ 'has-error': isSubmitted && formControls.telno.errors }">
+                                                            <input matInput name="telno" type="text"
+                                                                placeholder="Telephone No"
+                                                                [(ngModel)]="ReportData.telno"
+                                                                formControlName="telno" maxlength="15" required>
+                                                            <div *ngIf="isSubmitted && formControls.telno.errors"
+                                                                class="error-text">
+                                                                <div *ngIf="formControls.telno.errors.required">
+                                                                    Telephone No is required</div>
+                                                            </div>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <mat-form-field class="example-full-width"
+                                                            [ngClass]="{ 'has-error': isSubmitted && formControls.project.errors }">
+                                                           <mat-select [compareWith]="compareObjects" [(ngModel)]="ReportData.project" name="project" [typeaheadDebounceInterval]="matSelectDuration" 
+                                                            placeholder="Project name" formControlName="project" required>
+                                                                <mat-option >-Select-</mat-option>
+                                                                <mat-option *ngFor="let project of projectList" [value]="project.selectionid">
+                                                                {{ project.selectionvalue }}
+                                                            </mat-option>
+                                                            </mat-select>
+                                                            <div *ngIf="isSubmitted && formControls.project.errors"
+                                                                class="error-text">
+                                                                <div *ngIf="formControls.project.errors.required">Project Name
+                                                                    is required</div>
+                                                            </div>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <h4>Assets List</h4>
+                                            <div class="col-md-12" ><p>Work Order for Supply, Installation and FMS</p></div>
+								
+                                            <div class="tab-content">
+
+                                                <!-- Add Family -->
+                                                <div class="pro-overview tab-pane fade show active">
+
+                                                    <table mat-table [dataSource]="AssetRecord" matSort
+                                                        class="mat-elevation-z8">
+                                                        <ng-container matColumnDef="sno">
+                                                            <th mat-header-cell *matHeaderCellDef mat-sort-header> S No. </th>
+                                                            <td mat-cell *matCellDef="let AssetRecord ;let i=index;">
+                                                                <div class="block"> {{i+1}}</div>
+
+                                                            </td>
+                                                        </ng-container>
+
+                                                        <!--  Name Column -->
+                                                        <ng-container matColumnDef="product">
+                                                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Item Details </th>
+                                                            <td mat-cell *matCellDef="let AssetRecord ">
+                                                                <div class="block"> {{AssetRecord.product}}</div>
+
+                                                            </td>
+                                                        </ng-container>
+
+                                                        <!--  address Column -->
+                                                        <ng-container matColumnDef="count">
+                                                            <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                                                                Quantity </th>
+                                                            <td mat-cell *matCellDef="let AssetRecord ">
+                                                                <div class="block"> {{AssetRecord.count}} </div>
+
+                                                            </td>
+                                                        </ng-container>
+
+                                                                                                             
+                                                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                                        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                                                        </tr>
+                                                    </table>
+                                                    <mat-paginator [pageSize]="pageSizedisplay"
+                                                        [pageSizeOptions]="itemPerPage" showFirstLastButtons>
+                                                    </mat-paginator>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+
+                                                <div class="col-sm-8">
+                                                    <div class="form-group">
+                                                        <mat-form-field class="example-full-width">
+                                                            <textarea matInput name="remark" maxlength="200"
+                                                                [(ngModel)]="ReportData.remark" formControlName="remark"
+                                                                placeholder="Enter Remark"></textarea>
+                                                        </mat-form-field>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="submit-section">
+
+
+                                                <button mat-flat-button color="accent" (click)="addReport('generate')"
+                                                    *ngIf="add">
+                                                    <mat-icon aria-hidden="false">save</mat-icon> Generate
+                                                </button>
+
+
+                                                <button mat-flat-button color="warn" (click)="back()">
+                                                    <mat-icon aria-hidden="false">cancel</mat-icon> Back
+                                                </button>
+
+                                                <button mat-flat-button color="accent" (click)="addReport('update')"
+                                                    *ngIf="edit">
+                                                    <mat-icon aria-hidden="false">update</mat-icon> Update
+                                                </button>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

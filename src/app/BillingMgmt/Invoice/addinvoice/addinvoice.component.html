@@ -1,0 +1,210 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form [formGroup]="addInvoiceForm">
+    <mat-dialog-content class="mat-typography"> 
+     <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /Page Header -->
+
+                <div class="tab-content">
+
+                    <!-- Add User -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="col-md-12 mandatory">*Fields are Mandatory</div>
+
+                                <div class="row">
+                                                                      
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.pono.errors }">
+                                                <input matInput name="pono" type="text" placeholder="Purchase order no"
+                                                    [(ngModel)]="InvoiceData.pono" formControlName="pono" maxlength="60"
+                                                    required>
+                                                <div *ngIf="isSubmitted && formControls.pono.errors" class="error-text">
+                                                    <div *ngIf="formControls.pono.errors.required">Purchase Order No. is
+                                                        required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.customer.errors }">
+                                                <mat-select [compareWith]="compareObjects" placeholder="Customer Name" [(ngModel)]="InvoiceData.customer" formControlName="customer"
+                                                    (ngModelChange)="getAllAddressOfParty(InvoiceData.customer)" required>
+                                                <mat-option>-Select-</mat-option>
+                                                <mat-option *ngFor="let vendor of partyList"
+                                                    [value]="vendor.selectionid">
+                                                    {{ vendor.selectionvalue }}
+                                                </mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.customer.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.customer.errors.required">Customer Name
+                                                        is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.customeraddress.errors }">
+                                                <mat-select [compareWith]="compareObjects"
+                                                    [(ngModel)]="InvoiceData.customeraddress" name="customeraddress"
+                                                    placeholder="Customer Address" formControlName="customeraddress"
+                                                    (ngModelChange)="getGstFromAddress(InvoiceData.customeraddress)"
+                                                    required>
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let address of addressList"
+                                                        [value]="address.selectionid">
+                                                        {{ address.selectionvalue }}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.customeraddress.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.customeraddress.errors.required">Customer
+                                                        Address
+                                                        is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="gstno" type="text" placeholder="GST No"
+                                                    [readonly]="true" [(ngModel)]="InvoiceData.gstno"
+                                                    formControlName="gstno">
+
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="panno" type="text" placeholder="Pan No"
+                                                    [readonly]="true" [(ngModel)]="InvoiceData.panno"
+                                                    formControlName="panno">
+
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                   
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-select [(ngModel)]="InvoiceData.milestoneno" name="milestoneno"
+                                                    placeholder="Milestone No" formControlName="milestoneno" required>
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let milestone of milestoneList"
+                                                        [value]="milestone.selectionvalue">
+                                                        {{ milestone.selectionvalue }}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.amountwithouttax.errors }">
+                                                <input matInput name="amountwithouttax" type="text"
+                                                    placeholder="Amount without Tax"
+                                                    [(ngModel)]="InvoiceData.amountwithouttax"
+                                                    (ngModelChange)="calculateAmt()"
+                                                    formControlName="amountwithouttax" required>
+                                                <div *ngIf="isSubmitted && formControls.amountwithouttax.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.amountwithouttax.errors.required">Amount
+                                                        without Tax
+                                                        is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.amountwithtax.errors }">
+                                                <input matInput name="amountwithouttax" type="text"
+                                                    placeholder="Tax Amount"
+                                                    [(ngModel)]="InvoiceData.amountwithtax"
+                                                    (ngModelChange)="calculateAmt()"
+                                                    formControlName="amountwithtax" required>
+                                                <div *ngIf="isSubmitted && formControls.amountwithtax.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.amountwithtax.errors.required">Tax Amount 
+                                                        is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="totalamount" type="text"
+                                                    placeholder="Total Amount" [(ngModel)]="InvoiceData.totalamount"
+                                                    formControlName="totalamount" readonly=true>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <app-fileupload [files] = "attachmentInvoice" maxSize="2048" labelname="Upload Invoice Excel" modulename="invoiceExcel"></app-fileupload>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <app-fileupload [files] = "attachmentSupportingDoc" maxSize="2048" labelname="Upload Supporting Doc" modulename="invoiceSupportDoc"></app-fileupload>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-dialog-content>
+        <div class="clearfix"></div>
+        <mat-dialog-actions>
+            <div class="submit-section">
+
+
+                <button mat-flat-button color="accent" (click)="addInvoice('save')" *ngIf="add">
+                    <mat-icon aria-hidden="false">save</mat-icon> Save
+                </button>
+
+                <button mat-flat-button color="accent" (click)="addInvoice('update')" *ngIf="edit">
+                    <mat-icon aria-hidden="false">update</mat-icon> Update
+                </button>
+                <button mat-flat-button color="warn" (click)="back()">
+                    <mat-icon aria-hidden="false">cancel</mat-icon> Back
+                </button>
+
+            </div>
+        </mat-dialog-actions>   
+</form>

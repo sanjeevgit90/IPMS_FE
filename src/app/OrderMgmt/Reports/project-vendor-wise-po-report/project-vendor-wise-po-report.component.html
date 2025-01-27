@@ -1,0 +1,109 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form [formGroup]="projectVendorWiseReportForm">
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /Page Header -->
+                <div class="tab-content">
+
+                    <!-- Report -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <label class="radio-inline">
+                                                <input type="radio" value="PROJECT" name="wiseReport"
+                                                    [(ngModel)]="ReportRequest.wiseReport" formControlName="wiseReport">
+                                                Project Wise
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" value="SUPPLIER" name="wiseReport"
+                                                    [(ngModel)]="ReportRequest.wiseReport" formControlName="wiseReport">
+                                                Vendor Wise
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <button mat-flat-button color="accent" (click)="search()" *ngIf="list">
+                                            <mat-icon aria-hidden="false">search</mat-icon> Search
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Search Table -->
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <div class="total-rec">Total Records: {{totalRecords}}</div>
+                                </div>
+                                <div class="col-auto float-right ml-auto">
+                                    <mat-form-field class="search-input">
+                                        <input matInput (keyup)="applyFilter($event)" placeholder="Search..." #input>
+                                    </mat-form-field>
+                                    <button mat-flat-button color="accent" class="export-btn"
+                                        (click)="exporter.exportTable('xlsx', {fileName:'Project Vendor Wise Po Report'})"
+                                        matTooltip="Export to Excel">
+                                        <mat-icon>send</mat-icon> Export
+                                    </button>
+                                </div>
+
+
+                            </div>
+
+                            <table matTableExporter mat-table [dataSource]="ReportData" matSort class="mat-elevation-z8"
+                                #exporter="matTableExporter">
+                                <ng-container matColumnDef="name" *ngIf="ReportRequest.wiseReport == 'PROJECT'">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Project</th>
+                                    <td mat-cell *matCellDef="let ReportData">
+                                        {{ReportData.name}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="name" *ngIf="ReportRequest.wiseReport == 'SUPPLIER'">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Vendor</th>
+                                    <td mat-cell *matCellDef="let ReportData">
+                                        {{ReportData.name}} </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="count">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Count</th>
+                                    <td mat-cell *matCellDef="let ReportData">
+                                        {{ReportData.count}} </td>
+                                </ng-container>
+                                <ng-container matColumnDef="allTotalOfPo">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Total</th>
+                                    <td mat-cell *matCellDef="let ReportData">
+                                        {{ReportData.allTotalOfPo}} </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+                            <mat-paginator [pageSize]="pageSizedisplay" [pageSizeOptions]="itemPerPage"
+                                showFirstLastButtons>
+                            </mat-paginator>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

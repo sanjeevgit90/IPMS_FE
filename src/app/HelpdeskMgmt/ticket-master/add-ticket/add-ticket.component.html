@@ -1,0 +1,905 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form [formGroup]="addTicketMasterForm">
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /Page Header -->
+
+                <div class="tab-content">
+
+                    <!-- Add User -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="col-md-12 mandatory">*Fields are Mandatory</div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <strong>Ticket Creation Details</strong>
+                                    </div>
+                                 
+                                    <div class="col-sm-3" *ngIf="edit||view">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="Ticket No" type="text" placeholder="Ticket No"
+                                                    [(ngModel)]="TicketData.ticketNo" formControlName="ticketNo"
+                                                    maxlength="100" required readonly=true>
+
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.ticketTitle.errors }">
+                                                <input matInput name="Ticket Title" type="text"
+                                                    placeholder="Ticket Title" [(ngModel)]="TicketData.ticketTitle"
+                                                    formControlName="ticketTitle" maxlength="100" required>
+                                                <div *ngIf="isSubmitted && formControls.ticketTitle.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.ticketTitle.errors.required">
+                                                        Ticket Title is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.accountName.errors }">
+                                                <mat-label>Account Name</mat-label>
+                                                <mat-select [compareWith]="compareUser"
+                                                    [(ngModel)]="TicketData.accountName"
+                                                    (selectionChange)="getDataByProject(TicketData.accountName)"
+                                                    formControlName="accountName"
+                                                    [typeaheadDebounceInterval]="matSelectDuration" name="accountName"
+                                                    required>
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let projectData of projectList"
+                                                        value="{{projectData.selectionid}}"
+                                                        matTooltip="{{projectData.selectionvalue}}">
+                                                        {{projectData.selectionvalue}}</mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.accountName.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.accountName.errors.required">Account Name
+                                                        is
+                                                        required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.state.errors }">
+                                                <mat-label>State</mat-label>
+                                                <mat-select [(ngModel)]="TicketData.state"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="state"
+                                                    (selectionChange)="getAllDistrictByState(TicketData.state)"
+                                                    required>
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let stateData of stateList"
+                                                        value="{{stateData.selectionid}}">
+                                                        {{stateData.selectionvalue}}</mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.state.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.state.errors.required">State is required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.district.errors }">
+                                                <mat-label>District</mat-label>
+                                                <mat-select [(ngModel)]="TicketData.district"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="district"
+                                                    (selectionChange)="getActiveLocationsFromDistrict(TicketData.district)"
+                                                    required>
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let districtData of districtList"
+                                                        value="{{districtData.selectionid}}">
+                                                        {{districtData.selectionvalue}}</mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.district.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.district.errors.required">District is
+                                                        required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.location.errors }">
+                                                <mat-label>Unique Site Id</mat-label>
+                                                <mat-select [(ngModel)]="TicketData.location"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="location"
+                                                    (selectionChange)="onLocation(TicketData.location)" required>
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let locationData of locationList"
+                                                        value="{{locationData.selectionid}}">
+                                                        {{locationData.selectionvalue}}</mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.location.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.location.errors.required">Unique Site Id is
+                                                        required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.assetid.errors }">
+                                                <mat-label>Asset Name</mat-label>
+                                                <mat-select [(ngModel)]="TicketData.assetid"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="assetid" required
+                                                    (selectionChange)="getAssetById(TicketData.assetid)"
+                                                    [compareWith]="compareObjects">
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let assetData of assetList"
+                                                        value="{{assetData.selectionid}}">
+                                                        {{assetData.selectionvalue}}</mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.assetid.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.assetid.errors.required">Asset Name is
+                                                        required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="assettag" type="text"
+                                                    placeholder="Asset Tag/IP Address" [(ngModel)]="assettag"
+                                                    formControlName="assettag" maxlength="100">
+
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input readonly matInput name="category" type="text"
+                                                    placeholder="Category Type" [(ngModel)]="TicketData.category"
+                                                    formControlName="category" maxlength="100">
+
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input readonly matInput name="subCategory" type="text"
+                                                    placeholder="Subcategory" [(ngModel)]="TicketData.subCategory"
+                                                    formControlName="subCategory" maxlength="100">
+
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.description.errors }">
+                                                <mat-label>Problem Report</mat-label>
+                                                <mat-select [(ngModel)]="TicketData.description"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="description" (selectionChange)="problemChange()"
+                                                    required>
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let problemReportData of problemReportList"
+                                                        value="{{problemReportData.selectionid}}">
+                                                        {{problemReportData.selectionvalue}}</mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.description.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.description.errors.required">Problem Report
+                                                        is
+                                                        required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.otherProblemDescription.errors }">
+                                                <textarea matInput name="otherProblemDescription" maxlength="200"
+                                                    [(ngModel)]="TicketData.otherProblemDescription"
+                                                    formControlName="otherProblemDescription"
+                                                    placeholder="Other Problem Description"></textarea>
+                                            </mat-form-field>
+                                            <div *ngIf="isSubmitted && formControls.otherProblemDescription.errors"
+                                                class="error-text">
+                                                <div *ngIf="formControls.otherProblemDescription.errors.required">Other
+                                                    Problem Description is
+                                                    required</div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <!-- <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.attachment.errors }">
+                                                <input matInput name="attachment" type="text"
+                                                    placeholder="Attachment"
+                                                    [(ngModel)]="TicketData.attachment"
+                                                    formControlName="attachment" maxlength="60" required>
+                                                <div *ngIf="isSubmitted && formControls.attachment.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.attachment.errors.required">Attachment Category
+                                                        name is
+                                                        required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div> -->
+
+
+                                    <div class="col-sm-6" *ngIf='!view'>
+
+                                        <div class="col-sm-12">
+                                            <app-fileupload [files]="ticketAttachment" maxSize="2048"
+                                                labelname="attachment" modulename="ticket"></app-fileupload>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-3" *ngIf='view'>
+
+                                    <a href="{{url}}{{TicketData.attachment}}" target="_blank" title="view" *ngIf="!(TicketData.attachment =='' || TicketData.attachment==null)">
+                                        View Attachment
+                                    </a>
+                                </div>
+
+
+                                <hr>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <strong>Ticket Logging Details</strong>
+                                    </div>
+
+
+
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.ticketOwner.errors }">
+                                                <mat-label>Ticket Owner</mat-label>
+                                                <mat-select [(ngModel)]="TicketData.ticketOwner"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    [compareWith]="compareUser" formControlName="ticketOwner" required>
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let userData of userList"
+                                                        value="{{userData.selectionid}}">
+                                                        {{userData.selectionvalue}}</mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.ticketOwner .errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.ticketOwner.errors.required">Ticket Owner
+                                                        is
+                                                        required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field>
+                                                <mat-label>Ticket Type</mat-label>
+                                                <mat-select [(ngModel)]="TicketData.ticketType"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="ticketType" required>
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option value="Incident/Breakdown">Incident/Breakdown
+                                                    </mat-option>
+                                                    <mat-option value="Service">Service</mat-option>
+                                                    <mat-option value="Preventive Maintenance">Preventive Maintenance
+                                                    </mat-option>
+
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.ticketType.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.ticketType.errors.required">Ticket Type is
+                                                        required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field>
+                                                <mat-label>Priority</mat-label>
+                                                <mat-select [(ngModel)]="TicketData.priority"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="priority" required>
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option value="High">High</mat-option>
+                                                    <mat-option value="Medium">Medium</mat-option>
+                                                    <mat-option value="Low">Low </mat-option>
+
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.priority.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.priority.errors.required">Priority is
+                                                        required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.contactName.errors }">
+                                                <input matInput name="contactName" type="text"
+                                                    placeholder="Ticket Logged By" [(ngModel)]="TicketData.contactName"
+                                                    formControlName="contactName" maxlength="50" required>
+                                                <div *ngIf="isSubmitted && formControls.contactName.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.contactName.errors.required">Ticket Logged
+                                                        By
+                                                        required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field>
+                                                <mat-label>Mode</mat-label>
+                                                <mat-select [(ngModel)]="TicketData.channel"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="channel" required>
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option value="Email">Email</mat-option>
+                                                    <mat-option value="Phone">Phone</mat-option>
+                                                    <mat-option value="Facebook">Facebook </mat-option>
+                                                    <mat-option value="Twitter">Twitter </mat-option>
+                                                    <mat-option value="Chat">Chat </mat-option>
+                                                    <mat-option value="Forums">Forums </mat-option>
+                                                    <mat-option value="Feedback Widgets">Feedback Widgets</mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.channel.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.channel.errors.required">Mode is
+                                                        required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="email" type="text" placeholder="Email Id"
+                                                    [(ngModel)]="TicketData.email" formControlName="email"
+                                                    maxlength="200">
+
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="phone" type="text" placeholder="Phone No"
+                                                    [(ngModel)]="TicketData.phone" formControlName="phone"
+                                                    maxlength="10" numbersOnly>
+
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+                                    <!--  <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="dueDate" placeholder="Ticket Created Date Time" type="text"
+                                                    [matDatepicker]="picker1" [(ngModel)]="TicketData.dueDate"
+                                                    formControlName="dueDate" (dateChange)="generateSLADateTime()">
+                                                <div *ngIf="isSubmitted && formControls.dueDate.errors" class="error-text">
+                                                    <div *ngIf="formControls.dueDate.errors.required">Ticket Created Date
+                                                        required</div>
+                                                </div>
+                                                <mat-datepicker-toggle matSuffix [for]="picker1">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #picker1></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>  -->
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <!-- <mat-form-field class="example-full-width">
+                                            <input matInput type="datetime-local"  name="dueDate" [(ngModel)]="TicketData.dueDate | date:'yyyy-MM-ddTHH:mm'"
+                                            formControlName="dueDate" (ngModelChange)="generateSLADateTime()" >
+                                            <div *ngIf="isSubmitted && formControls.dueDate.errors" class="error-text">
+                                                <div *ngIf="formControls.dueDate.errors.required">Ticket Created Date
+                                                    required</div>
+                                            </div>
+                                            </mat-form-field> -->
+
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label> Ticket Created Date Time </mat-label>
+                                                <input matInput type="datetime-local" name="dueDate"
+                                                    [(ngModel)]="TicketData.dueDate" formControlName="dueDate"
+                                                    (change)="generateSLADateTime()" [max]="maxDateDisabled" required>
+
+                                                <div *ngIf="isSubmitted && formControls.dueDate.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.dueDate.errors.required">Ticket Created
+                                                        Date is
+                                                        required</div>
+                                                </div>
+
+                                            </mat-form-field>
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <!-- <mat-form-field class="example-full-width">
+                                                    <input matInput name="resolutionDate" placeholder="SLA Resolution Date Time" type="text"
+                                                        [matDatepicker]="picker2" [(ngModel)]="TicketData.resolutionDate"
+                                                        formControlName="resolutionDate" >
+                                                    <div *ngIf="isSubmitted && formControls.resolutionDate.errors" class="error-text">
+                                                        <div *ngIf="formControls.resolutionDate.errors.required">Resolution Date Time
+                                                            required</div>
+                                                    </div>
+                                                    <mat-datepicker-toggle matSuffix [for]="picker2">
+                                                    </mat-datepicker-toggle>
+                                                    <mat-datepicker #picker2></mat-datepicker>
+                                                </mat-form-field> -->
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>SLA Resolution Date Time</mat-label>
+                                                <input matInput type="datetime-local" name="resolutionDate"
+                                                    [ngModel]="TicketData.resolutionDate | date:'yyyy-MM-ddTHH:mm'"
+                                                    formControlName="resolutionDate">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+
+
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Assigned To</mat-label>
+                                                <mat-select [compareWith]="compareUser"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    [(ngModel)]="TicketData.assignTo" formControlName="assignName"
+                                                    (selectionChange)="getUserProfileById(TicketData.assignTo)">
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let userData of userList"
+                                                        value="{{userData.selectionid}}">
+                                                        {{userData.selectionvalue}}</mat-option>
+                                                </mat-select>
+
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+                                    <!-- <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <mat-form-field class="example-full-width"
+                                                            [ngClass]="{ 'has-error': isSubmitted && formControls.contactEmail.errors }">
+                                                            <input matInput name="contactEmail" type="text" placeholder="Contact Mail "
+                                                                [(ngModel)]="TicketData.contactEmail"
+                                                                formControlName="contactEmail" maxlength="60" required>
+                                                            <div *ngIf="isSubmitted && formControls.contactEmail.errors"
+                                                                class="error-text">
+                                                                <div *ngIf="formControls.contactEmail.errors.required">Contact Mail is
+                                                                    required</div>
+                                                            </div>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div> -->
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input readonly matInput name="contactEmail" type="text"
+                                                    placeholder="Contact Mail " [(ngModel)]="contactEmail"
+                                                    formControlName="contactEmail" maxlength="200">
+
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input readonly matInput name="mobileNo" type="text"
+                                                    placeholder="Mobile No " [(ngModel)]="mobileNo"
+                                                    formControlName="mobileNo" maxlength="15">
+
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <mat-form-field>
+                                                            <mat-label>Contact Mail</mat-label>
+                                                            <mat-select  [(ngModel)]="TicketData.contactEmail" formControlName="contactEmail"
+                                                                (selectionChange)="getMobileNoByUserProfile(TicketData.contactEmail)">
+                                                                <mat-option>-Select-</mat-option>
+                                                                <mat-option *ngFor="let emailData of emailAndPhone"
+                                                                    value="{{emailData.selectionid}}">
+                                                                    {{emailData.selectionvalue}}</mat-option>
+                                                            </mat-select>
+                                                            
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div> -->
+
+
+
+
+                                    <!-- <div class="col-sm-3">
+                                                    <div class="form-group">
+                                                        <mat-form-field>
+                                                            <mat-label>Mobile No</mat-label>
+                                                            <mat-select  [(ngModel)]="TicketData.mobileNo"
+                                                                formControlName="mobileNo">
+                                                                <mat-option>-Select-</mat-option>
+                                                                <mat-option *ngFor="let mobileData of mobileNo"
+                                                                    value="{{mobileData.selectionid}}">
+                                                                    {{mobileData.selectionvalue}}</mat-option>
+                                                            </mat-select>
+                                                            
+                                                        </mat-form-field>
+                                                    </div>
+                                            </div> -->
+
+
+
+                                    <div class="col-sm-3" *ngIf="!(edit || view)">
+                                        <div class="form-group">
+                                            <mat-form-field>
+                                                <mat-label>Status</mat-label>
+                                                <mat-select [(ngModel)]="TicketData.ticketStatus"
+                                                    formControlName="ticketStatus"
+                                                    [typeaheadDebounceInterval]="matSelectDuration" required
+                                                    (selectionChange)="TicketDate()">
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option value="OPEN">OPEN</mat-option>
+                                                    <mat-option value="CLOSED">CLOSED</mat-option>
+                                                </mat-select>
+
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3" *ngIf="edit || view">
+                                        <div class="form-group">
+                                            <mat-form-field>
+                                                <mat-label>Status</mat-label>
+                                                <mat-select [(ngModel)]="TicketData.ticketStatus"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="ticketStatus" required
+                                                    (selectionChange)="TicketDate()">
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option value="OPEN">OPEN</mat-option>
+                                                    <mat-option value="ESCALATED">ESCALATED</mat-option>
+                                                    <mat-option value="RESOLVED">RESOLVED</mat-option>
+                                                    <mat-option value="FORWARDED">FORWARDED</mat-option>
+                                                    <mat-option value="REASSIGNED">REASSIGNED</mat-option>
+                                                    <mat-option value="ONHOLD">ONHOLD</mat-option>
+                                                    <mat-option value="CLOSED">CLOSED</mat-option>
+                                                    <mat-option value="REOPENED">REOPENED</mat-option>
+                                                </mat-select>
+
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <!-- <mat-form-field class="example-full-width">
+                                                <input matInput name="ticketClosedTime" placeholder="Ticket Closed Time" type="datetime-local"
+                                                    [matDatepicker]="picker3" [(ngModel)]="TicketData.ticketClosedTime"
+                                                    formControlName="ticketClosedTime">
+                                                <mat-datepicker-toggle matSuffix [for]="picker3">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #picker3></mat-datepicker>
+                                            </mat-form-field> -->
+
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Ticket Closed Time</mat-label>
+                                                <input matInput type="datetime-local" name="ticketClosedTime"
+                                                    [(ngModel)]="TicketData.ticketClosedTime" [max]="maxDateDisabled"
+                                                    formControlName="ticketClosedTime">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field>
+                                                <mat-label>Ticket Category</mat-label>
+                                                <mat-select [(ngModel)]="TicketData.ticketCategory"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="ticketCategory" name="ticketCategory"
+                                                    (selectionChange)="getAllSubcategoryByCategory(TicketData.ticketCategory)" required>
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let categoryData of ticketCategoryList"
+                                                        value="{{categoryData.selectionid}}">
+                                                        {{categoryData.selectionvalue}}</mat-option>
+                                                </mat-select>
+
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+
+                                    <!-- <div class="col-sm-3">
+                                            <div class="form-group">
+                                                <mat-form-field>
+                                                    <mat-label>Ticket Category</mat-label>
+                                                    <mat-select [(ngModel)]="TicketData.ticketCategory"
+                                                        formControlName="ticketCategory">
+                                                        <mat-option>-Select-</mat-option>
+                                                        <mat-option *ngFor="let categoryData of ticketCategoryList"
+                                                            value="{{categoryData.selectionid}}">
+                                                            {{categoryData.selectionvalue}}</mat-option>
+                                                    </mat-select>
+                                                    
+                                                </mat-form-field>
+                                            </div>
+                                        </div> -->
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field>
+                                                <mat-label>Subcategory</mat-label>
+                                                <mat-select [(ngModel)]="TicketData.ticketSubcategory"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="ticketSubcategory" required>
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let categoryData of subCategoryList"
+                                                        value="{{categoryData.selectionid}}">
+                                                        {{categoryData.selectionvalue}}</mat-option>
+                                                </mat-select>
+
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <!-- <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.ticketSubcategory.errors }">
+                                                <input matInput name="ticketSubcategory" type="text"
+                                                    placeholder="Ticket SubCategory"
+                                                    [(ngModel)]="TicketData.ticketSubcategory"
+                                                    formControlName="ticketSubcategory" maxlength="60" required>
+                                                <div *ngIf="isSubmitted && formControls.ticketSubcategory.errors"
+                                                    class="error-text">
+                                                    
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div> -->
+
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.department.errors }">
+                                                <mat-label>Department</mat-label>
+                                                <mat-select [compareWith]="compareObjects"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    [(ngModel)]="TicketData.department" formControlName="department">
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let departmentData of departmentList"
+                                                        value="{{departmentData.selectionvalue}}">
+                                                        {{departmentData.selectionvalue}}</mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.department .errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.department.errors.required">Department is
+                                                        required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+
+
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field>
+                                                <mat-label>Classification</mat-label>
+                                                <mat-select [(ngModel)]="classifications"
+                                                    [typeaheadDebounceInterval]="matSelectDuration" multiple
+                                                    formControlName="classifications"
+                                                    (selectionChange)="classificationsChange(classifications)"
+                                                    [compareWith]="compareObjects">
+                                                    <mat-option *ngFor="let classificationData of classificationList"
+                                                        value="{{classificationData.selectionvalue}}">
+                                                        {{classificationData.selectionvalue}}</mat-option>
+                                                </mat-select>
+
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.resolution.errors }">
+                                                <textarea matInput name="resolution" type="text"
+                                                    placeholder="Problem Identified" [(ngModel)]="TicketData.resolution"
+                                                    formControlName="resolution" maxlength="500" required></textarea>
+                                                <div *ngIf="isSubmitted && formControls.resolution.errors"
+                                                    class="error-text">
+
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <h2 class="orange-title" *ngIf=" view &&  taskHistoryList.length>0">HelpDesk/IT Comments
+                                </h2>
+                                <table class="table table-bordered" *ngIf="view && taskHistoryList.length>0">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Actioned By</th>
+                                            <th>Assigned To Role / Assigned To Role</th>
+                                            <th>Status</th>
+                                            <th>Remark</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let commentsData of taskHistoryList">
+                                            <td>
+                                                <div *ngIf="commentsData.createdDate !=null">
+                                                    {{commentsData.createdDate |date : 'dd/MM/yyyy hh:mm:ss'}}</div>
+                                            </td>
+                                            <td>{{commentsData.updatedBy}}</td>
+                                            <td>{{commentsData.assignToRole}}
+                                                <div
+                                                    *ngIf="commentsData.assignToUser != null && commentsData.assignToRole != null">
+                                                    /</div> {{commentsData.assignToUser}}
+                                            </td>
+                                            <td> {{commentsData.approvalStatus}}</td>
+                                            <td>{{commentsData.remark}}
+                                                <br>
+                                                <a href="{{url}}{{commentsData.captureImg}}" target="_blank"
+                                                *ngIf='commentsData.captureImg != null'> View attachment</a>
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+
+
+
+                                <div class="submit-section">
+
+
+                                    <button mat-flat-button color="accent" (click)="addTicket('save')"
+                                        *ngIf="!view && draftFlag">
+                                        <mat-icon aria-hidden="false">save</mat-icon> Submit
+                                    </button>
+
+                                    <button mat-flat-button color="primary" (click)="saveAsDraft()"
+                                        *ngIf="!edit && !view">
+                                        <mat-icon aria-hidden="false">save</mat-icon> Save As Draft
+                                    </button>
+
+                                    <button mat-flat-button color="accent" (click)="updateTicketData()"
+                                        *ngIf="closedFlag && hasRole">
+                                        <mat-icon aria-hidden="false">update</mat-icon> Update
+                                    </button>
+                                    .
+                                    <button mat-flat-button color="warn" (click)="back()">
+                                        <mat-icon aria-hidden="false">cancel</mat-icon> Back
+                                    </button>
+
+                                    <button mat-flat-button color="accent" (click)="addTicket('update')"
+                                        *ngIf="edit && draftFlag">
+                                        <mat-icon aria-hidden="false">update</mat-icon> Update
+                                    </button>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

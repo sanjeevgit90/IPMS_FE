@@ -1,0 +1,84 @@
+<form [formGroup]="addAssetForm">
+    <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /Page Header -->
+
+                <div class="tab-content">
+
+                    <!-- Add User -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="col-md-12 mandatory">*Fields are Mandatory</div>
+
+                                <div class="row">
+                                    
+                                   <div class="col-sm-12">
+                                        <div class="form-group" class="example-full-width"
+                                        [ngClass]="{ 'has-error': isSubmitted && formControls.approvalStatus.errors }">
+                                            <mat-radio-group aria-label="Select an action" [(ngModel)]="ActionData.approvalStatus" formControlName="approvalStatus" required>
+                                                    <mat-radio-button value="APPROVED" >Approve</mat-radio-button>
+                                                   <mat-radio-button value="REJECTED">Reject</mat-radio-button>
+                                                  </mat-radio-group>
+                                                <div *ngIf="isSubmitted && formControls.approvalStatus.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.approvalStatus.errors.required">Action is Required 
+                                                        </div>  
+                                                    </div>                                                     
+                                            
+                                        </div>
+                                    </div>
+
+                                </div>
+                             
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.remark.errors }">
+                                                <textarea matInput name="remark" maxlength="200" [(ngModel)]="ActionData.remark"
+                                                    formControlName="remark" placeholder="Enter Remark"></textarea>
+                                                <div *ngIf="isSubmitted && formControls.remark.errors" class="error-text">
+                                                    <div *ngIf="formControls.remark.errors.required">Remark is Required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                                         
+
+                                <div class="submit-section">
+                                  
+                                    <button mat-flat-button color="accent" (click)="processTask(ActionData.approvalStatus)"  >
+                                        <mat-icon aria-hidden="false">update</mat-icon> Action</button>
+                                    
+                                    <button mat-flat-button color="warn" (click)="back()">
+                                        <mat-icon aria-hidden="false">cancel</mat-icon> Back</button>
+
+                                     </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+           
+</form>

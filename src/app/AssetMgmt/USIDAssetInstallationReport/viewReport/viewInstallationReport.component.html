@@ -1,0 +1,100 @@
+<form name="viewPoform">
+  <div class="row">
+    <div class="col-sm-10">
+      <table class="table table-bordered" name="table" id="table" cellspacing="0px" cellpadding="0px">
+        <tr>
+          <td class="center-align" colspan="3"><strong class="potitle">USID Installation Report</strong></td>
+        </tr>
+        <tr>
+          <td>Unique Site ID: {{locationAssets.location}} </td>
+        </tr>
+        <tr>
+          <td colspan="2">Police Station Name:{{locationAssets.policestation}} </td>
+
+        </tr>
+
+        <tr>
+          <td colspan="3">Location with Landmark: {{locationAssets.locationaddress}} </td>
+        </tr>
+        <tr>
+          <td colspan="2" *ngIf="locationAssets.installationdate >0">Date: {{locationAssets.installationdate | date:'dd-MM-yyyy'}}</td>
+          <td colspan="2" *ngIf="locationAssets.installationdate ==0 ">Date: </td>
+        </tr>
+        <tr>
+          <div class="col-md-12">
+            <p>Below are the details of items installed at site. [List of Inventory should only show the items installed
+              at that Unique site id]</p>
+          </div>
+        </tr>
+        <tr>
+          <td colspan="2" style="padding: 0px; margin: 0px">
+            <table style="width: 100%" class="table table-bordered print-dc" cellspacing="0px" cellpadding="0px">
+              <tr>
+                <th>Sr.No.</th>
+                <th>Item</th>
+                <th>Manufacturer Name</th>
+                <th>Model Name</th>
+                <th>Quantity</th>
+                <th>Serial No</th>
+              </tr>
+              <tr *ngFor="let item of locationAssets.installationMasterChild; let i = index ">
+                <td>{{i+1}}</td>
+                <td>{{item.productname}}</td>
+                <td>{{item.manufacturer}}</td>
+                <td>{{item.model}}</td>
+                <td>{{item.count}}</td>
+                <td>{{item.serialno}}</td>
+                <br />
+              </tr>
+            </table>
+          </td>
+        <tr>
+          <td colspan="3">Remarks :{{locationAssets.remark}}<br /><br /> </td>
+        </tr>
+        <tr>
+          <td colspan="3">
+            <div class="row">
+              <div class="col-md-12">Date of Installation : <br /><br /><br /><br /><br /></div>
+              <div class="col-md-6">
+                <span class="display-block">----------------------------</span>
+                <span>(Engineer Signature)</span>
+              </div>
+              <div class="col-md-6">
+                <span class="display-block">-----------------------------------------</span>
+                <span>(Customer Name &amp; Signature)</span>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="col-sm-2">
+      <div class="po-action">
+        <button *ngIf="!locationAssets.printflag" mat-flat-button color="primary" [disabled]="locationAssets.isDeleted"
+          (click)="printComponent('table');enableUpload(locationAssets.entityId)">
+          <mat-icon>print</mat-icon> Print
+        </button>
+        <div class="col-sm-12" *ngIf="locationAssets.uploadflag">
+
+          <div class="col-sm-12">
+
+            <app-fileupload [files]="attachmentFiles" maxSize="2048" labelname="Upload Attachment"
+            [entitydata]="locationAssets.entityId"
+              modulename="locationAssets"></app-fileupload>
+          </div>
+          <button mat-flat-button color="primary" [disabled]="locationAssets.isDeleted"
+            (click)="disablePrint(locationAssets.entityId)">
+
+            <mat-icon>save</mat-icon>
+            save
+          </button>
+        </div>
+        <button mat-flat-button color="warn" (click)="back()">
+          <mat-icon>close</mat-icon>
+          Close
+        </button>
+      </div>
+
+    </div>
+  </div>
+</form>

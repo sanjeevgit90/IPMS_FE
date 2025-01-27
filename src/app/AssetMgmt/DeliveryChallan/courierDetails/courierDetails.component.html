@@ -1,0 +1,94 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form [formGroup]="addCourierForm">
+    <!-- Page Header -->
+    <mat-dialog-content class="mat-typography">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">{{PageTitle}}</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a routerLink="/Dashboard"> Dashboard</a>
+                        </li>
+                        <li class="breadcrumb-item active">{{PageTitle}}</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+        <!-- /Page Header -->
+
+        <div class="tab-content">
+
+            <!-- Add User -->
+            <div class="pro-overview tab-pane fade show active">
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="col-md-12 mandatory">*Fields are Mandatory</div>
+
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <input matInput name="courierdate" placeholder="Courier Date" type="text"
+                                            [matDatepicker]="picker" [(ngModel)]="Courier.courierdate"
+                                            formControlName="courierdate" required>
+                                        <div *ngIf="isSubmitted && formControls.courierdate.errors"
+                                            class="error-text">
+                                            <div *ngIf="formControls.courierdate.errors.required">Courier Date is
+                                                required</div>
+                                        </div>
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width"
+                                    [ngClass]="{ 'has-error': isSubmitted && formControls.courierno.errors }">
+                                        <input matInput name="courierno" type="text"
+                                            placeholder="Courier No" [(ngModel)]="Courier.courierno"
+                                            formControlName="courierno" required>
+                                    </mat-form-field>
+                                    <div *ngIf="isSubmitted && formControls.courierno.errors"
+                                    class="error-text">
+                                    <div *ngIf="formControls.courierno.errors.required">Courier No
+                                        is required</div>
+                                </div>
+                                </div>
+                            </div>
+
+                          <div class="col-sm-3">
+                                <div class="form-group">
+                                    <mat-form-field class="example-full-width">
+                                        <textarea matInput name="courierDetails" maxlength="200"
+                                            [(ngModel)]="Courier.courierDetails" formControlName="courierDetails"
+                                            placeholder="Courier Details"></textarea>
+                                    </mat-form-field>
+                                </div>
+                          </div>
+
+                      </div>
+                </div>
+            </div>
+        </div>
+</div>
+ </mat-dialog-content>
+    <div class="clearfix"></div>
+    <mat-dialog-actions>
+        <div class="submit-section">
+
+            <button mat-flat-button color="accent" (click)="add()">
+                <mat-icon aria-hidden="false">update</mat-icon> Add
+            </button>
+
+            <button mat-flat-button color="warn" (click)="back()">
+                <mat-icon aria-hidden="false">cancel</mat-icon> Back
+            </button>
+
+        </div>
+    </mat-dialog-actions>
+</form>

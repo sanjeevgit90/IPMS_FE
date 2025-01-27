@@ -1,0 +1,659 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form [formGroup]="addPoForm">
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /Page Header -->
+                <div *ngIf="edit">
+                    <app-potab highlightedtab="potab" [additionalTerms]="!POEntityData.includeTerms"> </app-potab>
+                </div>
+                <div class="tab-content">
+
+                    <!-- Add User -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="col-md-12 mandatory">*Fields are Mandatory</div>
+
+                                <!-- <h3 class="blue-gradient">Basic Details</h3> -->
+                                <!-- <mat-checkbox class="example-margin" [value]="falseValue" (change)="checkboxChange($event.checked)">Is Historic PO?</mat-checkbox> -->
+                                <mat-checkbox class="example-margin" [value]="checked" (change)="checkChange(checked)"
+                                    *ngIf="add">Is Historic PO?</mat-checkbox>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <strong>Basic Details</strong>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.purchaseOrderNo.errors }">
+                                                <mat-label>Purchase Order No.</mat-label>
+                                                <input matInput name="purchaseOrderNo" type="text"
+                                                    placeholder="Please enter po no."
+                                                    [(ngModel)]="POEntityData.purchaseOrderNo"
+                                                    formControlName="purchaseOrderNo" maxlength="100" required>
+                                                <div *ngIf="isSubmitted && formControls.purchaseOrderNo.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.purchaseOrderNo.errors.required">PO No. is
+                                                        required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.orderDate.errors }">
+                                                <input matInput name="orderDate" placeholder="Please enter order date."
+                                                    type="text" [matDatepicker]="picker"
+                                                    [(ngModel)]="POEntityData.orderDate" formControlName="orderDate"
+                                                    required>
+                                                <div *ngIf="isSubmitted && formControls.orderDate.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.orderDate.errors.required">Order date
+                                                        is required</div>
+                                                </div>
+                                                <mat-datepicker-toggle matSuffix [for]="picker">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #picker></mat-datepicker>
+                                            </mat-form-field>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Make PO From</mat-label>
+                                                <mat-select [(ngModel)]="POEntityData.poMadeFrom"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="poMadeFrom"
+                                                    (ngModelChange)="changeRcSelection(POEntityData.poMadeFrom)">
+                                                    <mat-option>- Select -</mat-option>
+                                                    <mat-option value="RC">Rate Contract (RC)</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3" *ngIf="POEntityData.poMadeFrom=='RC'">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.rateContractId.errors }">
+                                                <mat-label>Rate Contract No.</mat-label>
+                                                <mat-select [(ngModel)]="POEntityData.rateContractId"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="rateContractId"
+                                                    (ngModelChange)="getRateContractById(POEntityData.rateContractId)"
+                                                    [compareWith]="compareObjects">
+                                                    <!-- <mat-option>- Select -</mat-option>
+                                                    <mat-option value=1>RC001</mat-option> -->
+                                                    <mat-option *ngFor="let rc of rcList" value="{{rc.selectionid}}"
+                                                        matTooltip="{{rc.selectionvalue}}">
+                                                        {{rc.selectionvalue}}</mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.rateContractId.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.rateContractId.errors.required">RC No. is
+                                                        required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.department.errors }">
+                                                <mat-label>Department</mat-label>
+                                                <mat-select [(ngModel)]="POEntityData.department"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="department" [compareWith]="compareObjects">
+                                                    <!-- <mat-option>-Select Project-</mat-option> -->
+                                                    <mat-option *ngFor="let dept of deptList"
+                                                        matTooltip="{{dept.selectionvalue}}"
+                                                        value="{{dept.selectionid}}">
+                                                        {{dept.selectionvalue}}</mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.department.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.department.errors.required">Department is
+                                                        required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.accountName.errors }">
+                                                <mat-label>Project</mat-label>
+                                                <mat-select [(ngModel)]="POEntityData.accountName"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="accountName"
+                                                    (ngModelChange)="getProjectById(POEntityData.accountName)"
+                                                    [compareWith]="compareObjects">
+                                                    <mat-option *ngFor="let p of projectList" value="{{p.selectionid}}"
+                                                        matTooltip="{{p.selectionvalue}}" matTooltip="{{p.selectionvalue}}">
+                                                        {{p.selectionvalue}}</mat-option>
+                                                </mat-select>
+                                                <!-- <input type="text" matInput [matAutocomplete]="Project" 
+                                                    formControlName="accountName" [(ngModel)]="POEntityData.accountName" required />
+                                                <mat-autocomplete #Project="matAutocomplete">
+                                                    <mat-option *ngFor="let option of filteredProjectList | async"
+                                                        [value]="option.selectionid">
+                                                        {{option.selectionvalue }}
+                                                    </mat-option>
+                                                </mat-autocomplete> -->
+                                                <div *ngIf="isSubmitted && formControls.accountName.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.accountName.errors.required">Project is
+                                                        required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.organisationId.errors }">
+                                                <mat-label>Organisation</mat-label>
+                                                <mat-select [(ngModel)]="POEntityData.organisationId"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="organisationId"
+                                                    (ngModelChange)="organisationChange(POEntityData.organisationId)"
+                                                    [compareWith]="compareObjects" [disabled]="starOrganisationFlag">
+                                                    <!-- <mat-option>-Select Project-</mat-option> -->
+                                                    <mat-option *ngFor="let org of orgList" value="{{org.selectionid}}" matTooltip="{{org.selectionvalue}}">
+                                                        {{org.selectionvalue}}</mat-option>
+                                                    <!-- <mat-option value=1>Aurionpro Solutions Ltd.</mat-option> -->
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.organisationId.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.organisationId.errors.required">
+                                                        Organisation is required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.orderType.errors }">
+                                                <mat-label>Order Type</mat-label>
+                                                <mat-select [(ngModel)]="POEntityData.orderType"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="orderType">
+                                                    <!-- <mat-option>-Select Project-</mat-option> -->
+                                                    <mat-option value="New Order">New Order</mat-option>
+                                                    <mat-option value="Repeat Order">Repeat Order</mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.orderType.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.orderType.errors.required">Order type is
+                                                        required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.modeOfPayment.errors }">
+                                                <mat-label>Payment Term</mat-label>
+                                                <mat-select [(ngModel)]="POEntityData.modeOfPayment"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="modeOfPayment">
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let pt of paymentModeList" value="{{pt.value}}" matTooltip="{{pt.value}}">
+                                                        {{pt.value}}</mat-option>
+                                                    <!-- <mat-option value="Immediate">Immediate</mat-option> -->
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.modeOfPayment.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.modeOfPayment.errors.required">Payment term
+                                                        is required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.dispatchThrough.errors }">
+                                                <mat-label>Dispatch Through</mat-label>
+                                                <mat-select [(ngModel)]="POEntityData.dispatchThrough"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="dispatchThrough">
+                                                    <!-- <mat-option>-Select Project-</mat-option> -->
+													<mat-option value="Air">Air</mat-option>
+                                                    <mat-option value="Rail">Rail</mat-option>
+                                                    <mat-option value="Road">Road</mat-option>
+                                                    <mat-option value="Services">Services</mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.dispatchThrough.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.dispatchThrough.errors.required">Dispatch
+                                                        through is required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.currency.errors }">
+                                                <mat-label>Currency</mat-label>
+                                                <mat-select [(ngModel)]="POEntityData.currency"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="currency">
+                                                    <!-- <mat-option>-Select Project-</mat-option> -->
+                                                    <!-- <mat-option value="INR">INR</mat-option>
+                                                    <mat-option value="USD">USD</mat-option> -->
+                                                    <mat-option *ngFor="let curr of currencyList" matTooltip="{{curr.selectionvalue}}"
+                                                        value="{{curr.selectionid}}">
+                                                        {{curr.selectionvalue}}</mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.currency.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.currency.errors.required">Currency is
+                                                        required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.deliveryTerm.errors }">
+                                                <mat-label>Delivery Term</mat-label>
+                                                <mat-select [(ngModel)]="POEntityData.deliveryTerm"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="deliveryTerm">
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let dt of deliveryTermList" matTooltip="{{dt.value}}"
+                                                        value="{{dt.value}}">{{dt.value}}</mat-option>
+                                                    <!-- <mat-option value="Immediate">Immediate</mat-option> -->
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.deliveryTerm.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.deliveryTerm.errors.required">Delivery term
+                                                        is required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Payment Method</mat-label>
+                                                <mat-select [(ngModel)]="POEntityData.paymentMethod"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="paymentMethod">
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let pm of paymentMethodList" matTooltip="{{pm.value}}"
+                                                        value="{{pm.value}}">{{pm.value}}</mat-option>
+                                                    <!-- <mat-option value="Cash">Cash</mat-option> -->
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.suppliersReference.errors }">
+                                                <mat-label>Suppliers Reference</mat-label>
+                                                <input matInput name="boqNo" type="text"
+                                                    placeholder="Please enter suppliers reference."
+                                                    [(ngModel)]="POEntityData.suppliersReference"
+                                                    formControlName="suppliersReference" maxlength="100" required>
+                                                <div *ngIf="isSubmitted && formControls.suppliersReference.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.suppliersReference.errors.required">
+                                                        Suppliers reference is
+                                                        required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3" *ngIf="POEntityData.currency=='USD'">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Discount Amount</mat-label>
+                                                <input matInput name="discountAmt" type="number"
+                                                    placeholder="Please enter discount amount."
+                                                    [(ngModel)]="POEntityData.discountAmt"
+                                                    formControlName="discountAmt">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Other Reference</mat-label>
+                                                <input matInput cols="55" rows="4" name="otherReference" type="text"
+                                                    placeholder="Please enter other reference."
+                                                    [(ngModel)]="POEntityData.otherReference"
+                                                    formControlName="otherReference" maxlength="100">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- <h3 class="blue-gradient"></h3> -->
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <strong>Supplier & Purchaser Details</strong>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.supplierName.errors }">
+                                                <mat-label>Supplier Name</mat-label>
+                                                <mat-select [(ngModel)]="POEntityData.supplierName"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="supplierName"
+                                                    (ngModelChange)="getAddressByParty(POEntityData.supplierName, 'supplier')"
+                                                    [compareWith]="compareObjects">
+                                                    <mat-option>-Select-</mat-option>
+                                                    <!-- <mat-option value="01">Dassault Systemes</mat-option> -->
+                                                    <mat-option *ngFor="let supp of supplierPartyList" matTooltip="{{supp.selectionvalue}}"
+                                                        value="{{supp.selectionid}}">{{supp.selectionvalue}}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.supplierName.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.supplierName.errors.required">Supplier name
+                                                        is required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.supplierDetails.errors }">
+                                                <mat-label>Supplier Address</mat-label>
+                                                <mat-select [(ngModel)]="POEntityData.supplierDetails"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="supplierDetails"
+                                                    (ngModelChange)="addressChange(POEntityData.supplierName, POEntityData.supplierDetails, POEntityData.billToAddress)"
+                                                    [compareWith]="compareObjects">
+                                                    <mat-option>-Select-</mat-option>
+                                                    <!-- <mat-option value="05">Bengaluru</mat-option> -->
+                                                    <mat-option *ngFor="let suppAdd of supplierAddressList" matTooltip="{{suppAdd.selectionvalue}}"
+                                                        value="{{suppAdd.selectionid}}">{{suppAdd.selectionvalue}}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.supplierDetails.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.supplierDetails.errors.required">Supplier
+                                                        address is required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.billFromState.errors }">
+                                                <mat-label>Bill From State</mat-label>
+                                                <mat-select [(ngModel)]="POEntityData.billFromState"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="billFromState">
+                                                    <mat-option>-Select-</mat-option>
+                                                    <!-- <mat-option value="05">Bengaluru</mat-option> -->
+                                                    <mat-option *ngFor="let stateData of stateList" matTooltip="{{stateData.selectionvalue}}"
+                                                        value="{{stateData.selectionid}}">
+                                                        {{stateData.selectionvalue}}</mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.billFromState.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.billFromState.errors.required">Bill from
+                                                        state is required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>GST No.</mat-label>
+                                                <input matInput name="billFromGstNo" type="text"
+                                                    placeholder="Please enter GSTIN."
+                                                    [(ngModel)]="POEntityData.billFromGstNo"
+                                                    formControlName="billFromGstNo" maxlength="15">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.buyerName.errors }">
+                                                <mat-label>Purchaser Name</mat-label>
+                                                <mat-select [(ngModel)]="POEntityData.buyerName"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="buyerName"
+                                                    (ngModelChange)="getAddressByParty(POEntityData.buyerName, 'purchaser')"
+                                                    [compareWith]="compareObjects">
+                                                    <mat-option>-Select-</mat-option>
+                                                    <!-- <mat-option value="04">Aurionpro Solurions Ltd.</mat-option> -->
+                                                    <mat-option *ngFor="let buy of purchaserPartyList" matTooltip="{{buy.selectionvalue}}"
+                                                        value="{{buy.selectionid}}">{{buy.selectionvalue}}</mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.buyerName.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.buyerName.errors.required">Purchaser name
+                                                        is required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.invoiceToAddress.errors }">
+                                                <mat-label>Invoice Postal Address</mat-label>
+                                                <mat-select [(ngModel)]="POEntityData.invoiceToAddress"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="invoiceToAddress" [compareWith]="compareObjects">
+                                                    <mat-option>-Select-</mat-option>
+                                                    <!-- <mat-option value="06">Synergia IT Park</mat-option> -->
+                                                    <mat-option *ngFor="let invo of addressListPurchaser" matTooltip="{{invo.selectionvalue}}"
+                                                        value="{{invo.selectionid}}">{{invo.selectionvalue}}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.invoiceToAddress.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.invoiceToAddress.errors.required">Invoice
+                                                        to address is required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.billToAddress.errors }">
+                                                <mat-label>Bill To Address</mat-label>
+                                                <mat-select [(ngModel)]="POEntityData.billToAddress"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="billToAddress"
+                                                    (ngModelChange)="addressChange(null, POEntityData.supplierDetails, POEntityData.billToAddress)"
+                                                    [compareWith]="compareObjects">
+                                                    <mat-option>-Select-</mat-option>
+                                                    <!-- <mat-option value="06">Synergia IT Park</mat-option> -->
+                                                    <mat-option *ngFor="let bill of addressListPurchaser" matTooltip="{{bill.selectionvalue}}"
+                                                        value="{{bill.selectionid}}">{{bill.selectionvalue}}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.billToAddress.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.billToAddress.errors.required">Bill to
+                                                        address is required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.shipToAddress.errors }">
+                                                <mat-label>Ship To Address</mat-label>
+                                                <mat-select [(ngModel)]="POEntityData.shipToAddress"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    formControlName="shipToAddress" [compareWith]="compareObjects">
+                                                    <mat-option>-Select-</mat-option>
+                                                    <!-- <mat-option value="06">Synergia IT Park</mat-option> -->
+                                                    <mat-option *ngFor="let ship of addressListPurchaser"
+                                                        matTooltip="{{ship.selectionvalue}}"
+                                                        value="{{ship.selectionid}}">{{ship.selectionvalue}}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.shipToAddress.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.shipToAddress.errors.required">Ship to
+                                                        address is required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- <h3 class="blue-gradient"></h3> -->
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <strong>Terms & Conditions</strong>
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.termsConditions.errors }">
+                                                <mat-label>Terms & Conditions</mat-label>
+                                                <textarea matInput cols="55" rows="4" name="termsConditions" type="text"
+                                                    placeholder="Please enter terms & conditions."
+                                                    [(ngModel)]="POEntityData.termsConditions"
+                                                    formControlName="termsConditions" required>
+                                                </textarea>
+                                                <div *ngIf="isSubmitted && formControls.termsConditions.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.termsConditions.errors.required">Terms &
+                                                        conditions are required
+                                                    </div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-checkbox class="example-margin" [(ngModel)]="POEntityData.includeTerms"
+                                                formControlName="includeTerms">Include Additional Terms</mat-checkbox>
+                                            <!-- <mat-checkbox class="example-margin">Include Additional Terms</mat-checkbox> -->
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-9"></div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-sm-12" *ngIf="view">
+                                        <!-- <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Upload Signed Copy</mat-label>
+                                                <input matInput name="signedCopyPath" type="text"
+                                                    placeholder="Uplaod signed copy."
+                                                    [(ngModel)]="POEntityData.signedCopyPath" formControlName="signedCopyPath"
+                                                    maxlength="250">
+                                            </mat-form-field>
+                                        </div> -->
+                                        <app-fileupload [files]="signedCopyPath" maxSize="15360"
+                                            labelname="Upload Signed Copy" modulename="posignedcopy"
+                                            [entitydata]="POEntityData.entityId"></app-fileupload>
+                                    </div>
+
+                                    <div class="col-sm-12" *ngIf="edit">
+                                        <app-fileupload [files]="PoAttachments" maxSize="15360" labelname="Attachments"
+                                            modulename="poattachments" [entitydata]="POEntityData.entityId"
+                                            [isSingle]="false">
+                                        </app-fileupload>
+                                    </div>
+                                </div>
+
+
+
+
+                                <div class="submit-section">
+                                    <button mat-flat-button color="primary" (click)="savePO()" *ngIf="add">
+                                        <mat-icon aria-hidden="false">save</mat-icon> Save
+                                    </button>
+
+                                    <button mat-flat-button color="primary" (click)="updatePO()" *ngIf="edit || view">
+                                        <mat-icon aria-hidden="false">update</mat-icon> Update
+                                    </button>
+
+                                    <button mat-flat-button color="warn" (click)="cancel()">
+                                        <mat-icon>chevron_left</mat-icon> Back
+                                    </button>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

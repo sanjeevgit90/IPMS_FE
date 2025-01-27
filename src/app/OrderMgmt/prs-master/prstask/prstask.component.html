@@ -1,0 +1,170 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form>
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                        <div class="col-auto float-right ml-auto">
+                            <!-- <button mat-flat-button color="warn" (click)="filterFunc()">
+                                <mat-icon aria-hidden="false">filter</mat-icon> Filter
+                            </button> -->
+                            <button mat-flat-button color="warn" (click)="filterFunc()" *ngIf="!result">
+                                <mat-icon aria-hidden="false">filter</mat-icon> Filter
+                            </button>
+                            <button mat-flat-button color="primary" (click)="filterFunc()" *ngIf="result">
+                                <mat-icon aria-hidden="false">check_circle</mat-icon> Filter Applied
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /Page Header -->
+
+                <div class="filter-box" *ngIf="filterDiv">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput name="prsNo" type="text" placeholder="Search by PRS no."
+                                        [(ngModel)]="FilterData.prsNo">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="submit-section">
+
+                        <button mat-flat-button color="primary" (click)="search()">
+                            <mat-icon aria-hidden="false">search</mat-icon> Search
+                        </button>
+                        <button mat-flat-button color="warn" (click)="cancel()">
+                            <mat-icon aria-hidden="false">cancel</mat-icon> Cancel
+                        </button>
+                    </div>
+                </div>
+
+                <div class="tab-content">
+
+                    <!-- Add Family -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="col-auto float-left ml-auto">
+                                <button mat-flat-button color="accent" (click)="getHistoryTask()" *ngIf="!history">
+                                    <mat-icon aria-hidden="false">search</mat-icon> PRS Action History
+                                </button>
+
+                                <button mat-flat-button color="accent" (click)="search()" *ngIf="history">
+                                    <mat-icon aria-hidden="false">search</mat-icon> Pending PRS Task
+                                </button>
+                            </div>
+
+                            <!-- Search Table -->
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <div class="total-rec">Total Records: {{totalRecords}}</div>
+                                </div>
+                                <div class="col-auto float-right ml-auto">
+                                    <mat-form-field class="search-input">
+                                        <input matInput (keyup)="applyFilter($event)" placeholder="Search..." #input>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+
+                            <table mat-table [dataSource]="TaskRecord" matSort class="mat-elevation-z8">
+
+                                <ng-container matColumnDef="prsNo">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> PRS No </th>
+                                    <td mat-cell *matCellDef="let TaskRecord" data-label="PRS No">
+                                        <div class="block">
+                                            <a [routerLink]="['/ViewPrsById', TaskRecord.prsId]"
+                                                (click)="saveTaskId(TaskRecord.entityId)">{{TaskRecord.prsNo}}</a>
+                                        </div>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="project">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Project </th>
+                                    <td mat-cell *matCellDef="let TaskRecord" data-label="Project">
+                                        <div class="block"> {{TaskRecord.project}} </div>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="partyName">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Party Name </th>
+                                    <td mat-cell *matCellDef="let TaskRecord" data-label="Party Name">
+                                        <div class="block"> {{TaskRecord.partyName}} </div>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="invoiceAmount">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Invoice Amount </th>
+                                    <td mat-cell *matCellDef="let TaskRecord" data-label="Invoice Amount">
+                                        <div class="block"> {{TaskRecord.invoiceAmount}} </div>
+                                    </td>
+                                </ng-container>
+                                <!--  Approval Status Column -->
+                                <ng-container matColumnDef="approvalStatus">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Approval Status </th>
+                                    <td mat-cell *matCellDef="let TaskRecord" data-label="Approval Status">
+                                        <div class="block"> {{TaskRecord.approvalStatus}} </div>
+                                    </td>
+                                </ng-container>
+                                <!--  Stage Name Column -->
+                                <ng-container matColumnDef="stageName">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Stage Name </th>
+                                    <td mat-cell *matCellDef="let TaskRecord" data-label="Stage Name">
+                                        <div class="block"> {{TaskRecord.stageName}} </div>
+                                    </td>
+                                </ng-container>
+
+                                <!-- Action Column -->
+
+                                <ng-container matColumnDef="action">
+                                    <th mat-header-cell *matHeaderCellDef>
+                                        <div *ngIf="!history">Action</div>
+                                        <div *ngIf="history">Remarks</div>
+                                    </th>
+                                    <td mat-cell *matCellDef="let TaskRecord">
+                                        <a class="btn btn-danger" matTooltip="action this record"
+                                            (click)="action(TaskRecord.taskid)" title="action" *ngIf="!history && TaskRecord.stageName !='PO TEAM'">
+                                            Action
+                                        </a>
+                                        <a mat-flat-button color="accent" matTooltip="action this record" *ngIf="!history && TaskRecord.stageName=='PO TEAM'"
+                                        [routerLink]="['/updatePrs', TaskRecord.taskid,'taskedit']" title="action" >
+                                            Edit
+                                        </a>
+                                        <div class="block" *ngIf="history"> {{TaskRecord.remark}} </div>
+                                    </td>
+                                </ng-container>
+                                <div *ngIf="!history">
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                </div>
+                                <div *ngIf="history">
+                                    <tr mat-header-row *matHeaderRowDef="historyColumns"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: historyColumns;"></tr>
+                                </div>
+                            </table>
+                            <mat-paginator [pageSize]="pageSizedisplay" [pageSizeOptions]="itemPerPage"
+                                showFirstLastButtons>
+                            </mat-paginator>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>

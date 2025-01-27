@@ -1,0 +1,175 @@
+<app-loader *ngIf="showLoading"></app-loader>
+
+<div class="main-wrapper">
+    <app-header> </app-header>
+    <app-leftmenu></app-leftmenu>
+    <div class="page-wrapper">
+        <div class="content container-fluid">
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h3 class="page-title">{{PageTitle}}</h3>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a routerLink="/Dashboard"> Dashboard</a>
+                            </li>
+                            <li class="breadcrumb-item active">{{PageTitle}}</li>
+                        </ul>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="col-auto float-right ml-auto">
+                            <a mat-flat-button color="warn" (click)="filterFunc()" *ngIf="!result">
+                                <mat-icon aria-hidden="false">filter</mat-icon> Filter
+                            </a>
+                            <a mat-flat-button color="primary" (click)="filterFunc()" *ngIf="result">
+                                <mat-icon aria-hidden="false">check_circle</mat-icon> Filter Applied
+                            </a>
+
+
+                        </div>
+                    </div>
+                </div>
+                <!-- /Page Header -->
+
+
+                <div class="filter-box" *ngIf="filterDiv">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput name="manufacturername" type="text"
+                                        placeholder="Search by manufacturer name"
+                                        [(ngModel)]="FilterData.manufacturername">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="submit-section">
+
+                        <button mat-flat-button color="primary" (click)="search()">
+                            <mat-icon aria-hidden="false">search</mat-icon> Search
+                        </button>
+                        <button mat-flat-button color="warn" (click)="cancelSearch()">
+                            <mat-icon aria-hidden="false">cancel</mat-icon> Cancel
+                        </button>
+                    </div>
+                </div>
+
+                <div class="tab-content">
+                    <form [formGroup]="addManufacturerForm">
+                        <!-- Add Model -->
+                        <div id="Hsn" class="pro-overview tab-pane fade show active">
+                            <div class="card">
+                                <div class="card-body">
+
+                                    <div class="col-md-12 mandatory">*Fields are Mandatory</div>
+
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <strong>{{PageTitle}}</strong>
+                                            <div class="add-from">
+
+                                                <div class="col-sm-12">
+                                                    <div class="form-group">
+                                                        <mat-form-field class="example-full-width"
+                                                            [ngClass]="{ 'has-error': isSubmitted && formControls.manufacturername.errors }">
+                                                            <input matInput name="manufacturername" type="text"
+                                                                placeholder="Manufacturer Name"
+                                                                [(ngModel)]="ManufacturerData.manufacturername"
+                                                                formControlName="manufacturername" maxlength="60"
+                                                                required>
+                                                            <div *ngIf="isSubmitted && formControls.manufacturername.errors"
+                                                                class="error-text">
+                                                                <div
+                                                                    *ngIf="formControls.manufacturername.errors.required">
+                                                                    Manufacturer name is
+                                                                    required</div>
+                                                            </div>
+                                                        </mat-form-field>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+                                            <div class="submit-section">
+                                                <button mat-flat-button color="accent" (click)="addManufacturer('save')"
+                                                    *ngIf="list && manufacturerAdd">
+                                                    <mat-icon aria-hidden="false">save</mat-icon> Save
+                                                </button>
+
+                                                <button mat-flat-button color="warn" (click)="cancel()" *ngIf="edit">
+                                                    <mat-icon aria-hidden="false">close</mat-icon> Cancel
+                                                </button>
+
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-8">
+                                            <!-- Search Table -->
+                                            <div class="row align-items-center">
+                                                <div class="col">
+                                                    <div class="total-rec">Total Records: {{totalRecords}}</div>
+                                                </div>
+                                                <div class="col-auto float-right ml-auto">
+                                                    <mat-form-field class="search-input">
+                                                        <input matInput (keyup)="applyFilter($event)"
+                                                            placeholder="Search..." #input>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+
+
+                                            <table mat-table [dataSource]="ManufacturerRecord" matSort
+                                                class="mat-elevation-z8">
+
+                                                <!-- Manufacturer Name Column -->
+
+                                                <ng-container matColumnDef="manufacturername">
+                                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Manufacturer
+                                                        Name </th>
+                                                    <td mat-cell *matCellDef="let ManufacturerRecord"
+                                                        data-label="Manufacturer">
+                                                        {{ManufacturerRecord.manufacturername}} </td>
+                                                </ng-container>
+
+
+                                                <!-- Action Column -->
+                                                <ng-container matColumnDef="action">
+                                                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                                                    <td mat-cell *matCellDef="let ManufacturerRecord">
+
+                                                        <button mat-flat-button color="warn"
+                                                            [disabled]="ManufacturerRecord.isDeleted"
+                                                            (click)="onDelete(ManufacturerRecord.manufacturername)"
+                                                            matTooltip="Delete this record" *ngIf="manufacturerDelete">
+                                                            <mat-icon aria-hidden="false">delete</mat-icon>
+
+                                                        </button>
+                                                    </td>
+                                                </ng-container>
+
+                                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                            </table>
+                                            <mat-paginator [pageSize]="pageSizedisplay" [pageSizeOptions]="itemPerPage"
+                                                showFirstLastButtons>
+                                            </mat-paginator>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

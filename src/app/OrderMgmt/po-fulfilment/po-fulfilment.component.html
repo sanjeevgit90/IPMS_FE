@@ -1,0 +1,103 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form>
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                        <div class="col-auto float-right ml-auto">
+                            
+                            <button mat-flat-button color="accent" (click)="addPoFulfilment()">
+                                <mat-icon aria-hidden="false">add</mat-icon> Add PO Payment
+                            </button>
+                            <button mat-flat-button color="warn" (click)="goBack()">
+                                <mat-icon aria-hidden="false">add</mat-icon> Back
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- /Page Header -->
+                <div class="tab-content">
+                    <!-- Add Family -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <!-- Search Table -->
+                            <div class="total-rec">Total Records: {{totalRecords}}</div>
+                            <table mat-table [dataSource]="PoFulfilmentMasterData" matSort class="mat-elevation-z8">
+                                <!--  Fulfilment Date Column -->
+                                <ng-container matColumnDef="fulfilmentDate">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Fulfilment Date</th>
+                                    <td mat-cell *matCellDef="let PoFulfilmentMasterData ">
+                                        {{PoFulfilmentMasterData.fulfilmentDate | date : 'dd/MM/yyyy'}}
+                                    </td>
+                                </ng-container>
+
+                                <!--  delayReason Column -->
+                                <ng-container matColumnDef="delayReason">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Delay Reason</th>
+                                    <td mat-cell *matCellDef="let PoFulfilmentMasterData ">
+                                        {{PoFulfilmentMasterData.delayReason}}
+                                    </td>
+                                </ng-container>
+
+                                <!--  nextdeliveryDate Column -->
+                                <ng-container matColumnDef="nextdeliveryDate">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Next Delivery Date</th>
+                                    <td mat-cell *matCellDef="let PoFulfilmentMasterData ">
+                                        {{PoFulfilmentMasterData.nextdeliveryDate | date : 'dd/MM/yyyy'}}
+                                    </td>
+                                </ng-container>
+
+                                <!--  delayCategory Column -->
+                                <ng-container matColumnDef="delayCategory">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Delivery Category</th>
+                                    <td mat-cell *matCellDef="let PoFulfilmentMasterData ">
+                                        {{PoFulfilmentMasterData.delayCategory}}
+                                    </td>
+                                </ng-container>
+
+                                <!-- Action Column -->
+                                <ng-container matColumnDef="action">
+                                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                                    <td mat-cell *matCellDef="let PoFulfilmentMasterData">
+
+                                        <a mat-flat-button color="primary" matTooltip="Edit this record"
+                                            [routerLink]="['/searchPurchaseOrder/EditPoFulfilment', PoFulfilmentMasterData.entityId,'edit']"
+                                            title="Edit">
+                                            <mat-icon aria-hidden="false">edit</mat-icon>
+                                        </a>
+
+                                        <button mat-flat-button color="warn" matTooltip="Delete this record" (click)="deleteFulfilment(PoFulfilmentMasterData.entityId)"
+                                            title="Delete">
+                                            <mat-icon aria-hidden="false">delete</mat-icon>
+                                        </button>
+                                    </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+                            <mat-paginator [pageSize]="pageSizedisplay" [pageSizeOptions]="itemPerPage"
+                                showFirstLastButtons>
+                            </mat-paginator>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,206 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form [formGroup]="addCollectionForm">
+    <mat-dialog-content class="mat-typography"> 
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /Page Header -->
+
+                <div class="tab-content">
+
+                    <!-- Add User -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="col-md-12 mandatory">*Fields are Mandatory</div>
+
+                                <div class="row">
+                                  
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="collectiondate" placeholder="Collection Date" type="text"
+                                                    [matDatepicker]="picker1" [(ngModel)]="CollectionData.collectiondate"
+                                                    formControlName="collectiondate" required>
+                                                    <div *ngIf="isSubmitted && formControls.collectiondate.errors" class="error-text">
+                                                        <div *ngIf="formControls.collectiondate.errors.required">Collection Date is
+                                                            required</div>
+                                                    </div>
+                                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker1></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.invoiceid.errors }">
+                                                <mat-select [compareWith]="compareObjects" [(ngModel)]="CollectionData.invoiceid" name="invoiceid"
+                                                (ngModelChange)="getInvoice(CollectionData.invoiceid)"
+                                                    placeholder="Invoice No" formControlName="invoiceid" required>
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let invoice of invoiceList"
+                                                        [value]="invoice.selectionid">
+                                                        {{ invoice.selectionvalue }}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.invoiceid.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.invoiceid.errors.required">Invoice
+                                                        is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                             [ngClass]="{ 'has-error': isSubmitted && formControls.invoiceValue.errors }">
+                                                <input matInput name="invoiceValue" type="text" placeholder="Invoice Pay Amount"
+                                                    [(ngModel)]="invoiceValue" 
+                                                    (ngModelChange)="calculateCollection()" formControlName="invoiceValue"
+                                                    required>
+                                                    <div *ngIf="isSubmitted && formControls.invoiceValue.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.invoiceValue.errors.required">Invoice Pay Amount
+                                                        is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                             [ngClass]="{ 'has-error': isSubmitted && formControls.tdsdeducted.errors }">
+                                                <input matInput name="tdsdeducted" type="text" placeholder="TDS deducted"
+                                                    [(ngModel)]="CollectionData.tdsdeducted" 
+                                                    (ngModelChange)="calculateCollection()" formControlName="tdsdeducted"
+                                                    required>
+                                                    <div *ngIf="isSubmitted && formControls.tdsdeducted.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.tdsdeducted.errors.required">TDS deducted
+                                                        is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                             [ngClass]="{ 'has-error': isSubmitted && formControls.gsttdsdeducted.errors }">
+                                                <input matInput name="gsttdsdeducted" type="text" placeholder="GST Deducted"
+                                                    [(ngModel)]="CollectionData.gsttdsdeducted" formControlName="gsttdsdeducted"
+                                                    (ngModelChange)="calculateCollection()"
+                                                    required>
+                                                    <div *ngIf="isSubmitted && formControls.gsttdsdeducted.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.gsttdsdeducted.errors.required">GST Deducted
+                                                        is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="otherdeducted" type="text" placeholder="Other deducted"
+                                                    [(ngModel)]="CollectionData.otherdeducted" 
+                                                    (ngModelChange)="calculateCollection()"
+                                                    formControlName="otherdeducted">
+                                               
+                                            </mat-form-field>
+                                        </div>
+                                        </div>
+                                   
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-select [(ngModel)]="CollectionData.deductiondescription" name="deductiondescription" 
+                                                    formControlName="deductiondescription" placeholder="Deduction Description">
+                                                         <mat-option value="Penalty">Penalty</mat-option>
+                                                         <mat-option value="Withheld">Withheld</mat-option>
+                                                         <mat-option value="Other Deduction">Other Deduction</mat-option>
+                                                  </mat-select>   
+                                                                            
+                                            </mat-form-field>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                             [ngClass]="{ 'has-error': isSubmitted && formControls.netamountcredieted.errors }">
+                                                <input matInput name="netamountcredieted" type="text" placeholder="Net Amount Credieted"
+                                                    [(ngModel)]="CollectionData.netamountcredieted" formControlName="netamountcredieted"
+                                                    readonly=true>
+                                                    <div *ngIf="isSubmitted && formControls.netamountcredieted.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.netamountcredieted.errors.required">Net Amount Credieted
+                                                        is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                             [ngClass]="{ 'has-error': isSubmitted && formControls.utrno.errors }">
+                                                <input matInput name="utrno" type="text" placeholder="UTR No"
+                                                    [(ngModel)]="CollectionData.utrno" formControlName="utrno"
+                                                    required>
+                                                    <div *ngIf="isSubmitted && formControls.utrno.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.utrno.errors.required">UTR No
+                                                        is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <app-fileupload [files] = "uploadpaymentadvice" maxSize="2048" labelname="Upload payment advice" modulename="collection"></app-fileupload>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </mat-dialog-content>
+        <div class="clearfix"></div>
+        <mat-dialog-actions>
+            <div class="submit-section">
+                <button mat-flat-button color="accent" (click)="addCollection('save')" *ngIf="add">
+                    <mat-icon aria-hidden="false">save</mat-icon> Save
+                </button>
+
+                <button mat-flat-button color="accent" (click)="addCollection('update')" *ngIf="edit">
+                    <mat-icon aria-hidden="false">update</mat-icon> Update
+                </button>                               
+                <button mat-flat-button color="warn" (click)="back()">
+                    <mat-icon aria-hidden="false">cancel</mat-icon> Back</button>
+
+            </div>
+        </mat-dialog-actions>   
+    
+</form>

@@ -1,0 +1,124 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form>
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                        <div class="col-auto float-right ml-auto">
+                            <button mat-flat-button color="warn" (click)="filterFunc()">
+                                <mat-icon aria-hidden="false">filter</mat-icon> Filter
+                            </button>
+                            <button mat-flat-button color="accent" (click)="addLicense()" *ngIf="licenceAdd">
+                                <mat-icon aria-hidden="false">add</mat-icon> Add License
+                            </button>
+
+                        </div>
+
+
+
+
+
+                    </div>
+                </div>
+                <!-- /Page Header -->
+
+
+                <div class="tab-content">
+
+                    <!-- Add Family -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+
+
+                            <!-- Search Table -->
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <div class="total-rec">Total Records: {{totalRecords}}</div>
+                                </div>
+                                <div class="col-auto float-right ml-auto">
+                                    <mat-form-field class="search-input">
+                                        <input matInput (keyup)="applyFilter($event)" placeholder="Search..." #input>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+
+
+                            <table mat-table [dataSource]="LicenseMasterData" matSort class="mat-elevation-z8">
+
+                                <!--  Name Column -->
+                                <ng-container matColumnDef="licenseTag">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> License Tag </th>
+                                    <td mat-cell *matCellDef="let LicenseMasterData " data-label="License Tag"> 
+                                        {{LicenseMasterData.licenseTag}}
+                                    </td>
+                                </ng-container>
+
+                                <!--  Email Column -->
+                                <ng-container matColumnDef="licenseToName">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> License To Name </th>
+                                    <td mat-cell *matCellDef="let LicenseMasterData " data-label="License to No">
+                                        {{LicenseMasterData.licenseToName}}
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="serialNo">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Serial No </th>
+                                    <td mat-cell *matCellDef="let LicenseMasterData " data-label="Serial No.">
+                                        {{LicenseMasterData.serialNo}}
+                                    </td>
+                                </ng-container>
+
+
+
+                                <!-- Action Column -->
+                                <ng-container matColumnDef="action">
+                                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                                    <td mat-cell *matCellDef="let LicenseMasterData">
+
+
+                                        <button mat-flat-button color="primary" matTooltip="Edit this record"
+                                            [routerLink]="['/updateLicense', LicenseMasterData.licenseTag,'edit']"
+                                            *ngIf="licenceEdit" [disabled]="LicenseMasterData.isDeleted">
+                                            <mat-icon aria-hidden="false">edit</mat-icon>
+                                        </button>
+
+
+
+                                        <button mat-flat-button color="warn" 
+                                            (click)="onDelete(LicenseMasterData.licenseTag)"
+                                            matTooltip="delete this record"
+                                            *ngIf="licenceDelete" [disabled]="LicenseMasterData.isDeleted" >
+                                            <mat-icon aria-hidden="false">delete</mat-icon>
+                                        </button>
+
+                                    </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+                            <mat-paginator [pageSize]="pageSizedisplay" [pageSizeOptions]="itemPerPage"
+                                showFirstLastButtons>
+                            </mat-paginator>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

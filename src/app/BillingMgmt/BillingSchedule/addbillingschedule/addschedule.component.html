@@ -1,0 +1,115 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form [formGroup]="addScheduleForm">
+    
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /Page Header -->
+
+                <div class="tab-content">
+
+                    <!-- Add User -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="col-md-12 mandatory">*Fields are Mandatory</div>
+
+                                <div class="row">
+                                  
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="dateofbilling" placeholder="Date of Billing" type="text"
+                                                    [matDatepicker]="picker1" [(ngModel)]="ScheduleData.dateofbilling"
+                                                    formControlName="dateofbilling" required>
+                                                    <div *ngIf="isSubmitted && formControls.dateofbilling.errors" class="error-text">
+                                                        <div *ngIf="formControls.dateofbilling.errors.required">Date of Billing is
+                                                            required</div>
+                                                    </div>
+                                                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker1></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                             [ngClass]="{ 'has-error': isSubmitted && formControls.milestoneno.errors }">
+                                                <input matInput name="milestoneno" type="text" placeholder="Milestone No"
+                                                    [(ngModel)]="milestoneno" formControlName="milestoneno"
+                                                    required>
+                                                    <div *ngIf="isSubmitted && formControls.milestoneno.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.milestoneno.errors.required">Milestone No
+                                                        is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                             [ngClass]="{ 'has-error': isSubmitted && formControls.amountofbilling.errors }">
+                                                <input matInput name="amountofbilling" type="text" placeholder="Amount"
+                                                    [(ngModel)]="ScheduleData.amountofbilling" formControlName="amountofbilling"
+                                                    required numberonly>
+                                                    <div *ngIf="isSubmitted && formControls.amountofbilling.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.amountofbilling.errors.required">Amount of billing
+                                                        is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                  
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <textarea matInput name="remark" maxlength="500"  [(ngModel)]="ScheduleData.remark" 
+                                                formControlName="remark" placeholder="Enter Remark" ></textarea>                                         
+                                            </mat-form-field>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="submit-section">
+                                    <button mat-flat-button color="accent" (click)="addSchedule('save')" *ngIf="add">
+                                        <mat-icon aria-hidden="false">save</mat-icon> Save
+                                    </button>
+
+                                    <button mat-flat-button color="accent" (click)="addSchedule('update')" *ngIf="edit">
+                                        <mat-icon aria-hidden="false">update</mat-icon> Update
+                                    </button>                               
+                                    <button mat-flat-button color="warn" (click)="back()">
+                                        <mat-icon aria-hidden="false">cancel</mat-icon> Back</button>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+</form>

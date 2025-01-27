@@ -1,0 +1,257 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form [formGroup]="addDCForm">
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /Page Header -->
+
+                <div class="tab-content">
+
+                    <!-- Add User -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="col-md-12 mandatory">*Fields are Mandatory</div>
+                                <div class="row">
+                                    <div class="col-sm-3" *ngIf="edit">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="dcno" type="text" placeholder="DC No"
+                                                    [(ngModel)]="DCData.dcno" formControlName="dcno" readonly="true"
+                                                    maxlength="60">
+
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.mobileno.errors }">
+                                                <input matInput name="mobileno" type="text"
+                                                    placeholder="TL Contact Details" [(ngModel)]="DCData.mobileno"
+                                                    formControlName="mobileno" required>
+                                                <div *ngIf="isSubmitted && formControls.mobileno.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.mobileno.errors.required">TL Contact
+                                                        Details
+                                                        is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.projectname.errors }">
+                                                <mat-select [compareWith]="compareObjects"
+                                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                                    [(ngModel)]="DCData.projectname" name="projectname"
+                                                    placeholder="Project name" formControlName="projectname" required>
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let project of projectList"
+                                                        [value]="project.selectionid" matTooltip="{{project.selectionvalue}}">
+                                                        {{ project.selectionvalue }}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.projectname.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.projectname.errors.required">Project Name
+                                                        is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="dcdate" placeholder="DC Date" type="text"
+                                                    [matDatepicker]="picker" [(ngModel)]="DCData.dcdate"
+                                                    formControlName="dcdate" required>
+                                                <div *ngIf="isSubmitted && formControls.dcdate.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.dcdate.errors.required">DC Date is
+                                                        required</div>
+                                                </div>
+                                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="consigneename" type="text"
+                                                    placeholder="Consignee Name" [(ngModel)]="DCData.consigneename"
+                                                    formControlName="consigneename">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="consigneecontact" type="text"
+                                                    placeholder="Consignee Contact Number"
+                                                    [(ngModel)]="DCData.consigneecontact"
+                                                    formControlName="consigneecontact" maxlength="10" numbersOnly>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.dcdate.errors }">
+                                                <mat-select [(ngModel)]="DCData.shippedto"
+                                                    [typeaheadDebounceInterval]="matSelectDuration" name="shippedto"
+                                                    formControlName="shippedto" placeholder="Enter shipped to location">
+                                                    <mat-option>-Select-</mat-option>
+                                                    <mat-option *ngFor="let location of locationList"
+                                                        [value]="location.selectionvalue">
+                                                        {{ location.selectionvalue }}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <div *ngIf="isSubmitted && formControls.shippedto.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.shippedto.errors.required">Shipped to is
+                                                        required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <textarea matInput name="remark" maxlength="200"
+                                                    [(ngModel)]="DCData.remark" formControlName="remark"
+                                                    placeholder="Enter Remarks"></textarea>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="pro-overview tab-pane fade show active" *ngIf="AssetRecord">
+                                    <div class="card" *ngIf="AssetRecord">
+                                        <table *ngIf="AssetRecord" #mytable mat-table [dataSource]="AssetRecord" matSort
+                                            class="mat-elevation-z8">
+                                            <ng-container matColumnDef="assetname">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Asset Name </th>
+                                                <td mat-cell *matCellDef="let AssetRecord" data-label="Asset Name">
+                                                    <div class="block"> {{AssetRecord.assetname}}</div>
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="serialno">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Serial No </th>
+                                                <td mat-cell *matCellDef="let AssetRecord" data-label="Serial No">
+                                                    <div class="block"> {{AssetRecord.serialno}} </div>
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="category">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Category</th>
+                                                <td mat-cell *matCellDef="let AssetRecord " data-label="Category">
+                                                    <div class="block"> {{AssetRecord.category}} </div>
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="productname">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Product </th>
+                                                <td mat-cell *matCellDef="let AssetRecord " data-label="Product">
+                                                    <div class="block"> {{AssetRecord.productname}} </div>
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="count">
+                                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Count </th>
+                                                <td mat-cell *matCellDef="let AssetRecord" data-label="Product">
+                                                    <div class="block"> 1 </div>
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="action">
+                                                <th mat-header-cell *matHeaderCellDef> Action </th>
+                                                <td mat-cell *matCellDef="let AssetRecord">
+                                                    <a mat-flat-button color="warn" matTooltip="Delete this record"
+                                                        *ngIf="!disableEdit" (click)="deleteAsset(AssetRecord)"
+                                                        title="delete">
+                                                        <mat-icon aria-hidden="false">delete</mat-icon>
+                                                    </a>
+                                                </td>
+                                            </ng-container>
+                                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                        </table>
+                                        <mat-paginator [pageSize]="pageSizedisplay" [pageSizeOptions]="itemPerPage"
+                                            showFirstLastButtons>
+                                        </mat-paginator>
+                                    </div>
+                                </div>
+                                <div class="row" *ngIf="saveAsset.length>0">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="assets" type="text"
+                                                placeholder="Total No. of Assets" [(ngModel)]="totalAssets"
+                                                formControlName="totalAssets">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.boxes.errors }">
+                                                <input matInput name="boxes" type="text"
+                                                placeholder="No. of boxes" [(ngModel)]="DCData.noofboxes"
+                                                formControlName="boxes">
+
+                                                <div *ngIf="isSubmitted && formControls.boxes.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.projectname.errors.required">No. of boxes
+                                                        is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    </div>
+                                <div class="submit-section">
+                                    <span *ngIf="!disableEdit" class="submit-section">
+                                        <button mat-flat-button color="primary" (click)="addAssets(DCData.projectname)">
+                                            <mat-icon aria-hidden="false">save</mat-icon> Add Assets +
+                                        </button>
+                                    </span>
+                                    <button mat-flat-button color="accent" (click)="addDC('save')"
+                                        [disabled]="disableAdd" *ngIf="!disableEdit && add">
+                                        <mat-icon aria-hidden="false">save</mat-icon> Save
+                                    </button>
+                                    <button mat-flat-button color="accent" (click)="addDC('update')"
+                                        *ngIf="!disableEdit && edit">
+                                        <mat-icon aria-hidden="false">update</mat-icon> Update
+                                    </button>
+                                    <button mat-flat-button color="accent" *ngIf="!disableEdit && edit"
+                                        (click)="sendToWarhouse(DCData)" title="send">
+                                        <mat-icon aria-hidden="false">update</mat-icon> Send to warehouse
+                                    </button>
+                                    <button mat-flat-button color="warn" (click)="back()">
+                                        <mat-icon aria-hidden="false">cancel</mat-icon> Back
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

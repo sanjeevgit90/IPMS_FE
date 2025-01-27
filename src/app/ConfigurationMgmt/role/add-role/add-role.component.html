@@ -1,0 +1,227 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form [formGroup]="addRoleForm">
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /Page Header -->
+
+                <div class="tab-content">
+
+                    <!-- Add Role -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="col-md-12 mandatory">*Fields are Mandatory</div>
+
+                                <div class="row">
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width"
+                                                [ngClass]="{ 'has-error': isSubmitted && formControls.rolename.errors }">
+                                                <input matInput name="rolename" type="text" placeholder="Role Name"
+                                                    [(ngModel)]="AddRoleData.rolename" formControlName="rolename"
+                                                    maxlength="60" required>
+                                                <div *ngIf="isSubmitted && formControls.rolename.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.rolename.errors.required">Role
+                                                        name is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+
+
+
+                                </div>
+
+
+                                <div class="submit-section">
+
+
+                                    <button mat-flat-button color="accent" (click)="addRole('save')" *ngIf="add">
+                                        <mat-icon aria-hidden="false">save</mat-icon> Save
+                                    </button>
+
+
+                                    <button mat-flat-button color="warn" (click)="back()">
+                                        <mat-icon aria-hidden="false">cancel</mat-icon> Back
+                                    </button>
+
+                                    <button mat-flat-button color="accent" (click)="addRole('update')" *ngIf="edit">
+                                        <mat-icon aria-hidden="false">update</mat-icon> Update
+                                    </button>
+                                </div>
+
+                            </div>
+
+
+
+
+                        </div>
+                        <div>
+                            <h2>Assign Menu role/rights</h2>
+
+                            <!-- <div *ngIf="errorHandle" class="help-block right-action">{{errorMessage}}</div> -->
+
+                            <mat-accordion>
+
+
+                                <mat-expansion-panel [disabled]="'true'">
+                                    <mat-expansion-panel-header class="disable_ripple">
+
+                                        <div class="col-sm-4 blue-text">
+                                            Menu/Module Name
+                                        </div>
+
+                                        <div class="col-sm-2 blue-text">
+                                            View/Read
+                                        </div>
+
+                                        <div class="col-sm-2 blue-text">
+                                            Add/Write
+                                        </div>
+
+                                        <div class="col-sm-2 blue-text">
+                                            Edit/Write
+                                        </div>
+                                        <div class="col-sm-2 blue-text">
+                                            Delete / Deactivate
+                                        </div>
+
+                                    </mat-expansion-panel-header>
+
+
+                                </mat-expansion-panel>
+
+
+
+                                <mat-expansion-panel *ngFor="let MenuDataList of AddRoleData.menuRights" >
+
+
+                                    <mat-expansion-panel-header *ngIf="MenuDataList.childMenu.length==0">
+                                        <div class="col-sm-4">
+                                            <strong>{{MenuDataList.displayname}}</strong>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <mat-checkbox class="example-margin" (click)="$event.stopPropagation();"
+                                                [(ngModel)]="MenuDataList.enableView" [ngModelOptions]="{standalone: true}">
+                                                </mat-checkbox>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <mat-checkbox class="example-margin" (click)="$event.stopPropagation();" 
+                                            [(ngModel)]="MenuDataList.enableAdd" [ngModelOptions]="{standalone: true}"></mat-checkbox>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <mat-checkbox class="example-margin" (click)="$event.stopPropagation();" 
+                                            [(ngModel)]="MenuDataList.enableEdit" [ngModelOptions]="{standalone: true}"></mat-checkbox>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <mat-checkbox class="example-margin"  (click)="$event.stopPropagation();"
+                                            [(ngModel)]="MenuDataList.enableDelete" [ngModelOptions]="{standalone: true}"></mat-checkbox>
+                                        </div>
+                                    </mat-expansion-panel-header>
+
+                                    <mat-expansion-panel-header *ngIf="MenuDataList.childMenu.length>0">
+                                        <div class="col-sm-4">
+                                            <strong>{{MenuDataList.displayname}}</strong>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <mat-checkbox class="example-margin" (click)="$event.stopPropagation();" [(ngModel)]="MenuDataList.enableView"
+                                                [ngModelOptions]="{standalone: true}"></mat-checkbox>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <mat-checkbox class="example-margin" (click)="$event.stopPropagation();" [(ngModel)]="MenuDataList.enableAdd"
+                                                [ngModelOptions]="{standalone: true}"></mat-checkbox>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <mat-checkbox class="example-margin" (click)="$event.stopPropagation();" [(ngModel)]="MenuDataList.enableEdit"
+                                                [ngModelOptions]="{standalone: true}"></mat-checkbox>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <mat-checkbox class="example-margin" (click)="$event.stopPropagation();" [(ngModel)]="MenuDataList.enableDelete"
+                                                [ngModelOptions]="{standalone: true}"></mat-checkbox>
+                                        </div>
+
+                                    </mat-expansion-panel-header>
+
+
+                                    <div *ngIf="MenuDataList.childMenu.length>0">
+                                        <div *ngFor="let childMenu of MenuDataList.childMenu">
+                                            <div class="childmenu row">
+                                                <div class="col-sm-4">
+                                                    {{childMenu.displayname}}
+                                                </div>
+
+                                                <div class="col-sm-2">
+                                                    <mat-checkbox class="example-margin"
+                                                        [(ngModel)]="childMenu.enableView" [ngModelOptions]="{standalone: true}">
+                                                    </mat-checkbox>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <mat-checkbox class="example-margin"
+                                                        [(ngModel)]="childMenu.enableAdd" [ngModelOptions]="{standalone: true}">
+                                                    </mat-checkbox>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <mat-checkbox class="example-margin"
+                                                        [(ngModel)]="childMenu.enableEdit" [ngModelOptions]="{standalone: true}">
+                                                    </mat-checkbox>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <mat-checkbox class="example-margin"
+                                                        [(ngModel)]="childMenu.enableDelete"
+                                                        [ngModelOptions]="{standalone: true}"></mat-checkbox>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </mat-expansion-panel>
+                            </mat-accordion>
+
+                            <div class="submit-section">
+
+
+                                <button mat-flat-button color="accent" (click)="addRole('save')" *ngIf="add">
+                                    <mat-icon aria-hidden="false">save</mat-icon> Save
+                                </button>
+
+
+                                <button mat-flat-button color="warn" (click)="back()">
+                                    <mat-icon aria-hidden="false">cancel</mat-icon> Back
+                                </button>
+
+                                <button mat-flat-button color="accent" (click)="addRole('update')" *ngIf="edit">
+                                    <mat-icon aria-hidden="false">update</mat-icon> Update
+                                </button>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,400 @@
+<app-loader *ngIf="showLoading"></app-loader>
+
+<div class="main-wrapper">
+    <app-header> </app-header>
+    <app-leftmenu></app-leftmenu>
+    <div class="page-wrapper">
+        <div class="content container-fluid">
+            <!-- Page Header -->
+            <div class="page-header">
+                <div class="row align-items-center">
+                    <div class="col">
+                        <h3 class="page-title">{{PageTitle}}</h3>
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a routerLink="/Dashboard"> Dashboard</a>
+                            </li>
+                            <li class="breadcrumb-item active">{{PageTitle}}</li>
+                        </ul>
+                    </div>
+
+                    <div class="col-auto float-right ml-auto">
+                        <button mat-flat-button color="warn" (click)="filterFunc()" *ngIf="!result">
+                            <mat-icon aria-hidden="false">filter</mat-icon> Filter
+                        </button>
+                        <button mat-flat-button color="primary" (click)="filterFunc()" *ngIf="result">
+                            <mat-icon aria-hidden="false">check_circle</mat-icon> Filter Applied
+                        </button>
+
+                        <button mat-flat-button color="accent" (click)="addPO()" *ngIf="poAdd">
+                            <mat-icon aria-hidden="false">add</mat-icon> Add PO
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- /Page Header -->
+
+            <div class="filter-box" *ngIf="filterDiv">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <mat-form-field class="example-full-width">
+                                <input matInput name="purchaseOrderNo" type="text" placeholder="Search by PO no."
+                                    [(ngModel)]="FilterData.purchaseOrderNo">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <mat-form-field class="example-full-width">
+                                <mat-select [(ngModel)]="FilterData.accountName" name="accountName"
+                                    [typeaheadDebounceInterval]="matSelectDuration" placeholder="Search by Project">
+                                    <mat-option>-Search By Project-</mat-option>
+                                    <mat-option *ngFor="let p of projectList" value="{{p.selectionid}}"
+                                        matTooltip="{{p.selectionvalue}}">
+                                        {{p.selectionvalue}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <mat-form-field class="example-full-width">
+                                <mat-select [(ngModel)]="FilterData.organisationId" name="organisationId"
+                                    [typeaheadDebounceInterval]="matSelectDuration"
+                                    placeholder="Search by Organisation">
+                                    <mat-option>-Search By Organisation-</mat-option>
+                                    <mat-option *ngFor="let org of orgList" value="{{org.selectionid}}">
+                                        {{org.selectionvalue}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <mat-form-field class="example-full-width">
+                                <mat-select [(ngModel)]="FilterData.supplierName" name="supplierName"
+                                    [typeaheadDebounceInterval]="matSelectDuration" placeholder="Search by Vendor">
+                                    <mat-option>-Search By Vendor-</mat-option>
+                                    <mat-option *ngFor="let supp of supplierPartyList" [value]="supp.selectionid">
+                                        {{supp.selectionvalue}}</mat-option>
+                                </mat-select>
+                                <!-- <mat-select [(ngModel)]="FilterData.supplierName" name="supplierName"
+                                    placeholder="Search by Vendor">
+                                        <mat-option *ngFor="let supp of supplierPartyList" [value]="supp.selectionid">
+                                          {{ supp.selectionvalue }}
+                                        </mat-option>
+                                      </mat-select> -->
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <mat-form-field class="example-full-width">
+                                <mat-select [(ngModel)]="FilterData.department" name="department"
+                                    [typeaheadDebounceInterval]="matSelectDuration" placeholder="Search by Department">
+                                    <mat-option>-Search By Department-</mat-option>
+                                    <mat-option *ngFor="let d of deptList" value="{{d.selectionid}}">
+                                        {{d.selectionvalue}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <mat-form-field class="example-full-width">
+                                <input matInput name="status" type="text" placeholder="Search by status"
+                                    [(ngModel)]="FilterData.approvalStatus">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="submit-section">
+                    <button mat-flat-button color="primary" (click)="search()">
+                        <mat-icon aria-hidden="false">search</mat-icon> Search
+                    </button>
+                    <button mat-flat-button color="warn" (click)="cancel()">
+                        <mat-icon aria-hidden="false">cancel</mat-icon> Clear
+                    </button>
+                </div>
+            </div>
+
+            <div class="tab-content">
+
+                <!-- Add Family -->
+                <div class="pro-overview tab-pane fade show active">
+                    <div class="card">
+
+
+                        <!-- Search Table -->
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <div class="total-rec">Total Records: {{totalRecords}}</div>
+                            </div>
+                            <div class="col-auto float-right ml-auto">
+                                <mat-form-field class="search-input">
+                                    <input matInput (keyup)="applyFilter($event)" placeholder="Search..." #input>
+                                </mat-form-field>
+                                <button mat-flat-button color="warn" class="export-btn"
+                                    (click)="exporter.exportTable('csv', {fileName:'PO Report'})"
+                                    matTooltip="Export to CSV">
+                                    <mat-icon>send</mat-icon> Export
+                                </button>
+                            </div>
+
+                        </div>
+
+                        <div style="overflow-x:auto;">
+                            <table mat-table [dataSource]="POListData" matSort class="mat-elevation-z8">
+
+                                <!--  PO No. Column -->
+                                <ng-container matColumnDef="purchaseOrderNo">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> PO No. / Order Date</th>
+                                    <td mat-cell *matCellDef="let POListData" data-label="PO No.&#xa;Order Date">
+                                        <div class="block strong blue-text"> {{POListData.purchaseOrderNo}} </div>
+                                        <div class="block"> {{POListData.orderDate | date : 'dd/MM/yyyy'}} </div>
+                                    </td>
+                                </ng-container>
+
+                                <!--  Vendor Column -->
+                                <ng-container matColumnDef="vendor">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Vendor</th>
+                                    <td mat-cell *matCellDef="let POListData" data-label="Vendor">
+                                        <div class="block strong blue-text"> {{POListData.suppName}} </div>
+                                    </td>
+                                </ng-container>
+
+                                <!--  Department/ Project Column -->
+                                <ng-container matColumnDef="departmentName">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Department / Project Name
+                                    </th>
+                                    <td mat-cell *matCellDef="let POListData" data-label="Department&#xa;Project Name">
+                                        <div class="block strong blue-text"> {{POListData.departmentName}} </div>
+                                        <div class="block"> {{POListData.accName}} </div>
+                                    </td>
+                                </ng-container>
+
+                                <!--  Workflow Column -->
+                                <ng-container matColumnDef="workflowName">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Workflow / Status </th>
+                                    <td mat-cell *matCellDef="let POListData" data-label="Workflow&#xa;Status">
+                                        <div class="block strong blue-text"> {{POListData.workflowName}} </div>
+                                        <div class="block"> {{POListData.approvalStatus}} </div>
+                                    </td>
+                                </ng-container>
+
+                                <!--  Amount Column -->
+                                <ng-container matColumnDef="amount">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Amount </th>
+                                    <td mat-cell *matCellDef="let POListData" data-label="total amount">
+                                        <div class="block strong blue-text"> {{POListData.grandTotal}} </div>
+                                    </td>
+                                </ng-container>
+
+
+
+                                <!-- Action Column -->
+                                <ng-container matColumnDef="action">
+                                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                                    <td mat-cell *matCellDef="let POListData">
+                                        <button mat-flat-button color="accent" [matMenuTriggerFor]="menu">
+                                            <mat-icon>mouse</mat-icon> Action
+                                        </button>
+                                        <mat-menu #menu="matMenu" class="actionmenu">
+                                            <a mat-menu-item [routerLink]="['/ViewPoById', POListData.entityId, 'PO']"
+                                                *ngIf="poView">
+                                                <mat-icon aria-hidden="false">visibility</mat-icon> View
+                                            </a>
+
+                                            <a mat-menu-item [routerLink]="['UpdatePO', POListData.entityId,'edit']"
+                                                *ngIf="POListData.approvalStatus=='PENDING' && poEdit">
+                                                <mat-icon aria-hidden="false">edit</mat-icon> Edit
+                                            </a>
+
+                                            <a mat-menu-item
+                                                [routerLink]="['uploadSignCopy', POListData.entityId,'view']"
+                                                *ngIf="POListData.approvalStatus=='APPROVED'  && poEdit">
+                                                <mat-icon aria-hidden="false">attach_file</mat-icon> Upload signed copy
+                                            </a>
+                                            <button mat-menu-item (click)="deletePo(POListData.entityId)"
+                                                *ngIf="POListData.approvalStatus=='PENDING' && poDelete">
+                                                <mat-icon aria-hidden="false">delete</mat-icon> Delete
+                                            </button>
+
+                                            <button mat-menu-item
+                                            *ngIf="poEdit"
+                                                (click)="generateDuplicateOrder(POListData.entityId, null)">
+                                                <mat-icon aria-hidden="false">control_point_duplicate</mat-icon>
+                                                Duplicate
+                                            </button>
+
+                                            <button mat-menu-item
+                                                (click)="generateDuplicateOrder(POListData.entityId, 'AMEND')"
+                                                *ngIf="POListData.approvalStatus=='AMENDMENT_APPROVED' && POListData.amendedPoId==null && poEdit">
+                                                <mat-icon aria-hidden="false">edit_attributes</mat-icon> Amend
+                                            </button>
+                                            <a mat-menu-item
+                                            *ngIf="poEdit"
+                                                [routerLink]="['searchPoPayment', POListData.entityId,'list']">
+                                                <mat-icon aria-hidden="false">payment</mat-icon> PO Payment
+                                            </a>
+                                            <a mat-menu-item
+                                                [routerLink]="['searchPoFulfilment', POListData.entityId,'list']"
+                                                *ngIf="POListData.approvalStatus=='APPROVED' && poEdit">
+                                                <mat-icon aria-hidden="false">payment</mat-icon> PO Fulfilment
+                                            </a>
+                                            <a mat-menu-item
+                                            *ngIf="poEdit"
+                                                [routerLink]="['searchVendorComparison', POListData.entityId,'list']">
+                                                <mat-icon aria-hidden="false">compare_arrows</mat-icon> Vendor
+                                                Comparison
+                                            </a>
+
+
+                                            <!-- <button mat-menu-item (click)="requestForAmendment(POListData.entityId)"
+                                                *ngIf="POListData.approvalStatus=='APPROVED'">
+                                                <mat-icon aria-hidden="false">settings</mat-icon> Request for amendment
+                                        </button> -->
+
+                                            <button mat-menu-item data-toggle="modal" data-target="#myModal"
+                                                (click)="getPoId(POListData.entityId)"
+                                                *ngIf="POListData.approvalStatus=='APPROVED' && poEdit">
+                                                <mat-icon aria-hidden="false">settings</mat-icon> Request for amendment
+                                            </button>
+
+                                            <button mat-menu-item (click)="pushPoToOpenBravo(POListData.entityId)"
+                                                *ngIf="POListData.approvalStatus=='APPROVED' && POListData.poPushedStatus=='PENDING' && poEdit">
+                                                <mat-icon aria-hidden="false">launch</mat-icon> Push PO
+                                            </button>
+                                        </mat-menu>
+
+                                    </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+                        </div>
+                        <mat-paginator [pageSize]="pageSizedisplay" [pageSizeOptions]="itemPerPage"
+                            showFirstLastButtons>
+                        </mat-paginator>
+
+                        <div class="export-div">
+                            <table matTableExporter mat-table [dataSource]="exportPOData" matSort
+                                class="mat-elevation-z8" #exporter="matTableExporter">
+                                <!--  PO No. Column -->
+                                <ng-container matColumnDef="purchaseOrderNo">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> PO No.</th>
+                                    <td mat-cell *matCellDef="let exportPOData" data-label="PO No.">
+                                        <div class="block strong"> {{exportPOData.purchaseOrderNo}} </div>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="orderDate">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Order Date</th>
+                                    <td mat-cell *matCellDef="let exportPOData" data-label="Order Date">
+                                        <div class="block strong"> {{exportPOData.orderDate | date : 'dd/MM/yyyy'}}
+                                        </div>
+                                    </td>
+                                </ng-container>
+
+                                <!--  Vendor Column -->
+                                <ng-container matColumnDef="vendor">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Vendor</th>
+                                    <td mat-cell *matCellDef="let exportPOData" data-label="Vendor">
+                                        <div class="block strong"> {{exportPOData.suppName}} </div>
+                                    </td>
+                                </ng-container>
+
+                                <!--  Department-->
+                                <ng-container matColumnDef="departmentName">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Department
+                                    </th>
+                                    <td mat-cell *matCellDef="let exportPOData" data-label="Department">
+                                        <div class="block strong"> {{exportPOData.departmentName}} </div>
+                                    </td>
+                                </ng-container>
+
+                                <!-- Project Column -->
+                                <ng-container matColumnDef="accName">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Project Name
+                                    </th>
+                                    <td mat-cell *matCellDef="let exportPOData" data-label="Project Name">
+                                        <div class="block strong"> {{exportPOData.accName}} </div>
+                                    </td>
+                                </ng-container>
+
+                                <!--  Workflow Column -->
+                                <ng-container matColumnDef="workflowName">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Workflow</th>
+                                    <td mat-cell *matCellDef="let exportPOData" data-label="Workflow">
+                                        <div class="block strong"> {{exportPOData.workflowName}} </div>
+                                    </td>
+                                </ng-container>
+
+                                <!-- Status Column -->
+                                <ng-container matColumnDef="approvalStatus">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
+                                    <td mat-cell *matCellDef="let exportPOData" data-label="Status">
+                                        <div class="block strong"> {{exportPOData.approvalStatus}} </div>
+                                    </td>
+                                </ng-container>
+
+                                <!--  Amount Column -->
+                                <ng-container matColumnDef="amount">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Amount </th>
+                                    <td mat-cell *matCellDef="let exportPOData" data-label="total amount">
+                                        <div class="block strong"> {{exportPOData.grandTotal}} </div>
+                                    </td>
+                                </ng-container>
+
+
+
+                                <tr mat-header-row *matHeaderRowDef="exportColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: exportColumns;"></tr>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog" #closebutton>
+    <div class="modal-dialog">
+        <form [formGroup]="amendmentForm">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <!-- <mat-form-field class="example-full-width">
+                                <mat-label>PRS No.</mat-label>
+                            </mat-form-field> -->
+                            <strong>Are you sure you want to send amendment request for this PO?</strong>
+                            <mat-form-field class="example-full-width"
+                                [ngClass]="{ 'has-error': isSubmitted && formControls.remark.errors }">
+                                <mat-label>Remarks</mat-label>
+                                <textarea matInput cols="55" rows="4" name="remark" type="text"
+                                    placeholder="Please enter remarks." formControlName="remark"
+                                    [(ngModel)]="TaskData.remark" maxlength="250" required>
+                                </textarea>
+                                <div *ngIf="isSubmitted && formControls.remark.errors" class="error-text">
+                                    <div *ngIf="formControls.remark.errors.required">Remark
+                                        is required</div>
+                                </div>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button mat-flat-button color="primary" (click)="requestForAmendment(amendPoId)">Yes</button>
+                    <button mat-flat-button color="warn" data-dismiss="modal">No</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

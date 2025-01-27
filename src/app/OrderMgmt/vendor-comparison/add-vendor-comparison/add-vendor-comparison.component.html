@@ -1,0 +1,135 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form [formGroup]="addVendorComparisonForm">
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+                <!-- /Page Header -->
+
+                <div class="tab-content">
+
+                    <!-- Add PO Payment -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+                            <div class="card-body">
+
+                                <div class="col-md-12 mandatory">*Fields are Mandatory</div>
+
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.customerName.errors }">
+                                                <input matInput name="customerName" type="text" placeholder="Customer Name"
+                                                    [(ngModel)]="VendorComparisonData.customerName" formControlName="customerName"
+                                                    maxlength="60">
+                                                <div *ngIf="isSubmitted && formControls.customerName.errors" class="error-text">
+                                                    <div *ngIf="formControls.customerName.errors.required">Customer name is
+                                                        required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.amount.errors }">
+                                                <input matInput name="amount" type="text" placeholder="Amount"
+                                                    [(ngModel)]="VendorComparisonData.amount"
+                                                    formControlName="amount" maxlength="10" numbersOnly required>
+                                                <div *ngIf="isSubmitted && formControls.amount.errors"
+                                                    class="error-text">
+                                                    <div *ngIf="formControls.amount.errors.required">Amount is required</div>
+                                                </div>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.deliveryTime.errors }">
+                                                <input matInput name="deliveryTime" placeholder="Delivery Date " type="text"
+                                                    [matDatepicker]="picker" [(ngModel)]="VendorComparisonData.deliveryTime"
+                                                    formControlName="deliveryTime">
+                                                <div *ngIf="isSubmitted && formControls.deliveryTime.errors" class="error-text">
+                                                    <div *ngIf="formControls.deliveryTime.errors.required">Delivery date is
+                                                        required</div>
+                                                </div>
+                                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                                <mat-datepicker #picker></mat-datepicker>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="paymentTerms" type="text" placeholder="Payment Terms"
+                                                    [(ngModel)]="VendorComparisonData.paymentTerms" formControlName="paymentTerms"
+                                                    maxlength="200">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <input matInput name="quality" type="text" placeholder="Quality"
+                                                    [(ngModel)]="VendorComparisonData.quality" formControlName="quality"
+                                                    maxlength="200">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+                                            <mat-form-field class="example-full-width">
+                                                <mat-label>Remarks</mat-label>
+                                                <textarea matInput cols="55" rows="4" name="remarks" type="text"
+                                                    placeholder="Please enter remarks."
+                                                    [(ngModel)]="VendorComparisonData.remarks" formControlName="remarks"
+                                                    maxlength="200">
+                                                </textarea>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="submit-section">
+                                  
+
+                                    <button mat-flat-button color="accent" (click)="addVendorComparison('save')" *ngIf="add">
+                                        <mat-icon aria-hidden="false">save</mat-icon> Save</button>
+
+                                    <button mat-flat-button color="accent" (click)="addVendorComparison('update')" *ngIf="edit">
+                                        <mat-icon aria-hidden="false">update</mat-icon> Update</button>
+                                    
+                                    <button mat-flat-button color="warn" (click)="back()">
+                                        <mat-icon aria-hidden="false">cancel</mat-icon> Back</button>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

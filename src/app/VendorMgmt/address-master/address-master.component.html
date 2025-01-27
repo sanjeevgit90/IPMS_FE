@@ -1,0 +1,161 @@
+<app-loader *ngIf="showLoading"></app-loader>
+<form>
+    <div class="main-wrapper">
+        <app-header> </app-header>
+        <app-leftmenu></app-leftmenu>
+        <div class="page-wrapper">
+            <div class="content container-fluid">
+                <!-- Page Header -->
+                <div class="page-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="page-title">{{PageTitle}}</h3>
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a routerLink="/Dashboard"> Dashboard</a>
+                                </li>
+                                <li class="breadcrumb-item active">{{PageTitle}}</li>
+                            </ul>
+                        </div>
+
+                        <div class="col-auto float-right ml-auto">
+                            
+                            <button mat-flat-button color="accent" (click)="addAddress()">
+                                <mat-icon aria-hidden="false">add</mat-icon> Add Address</button>
+                           
+                        </div>
+
+
+
+                       
+
+                    </div>
+                </div>
+                <!-- /Page Header -->
+
+               
+                <div>
+                    <app-vendortab highlightedtab="addresstab"> </app-vendortab>
+                </div>
+                <div class="tab-content">
+
+                    <!-- Add Address -->
+                    <div class="pro-overview tab-pane fade show active">
+                        <div class="card">
+
+
+                            <!-- Search Table -->
+                            <div class="total-rec">Total Records: {{totalRecords}}</div>
+
+                            <table mat-table [dataSource]="AddressMasterData" matSort class="mat-elevation-z8">
+
+                                <!--  Type Column -->
+                                <ng-container matColumnDef="addressType">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Address Type</th>
+                                    <td mat-cell *matCellDef="let AddressMasterData " data-label="Address Type">
+                                        {{AddressMasterData.addressType}} 
+                                    </td>
+                                </ng-container>
+
+                                 <!--  Address Column -->
+                                 <ng-container matColumnDef="address1">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Address</th>
+                                    <td mat-cell *matCellDef="let AddressMasterData " data-label="Address">
+                                        {{AddressMasterData.address1}} 
+                                    </td>
+                                </ng-container>
+
+                                
+                                 <!--  landmark Column -->
+                                 <ng-container matColumnDef="landmark">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Landmark</th>
+                                    <td mat-cell *matCellDef="let AddressMasterData " data-label="Landmark">
+                                        {{AddressMasterData.landmark}} 
+                                    </td>
+                                </ng-container>
+
+
+                                 <!--  City Column -->
+                                 <ng-container matColumnDef="cityName">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> City</th>
+                                    <td mat-cell *matCellDef="let AddressMasterData " data-label="City">
+                                        <!-- {{AddressMasterData.cityName}} -->
+                                        {{AddressMasterData.city}}
+                                    </td>
+                                </ng-container>
+
+                                <!--  State Column -->
+                                <ng-container matColumnDef="stateName">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> State</th>
+                                    <td mat-cell *matCellDef="let AddressMasterData " data-label="State">
+                                        <!-- {{AddressMasterData.stateName}} -->
+                                        {{AddressMasterData.state}}
+                                    </td>
+                                </ng-container>
+
+                                <!--  District Column -->
+                                <ng-container matColumnDef="districtName">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> District</th>
+                                    <td mat-cell *matCellDef="let AddressMasterData " data-label="District">
+                                        <!-- {{AddressMasterData.districtName}} -->
+                                        {{AddressMasterData.district}}
+                                    </td>
+                                </ng-container>
+
+                                 <!--  Country Column -->
+                                 <ng-container matColumnDef="country">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> country</th>
+                                    <td mat-cell *matCellDef="let AddressMasterData " data-label="Country">
+                                        {{AddressMasterData.country}} 
+                                    </td>
+                                </ng-container>
+
+                                 <!--  District Column -->
+                                 <ng-container matColumnDef="pinCode">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Pincode</th>
+                                    <td mat-cell *matCellDef="let AddressMasterData " data-label="Pincode">
+                                        {{AddressMasterData.pinCode}} 
+                                    </td>
+                                </ng-container>
+
+
+                                
+                                <!-- Action Column -->
+                                <ng-container matColumnDef="action">
+                                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                                    <td mat-cell *matCellDef="let AddressMasterData">
+
+
+                                        <!-- <a mat-flat-button color="primary"  matTooltip="Edit this record"
+                                            [routerLink]="['UpdatePartyAddress', AddressMasterData.entityId,'edit']" title="Edit">
+                                            <mat-icon aria-hidden="false" >edit</mat-icon>
+                                            </a> -->
+                                        <button mat-flat-button color="primary" matTooltip="Edit this record" (click)="editAddress(AddressMasterData.entityId)"
+                                            title="Edit">
+                                            <mat-icon aria-hidden="false">edit</mat-icon>
+                                        </button>
+
+                                        <button mat-flat-button color="warn" (click)="onDelete(AddressMasterData.entityId,AddressMasterData.isDeleted)"
+                                            matTooltip="Deactivate this record" *ngIf="!AddressMasterData.isDeleted">
+                                            <mat-icon aria-hidden="false">delete</mat-icon>
+                                        </button>
+                                        <button mat-flat-button color="basic" class="green-btn" (click)="onDelete(AddressMasterData.entityId,AddressMasterData.isDeleted)"
+                                            matTooltip="Activate this record" *ngIf="AddressMasterData.isDeleted">
+                                            <mat-icon aria-hidden="false">delete</mat-icon>
+                                        </button>
+                                    </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                            </table>
+                            <mat-paginator [pageSize]="pageSizedisplay" [pageSizeOptions]="itemPerPage"
+                                showFirstLastButtons>
+                            </mat-paginator>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
