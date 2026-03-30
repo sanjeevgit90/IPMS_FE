@@ -8,6 +8,8 @@ export class AppGlobals {
 
     readonly baseAPIUrl: string = 'https://ipms.aurionpro.com:8096/ipms/'; // Production Deployment
     readonly baseUrl: string = 'https://ipms.aurionpro.com/';
+    // readonly baseAPIUrl: string = 'http://localhost:8095/';
+    // readonly baseUrl: string = 'http://localhost:4200/';
 
     // readonly baseAPIUrl: string = 'https://ipmstest.aurionpro.com:8092/ipms/'; // UAT Deployment
     // readonly baseUrl: string = 'https://ipmstest.aurionpro.com/'
@@ -15,7 +17,6 @@ export class AppGlobals {
    // readonly baseAPIUrl: string = 'http://172.16.3.52:8092/ipms/'; // UAT Deployment
     //readonly baseUrl: string = 'http://172.16.3.52:8092/'
 
-    // readonly baseAPIUrl: string = 'http://localhost:8095/';
     readonly pageNumer: number[] = [5, 10, 25, 50, 100];
     readonly pageSize: number = 10;
     readonly matSelectDurationTime: number = 1000;
