@@ -5,6 +5,7 @@ import { AppGlobals } from '../../../global/app.global';
 import { DialogService } from '../../../service/dialog.service';
 import { SharedService } from '../../../service/shared.service';
 import { PurchaseOrderService } from '../../../OrderMgmt/purchase-order/purchase-order.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-view-po',
@@ -17,6 +18,7 @@ export class ViewPoComponent implements OnInit {
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService) { }
 
   showLoading: boolean = false;
+letterHeadLogoPath = environment.imageBasePath;
   /* purchaseOrder = {"purchaseOrderNo": "", "orderDate": "", "poMadeFrom": "",
   "rateContractId": "", "department": "", "accountName": "",
   "organisationId": "", "orderType": "", "modeOfPayment": "",
