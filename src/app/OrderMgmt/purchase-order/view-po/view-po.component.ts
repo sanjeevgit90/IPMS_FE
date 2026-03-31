@@ -5,7 +5,6 @@ import { AppGlobals } from '../../../global/app.global';
 import { DialogService } from '../../../service/dialog.service';
 import { SharedService } from '../../../service/shared.service';
 import { PurchaseOrderService } from '../../../OrderMgmt/purchase-order/purchase-order.service';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-view-po',
@@ -19,7 +18,6 @@ export class ViewPoComponent implements OnInit {
 
   showLoading: boolean = false;
   letterHeadLogoPath = this._global.baseUrl + 'assets/Images/letterhead/AurionPro-logo1.png';
-  // letterHeadLogoPath = environment.imageBasePath;
   /* purchaseOrder = {"purchaseOrderNo": "", "orderDate": "", "poMadeFrom": "",
   "rateContractId": "", "department": "", "accountName": "",
   "organisationId": "", "orderType": "", "modeOfPayment": "",
