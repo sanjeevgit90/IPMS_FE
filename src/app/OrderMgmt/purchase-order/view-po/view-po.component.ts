@@ -17,6 +17,7 @@ export class ViewPoComponent implements OnInit {
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService) { }
 
   showLoading: boolean = false;
+  letterHeadLogoPath = this._global.baseUrl + 'assets/Images/letterhead/AurionPro-logo1.png';
   /* purchaseOrder = {"purchaseOrderNo": "", "orderDate": "", "poMadeFrom": "",
   "rateContractId": "", "department": "", "accountName": "",
   "organisationId": "", "orderType": "", "modeOfPayment": "",
