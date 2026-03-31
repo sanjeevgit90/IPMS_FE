@@ -81,7 +81,7 @@
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header> Remarks </th>
                                     <td mat-cell *matCellDef="let WorkflowHistoryData">
                                         <div class="block" *ngIf="!(WorkflowHistoryData.stageName=='PO TEAM' || WorkflowHistoryData.stageName=='PO TEAM SCSOFT')"> {{WorkflowHistoryData.remark}} </div>
-                                        <div class="block" *ngIf="(WorkflowHistoryData.stageName=='PO TEAM' || WorkflowHistoryData.stageName=='PO TEAM SCSOFT')"> {{WorkflowHistoryData.remark}} <a href="{{baseUrl}}{{WorkflowHistoryData.url}}" target="_blank"> Download Draft</a></div>
+                                        <div class="block" *ngIf="(WorkflowHistoryData.stageName=='PO TEAM' || WorkflowHistoryData.stageName=='PO TEAM SCSOFT')"> {{WorkflowHistoryData.remark}} <a href="{{baseUrl}}{{WorkflowHistoryData.url}}" target="_blank" *ngIf="WorkflowHistoryData.url"> Download Draft</a></div>
                                     </td>
                                 </ng-container>
 
