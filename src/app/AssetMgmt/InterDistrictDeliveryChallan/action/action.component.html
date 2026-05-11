@@ -33,11 +33,11 @@
                                     [ngClass]="{ 'has-error': isSubmitted && formControls.approvalStatus.errors }">
                                     <mat-radio-group aria-label="Select an action"
                                         [(ngModel)]="ActionData.approvalStatus" formControlName="approvalStatus"
-                                        required>
+                                        required (change)="onStatusChange($event.value)">
                                         <mat-radio-button value="APPROVED" *ngIf="project||invoice">Approve
                                         </mat-radio-button>
-                                        <mat-radio-button value="RECEIVED" *ngIf="dc">Receive</mat-radio-button>
-                                        <mat-radio-button value="REJECTED">Reject</mat-radio-button>
+                                        <mat-radio-button value="RECEIVED" *ngIf="dc" class="ml-2">Receive</mat-radio-button>
+                                        <mat-radio-button value="REJECTED" class="ml-2">Reject</mat-radio-button>
                                     </mat-radio-group>
                                     <div *ngIf="isSubmitted && formControls.approvalStatus.errors" class="error-text">
                                         <div *ngIf="formControls.approvalStatus.errors.required">Action is Required
@@ -89,13 +89,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row mt-4">
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <mat-form-field class="example-full-width"
                                         [ngClass]="{ 'has-error': isSubmitted && formControls.remark.errors }">
                                         <textarea matInput name="remark" maxlength="200" [(ngModel)]="ActionData.remark"
-                                            formControlName="remark" placeholder="Enter Remark"></textarea>
+                                            formControlName="remark" placeholder="Enter Remark" [value]="ActionData.approvalStatus"></textarea>
                                         <div *ngIf="isSubmitted && formControls.remark.errors" class="error-text">
                                             <div *ngIf="formControls.remark.errors.required">Remark is Required
                                             </div>
