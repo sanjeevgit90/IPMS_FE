@@ -259,5 +259,12 @@ export class ActionComponent implements OnInit {
     return this.addAssetForm.controls;
   }
 
+  onStatusChange(event : string) {
+    debugger;
+    this.addAssetForm.patchValue({
+      remark: event
+    });
+  }
+
 }
 

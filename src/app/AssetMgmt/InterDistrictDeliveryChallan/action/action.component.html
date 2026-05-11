@@ -33,7 +33,7 @@
                                     [ngClass]="{ 'has-error': isSubmitted && formControls.approvalStatus.errors }">
                                     <mat-radio-group aria-label="Select an action"
                                         [(ngModel)]="ActionData.approvalStatus" formControlName="approvalStatus"
-                                        required>
+                                        required (change)="onStatusChange($event.value)">
                                         <mat-radio-button value="APPROVED" *ngIf="project||invoice">Approve
                                         </mat-radio-button>
                                         <mat-radio-button value="RECEIVED" *ngIf="dc" class="ml-2">Receive</mat-radio-button>
@@ -89,7 +89,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row mt-2">
+                        <div class="row mt-4">
                             <div class="col-sm-12">
                                 <div class="form-group">
                                     <mat-form-field class="example-full-width"
