@@ -260,7 +260,6 @@ export class ActionComponent implements OnInit {
   }
 
   onStatusChange(event : string) {
-    debugger;
     this.addAssetForm.patchValue({
       remark: event
     });
