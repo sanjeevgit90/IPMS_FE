@@ -23,6 +23,7 @@
     "@angular/router": "~10.2.5",
     "@angular/service-worker": "~10.2.5",
     "bootstrap": "^4.4.1",
+    "cdk-table-exporter": "^10.2.4",
     "highcharts": "^8.2.2",
     "http-parser-js": "^0.5.10",
     "jquery": "^3.5.0",
