@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular9": {
+    "IPMS_FE": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/angular9",
+            "outputPath": "dist/IPMS_FE",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -67,18 +67,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "angular9:build"
+            "browserTarget": "IPMS_FE:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "angular9:build:production"
+              "browserTarget": "IPMS_FE:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "angular9:build"
+            "browserTarget": "IPMS_FE:build"
           }
         },
         "test": {
@@ -117,18 +117,18 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "angular9:serve"
+            "devServerTarget": "IPMS_FE:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "angular9:serve:production"
+              "devServerTarget": "IPMS_FE:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "angular9",
+  "defaultProject": "IPMS_FE",
   "cli": {
     "analytics": "b3336135-79b1-4687-9cc3-0ebc592df8d4"
   }
