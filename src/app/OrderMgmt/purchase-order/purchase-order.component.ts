@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AppGlobals } from '../../global/app.global';
@@ -14,14 +14,15 @@ import { PoFilterSession } from '../ordermgmtfilterdata';
 //import { MatSelect } from '@angular/material/select';
 
 @Component({
-  selector: 'app-purchase-order',
-  templateUrl: './purchase-order.component.html',
-  providers: [PurchaseOrderService, AppGlobals, DialogService, SharedService, PoTaskService]
+    selector: 'app-purchase-order',
+    templateUrl: './purchase-order.component.html',
+    providers: [PurchaseOrderService, AppGlobals, DialogService, SharedService, PoTaskService],
+    standalone: false
 })
 export class PurchaseOrderComponent implements OnInit {
   result: boolean = false;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private purchaseOrderService: PurchaseOrderService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private purchaseOrderService: PurchaseOrderService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService, private poTaskService: PoTaskService) { }
 
   displayedColumns: string[] = ['purchaseOrderNo', 'vendor', 'departmentName', 'workflowName', 'amount', 'action'];
@@ -33,7 +34,7 @@ export class PurchaseOrderComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild('closebutton') closebutton;
 
-  amendmentForm: FormGroup;
+  amendmentForm: UntypedFormGroup;
   isSubmitted = false;
   showLoading: boolean = false;
 

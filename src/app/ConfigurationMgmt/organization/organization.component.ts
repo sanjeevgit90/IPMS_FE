@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../global/app.global';
@@ -11,14 +11,14 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
-  selector: 'app-organization',
-  templateUrl: './organization.component.html',
-  providers: [OrganizationService, AppGlobals, DialogService, SharedService]
-
+    selector: 'app-organization',
+    templateUrl: './organization.component.html',
+    providers: [OrganizationService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class OrganizationComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private organizationService: OrganizationService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private organizationService: OrganizationService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService) { }
 
   displayedColumns: string[] = ['orgName', 'orgCountry', 'orgPan', 'orgTan', 'orgDirectors', 'orgRegAddress', 'action'];
@@ -49,7 +49,7 @@ export class OrganizationComponent implements OnInit {
     "orgName": "", "orgCountry": "", "orgDirectors": "", "orgPan": "",
     "orgTan": "", "orgRegAddress": ""
   };
-  addOrganizationForm: FormGroup;
+  addOrganizationForm: UntypedFormGroup;
   isSubmitted = false;
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

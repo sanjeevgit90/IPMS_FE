@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -15,15 +15,16 @@ import { map, startWith } from 'rxjs/operators';
 
 
 @Component({
-  selector: 'app-add-po',
-  templateUrl: './add-po.component.html',
-  providers: [PurchaseOrderService, AppGlobals, DialogService, SharedService, RateContractService, ProjectMasterService, OrganizationService, FileuploadService]
+    selector: 'app-add-po',
+    templateUrl: './add-po.component.html',
+    providers: [PurchaseOrderService, AppGlobals, DialogService, SharedService, RateContractService, ProjectMasterService, OrganizationService, FileuploadService],
+    standalone: false
 })
 export class AddPoComponent implements OnInit {
 
   filteredProjectList: any = [];
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private purchaseOrderService: PurchaseOrderService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private purchaseOrderService: PurchaseOrderService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService, private rateContractService: RateContractService,
     private projectMasterService: ProjectMasterService, private organizationService: OrganizationService, private fileuploadService: FileuploadService) { }
 
@@ -40,7 +41,7 @@ export class AddPoComponent implements OnInit {
   list = true;
   view = false;
 
-  addPoForm: FormGroup;
+  addPoForm: UntypedFormGroup;
   isSubmitted = false;
 
   POEntityData = {

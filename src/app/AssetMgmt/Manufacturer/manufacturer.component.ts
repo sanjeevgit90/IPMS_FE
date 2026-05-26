@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormGroupDirective } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, FormGroupDirective } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../global/app.global';
@@ -12,14 +12,14 @@ import { MatPaginator } from '@angular/material/paginator';
 import { ManufacturerFilterSession } from '../assetfilterdata';
 
 @Component({
-  selector: 'app-manufacturer',
-  templateUrl: './manufacturer.component.html',
-  providers: [ManufacturerService, AppGlobals, DialogService, SharedService]
-
+    selector: 'app-manufacturer',
+    templateUrl: './manufacturer.component.html',
+    providers: [ManufacturerService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class ManufacturerComponent implements OnInit {
   result: boolean = false;
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private manufacturerService: ManufacturerService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private manufacturerService: ManufacturerService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService) { }
 
   displayedColumns: string[] = ['manufacturername', 'action'];
@@ -40,7 +40,7 @@ export class ManufacturerComponent implements OnInit {
   manufacturerView: boolean = false;
   manufacturerDelete: boolean = false;
   ManufacturerData = { "manufacturername": null };
-  addManufacturerForm: FormGroup;
+  addManufacturerForm: UntypedFormGroup;
   isSubmitted = false;
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -12,13 +12,14 @@ import { OrganizationService } from '../../../ConfigurationMgmt/organization/org
 import { MatCheckbox } from '@angular/material/checkbox';
 
 @Component({
-  selector: 'app-add-rc',
-  templateUrl: './add-rc.component.html',
-  providers: [RateContractService, AppGlobals, DialogService, SharedService, FileuploadService, ProjectMasterService, OrganizationService]
+    selector: 'app-add-rc',
+    templateUrl: './add-rc.component.html',
+    providers: [RateContractService, AppGlobals, DialogService, SharedService, FileuploadService, ProjectMasterService, OrganizationService],
+    standalone: false
 })
 export class AddRcComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private rateContractService: RateContractService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private rateContractService: RateContractService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService, private fileuploadService: FileuploadService, private projectMasterService: ProjectMasterService, private organizationService: OrganizationService) { }
 
 
@@ -37,7 +38,7 @@ export class AddRcComponent implements OnInit {
   list = true;
   view = false;
 
-  addRcForm: FormGroup;
+  addRcForm: UntypedFormGroup;
   isSubmitted = false;
 
   RCEntityData = {

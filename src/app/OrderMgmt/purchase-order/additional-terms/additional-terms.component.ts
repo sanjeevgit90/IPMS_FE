@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -10,13 +10,14 @@ import { FileuploadService } from '../../../service/fileupload.service';
 import { PoTaskService } from '../../../OrderMgmt/purchase-order-task/po-task.service';
 
 @Component({
-  selector: 'app-additional-terms',
-  templateUrl: './additional-terms.component.html',
-  providers: [PurchaseOrderService, AppGlobals, DialogService, SharedService, FileuploadService, PoTaskService]
+    selector: 'app-additional-terms',
+    templateUrl: './additional-terms.component.html',
+    providers: [PurchaseOrderService, AppGlobals, DialogService, SharedService, FileuploadService, PoTaskService],
+    standalone: false
 })
 export class AdditionalTermsComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private purchaseOrderService: PurchaseOrderService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private purchaseOrderService: PurchaseOrderService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService, private fileuploadService: FileuploadService,
     private poTaskService: PoTaskService) { }
 
@@ -33,7 +34,7 @@ export class AdditionalTermsComponent implements OnInit {
   edit = false;
   list = true;
 
-  addTermsForm: FormGroup;
+  addTermsForm: UntypedFormGroup;
   isSubmitted = false;
   matSelectDuration = this._global.matSelectDurationTime;
 

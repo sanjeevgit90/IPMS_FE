@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, Optional, } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -9,13 +9,14 @@ import { SharedService } from '../../../service/shared.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-viewproject',
-  templateUrl: './viewproject.component.html',
-  providers: [ProjectMasterService, AppGlobals, DialogService, SharedService]
+    selector: 'app-viewproject',
+    templateUrl: './viewproject.component.html',
+    providers: [ProjectMasterService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class ViewProjectComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private projectService: ProjectMasterService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private projectService: ProjectMasterService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService) { }
 
 
@@ -45,9 +46,9 @@ export class ViewProjectComponent implements OnInit {
     "projectManager": null, "approvalStatus": null, "isDeleted": null
   };
 
-  addProjectForm: FormGroup;
-  MappingForm: FormGroup;
-  uploadForm: FormGroup;
+  addProjectForm: UntypedFormGroup;
+  MappingForm: UntypedFormGroup;
+  uploadForm: UntypedFormGroup;
 
   poAttachment: any = [];
   planAttachment: any = [];

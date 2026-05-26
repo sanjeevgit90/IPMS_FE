@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -9,13 +9,14 @@ import { RcProductDetailsService } from '../../../OrderMgmt/rc-product-details/r
 import { HsnMasterService } from '../../../AssetMgmt/HsnMaster/hsn-master.service';
 
 @Component({
-  selector: 'app-add-rc-product-details',
-  templateUrl: './add-rc-product-details.component.html',
-  providers: [RcProductDetailsService, AppGlobals, DialogService, SharedService, HsnMasterService]
+    selector: 'app-add-rc-product-details',
+    templateUrl: './add-rc-product-details.component.html',
+    providers: [RcProductDetailsService, AppGlobals, DialogService, SharedService, HsnMasterService],
+    standalone: false
 })
 export class AddRcProductDetailsComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private productDetailsService: RcProductDetailsService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private productDetailsService: RcProductDetailsService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService, private hsnMasterService: HsnMasterService) { }
 
   showLoading: boolean = false;
@@ -30,7 +31,7 @@ export class AddRcProductDetailsComponent implements OnInit {
   edit = false;
   list = true;
 
-  addProductDetailsForm: FormGroup;
+  addProductDetailsForm: UntypedFormGroup;
   isSubmitted = false;
 
   // isHistoricData = "NO";

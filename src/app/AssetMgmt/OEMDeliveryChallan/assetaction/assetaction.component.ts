@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, Optional, } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -11,13 +11,14 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { UpdateDCAssetComponent } from './../../DeliveryChallan/addasset/updateasset.component';
 
 @Component({
-  selector: 'app-assetaction',
-  templateUrl: './assetaction.component.html',
-  providers: [OEMDeliveryChallanService, AppGlobals, DialogService, SharedService]
+    selector: 'app-assetaction',
+    templateUrl: './assetaction.component.html',
+    providers: [OEMDeliveryChallanService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class OEMActionComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private _global: AppGlobals,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private _global: AppGlobals,
     private dialogService: DialogService, private sharedService: SharedService, private oemService: OEMDeliveryChallanService, private dialog1: MatDialog,
     public dialogRef: MatDialogRef<OEMActionComponent>,
     //@Optional() is used to prevent error if no data is passed
@@ -40,7 +41,7 @@ export class OEMActionComponent implements OnInit {
     "approvalStatus": null, "remark": null
   };
 
-  addAssetForm: FormGroup;
+  addAssetForm: UntypedFormGroup;
   isSubmitted = false;
 
   back = function () {

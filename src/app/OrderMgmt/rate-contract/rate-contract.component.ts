@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AppGlobals } from '../../global/app.global';
@@ -12,13 +12,14 @@ import { MatPaginator } from '@angular/material/paginator';
 import { RcFilterSession } from '../ordermgmtfilterdata';
 
 @Component({
-  selector: 'app-rate-contract',
-  templateUrl: './rate-contract.component.html',
-  providers: [RateContractService, AppGlobals, DialogService, SharedService]
+    selector: 'app-rate-contract',
+    templateUrl: './rate-contract.component.html',
+    providers: [RateContractService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class RateContractComponent implements OnInit {
   result: boolean = false;
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private rateContractService: RateContractService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private rateContractService: RateContractService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService) { }
 
   displayedColumns: string[] = ['rateContractNo', 'contractDate', 'departmentName', 'accName', 'approvalStatus', 'action'];

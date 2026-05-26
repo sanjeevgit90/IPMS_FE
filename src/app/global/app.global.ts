@@ -6,10 +6,10 @@ export class AppGlobals {
     // readonly baseAPIUrl: string = 'http://103.11.155.191:8091/ipms/';
     // readonly baseUrl: string = 'http://103.11.155.191:8091/upsrtc/';
 
-    readonly baseAPIUrl: string = 'https://ipms.aurionpro.com:8096/ipms/'; // Production Deployment
-    readonly baseUrl: string = 'https://ipms.aurionpro.com/';
-    // readonly baseAPIUrl: string = 'http://localhost:8095/';
-    // readonly baseUrl: string = 'http://localhost:4200/';
+    // readonly baseAPIUrl: string = 'https://ipms.aurionpro.com:8096/ipms/'; // Production Deployment
+    // readonly baseUrl: string = 'https://ipms.aurionpro.com/';
+    readonly baseAPIUrl: string = 'http://localhost:8095/';
+    readonly baseUrl: string = 'http://localhost:4200/';
 
     // readonly baseAPIUrl: string = 'https://ipmstest.aurionpro.com:8092/ipms/'; // UAT Deployment
     // readonly baseUrl: string = 'https://ipmstest.aurionpro.com/'
@@ -21,7 +21,7 @@ export class AppGlobals {
     readonly pageSize: number = 10;
     readonly matSelectDurationTime: number = 1000;
     readonly UserRights = sessionStorage.getItem('UserRights');
-    readonly baseUomList: Object[] = [
+    readonly baseUomList: any[] = [
 
         {
             "id": 1,
@@ -93,7 +93,7 @@ export class AppGlobals {
         }
     ];
 
-    readonly assetStatusList: Object[] = [
+    readonly assetStatusList: any[] = [
 
         {
             "id": 1,
@@ -133,11 +133,11 @@ export class AppGlobals {
         }
 
     ];
-    readonly completionStatus: Object[] = [{ "id": "101", "name": "OPEN" }, { "id": "102", "name": "CLOSE" },
+    readonly completionStatus: any[] = [{ "id": "101", "name": "OPEN" }, { "id": "102", "name": "CLOSE" },
     { "id": "103", "name": "ONHOLD" }, { "id": "104", "name": "DEFERRED" }];
 
 
-    thirdPartyCredentials: Object[] = [
+    thirdPartyCredentials: any[] = [
 
         {
             "userid": "jitendra.dubey@aurionpro.com",

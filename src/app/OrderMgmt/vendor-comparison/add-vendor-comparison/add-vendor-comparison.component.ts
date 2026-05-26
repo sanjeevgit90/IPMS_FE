@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -8,14 +8,14 @@ import { VendorComparisonService } from '../vendor-comparison.service';
 import { SharedService } from '../../../service/shared.service';
 
 @Component({
-  selector: 'app-add-vendor-comparison',
-  templateUrl: './add-vendor-comparison.component.html',
-  providers: [VendorComparisonService, AppGlobals, DialogService, SharedService]
-
+    selector: 'app-add-vendor-comparison',
+    templateUrl: './add-vendor-comparison.component.html',
+    providers: [VendorComparisonService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class AddVendorComparisonComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private vendorComparisonService: VendorComparisonService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private vendorComparisonService: VendorComparisonService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService) { }
 
   showLoading: boolean = false;
@@ -29,7 +29,7 @@ export class AddVendorComparisonComponent implements OnInit {
     "customerName": null, "amount": null, "deliveryTime": null,
     "paymentTerms": null, "quality": null, "remarks": null, "purchaseOrderNo": null
   };
-  addVendorComparisonForm: FormGroup;
+  addVendorComparisonForm: UntypedFormGroup;
   isSubmitted = false;
 
   back = function () {

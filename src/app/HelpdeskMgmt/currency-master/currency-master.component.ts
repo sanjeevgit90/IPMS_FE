@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../global/app.global';
@@ -11,14 +11,14 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
-  selector: 'app-currency-master',
-  templateUrl: './currency-master.component.html',
-  providers: [CurrencyMasterService, AppGlobals, DialogService, SharedService]
-
+    selector: 'app-currency-master',
+    templateUrl: './currency-master.component.html',
+    providers: [CurrencyMasterService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class CurrencyMasterComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private currencyMasterService: CurrencyMasterService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private currencyMasterService: CurrencyMasterService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService) { }
 
   displayedColumns: string[] = ['currencyName', 'currencySymbol', 'action'];
@@ -40,7 +40,7 @@ export class CurrencyMasterComponent implements OnInit {
   list = true;
   CurrencyData = {
     "currencyName": null, "currencySymbol": null, "organisationId": null };
-    addCurrencyMasterForm: FormGroup;
+    addCurrencyMasterForm: UntypedFormGroup;
   isSubmitted = false;
   cancel = function () {
     this.list = true;

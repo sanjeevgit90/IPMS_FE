@@ -13,9 +13,10 @@ import { MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import { CollectionActionComponent} from './action/action.component';
 
 @Component({
-  selector: 'app-collectiontask',
-  templateUrl: './collectiontask.component.html',
-  providers: [AppGlobals, DialogService, SharedService, CollectionTaskService]
+    selector: 'app-collectiontask',
+    templateUrl: './collectiontask.component.html',
+    providers: [AppGlobals, DialogService, SharedService, CollectionTaskService],
+    standalone: false
 })
 export class CollectionTaskComponent implements OnInit {
 

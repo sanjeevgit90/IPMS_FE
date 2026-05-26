@@ -11,9 +11,10 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
-  selector: 'app-vehicle-service-master',
-  templateUrl: './vehicle-service-master.component.html',
-  providers: [VehicleServiceMasterService, AppGlobals, DialogService, SharedService]
+    selector: 'app-vehicle-service-master',
+    templateUrl: './vehicle-service-master.component.html',
+    providers: [VehicleServiceMasterService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class VehicleServiceMasterComponent implements OnInit {
 

@@ -3,36 +3,54 @@
 <div class="sidebar" id="sidebar" [class.visited]="isOpen == true">
   <div class="sidebar-inner slimscroll">
     <div id="sidebar-menu" class="sidebar-menu">
-      <div *ngFor="let MenuDataList of menuList; let i=index" [routerLinkActive]="['activemenu']">
-        <div class="menulist" *ngIf="MenuDataList.childmenu.length==0">
-          <a routerLink="/{{MenuDataList.urlpath}}" [routerLinkActive]="['activemenu']">
-            <mat-icon color="accent" *ngIf="MenuDataList.description!=null" class="menu-icon">{{MenuDataList.description}}</mat-icon>
-            <mat-icon color="accent" *ngIf="MenuDataList.description==null" class="menu-icon">keyboard_arrow_right</mat-icon>
-            <span>{{MenuDataList.displayname}}</span>
-          </a>
+      @for (MenuDataList of menuList; track MenuDataList; let i = $index) {
+        <div [routerLinkActive]="['activemenu']">
+          @if (MenuDataList.childmenu.length==0) {
+            <div class="menulist">
+              <a routerLink="/{{MenuDataList.urlpath}}" [routerLinkActive]="['activemenu']">
+                @if (MenuDataList.description!=null) {
+                  <mat-icon color="accent" class="menu-icon">{{MenuDataList.description}}</mat-icon>
+                }
+                @if (MenuDataList.description==null) {
+                  <mat-icon color="accent" class="menu-icon">keyboard_arrow_right</mat-icon>
+                }
+                <span>{{MenuDataList.displayname}}</span>
+              </a>
+            </div>
+          }
+          @if (MenuDataList.childmenu.length>0) {
+            <div class="menulist dropdown-toggle" data-toggle="dropdown">
+              <a [routerLinkActive]="['activemenu']">
+                @if (MenuDataList.description!=null) {
+                  <mat-icon color="accent" class="menu-icon">{{MenuDataList.description}}</mat-icon>
+                }
+                @if (MenuDataList.description==null) {
+                  <mat-icon color="accent" class="menu-icon">keyboard_arrow_right</mat-icon>
+                }
+                <span>{{MenuDataList.displayname}}</span>
+              </a>
+            </div>
+          }
+          @if (MenuDataList.childmenu.length>0) {
+            <div class="dropdown-menu">
+              @for (childMenu of MenuDataList.childmenu; track childMenu) {
+                <a class="dropdown-item"
+                routerLink="/{{childMenu.urlpath}}" [routerLinkActive]="['activemenu']">{{childMenu.displayname}}</a>
+              }
+            </div>
+          }
         </div>
-        <div class="menulist dropdown-toggle" data-toggle="dropdown" *ngIf="MenuDataList.childmenu.length>0">
-          <a [routerLinkActive]="['activemenu']">
-            <mat-icon color="accent" *ngIf="MenuDataList.description!=null" class="menu-icon">{{MenuDataList.description}}</mat-icon>
-            <mat-icon color="accent" *ngIf="MenuDataList.description==null" class="menu-icon">keyboard_arrow_right</mat-icon> 
-            <span>{{MenuDataList.displayname}}</span>
-          </a>
-        </div>
-        <div class="dropdown-menu" *ngIf="MenuDataList.childmenu.length>0">
-          <a class="dropdown-item" *ngFor="let childMenu of MenuDataList.childmenu"
-            routerLink="/{{childMenu.urlpath}}" [routerLinkActive]="['activemenu']">{{childMenu.displayname}}</a>
-        </div>
-      </div>
+      }
     </div>
   </div>
 </div>
 <script type="text/javascript">
   $(document).ready(function () {
-    $(window).resize(function () {
-      var viewportWidth = $(window).width();
-      if (viewportWidth > 320) {
-        $("#slide-out").removeAttr("style");
-      }
-    });
-  })
+  $(window).resize(function () {
+  var viewportWidth = $(window).width();
+  if (viewportWidth > 320) {
+  $("#slide-out").removeAttr("style");
+}
+});
+})
 </script>

@@ -14,9 +14,10 @@ import { ActionComponent } from '../../AssetMgmt/InterDistrictDeliveryChallan/ac
 import { ViewProjectComponent } from './../ProjectMaster/viewproject/viewproject.component';
 
 @Component({
-  selector: 'app-projectapproval',
-  templateUrl: './projectapproval.component.html',
-  providers: [AppGlobals, DialogService, SharedService, ProjectApprovalTaskService]
+    selector: 'app-projectapproval',
+    templateUrl: './projectapproval.component.html',
+    providers: [AppGlobals, DialogService, SharedService, ProjectApprovalTaskService],
+    standalone: false
 })
 export class ProjectApprovalTaskComponent implements OnInit {
 

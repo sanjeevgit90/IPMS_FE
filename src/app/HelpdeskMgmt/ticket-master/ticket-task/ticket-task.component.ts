@@ -11,9 +11,10 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
-  selector: 'app-ticket-task',
-  templateUrl: './ticket-task.component.html',
-  providers: [TicketTaskService, AppGlobals, DialogService, SharedService]
+    selector: 'app-ticket-task',
+    templateUrl: './ticket-task.component.html',
+    providers: [TicketTaskService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class TicketTaskComponent implements OnInit {
 

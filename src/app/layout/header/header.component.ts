@@ -4,9 +4,10 @@ import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  providers: [AppGlobals]
+    selector: 'app-header',
+    templateUrl: './header.component.html',
+    providers: [AppGlobals],
+    standalone: false
 })
 export class HeaderComponent implements OnInit {
 

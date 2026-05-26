@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -12,13 +12,14 @@ import { MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import { BillingReportService } from '../billingreport.service';
 
 @Component({
-  selector: 'app-monthlybilling',
-  templateUrl: './monthlybilling.component.html',
-  providers: [BillingReportService, AppGlobals, DialogService, SharedService]
+    selector: 'app-monthlybilling',
+    templateUrl: './monthlybilling.component.html',
+    providers: [BillingReportService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class MonthlyBillingComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private scheduleService: BillingReportService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private scheduleService: BillingReportService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService,
     private dialog:MatDialog) { }
   
@@ -48,7 +49,7 @@ export class MonthlyBillingComponent implements OnInit {
   // projectId: any;
 
   
-  reportForm: FormGroup;
+  reportForm: UntypedFormGroup;
   isSubmitted = false;
 
 applyFilter(event: Event) {

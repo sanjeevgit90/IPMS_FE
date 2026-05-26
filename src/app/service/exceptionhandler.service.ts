@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
+import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 import { AppGlobals } from '../global/app.global';
 import {  throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';

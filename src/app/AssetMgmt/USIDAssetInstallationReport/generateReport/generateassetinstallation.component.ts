@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -13,13 +13,14 @@ import { USIDInstallationReportService } from '../USIDassetinstallation.service'
 
 
 @Component({
-  selector: 'app-generateassetinstallation',
-  templateUrl: './generateassetinstallation.component.html',
-  providers: [USIDInstallationReportService, AppGlobals, DialogService, SharedService]
+    selector: 'app-generateassetinstallation',
+    templateUrl: './generateassetinstallation.component.html',
+    providers: [USIDInstallationReportService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class AddUSIDInstallationComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private reportService: USIDInstallationReportService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private reportService: USIDInstallationReportService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService) { }
 
   showLoading: boolean = false;
@@ -54,7 +55,7 @@ export class AddUSIDInstallationComponent implements OnInit {
   locationList: any = [];
   searchLocation: String = '';
 
-  addCityForm: FormGroup;
+  addCityForm: UntypedFormGroup;
   isSubmitted = false;
 
   back = function () {

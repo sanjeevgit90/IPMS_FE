@@ -10,9 +10,10 @@ import { AddressMasterService } from '../address-master/address-master.service';
 import { SharedService } from '../../service/shared.service';
 
 @Component({
-  selector: 'app-address-master',
-  templateUrl: './address-master.component.html',
-  providers: [AddressMasterService, AppGlobals, DialogService, SharedService]
+    selector: 'app-address-master',
+    templateUrl: './address-master.component.html',
+    providers: [AddressMasterService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class AddressMasterComponent implements OnInit {
 

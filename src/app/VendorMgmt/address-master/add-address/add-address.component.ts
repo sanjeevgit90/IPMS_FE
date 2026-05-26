@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -8,14 +8,14 @@ import { AddressMasterService } from '../../address-master/address-master.servic
 import { SharedService } from '../../../service/shared.service';
 
 @Component({
-  selector: 'app-add-address',
-  templateUrl: './add-address.component.html',
-  providers: [AddressMasterService, AppGlobals, DialogService, SharedService]
-
+    selector: 'app-add-address',
+    templateUrl: './add-address.component.html',
+    providers: [AddressMasterService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class AddAddressComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private addressMasterService: AddressMasterService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private addressMasterService: AddressMasterService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService) { }
 
 
@@ -43,7 +43,7 @@ export class AddAddressComponent implements OnInit {
   districtList: any = [];
   cityList: any = [];
 
-  addAddressForm: FormGroup;
+  addAddressForm: UntypedFormGroup;
   isSubmitted = false;
   back = function () {
     //this.router.navigate(['/SearchPartyAddress']);

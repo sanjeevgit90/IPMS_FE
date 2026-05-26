@@ -15,9 +15,10 @@ import { CourierDetailsComponent } from './../DeliveryChallan/courierDetails/cou
 import { DCFilterSession } from '../assetfilterdata';
 
 @Component({
-  selector: 'app-interDC',
-  templateUrl: './interDC.component.html',
-  providers: [InterDistrictDCService, AppGlobals, DialogService, SharedService]
+    selector: 'app-interDC',
+    templateUrl: './interDC.component.html',
+    providers: [InterDistrictDCService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class InterDistrictDCComponent implements OnInit {
   result: boolean = false;
@@ -61,7 +62,8 @@ export class InterDistrictDCComponent implements OnInit {
     this.result = false;
     this.search();
   }
-  projectList = {};
+  // projectList = {};
+  projectList: any[] = [];
   // projectList
   getActiveProject = function () {
     const headers = { "Authorization": sessionStorage.getItem("token") };

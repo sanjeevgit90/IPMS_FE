@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../../global/app.global';
@@ -14,15 +14,15 @@ import { DateAdapter } from '@angular/material/core';
 import { FileuploadService } from '../../../../service/fileupload.service';
 
 @Component({
-  selector: 'app-add-task',
-  templateUrl: './add-task.component.html',
-  providers: [TicketTaskService, AppGlobals, DialogService, SharedService, FileuploadService]
-
+    selector: 'app-add-task',
+    templateUrl: './add-task.component.html',
+    providers: [TicketTaskService, AppGlobals, DialogService, SharedService, FileuploadService],
+    standalone: false
 })
 export class AddTaskComponent implements OnInit {
   maxDateDisabled: any;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private ticketTaskService: TicketTaskService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private ticketTaskService: TicketTaskService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService, private fileuploadService: FileuploadService) { }
 
   displayedColumns: string[] = ['checkbox', 'tripId', 'sourceAdd', 'destAdd', 'startTime', 'endTime', 'distance'];
@@ -83,10 +83,10 @@ export class AddTaskComponent implements OnInit {
   };
   assignToUser: String = null;
 
-  userList = {};
-  vehicleList = {};
+  userList :any[] = [];
+  vehicleList : any[] = [];
   classifications: any = [];
-  addTaskForm: FormGroup;
+  addTaskForm: UntypedFormGroup;
   isSubmitted = false;
   //ticketAttachment :any =[];
   tripResults: any = [];

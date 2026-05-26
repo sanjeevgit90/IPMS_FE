@@ -3,8 +3,9 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-projecttab',
-  templateUrl: './projecttab.component.html'
+    selector: 'app-projecttab',
+    templateUrl: './projecttab.component.html',
+    standalone: false
 })
 export class ProjecttabComponent implements OnInit {
 

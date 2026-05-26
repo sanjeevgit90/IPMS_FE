@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -9,13 +9,14 @@ import { PartyMasterService } from '../../../VendorMgmt/party-master/party-maste
 import { FileuploadService } from '../../../service/fileupload.service';
 
 @Component({
-  selector: 'app-add-party',
-  templateUrl: './add-party.component.html',
-  providers: [PartyMasterService, AppGlobals, DialogService, SharedService, FileuploadService]
+    selector: 'app-add-party',
+    templateUrl: './add-party.component.html',
+    providers: [PartyMasterService, AppGlobals, DialogService, SharedService, FileuploadService],
+    standalone: false
 })
 export class AddPartyComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private partyMasterService: PartyMasterService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private partyMasterService: PartyMasterService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService, private fileuploadService: FileuploadService) { }
 
     showLoading: boolean = false;
@@ -31,7 +32,7 @@ export class AddPartyComponent implements OnInit {
     edit = false;
     list = true;
   
-    addPartyForm: FormGroup;
+    addPartyForm: UntypedFormGroup;
     isSubmitted = false;
   
     PartyEntityData = {
@@ -46,7 +47,7 @@ export class AddPartyComponent implements OnInit {
       "micrCode": null, "ifscNeftCode": null, "remarks": null, "organisationId": null
     };
 
-    orgList = {};
+    orgList : any[] = [];
     dateOfIncorporationAttachment: any = [];
     panNoAttachment: any = [];
     tanNoAttachment: any = [];
@@ -233,7 +234,7 @@ export class AddPartyComponent implements OnInit {
       this.showLoading = true;
       this.sharedService.getOrganizationsList(headers).subscribe(resp => {
         
-        this.orgList = resp;
+        this.orgList = resp || [];
         this.showLoading = false;
       }, (error: any) => {
         

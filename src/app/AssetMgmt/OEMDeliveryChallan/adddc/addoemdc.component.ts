@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -22,13 +22,14 @@ export interface Element {
 }
 
 @Component({
-  selector: 'app-addoemdc',
-  templateUrl: './addoemdc.component.html',
-  providers: [OEMDeliveryChallanService, AppGlobals, DialogService, SharedService]
+    selector: 'app-addoemdc',
+    templateUrl: './addoemdc.component.html',
+    providers: [OEMDeliveryChallanService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class AddOEMDCComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private dcService: OEMDeliveryChallanService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private dcService: OEMDeliveryChallanService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService, private dialog: MatDialog) { }
 
 
@@ -64,7 +65,7 @@ export class AddOEMDCComponent implements OnInit {
   partyList: any=[];
   addressList:any=[];
 
-  addDCForm: FormGroup;
+  addDCForm: UntypedFormGroup;
   isSubmitted = false;
   disableAdd: boolean = true;
   AssetEntityId = [];

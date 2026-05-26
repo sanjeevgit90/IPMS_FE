@@ -11,9 +11,10 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { VehicleFilterSession } from '../helpdeskfilterdata';
 @Component({
-  selector: 'app-vehicle-master',
-  templateUrl: './vehicle-master.component.html',
-  providers: [VehicleMasterService, AppGlobals, DialogService, SharedService]
+    selector: 'app-vehicle-master',
+    templateUrl: './vehicle-master.component.html',
+    providers: [VehicleMasterService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class VehicleMasterComponent implements OnInit {
   result: boolean = false;

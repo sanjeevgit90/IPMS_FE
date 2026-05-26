@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -10,14 +10,14 @@ import { FileuploadService } from '../../../service/fileupload.service';
 
 
 @Component({
-  selector: 'app-add-vehicle-service',
-  templateUrl: './add-vehicle-service.component.html',
-  providers: [VehicleServiceMasterService, AppGlobals, DialogService, SharedService, FileuploadService]
-
+    selector: 'app-add-vehicle-service',
+    templateUrl: './add-vehicle-service.component.html',
+    providers: [VehicleServiceMasterService, AppGlobals, DialogService, SharedService, FileuploadService],
+    standalone: false
 })
 export class AddVehicleServiceComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient,
     private vehicleServiceMasterService: VehicleServiceMasterService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService, private fileuploadService: FileuploadService) { }
 
@@ -40,7 +40,7 @@ export class AddVehicleServiceComponent implements OnInit {
     "uploadedAttachment": null, "remark": "", "isAFreeService": "NO"
   };
 
-  addVehicleServiceForm: FormGroup;
+  addVehicleServiceForm: UntypedFormGroup;
   isSubmitted = false;
   IsAFreeService = "NO";
   vehicleList: any = [];

@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, Optional, } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -12,13 +12,14 @@ import { InvoiceTaskService } from '../../../BillingMgmt/Invoice/invoicetask/inv
 import { FileuploadService } from '../../../service/fileupload.service';
 
 @Component({
-  selector: 'app-action',
-  templateUrl: './action.component.html',
-  providers: [InterDistrictDCService, AppGlobals, DialogService, SharedService, ProjectApprovalTaskService, InvoiceTaskService, FileuploadService]
+    selector: 'app-action',
+    templateUrl: './action.component.html',
+    providers: [InterDistrictDCService, AppGlobals, DialogService, SharedService, ProjectApprovalTaskService, InvoiceTaskService, FileuploadService],
+    standalone: false
 })
 export class ActionComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private dcService: InterDistrictDCService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private dcService: InterDistrictDCService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService, private taskService: ProjectApprovalTaskService,
     private fileuploadService: FileuploadService,
     private invoiceService: InvoiceTaskService,
@@ -50,7 +51,7 @@ export class ActionComponent implements OnInit {
     "approvalStatus": null, "remark": null, "assignToRole": null
   };
 
-  addAssetForm: FormGroup;
+  addAssetForm: UntypedFormGroup;
   isSubmitted = false;
 
   back = function () {

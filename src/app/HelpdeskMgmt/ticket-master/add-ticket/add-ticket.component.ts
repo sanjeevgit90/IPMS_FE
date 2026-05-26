@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { UntypedFormBuilder, FormControl, UntypedFormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -11,16 +11,17 @@ import { LocationService } from '../../../UniqueSiteId/location/location.service
 import { FileuploadService } from '../../../service/fileupload.service';
 
 @Component({
-  selector: 'app-add-ticket',
-  templateUrl: './add-ticket.component.html',
-  providers: [TicketMasterService, AppGlobals, DialogService, SharedService, FileuploadService, TicketTaskService, LocationService]
+    selector: 'app-add-ticket',
+    templateUrl: './add-ticket.component.html',
+    providers: [TicketMasterService, AppGlobals, DialogService, SharedService, FileuploadService, TicketTaskService, LocationService],
+    standalone: false
 })
 export class AddTicketComponent implements OnInit {
 
 
   maxDateDisabled: string;
    
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private ticketMasterService: TicketMasterService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private ticketMasterService: TicketMasterService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService, private fileuploadService: FileuploadService,
     private taskService: TicketTaskService, private locationService: LocationService) { }
 
@@ -69,7 +70,7 @@ export class AddTicketComponent implements OnInit {
   BackToAge: boolean = false;
   BackToEsc: boolean = false;
 
-  addTicketMasterForm: FormGroup;
+  addTicketMasterForm: UntypedFormGroup;
   isSubmitted = false;
 
   back = function () {

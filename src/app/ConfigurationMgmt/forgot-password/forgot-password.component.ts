@@ -1,4 +1,4 @@
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Component, OnInit, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ForgotPasswordService } from './forgot-password.service';
@@ -8,21 +8,21 @@ import { SharedService } from 'src/app/service/shared.service';
 import { DialogService } from 'src/app/service/dialog.service';
 
 @Component({
-  selector: 'app-forgot-password',
-  templateUrl: './forgot-password.component.html',
-  providers: [ForgotPasswordService, AppGlobals, DialogService, SharedService]
-
+    selector: 'app-forgot-password',
+    templateUrl: './forgot-password.component.html',
+    providers: [ForgotPasswordService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class ForgotPasswordComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private forgotPasswordService: ForgotPasswordService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private forgotPasswordService: ForgotPasswordService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService
   ) { }
 
   forgotPasswordData = {
     "username": null
   };
-  forgotpasswordForm: FormGroup;
+  forgotpasswordForm: UntypedFormGroup;
   isSubmitted = false;
   errorMessage = "";
   showLoading: boolean = false;

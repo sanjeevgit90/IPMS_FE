@@ -7,9 +7,10 @@ import { SharedService } from '../../../service/shared.service';
 import { PurchaseOrderService } from '../../../OrderMgmt/purchase-order/purchase-order.service';
 
 @Component({
-  selector: 'app-view-po',
-  templateUrl: './view-po.component.html',
-  providers: [PurchaseOrderService, AppGlobals, DialogService, SharedService]
+    selector: 'app-view-po',
+    templateUrl: './view-po.component.html',
+    providers: [PurchaseOrderService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class ViewPoComponent implements OnInit {
 
@@ -141,7 +142,7 @@ export class ViewPoComponent implements OnInit {
     "currencySymbol": "",
     "paymentTermId": "",
     "paymentMethodId": "",
-    "productDetailsList": "",
+    "productDetailsList": [],
     "attachments": null,
 
     "poheaddesignation": "",
@@ -263,7 +264,7 @@ export class ViewPoComponent implements OnInit {
     "currencySymbol": "",
     "paymentTermId": "",
     "paymentMethodId": "",
-    "productDetailsList": "",
+    "productDetailsList": [],
 
     "poheaddesignation": "",
     "poheadname": "",

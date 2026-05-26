@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -9,13 +9,14 @@ import { RateContractService } from '../../../OrderMgmt/rate-contract/rate-contr
 import { FileuploadService } from '../../../service/fileupload.service';
 
 @Component({
-  selector: 'app-rc-additional-terms',
-  templateUrl: './rc-additional-terms.component.html',
-  providers: [RateContractService, AppGlobals, DialogService, SharedService, FileuploadService]
+    selector: 'app-rc-additional-terms',
+    templateUrl: './rc-additional-terms.component.html',
+    providers: [RateContractService, AppGlobals, DialogService, SharedService, FileuploadService],
+    standalone: false
 })
 export class RcAdditionalTermsComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private rateContractService: RateContractService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private rateContractService: RateContractService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService, private fileuploadService: FileuploadService) { }
 
 
@@ -31,7 +32,7 @@ export class RcAdditionalTermsComponent implements OnInit {
   edit = false;
   list = true;
 
-  addTermsForm: FormGroup;
+  addTermsForm: UntypedFormGroup;
   isSubmitted = false;
 
   RCEntityData = {

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AppGlobals } from '../../global/app.global';
@@ -12,13 +12,14 @@ import { MatPaginator } from '@angular/material/paginator';
 import { PoTaskService } from '../../OrderMgmt/purchase-order-task/po-task.service';
 
 @Component({
-  selector: 'app-product-details',
-  templateUrl: './product-details.component.html',
-  providers: [ProductDetailsService, AppGlobals, DialogService, SharedService, PoTaskService]
+    selector: 'app-product-details',
+    templateUrl: './product-details.component.html',
+    providers: [ProductDetailsService, AppGlobals, DialogService, SharedService, PoTaskService],
+    standalone: false
 })
 export class ProductDetailsComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private productDetailsService: ProductDetailsService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private productDetailsService: ProductDetailsService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService, private poTaskService: PoTaskService) { }
 
   displayedColumns: string[] = ['product', 'hsnId', 'cgst', 'sgst', 'igst', 'cgstAmount', 'sgstAmount', 'igstAmount', 'finalAmount', 'action'];

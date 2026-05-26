@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -12,13 +12,14 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
-  selector: 'app-update-po-task',
-  templateUrl: './update-po-task.component.html',
-  providers: [PurchaseOrderService, AppGlobals, DialogService, SharedService, PoTaskService]
+    selector: 'app-update-po-task',
+    templateUrl: './update-po-task.component.html',
+    providers: [PurchaseOrderService, AppGlobals, DialogService, SharedService, PoTaskService],
+    standalone: false
 })
 export class UpdatePoTaskComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private purchaseOrderService: PurchaseOrderService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private purchaseOrderService: PurchaseOrderService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService, private poTaskService: PoTaskService) { }
 
   showLoading: boolean = false;
@@ -38,7 +39,7 @@ export class UpdatePoTaskComponent implements OnInit {
   edit = false;
   list = true;
 
-  addPoTaskForm: FormGroup;
+  addPoTaskForm: UntypedFormGroup;
   isSubmitted = false;
   baseUrl: any = null;
 

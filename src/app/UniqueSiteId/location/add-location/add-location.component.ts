@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, Validators } from '@angular/forms';
 import { LocationService } from '../location.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -7,9 +7,10 @@ import { DialogService } from '../../../service/dialog.service';
 import { SharedService } from '../../../service/shared.service';
 
 @Component({
-  selector: 'app-add-location',
-  templateUrl: './add-location.component.html',
-  providers: [LocationService, AppGlobals, DialogService, SharedService]
+    selector: 'app-add-location',
+    templateUrl: './add-location.component.html',
+    providers: [LocationService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class AddLocationComponent implements OnInit {
 
@@ -18,7 +19,7 @@ export class AddLocationComponent implements OnInit {
 
   showLoading: boolean = false;
   PageTitle = "Location Master";
-  addLocationForm: FormGroup;
+  addLocationForm: UntypedFormGroup;
   isSubmitted = false;
   successMessage: string;
   add: boolean = true;
@@ -191,25 +192,25 @@ export class AddLocationComponent implements OnInit {
 
     this.getActiveState();
 
-    this.addLocationForm = new FormGroup({
-      locationid: new FormControl('', Validators.required),
-      state: new FormControl('', Validators.required),
-      district: new FormControl('', Validators.required),
-      city: new FormControl('', Validators.required),
-      policestation: new FormControl('', Validators.required),
-      locationaddress: new FormControl('', Validators.required),
-      zip: new FormControl('', Validators.required),
-      country: new FormControl('INDIA'),
-      latitude: new FormControl('0'),
-      longitude: new FormControl('0'),
-      contactperson: new FormControl(''),
-      warehouse: new FormControl(Boolean),
+    this.addLocationForm = new UntypedFormGroup({
+      locationid: new UntypedFormControl('', Validators.required),
+      state: new UntypedFormControl('', Validators.required),
+      district: new UntypedFormControl('', Validators.required),
+      city: new UntypedFormControl('', Validators.required),
+      policestation: new UntypedFormControl('', Validators.required),
+      locationaddress: new UntypedFormControl('', Validators.required),
+      zip: new UntypedFormControl('', Validators.required),
+      country: new UntypedFormControl('INDIA'),
+      latitude: new UntypedFormControl('0'),
+      longitude: new UntypedFormControl('0'),
+      contactperson: new UntypedFormControl(''),
+      warehouse: new UntypedFormControl(Boolean),
       //contact_person:new FormControl('', Validators.required),
-      phoneno: new FormControl(''),
-      emailid: new FormControl(''),
-      isprioritysite: new FormControl(Boolean),
-      surveydate: new FormControl('', Validators.required),
-      approvaldate: new FormControl('', Validators.required)
+      phoneno: new UntypedFormControl(''),
+      emailid: new UntypedFormControl(''),
+      isprioritysite: new UntypedFormControl(Boolean),
+      surveydate: new UntypedFormControl('', Validators.required),
+      approvaldate: new UntypedFormControl('', Validators.required)
 
       //name: new FormControl('', [Validators.required, Validators.minLength(3)]),
       //email: new FormControl('', [Validators.required, Validators.email]),

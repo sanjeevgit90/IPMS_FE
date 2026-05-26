@@ -13,9 +13,10 @@ import { AssetMasterService } from './../AssetMaster/assetmaster.service';
 import { UpdateDCAssetComponent} from './../DeliveryChallan/addasset/updateasset.component';
 
 @Component({
-  selector: 'app-citywiseasset',
-  templateUrl: './citywiseasset.component.html',
-  providers: [AssetMasterService, AppGlobals, DialogService, SharedService]
+    selector: 'app-citywiseasset',
+    templateUrl: './citywiseasset.component.html',
+    providers: [AssetMasterService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class CityWiseAssetReportComponent implements OnInit {
 

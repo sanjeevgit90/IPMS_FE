@@ -13,9 +13,10 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AssetMisFilterSession } from '../assetfilterdata';
 
 @Component({
-  selector: 'app-assetTPA',
-  templateUrl: './assetTPA.component.html',
-  providers: [AssetTPAService, AppGlobals, DialogService, SharedService]
+    selector: 'app-assetTPA',
+    templateUrl: './assetTPA.component.html',
+    providers: [AssetTPAService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class AssetTPAComponent implements OnInit {
   result: boolean = false;

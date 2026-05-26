@@ -14,9 +14,10 @@ import { ViewCityInstallationReport } from './viewReport/viewCityInstallationRep
 
 
 @Component({
-  selector: 'app-cityassetinstallation',
-  templateUrl: './cityassetinstallation.component.html',
-  providers: [CityInstallationReportService, AppGlobals, DialogService, SharedService]
+    selector: 'app-cityassetinstallation',
+    templateUrl: './cityassetinstallation.component.html',
+    providers: [CityInstallationReportService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class CityInstallationComponent implements OnInit {
 

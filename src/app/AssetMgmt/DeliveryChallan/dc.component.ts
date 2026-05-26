@@ -13,9 +13,10 @@ import { ViewDeliveryChallanComponent } from './viewDC/viewDC.component';
 import { CourierDetailsComponent } from './courierDetails/courierDetails.component';
 import { DCFilterSession } from '../assetfilterdata';
 @Component({
-  selector: 'app-dc',
-  templateUrl: './dc.component.html',
-  providers: [DeliveryChallanService, AppGlobals, DialogService, SharedService]
+    selector: 'app-dc',
+    templateUrl: './dc.component.html',
+    providers: [DeliveryChallanService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class DeliveryChallanComponent implements OnInit {
   result: boolean = false;

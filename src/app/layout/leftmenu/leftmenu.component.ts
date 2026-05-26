@@ -5,9 +5,10 @@ import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-leftmenu',
-  templateUrl: './leftmenu.component.html',
-  providers: [SharedService, AppGlobals]
+    selector: 'app-leftmenu',
+    templateUrl: './leftmenu.component.html',
+    providers: [SharedService, AppGlobals],
+    standalone: false
 })
 export class LeftmenuComponent implements OnInit {
   constructor(private sharedService: SharedService, private router: Router, private route: ActivatedRoute, private _global: AppGlobals) { }

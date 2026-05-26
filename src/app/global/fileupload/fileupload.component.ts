@@ -8,9 +8,10 @@ import { DialogService } from '../../service/dialog.service';
 import { of } from 'rxjs';
 
 @Component({
-  selector: 'app-fileupload',
-  templateUrl: './fileupload.component.html',
-  providers: [FileuploadService, AppGlobals, DialogService]
+    selector: 'app-fileupload',
+    templateUrl: './fileupload.component.html',
+    providers: [FileuploadService, AppGlobals, DialogService],
+    standalone: false
 })
 export class FileuploadComponent implements OnInit {
 

@@ -13,9 +13,10 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ViewProjectComponent } from './viewproject/viewproject.component';
 
 @Component({
-  selector: 'app-project',
-  templateUrl: './projectmaster.component.html',
-  providers: [ProjectMasterService, AppGlobals, DialogService, SharedService]
+    selector: 'app-project',
+    templateUrl: './projectmaster.component.html',
+    providers: [ProjectMasterService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class ProjectMasterComponent implements OnInit {
 

@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, Optional, } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -10,13 +10,14 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FileuploadService } from '../../../service/fileupload.service';
 
 @Component({
-  selector: 'app-addinvoice',
-  templateUrl: './addinvoice.component.html',
-  providers: [InvoiceService, AppGlobals, DialogService, SharedService, FileuploadService]
+    selector: 'app-addinvoice',
+    templateUrl: './addinvoice.component.html',
+    providers: [InvoiceService, AppGlobals, DialogService, SharedService, FileuploadService],
+    standalone: false
 })
 export class AddInvoiceComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private invoiceService: InvoiceService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private invoiceService: InvoiceService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService,
     private fileuploadService: FileuploadService,
     public dialogRef: MatDialogRef<AddInvoiceComponent>,
@@ -43,7 +44,7 @@ export class AddInvoiceComponent implements OnInit {
     "invoicesupportingdoc": null, "accountexcel": null, "invoicesignedexcel": null
   };
 
-  addInvoiceForm: FormGroup;
+  addInvoiceForm: UntypedFormGroup;
   isSubmitted = false;
   completionStatusList = this._global.completionStatus;
 

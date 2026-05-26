@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -8,14 +8,14 @@ import { PoPaymentService } from '../po-payment.service';
 import { SharedService } from '../../../service/shared.service';
 
 @Component({
-  selector: 'app-add-payment',
-  templateUrl: './add-payment.component.html',
-  providers: [PoPaymentService, AppGlobals, DialogService, SharedService]
-
+    selector: 'app-add-payment',
+    templateUrl: './add-payment.component.html',
+    providers: [PoPaymentService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class AddPaymentComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private poPaymentService: PoPaymentService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private poPaymentService: PoPaymentService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService) { }
 
   showLoading: boolean = false;
@@ -31,7 +31,7 @@ export class AddPaymentComponent implements OnInit {
     "invoiceNumber": null, "invoiceDate": null, "cashBackReceived": null,
     "interestPaid": null, "purchaseOrderNo": null
   };
-  addPoPaymentForm: FormGroup;
+  addPoPaymentForm: UntypedFormGroup;
   isSubmitted = false;
 
   back = function () {

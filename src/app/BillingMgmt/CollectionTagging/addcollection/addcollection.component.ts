@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, Optional, } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -11,13 +11,14 @@ import { InvoiceService } from '../../Invoice/invoice.service';
 
 import { FileuploadService } from '../../../service/fileupload.service';
 @Component({
-  selector: 'app-addcollection',
-  templateUrl: './addcollection.component.html',
-  providers: [CollectionTaggingService, AppGlobals, DialogService, SharedService, InvoiceService, FileuploadService]
+    selector: 'app-addcollection',
+    templateUrl: './addcollection.component.html',
+    providers: [CollectionTaggingService, AppGlobals, DialogService, SharedService, InvoiceService, FileuploadService],
+    standalone: false
 })
 export class AddCollectionComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private collectionService: CollectionTaggingService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private collectionService: CollectionTaggingService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService,private invoiceService:InvoiceService,
     private fileuploadService: FileuploadService,
     public dialogRef: MatDialogRef<AddCollectionComponent>,
@@ -51,7 +52,7 @@ export class AddCollectionComponent implements OnInit {
 invoiceList :any =[];
 uploadpaymentadvice: any=[];
 
-  addCollectionForm: FormGroup;
+  addCollectionForm: UntypedFormGroup;
   isSubmitted = false;
   
   back = function () {

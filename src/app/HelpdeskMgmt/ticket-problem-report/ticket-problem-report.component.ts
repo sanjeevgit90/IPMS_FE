@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../global/app.global';
@@ -11,14 +11,14 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
-  selector: 'app-ticket-problem-report',
-  templateUrl: './ticket-problem-report.component.html',
-  providers: [TicketProblemReportService, AppGlobals, DialogService, SharedService]
-
+    selector: 'app-ticket-problem-report',
+    templateUrl: './ticket-problem-report.component.html',
+    providers: [TicketProblemReportService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class TicketProblemReportComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private ticketProblemReportService: TicketProblemReportService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private ticketProblemReportService: TicketProblemReportService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService) { }
 
   displayedColumns: string[] = ['problemReportValue', 'projectname', 'action'];
@@ -52,7 +52,7 @@ export class TicketProblemReportComponent implements OnInit {
 
   projectList: any = [];
 
-  addTicketProblemReportForm: FormGroup;
+  addTicketProblemReportForm: UntypedFormGroup;
   isSubmitted = false;
 
   applyFilter(event: Event) {

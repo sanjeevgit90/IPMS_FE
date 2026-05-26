@@ -12,9 +12,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { TicketMISFilterSession } from '../../helpdeskfilterdata';
 
 @Component({
-  selector: 'app-ticket-mis-report',
-  templateUrl: './ticket-mis-report.component.html',
-  providers: [TicketReportService, AppGlobals, DialogService, SharedService]
+    selector: 'app-ticket-mis-report',
+    templateUrl: './ticket-mis-report.component.html',
+    providers: [TicketReportService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class TicketMISComponent implements OnInit {
   result: boolean = false;

@@ -4,8 +4,9 @@ import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
-  selector: 'app-vendortab',
-  templateUrl: './vendortab.component.html'
+    selector: 'app-vendortab',
+    templateUrl: './vendortab.component.html',
+    standalone: false
 })
 export class VendortabComponent implements OnInit {
 

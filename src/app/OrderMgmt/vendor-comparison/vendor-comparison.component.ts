@@ -10,10 +10,10 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
-  selector: 'app-vendor-comparison',
-  templateUrl: './vendor-comparison.component.html',
-  providers: [VendorComparisonService, AppGlobals, DialogService, SharedService]
-
+    selector: 'app-vendor-comparison',
+    templateUrl: './vendor-comparison.component.html',
+    providers: [VendorComparisonService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class VendorComparisonComponent implements OnInit {
 

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -23,13 +23,14 @@ export interface Element {
 }
 
 @Component({
-  selector: 'app-adddc',
-  templateUrl: './adddc.component.html',
-  providers: [DeliveryChallanService, AppGlobals, DialogService, SharedService]
+    selector: 'app-adddc',
+    templateUrl: './adddc.component.html',
+    providers: [DeliveryChallanService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class AddDeliveryChallanComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private dcService: DeliveryChallanService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private dcService: DeliveryChallanService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService, private dialog:MatDialog) { }
 
 
@@ -68,7 +69,7 @@ export class AddDeliveryChallanComponent implements OnInit {
 
   party: any = [];
 
-  addDCForm: FormGroup;
+  addDCForm: UntypedFormGroup;
   isSubmitted = false;
   disableAdd :boolean= true;
 

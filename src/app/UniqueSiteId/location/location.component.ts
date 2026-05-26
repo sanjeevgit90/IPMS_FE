@@ -10,9 +10,10 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MasterFilterSession } from '../UniqueSiteIdFilterData';
 @Component({
-  selector: 'app-location',
-  templateUrl: './location.component.html',
-  providers: [LocationService, AppGlobals, DialogService, SharedService]
+    selector: 'app-location',
+    templateUrl: './location.component.html',
+    providers: [LocationService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class LocationComponent implements OnInit {
   result: boolean = false;

@@ -11,10 +11,10 @@ import { MatSort } from "@angular/material/sort";
 import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
-  selector: 'app-myprofile',
-  templateUrl: './myprofile.component.html',
-  providers: [MyprofileService, AppGlobals, DialogService, SharedService]
-
+    selector: 'app-myprofile',
+    templateUrl: './myprofile.component.html',
+    providers: [MyprofileService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class MyprofileComponent implements OnInit {
 

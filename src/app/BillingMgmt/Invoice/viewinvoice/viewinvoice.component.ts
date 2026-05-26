@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, Optional, } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -9,13 +9,14 @@ import { SharedService } from '../../../service/shared.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-viewinvoice',
-  templateUrl: './viewinvoice.component.html',
-  providers: [InvoiceService, AppGlobals, DialogService, SharedService]
+    selector: 'app-viewinvoice',
+    templateUrl: './viewinvoice.component.html',
+    providers: [InvoiceService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class ViewInvoiceComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private invoiceService: InvoiceService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private invoiceService: InvoiceService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService,
     public dialogRef: MatDialogRef<ViewInvoiceComponent>,
     //@Optional() is used to prevent error if no data is passed

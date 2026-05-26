@@ -14,9 +14,10 @@ import { ViewUSIDInstallationReport } from './viewReport/viewInstallationReport.
 
 
 @Component({
-  selector: 'app-USIDassetinstallation',
-  templateUrl: './USIDassetinstallation.component.html',
-  providers: [USIDInstallationReportService, AppGlobals, DialogService, SharedService]
+    selector: 'app-USIDassetinstallation',
+    templateUrl: './USIDassetinstallation.component.html',
+    providers: [USIDInstallationReportService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class USIDInstallationComponent implements OnInit {
 

@@ -14,9 +14,10 @@ import { ViewInvoiceComponent } from './viewinvoice/viewinvoice.component';
 import { AddInvoiceComponent } from './addinvoice/addinvoice.component';
 
 @Component({
-  selector: 'app-invoice',
-  templateUrl: './invoice.component.html',
-  providers: [InvoiceService, AppGlobals, DialogService, SharedService]
+    selector: 'app-invoice',
+    templateUrl: './invoice.component.html',
+    providers: [InvoiceService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class InvoiceComponent implements OnInit {
 

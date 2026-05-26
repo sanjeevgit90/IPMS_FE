@@ -16,9 +16,10 @@ import { ViewOEMDCComponent } from './viewDC/viewOEMDC.component';
 
 
 @Component({
-  selector: 'app-oemdc',
-  templateUrl: './oemdc.component.html',
-  providers: [OEMDeliveryChallanService, AppGlobals, DialogService, SharedService]
+    selector: 'app-oemdc',
+    templateUrl: './oemdc.component.html',
+    providers: [OEMDeliveryChallanService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class OEMDCComponent implements OnInit {
 

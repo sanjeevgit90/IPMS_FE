@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../global/app.global';
@@ -10,13 +10,14 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 @Component({
-  selector: 'app-project-mapping',
-  templateUrl: './project-mapping.component.html',
-  providers: [ProjectMappingService, AppGlobals, DialogService, SharedService]
+    selector: 'app-project-mapping',
+    templateUrl: './project-mapping.component.html',
+    providers: [ProjectMappingService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class ProjectMappingComponent implements OnInit {
   result: boolean = false;
-  constructor(private formBuilder: FormBuilder, 
+  constructor(private formBuilder: UntypedFormBuilder, 
     private router: Router, 
     private route: ActivatedRoute, 
     private http: HttpClient, 
@@ -57,7 +58,7 @@ export class ProjectMappingComponent implements OnInit {
     "projectname": null, "orgname": null,
   };
 
-  ProjectMappingForm: FormGroup;
+  ProjectMappingForm: UntypedFormGroup;
   isSubmitted = false;
   filterFunc = function () {
     this.filterDiv = true;

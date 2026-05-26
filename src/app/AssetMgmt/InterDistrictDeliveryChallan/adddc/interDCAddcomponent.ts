@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -23,13 +23,14 @@ export interface Element {
 }
 
 @Component({
-  selector: 'app-interdcAdd',
-  templateUrl: './interdcAdd.component.html',
-  providers: [InterDistrictDCService, AppGlobals, DialogService, SharedService]
+    selector: 'app-interdcAdd',
+    templateUrl: './interdcAdd.component.html',
+    providers: [InterDistrictDCService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class AddInterDCComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private dcService: InterDistrictDCService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private dcService: InterDistrictDCService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService, private dialog:MatDialog) { }
 
 
@@ -63,7 +64,7 @@ export class AddInterDCComponent implements OnInit {
   projectList : any = [];
   locationList: any = [];
   
-  addDCForm: FormGroup;
+  addDCForm: UntypedFormGroup;
   isSubmitted = false;
   disableAdd:Boolean = true;
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -8,13 +8,14 @@ import { SharedService } from '../../../service/shared.service';
 import { VendorPaymentsService } from '../payments.service';
 
 @Component({
-  selector: 'app-add-payments',
-  templateUrl: './add-payments.component.html',
-  providers: [VendorPaymentsService, AppGlobals, DialogService, SharedService]
+    selector: 'app-add-payments',
+    templateUrl: './add-payments.component.html',
+    providers: [VendorPaymentsService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class AddVendorPaymentComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private prsService: VendorPaymentsService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private prsService: VendorPaymentsService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService) { }
 
 
@@ -30,7 +31,7 @@ export class AddVendorPaymentComponent implements OnInit {
   edit = false;
   list = true;
 
-  addPaymentForm: FormGroup;
+  addPaymentForm: UntypedFormGroup;
   isSubmitted = false;
 
   prsId: any = null;

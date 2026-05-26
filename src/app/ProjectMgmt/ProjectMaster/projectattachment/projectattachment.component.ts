@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-projectattachment',
-  templateUrl: './projectattachment.component.html'
+    selector: 'app-projectattachment',
+    templateUrl: './projectattachment.component.html',
+    standalone: false
 })
 export class ProjectattachmentComponent implements OnInit {
 

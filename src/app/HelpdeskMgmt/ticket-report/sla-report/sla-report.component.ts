@@ -12,9 +12,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { TicketSLAFilterSession } from '../../helpdeskfilterdata';
 
 @Component({
-  selector: 'app-sla-report',
-  templateUrl: './sla-report.component.html',
-  providers: [TicketReportService, AppGlobals, DialogService, SharedService]
+    selector: 'app-sla-report',
+    templateUrl: './sla-report.component.html',
+    providers: [TicketReportService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class TicketSLAReportComponent implements OnInit {
   result: boolean = false;

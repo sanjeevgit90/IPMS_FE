@@ -10,10 +10,10 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
-  selector: 'app-po-fulfilment',
-  templateUrl: './po-fulfilment.component.html',
-  providers: [PoFulfilmentService, AppGlobals, DialogService, SharedService]
-
+    selector: 'app-po-fulfilment',
+    templateUrl: './po-fulfilment.component.html',
+    providers: [PoFulfilmentService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class PoFulfilmentComponent implements OnInit {
 

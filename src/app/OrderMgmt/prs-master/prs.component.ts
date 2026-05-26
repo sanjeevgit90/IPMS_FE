@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AppGlobals } from '../../global/app.global';
@@ -12,13 +12,14 @@ import { MatPaginator } from '@angular/material/paginator';
 import { PrsFilterSession } from '../ordermgmtfilterdata';
 
 @Component({
-  selector: 'app-prs',
-  templateUrl: './prs.component.html',
-  providers: [PRSService, AppGlobals, DialogService, SharedService]
+    selector: 'app-prs',
+    templateUrl: './prs.component.html',
+    providers: [PRSService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class PRSComponent implements OnInit {
   result: boolean = false;
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private prsService: PRSService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private prsService: PRSService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService) { }
 
   displayedColumns: string[] = ['prsNo', 'purchaseOrderNumber', 'partyName',

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../global/app.global';
@@ -11,14 +11,14 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
-  selector: 'app-department',
-  templateUrl: './department.component.html',
-  providers: [DepartmentService, AppGlobals, DialogService, SharedService]
-
+    selector: 'app-department',
+    templateUrl: './department.component.html',
+    providers: [DepartmentService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class DepartmentComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private departmentService: DepartmentService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private departmentService: DepartmentService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService) { }
 
   displayedColumns: string[] = ['departmentName', 'departmentCode', 'action'];
@@ -45,7 +45,7 @@ export class DepartmentComponent implements OnInit {
   DepartmentData = {
     "departmentName": "", "departmentCode": ""
   };
-  addDepartmentForm: FormGroup;
+  addDepartmentForm: UntypedFormGroup;
   isSubmitted = false;
 
   applyFilter(event: Event) {

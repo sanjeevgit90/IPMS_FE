@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, Optional, } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../../global/app.global';
@@ -8,13 +8,14 @@ import { PrsTaskService } from '../prstask.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-prsaction',
-  templateUrl: './prsaction.component.html',
-  providers: [PrsTaskService, AppGlobals, DialogService]
+    selector: 'app-prsaction',
+    templateUrl: './prsaction.component.html',
+    providers: [PrsTaskService, AppGlobals, DialogService],
+    standalone: false
 })
 export class PrsActionComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, 
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, 
     private _global: AppGlobals, private dialogService: DialogService, private taskService: PrsTaskService,
     public dialogRef: MatDialogRef<PrsActionComponent>,
     //@Optional() is used to prevent error if no data is passed
@@ -36,7 +37,7 @@ export class PrsActionComponent implements OnInit {
     "approvalStatus": null, "remark": null, 
   };
   taskHistoryList:any=[];
-  addAssetForm: FormGroup;
+  addAssetForm: UntypedFormGroup;
   isSubmitted = false;
 
   back = function () {

@@ -7,9 +7,10 @@ import { SharedService } from '../../../service/shared.service';
 import { RateContractService } from '../../../OrderMgmt/rate-contract/rate-contract.service';
 
 @Component({
-  selector: 'app-view-rc',
-  templateUrl: './view-rc.component.html',
-  providers: [RateContractService, AppGlobals, DialogService, SharedService]
+    selector: 'app-view-rc',
+    templateUrl: './view-rc.component.html',
+    providers: [RateContractService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class ViewRcComponent implements OnInit {
 
@@ -121,9 +122,8 @@ export class ViewRcComponent implements OnInit {
     "departmentName": "",
     "accName": "",
     "currencySymbol": "",
-    "rcProductDetailsList": "",
+    "rcProductDetailsList" : [],
     "attachments": null,
-
     "poheaddesignation": "",
     "poheadname": "",
     "organisationName": "",

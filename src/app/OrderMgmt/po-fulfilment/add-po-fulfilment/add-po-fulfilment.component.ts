@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -8,14 +8,14 @@ import { PoFulfilmentService } from '../po-fulfilment.service';
 import { SharedService } from '../../../service/shared.service';
 
 @Component({
-  selector: 'app-add-po-fulfilment',
-  templateUrl: './add-po-fulfilment.component.html',
-  providers: [PoFulfilmentService, AppGlobals, DialogService, SharedService]
-
+    selector: 'app-add-po-fulfilment',
+    templateUrl: './add-po-fulfilment.component.html',
+    providers: [PoFulfilmentService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class AddPoFulfilmentComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private poFulfilmentService: PoFulfilmentService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private poFulfilmentService: PoFulfilmentService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService) { }
 
   showLoading: boolean = false;
@@ -29,7 +29,7 @@ export class AddPoFulfilmentComponent implements OnInit {
     "fulfilmentDate": null, "delayReason": null, "nextdeliveryDate": null,
     "delayCategory": null, "purchaseOrderNo": null
   };
-  addPoFulfilmentForm: FormGroup;
+  addPoFulfilmentForm: UntypedFormGroup;
   isSubmitted = false;
 
   back = function () {

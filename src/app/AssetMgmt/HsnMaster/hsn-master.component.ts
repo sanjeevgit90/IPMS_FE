@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../global/app.global';
@@ -11,13 +11,14 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
-  selector: 'app-hsn-master',
-  templateUrl: './hsn-master.component.html',
-  providers: [HsnMasterService, AppGlobals, DialogService, SharedService]
+    selector: 'app-hsn-master',
+    templateUrl: './hsn-master.component.html',
+    providers: [HsnMasterService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class HsnMasterComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private hsnMasterService: HsnMasterService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private hsnMasterService: HsnMasterService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService) { }
 
   displayedColumns: string[] = ['hsncode', 'cgst', 'sgst', 'igst', 'country', 'action'];
@@ -45,7 +46,7 @@ export class HsnMasterComponent implements OnInit {
     "hsncode": null, "country": null, "cgst": 0, "sgst": 0,
     "igst": 0
   };
-  addHsnForm: FormGroup;
+  addHsnForm: UntypedFormGroup;
   isSubmitted = false;
 
   applyFilter(event: Event) {

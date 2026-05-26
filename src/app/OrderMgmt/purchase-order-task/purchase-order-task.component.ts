@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AppGlobals } from '../../global/app.global';
@@ -13,14 +13,15 @@ import { MatPaginator } from '@angular/material/paginator';
 import { PoApprovalFilterSession } from '../ordermgmtfilterdata';
 
 @Component({
-  selector: 'app-purchase-order-task',
-  templateUrl: './purchase-order-task.component.html',
-  providers: [PurchaseOrderService, AppGlobals, DialogService, SharedService, PoTaskService]
+    selector: 'app-purchase-order-task',
+    templateUrl: './purchase-order-task.component.html',
+    providers: [PurchaseOrderService, AppGlobals, DialogService, SharedService, PoTaskService],
+    standalone: false
 })
 export class PurchaseOrderTaskComponent implements OnInit {
 
   result: boolean = false;
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private purchaseOrderService: PurchaseOrderService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private purchaseOrderService: PurchaseOrderService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService, private poTaskService: PoTaskService) { }
 
   displayedColumns: string[] = ['poRcFlag', 'purchaseOrderNo', 'grandTotal', 'projectName', 'orgName', 'approvalStatus', 'stageName', 'action'];

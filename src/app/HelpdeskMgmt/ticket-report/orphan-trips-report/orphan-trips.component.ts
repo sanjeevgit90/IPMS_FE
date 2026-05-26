@@ -11,9 +11,10 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
-  selector: 'app-orphan-trips',
-  templateUrl: './orphan-trips.component.html',
-  providers: [TicketReportService, AppGlobals, DialogService, SharedService]
+    selector: 'app-orphan-trips',
+    templateUrl: './orphan-trips.component.html',
+    providers: [TicketReportService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class OrphanTripsComponent implements OnInit {
 

@@ -1,27 +1,28 @@
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Component, OnInit, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ResetPasswordService } from './Reset-password.service';
+import { ResetPasswordService } from './reset-password.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../global/app.global';
 import { SharedService } from 'src/app/service/shared.service';
 import { DialogService } from 'src/app/service/dialog.service';
 
 @Component({
-  selector: 'app-reset-password',
-  templateUrl: './reset-password.component.html',
-  providers: [ResetPasswordService, AppGlobals, DialogService, SharedService]
+    selector: 'app-reset-password',
+    templateUrl: './reset-password.component.html',
+    providers: [ResetPasswordService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class ResetPasswordComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private resetPasswordService: ResetPasswordService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private resetPasswordService: ResetPasswordService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService
   ) { }
 
   resetPasswordData = {
     "username": null, "newPassword": null, "token": null
   };
-  resetpasswordForm: FormGroup;
+  resetpasswordForm: UntypedFormGroup;
   isSubmitted = false;
   errorMessage = "";
   showLoading: boolean = false;

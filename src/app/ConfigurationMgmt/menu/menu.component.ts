@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../global/app.global';
@@ -11,13 +11,14 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MenuFilterSession } from '../ConfigurationMgmtFilterData';
 @Component({
-  selector: 'app-menu',
-  templateUrl: './menu.component.html',
-  providers: [MenuService, AppGlobals, DialogService, SharedService]
+    selector: 'app-menu',
+    templateUrl: './menu.component.html',
+    providers: [MenuService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class MenuComponent implements OnInit {
   result: boolean = false;
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private menuService: MenuService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private menuService: MenuService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService
   ) { }
 
@@ -53,7 +54,7 @@ export class MenuComponent implements OnInit {
     "displayname": null, "menuname": null,
   };
   formatData = {};
-  addMenuForm: FormGroup;
+  addMenuForm: UntypedFormGroup;
   isSubmitted = false;
   filterFunc = function () {
     this.filterDiv = true;

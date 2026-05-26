@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../global/app.global';
@@ -19,13 +19,14 @@ export interface UserData {
 
 
 @Component({
-  selector: 'app-family',
-  templateUrl: './family.component.html',
-  providers: [FamilyService, AppGlobals, DialogService, SharedService]
+    selector: 'app-family',
+    templateUrl: './family.component.html',
+    providers: [FamilyService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class FamilyComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private familyService: FamilyService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private familyService: FamilyService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService) { }
   //  displayedColumns: string[] = ['memberName', 'memberContact', 'dob', 'relationship', 'action'];
   displayedColumns = ['memberName', 'memberContact', 'dob', 'relationship', 'action'];
@@ -62,7 +63,7 @@ export class FamilyComponent implements OnInit {
     "memberName": "", "memberContact": "", "dob": "", "relationship": ""
   };
 
-  addFamilyForm: FormGroup;
+  addFamilyForm: UntypedFormGroup;
   isSubmitted = false;
 
 

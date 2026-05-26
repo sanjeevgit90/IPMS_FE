@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -11,13 +11,14 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
-  selector: 'app-update-grn-task',
-  templateUrl: './update-grn-task.component.html',
-  providers: [AppGlobals, DialogService, SharedService, GrnTaskService]
+    selector: 'app-update-grn-task',
+    templateUrl: './update-grn-task.component.html',
+    providers: [AppGlobals, DialogService, SharedService, GrnTaskService],
+    standalone: false
 })
 export class UpdateGrnTaskComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService, private grnTaskService: GrnTaskService) { }
 
   showLoading: boolean = false;
@@ -37,7 +38,7 @@ export class UpdateGrnTaskComponent implements OnInit {
   edit = false;
   list = true;
 
-  addGrnTaskForm: FormGroup;
+  addGrnTaskForm: UntypedFormGroup;
   isSubmitted = false;
   baseUrl: any = null;
 

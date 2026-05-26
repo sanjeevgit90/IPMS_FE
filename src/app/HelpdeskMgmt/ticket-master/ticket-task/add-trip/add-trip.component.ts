@@ -11,9 +11,10 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
-  selector: 'app-add-trip',
-  templateUrl: './add-trip.component.html',
-  providers: [TicketTaskService, AppGlobals, DialogService, SharedService]
+    selector: 'app-add-trip',
+    templateUrl: './add-trip.component.html',
+    providers: [TicketTaskService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class AddTripComponent implements OnInit {
 

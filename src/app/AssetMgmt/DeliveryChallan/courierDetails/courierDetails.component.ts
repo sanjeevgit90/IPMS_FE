@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, Optional, } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -11,13 +11,14 @@ import { InterDistrictDCService } from '../../InterDistrictDeliveryChallan/inter
 import { OEMDeliveryChallanService } from '../../OEMDeliveryChallan/oemdc.service';
 
 @Component({
-  selector: 'app-courier',
-  templateUrl: './courierDetails.component.html',
-  providers: [DeliveryChallanService, AppGlobals, DialogService, SharedService, InterDistrictDCService, OEMDeliveryChallanService]
+    selector: 'app-courier',
+    templateUrl: './courierDetails.component.html',
+    providers: [DeliveryChallanService, AppGlobals, DialogService, SharedService, InterDistrictDCService, OEMDeliveryChallanService],
+    standalone: false
 })
 export class CourierDetailsComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private dcService: DeliveryChallanService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private dcService: DeliveryChallanService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService, private iddcService: InterDistrictDCService, private oemdcService: OEMDeliveryChallanService,
     public dialogRef: MatDialogRef<CourierDetailsComponent>,
     //@Optional() is used to prevent error if no data is passed
@@ -42,7 +43,7 @@ export class CourierDetailsComponent implements OnInit {
     "courierdate": null, "courierno": null, "courierDetails": null
   };
 
-  addCourierForm: FormGroup;
+  addCourierForm: UntypedFormGroup;
   isSubmitted = false;
 
   back = function () {

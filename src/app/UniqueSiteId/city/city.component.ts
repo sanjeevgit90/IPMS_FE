@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { HttpClient, HttpEventType, HttpErrorResponse } from '@angular/common/http';
 import { of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -14,14 +14,14 @@ import { MatPaginator } from '@angular/material/paginator';
 
 
 @Component({
-  selector: 'app-city',
-  templateUrl: './city.component.html',
-  providers: [CityService, AppGlobals, DialogService, SharedService]
-
+    selector: 'app-city',
+    templateUrl: './city.component.html',
+    providers: [CityService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class CityComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private cityService: CityService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private cityService: CityService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService) { }
 
   displayedColumns: string[] = ['cityname', 'citycode', 'state', 'district', 'action'];
@@ -69,7 +69,7 @@ export class CityComponent implements OnInit {
   StateName = "";
   DistrictName = "";
 
-  addCityForm: FormGroup;
+  addCityForm: UntypedFormGroup;
   isSubmitted = false;
 
   

@@ -3,8 +3,9 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-potab',
-  templateUrl: './potab.component.html'
+    selector: 'app-potab',
+    templateUrl: './potab.component.html',
+    standalone: false
 })
 export class PotabComponent implements OnInit {
 

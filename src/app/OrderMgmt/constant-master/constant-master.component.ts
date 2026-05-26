@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AppGlobals } from '../../global/app.global';
@@ -11,12 +11,13 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
-  selector: 'app-constant-master',
-  templateUrl: './constant-master.component.html',
-  providers: [ConstantMasterService, AppGlobals, DialogService, SharedService]
+    selector: 'app-constant-master',
+    templateUrl: './constant-master.component.html',
+    providers: [ConstantMasterService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class ConstantMasterComponent implements OnInit {
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private constantMasterService: ConstantMasterService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private constantMasterService: ConstantMasterService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService) { }
 
   displayedColumns: string[] = ['type', 'value', 'organisationName', 'action'];
@@ -39,7 +40,7 @@ export class ConstantMasterComponent implements OnInit {
   ConstantData = {
     "type": null, "value": null, "organisationId": null
   };
-  addConstantForm: FormGroup;
+  addConstantForm: UntypedFormGroup;
   isSubmitted = false;
   cancel = function () {
     this.list = true;

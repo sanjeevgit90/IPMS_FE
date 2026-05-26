@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, Optional, } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../../global/app.global';
@@ -8,13 +8,14 @@ import { CollectionTaskService } from '../collectiontask.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-action',
-  templateUrl: './action.component.html',
-  providers: [CollectionTaskService, AppGlobals, DialogService]
+    selector: 'app-action',
+    templateUrl: './action.component.html',
+    providers: [CollectionTaskService, AppGlobals, DialogService],
+    standalone: false
 })
 export class CollectionActionComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, 
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, 
     private _global: AppGlobals, private dialogService: DialogService, private taskService: CollectionTaskService,
     public dialogRef: MatDialogRef<CollectionActionComponent>,
     //@Optional() is used to prevent error if no data is passed
@@ -36,7 +37,7 @@ export class CollectionActionComponent implements OnInit {
     "approvalStatus": null, "remark": null, 
   };
 
-  addAssetForm: FormGroup;
+  addAssetForm: UntypedFormGroup;
   isSubmitted = false;
 
   back = function () {

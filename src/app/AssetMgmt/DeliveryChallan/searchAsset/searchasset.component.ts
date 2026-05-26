@@ -12,9 +12,10 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-asearchsset',
-  templateUrl: './searchasset.component.html',
-  providers: [AssetMasterService, AppGlobals, DialogService, SharedService]
+    selector: 'app-asearchsset',
+    templateUrl: './searchasset.component.html',
+    providers: [AssetMasterService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 
 export class SearchAssetComponent implements OnInit {

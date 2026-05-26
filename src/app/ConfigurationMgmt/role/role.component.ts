@@ -10,9 +10,10 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
-  selector: 'app-role',
-  templateUrl: './role.component.html',
-  providers: [RoleService, AppGlobals, DialogService, SharedService]
+    selector: 'app-role',
+    templateUrl: './role.component.html',
+    providers: [RoleService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class RoleComponent implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute, private http: HttpClient, private roleService: RoleService,

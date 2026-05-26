@@ -12,9 +12,10 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { TicketFilterSession } from '../helpdeskfilterdata';
 
 @Component({
-  selector: 'app-ticket-master',
-  templateUrl: './ticket-master.component.html',
-  providers: [TicketMasterService, AppGlobals, DialogService, SharedService]
+    selector: 'app-ticket-master',
+    templateUrl: './ticket-master.component.html',
+    providers: [TicketMasterService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class TicketMasterComponent implements OnInit {
   result: boolean = false;

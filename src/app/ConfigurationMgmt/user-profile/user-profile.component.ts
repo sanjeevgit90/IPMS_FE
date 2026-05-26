@@ -13,9 +13,10 @@ import { flatMap } from 'rxjs/operators';
 import { ManagerUserFilterSession } from '../ConfigurationMgmtFilterData';
 
 @Component({
-  selector: 'app-user-profile',
-  templateUrl: './user-profile.component.html',
-  providers: [UserProfileService, AppGlobals, DialogService, SharedService]
+    selector: 'app-user-profile',
+    templateUrl: './user-profile.component.html',
+    providers: [UserProfileService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class UserProfileComponent implements OnInit {
   result: boolean = false;

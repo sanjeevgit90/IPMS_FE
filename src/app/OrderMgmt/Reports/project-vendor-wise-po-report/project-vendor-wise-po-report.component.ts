@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -11,14 +11,14 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
-  selector: 'app-project-vendor-wise-po-report',
-  templateUrl: './project-vendor-wise-po-report.component.html',
-  providers: [PoReportsService, AppGlobals, DialogService]
-
+    selector: 'app-project-vendor-wise-po-report',
+    templateUrl: './project-vendor-wise-po-report.component.html',
+    providers: [PoReportsService, AppGlobals, DialogService],
+    standalone: false
 })
 export class ProjectVendorWisePoReportComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private poReportsService: PoReportsService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private poReportsService: PoReportsService,
     private _global: AppGlobals, private dialogService: DialogService
   ) { }
 
@@ -34,7 +34,7 @@ export class ProjectVendorWisePoReportComponent implements OnInit {
   add = false;
   edit = false;
   list = true;
-  projectVendorWiseReportForm: FormGroup;
+  projectVendorWiseReportForm: UntypedFormGroup;
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.ReportData.filter = filterValue.trim().toLowerCase();

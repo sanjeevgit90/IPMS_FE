@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -8,14 +8,14 @@ import { SharedService } from '../../../service/shared.service';
 import { LicenseMasterService } from '../license-master.service';
 
 @Component({
-  selector: 'app-add-license',
-  templateUrl: './add-license.component.html',
- providers: [LicenseMasterService,AppGlobals, DialogService, SharedService]
-
+    selector: 'app-add-license',
+    templateUrl: './add-license.component.html',
+    providers: [LicenseMasterService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class AddLicenseComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private licenseMasterService: LicenseMasterService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private licenseMasterService: LicenseMasterService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService) { }
 
  showLoading: boolean = false;
@@ -43,7 +43,7 @@ export class AddLicenseComponent implements OnInit {
  
   eolList={};
 
-  addLicenseMasterForm: FormGroup;
+  addLicenseMasterForm: UntypedFormGroup;
   isSubmitted = false;
   
 

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../global/app.global';
@@ -11,14 +11,14 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
-  selector: 'app-ticket-classification',
-  templateUrl: './ticket-classification.component.html',
-  providers: [TicketClassificationService, AppGlobals, DialogService, SharedService]
-
+    selector: 'app-ticket-classification',
+    templateUrl: './ticket-classification.component.html',
+    providers: [TicketClassificationService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class TicketClassificationComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private ticketClassificationService: TicketClassificationService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private ticketClassificationService: TicketClassificationService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService) { }
 
   displayedColumns: string[] = ['classificationValue', 'projectname', 'action'];
@@ -52,7 +52,7 @@ export class TicketClassificationComponent implements OnInit {
 
   projectList: any = [];
 
-  addTicketClassificationForm: FormGroup;
+  addTicketClassificationForm: UntypedFormGroup;
   isSubmitted = false;
   classificationList: any = [];
 

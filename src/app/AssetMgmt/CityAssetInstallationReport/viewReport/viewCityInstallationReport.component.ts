@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Inject, Optional } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -16,13 +16,14 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FileuploadService } from '../../../service/fileupload.service';
 
 @Component({
-  selector: 'app-viewCityInstallationReport',
-  templateUrl: './viewCityInstallationReport.component.html',
-  providers: [CityInstallationReportService, AppGlobals, DialogService, SharedService, FileuploadService]
+    selector: 'app-viewCityInstallationReport',
+    templateUrl: './viewCityInstallationReport.component.html',
+    providers: [CityInstallationReportService, AppGlobals, DialogService, SharedService, FileuploadService],
+    standalone: false
 })
 export class ViewCityInstallationReport implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private reportService: CityInstallationReportService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private reportService: CityInstallationReportService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService,
     private fileuploadService: FileuploadService) { }
 
@@ -41,7 +42,7 @@ export class ViewCityInstallationReport implements OnInit {
   edit = false;
   list = true;
 
-  addCityForm: FormGroup;
+  addCityForm: UntypedFormGroup;
   isSubmitted = false;
   attachmentFiles: any = [];
   uploadFlag: boolean = false;

@@ -11,9 +11,10 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { ProductMasterMisFilterSession } from '../assetfilterdata';
 @Component({
-  selector: 'app-productmaster',
-  templateUrl: './productmaster.component.html',
-  providers: [ProductMasterService, AppGlobals, DialogService, SharedService]
+    selector: 'app-productmaster',
+    templateUrl: './productmaster.component.html',
+    providers: [ProductMasterService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class ProductMasterComponent implements OnInit {
   result: boolean = false;
@@ -38,8 +39,10 @@ export class ProductMasterComponent implements OnInit {
   productEdit: boolean = false;
   productView: boolean = false;
   productDelete: boolean = false;
-  categoryList = {};
-  subcategoryList = {};
+  // categoryList = {};
+  // subcategoryList = {};
+  categoryList : any = [];
+  subcategoryList : any = [];
   ProductDataExport: any = [];
   addProducts = function () {
     this.router.navigate(['/addProduct']);

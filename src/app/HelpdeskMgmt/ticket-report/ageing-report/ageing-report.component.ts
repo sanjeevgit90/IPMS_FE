@@ -12,9 +12,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { TicketAgingFilterSession } from '../../helpdeskfilterdata';
 
 @Component({
-  selector: 'app-ageing-report',
-  templateUrl: './ageing-report.component.html',
-  providers: [TicketReportService, AppGlobals, DialogService, SharedService]
+    selector: 'app-ageing-report',
+    templateUrl: './ageing-report.component.html',
+    providers: [TicketReportService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class TicketAgeingReportComponent implements OnInit {
   result: boolean = false;

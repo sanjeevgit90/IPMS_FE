@@ -11,9 +11,10 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
-  selector: 'app-escalated-report',
-  templateUrl: './escalated-report.component.html',
-  providers: [TicketReportService, AppGlobals, DialogService, SharedService]
+    selector: 'app-escalated-report',
+    templateUrl: './escalated-report.component.html',
+    providers: [TicketReportService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class TicketEscalationReportComponent implements OnInit {
 

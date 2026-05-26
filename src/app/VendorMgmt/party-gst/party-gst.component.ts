@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../global/app.global';
@@ -13,14 +13,15 @@ import { FileuploadService } from '../../service/fileupload.service';
 import { GeographyService } from '../../UniqueSiteId/geography/geography.service';
 
 @Component({
-  selector: 'app-party-gst',
-  templateUrl: './party-gst.component.html',
-  providers: [PartyGstService, AppGlobals, DialogService, SharedService, FileuploadService, GeographyService]
+    selector: 'app-party-gst',
+    templateUrl: './party-gst.component.html',
+    providers: [PartyGstService, AppGlobals, DialogService, SharedService, FileuploadService, GeographyService],
+    standalone: false
 })
 export class PartyGstComponent implements OnInit {
 
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private partyGstService: PartyGstService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private partyGstService: PartyGstService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService, private fileuploadService: FileuploadService,
     private geographyService: GeographyService) { }
   displayedColumns: string[] = ['gstNo', 'state', 'gstNoAttachment', 'action'];
@@ -49,7 +50,7 @@ export class PartyGstComponent implements OnInit {
   };
 
   PartyParent = { "entityId": "" };
-  addGstForm: FormGroup;
+  addGstForm: UntypedFormGroup;
   isSubmitted = false;
   gstNoAttachment: any = [];
 

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -11,14 +11,14 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
-  selector: 'app-status-wise-po-report',
-  templateUrl: './status-wise-po-report.component.html',
-  providers: [PoReportsService, AppGlobals, DialogService, SharedService]
-
+    selector: 'app-status-wise-po-report',
+    templateUrl: './status-wise-po-report.component.html',
+    providers: [PoReportsService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class StatusWisePoReportComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private poReportsService: PoReportsService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private poReportsService: PoReportsService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService
   ) { }
 
@@ -35,7 +35,7 @@ export class StatusWisePoReportComponent implements OnInit {
   add = false;
   edit = false;
   list = true;
-  poStatusForm: FormGroup;
+  poStatusForm: UntypedFormGroup;
   StatusCountReport : any = {};
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

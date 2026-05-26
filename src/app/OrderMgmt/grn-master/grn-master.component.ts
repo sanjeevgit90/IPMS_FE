@@ -13,9 +13,10 @@ import { GrnTaskService } from '../../OrderMgmt/grn-task/grn-task.service';
 import { GrnFilterSession } from '../ordermgmtfilterdata';
 
 @Component({
-  selector: 'app-grn-master',
-  templateUrl: './grn-master.component.html',
-  providers: [GrnMasterService, AppGlobals, DialogService, SharedService, GrnTaskService]
+    selector: 'app-grn-master',
+    templateUrl: './grn-master.component.html',
+    providers: [GrnMasterService, AppGlobals, DialogService, SharedService, GrnTaskService],
+    standalone: false
 })
 export class GrnMasterComponent implements OnInit {
   result: boolean = false;

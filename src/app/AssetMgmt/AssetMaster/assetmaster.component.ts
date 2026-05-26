@@ -16,9 +16,10 @@ import { AssetFilterSession } from '../assetfilterdata';
 
 
 @Component({
-  selector: 'app-asset',
-  templateUrl: './assetmaster.component.html',
-  providers: [AssetMasterService, AppGlobals, DialogService, SharedService]
+    selector: 'app-asset',
+    templateUrl: './assetmaster.component.html',
+    providers: [AssetMasterService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class AssetMasterComponent implements OnInit {
 

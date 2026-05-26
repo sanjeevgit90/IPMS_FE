@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, Optional, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -11,13 +11,14 @@ import { FileuploadService } from '../../../service/fileupload.service';
 import { ProjectApprovalTaskService } from '../../ProjectApproval/projectapproval.service';
 
 @Component({
-  selector: 'app-addproject',
-  templateUrl: './addproject.component.html',
-  providers: [ProjectMasterService, AppGlobals, DialogService, SharedService, FileuploadService, MatStepper, ProjectApprovalTaskService]
+    selector: 'app-addproject',
+    templateUrl: './addproject.component.html',
+    providers: [ProjectMasterService, AppGlobals, DialogService, SharedService, FileuploadService, MatStepper, ProjectApprovalTaskService],
+    standalone: false
 })
 export class AddProjectComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private projectService: ProjectMasterService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private projectService: ProjectMasterService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService, private fileuploadService: FileuploadService,
     private taskService: ProjectApprovalTaskService) { }
   @ViewChild('stepper') private myStepper: MatStepper;
@@ -48,9 +49,9 @@ export class AddProjectComponent implements OnInit {
     "projectManager": null, "approvalStatus": null
   };
 
-  addProjectForm: FormGroup;
-  MappingForm: FormGroup;
-  uploadForm: FormGroup;
+  addProjectForm: UntypedFormGroup;
+  MappingForm: UntypedFormGroup;
+  uploadForm: UntypedFormGroup;
 
   poAttachment: any = [];
   planAttachment: any = [];

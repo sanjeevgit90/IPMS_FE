@@ -13,9 +13,10 @@ import { IncidentFilterSession } from '../../helpdeskfilterdata';
 //import * as jsPDF from 'jspdf';
 
 @Component({
-  selector: 'app-incident-report',
-  templateUrl: './incident-report.component.html',
-  providers: [TicketReportService, AppGlobals, DialogService, SharedService]
+    selector: 'app-incident-report',
+    templateUrl: './incident-report.component.html',
+    providers: [TicketReportService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class TicketIncidentReportComponent implements OnInit {
   loading:boolean =false;

@@ -7,9 +7,10 @@ import { SharedService } from '../../../service/shared.service';
 import { PRSService } from '../prs.service';
 
 @Component({
-  selector: 'app-view-prs',
-  templateUrl: './view-prs.component.html',
-  providers: [PRSService, AppGlobals, DialogService, SharedService]
+    selector: 'app-view-prs',
+    templateUrl: './view-prs.component.html',
+    providers: [PRSService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class ViewPRSComponent implements OnInit {
 

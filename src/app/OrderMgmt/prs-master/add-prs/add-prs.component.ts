@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef  } from '@angular/core';
-import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -10,17 +10,20 @@ import { PrsTaskService } from '../prstask/prstask.service';
 import { FileuploadService } from '../../../service/fileupload.service';
 import { PurchaseOrderService } from '../../../OrderMgmt/purchase-order/purchase-order.service';
 import { map, startWith } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-add-prs',
-  templateUrl: './add-prs.component.html',
-  providers: [PRSService, AppGlobals, DialogService, SharedService, FileuploadService, PurchaseOrderService, PrsTaskService]
+    selector: 'app-add-prs',
+    templateUrl: './add-prs.component.html',
+    providers: [PRSService, AppGlobals, DialogService, SharedService, FileuploadService, PurchaseOrderService, PrsTaskService],
+    standalone: false
 })
 export class AddPrsComponent implements OnInit {
 
-  filteredPoList: any = [];
+  // filteredPoList: any = [];
+  filteredPoList!: Observable<any[]>;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private prsService: PRSService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private prsService: PRSService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService,
     private fileuploadService: FileuploadService, private purchaseOrderService: PurchaseOrderService,private prsTaskService: PrsTaskService,
     private cdr: ChangeDetectorRef) { }
@@ -42,7 +45,7 @@ export class AddPrsComponent implements OnInit {
   edit = false;
   list = true;
 
-  addPrsForm: FormGroup;
+  addPrsForm: UntypedFormGroup;
   isSubmitted = false;
 
   PrsData = {

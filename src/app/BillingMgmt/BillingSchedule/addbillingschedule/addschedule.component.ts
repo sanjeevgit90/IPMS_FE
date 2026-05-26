@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, Optional, } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -7,16 +7,16 @@ import { DialogService } from '../../../service/dialog.service';
 import { BillingScheduleService } from '../billingschedule.service';
 import { SharedService } from '../../../service/shared.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
-  selector: 'app-addschedule',
-  templateUrl: './addschedule.component.html',
-  providers: [BillingScheduleService, AppGlobals, DialogService, SharedService]
+    selector: 'app-addschedule',
+    templateUrl: './addschedule.component.html',
+    providers: [BillingScheduleService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class AddScheduleComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private scheduleService: BillingScheduleService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private scheduleService: BillingScheduleService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService,
     public dialogRef: MatDialogRef<AddScheduleComponent>,
     //@Optional() is used to prevent error if no data is passed
@@ -43,7 +43,7 @@ export class AddScheduleComponent implements OnInit {
     "id": {}, "dateofbilling": null, "amountofbilling": null, "remark": null
   };
 
-  addScheduleForm: FormGroup;
+  addScheduleForm: UntypedFormGroup;
   isSubmitted = false;
   
   back = function () {

@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormGroupDirective } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, FormGroupDirective } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -10,15 +10,17 @@ import { FileuploadService } from '../../../service/fileupload.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { GrnTaskService } from '../../../OrderMgmt/grn-task/grn-task.service';
 import { map, startWith } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-add-grn',
-  templateUrl: './add-grn.component.html',
-  providers: [GrnMasterService, AppGlobals, DialogService, SharedService, FileuploadService, GrnTaskService]
+    selector: 'app-add-grn',
+    templateUrl: './add-grn.component.html',
+    providers: [GrnMasterService, AppGlobals, DialogService, SharedService, FileuploadService, GrnTaskService],
+    standalone: false
 })
 export class AddGrnComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private grnMasterService: GrnMasterService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private grnMasterService: GrnMasterService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService,
     private fileuploadService: FileuploadService, private grnTaskService: GrnTaskService, private cdr: ChangeDetectorRef) { }
 
@@ -46,7 +48,7 @@ export class AddGrnComponent implements OnInit {
   list = true;
   view = false;
 
-  addGrnForm: FormGroup;
+  addGrnForm: UntypedFormGroup;
   isSubmitted = false;
 
   GrnData = {
@@ -66,7 +68,8 @@ export class AddGrnComponent implements OnInit {
   dcCopyUpload: any = [];
   lrCopyUpload: any = [];
   taskId = null;
-  filteredPoList: any = [];
+  // filteredPoList: any = [];
+  filteredPoList!: Observable<any[]>;
 
   compareObjects(o1: any, o2: any): boolean {
     //return o1.name === o2.name && o1.id === o2.id;

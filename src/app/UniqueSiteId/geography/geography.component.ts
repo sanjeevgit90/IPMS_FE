@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../global/app.global';
@@ -18,10 +18,10 @@ import { MatPaginator } from '@angular/material/paginator';
 // }
 
 @Component({
-  selector: 'app-geography',
-  templateUrl: './geography.component.html',
-  providers: [GeographyService, AppGlobals, DialogService, SharedService]
-
+    selector: 'app-geography',
+    templateUrl: './geography.component.html',
+    providers: [GeographyService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class GeographyComponent implements OnInit {
 
@@ -33,7 +33,7 @@ export class GeographyComponent implements OnInit {
   // ];
   // filteredOptions: Observable<stateList[]>;
   
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private geographyService: GeographyService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private geographyService: GeographyService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService) { }
   displayedColumns: string[] = ['geographyname', 'geographycode', 'parentgeography', 'action'];
   GeographyMasterData: MatTableDataSource<any>;
@@ -80,7 +80,7 @@ export class GeographyComponent implements OnInit {
   ParentGeographyName = "";
   districtError: boolean = false;
 
-  addGeographyForm: FormGroup;
+  addGeographyForm: UntypedFormGroup;
   isSubmitted = false;
 
   applyFilter(event: Event) {

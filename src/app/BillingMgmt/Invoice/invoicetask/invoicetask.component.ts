@@ -14,9 +14,10 @@ import { ActionComponent} from '../../../AssetMgmt/InterDistrictDeliveryChallan/
 import { ViewInvoiceComponent} from '../viewinvoice/viewinvoice.component';
 
 @Component({
-  selector: 'app-invoicetask',
-  templateUrl: './invoicetask.component.html',
-  providers: [AppGlobals, DialogService, SharedService, InvoiceTaskService]
+    selector: 'app-invoicetask',
+    templateUrl: './invoicetask.component.html',
+    providers: [AppGlobals, DialogService, SharedService, InvoiceTaskService],
+    standalone: false
 })
 export class InvoiceTaskComponent implements OnInit {
 

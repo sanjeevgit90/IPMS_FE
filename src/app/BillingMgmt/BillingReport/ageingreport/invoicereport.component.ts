@@ -12,9 +12,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog, MatDialogConfig} from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-invoicereport',
-  templateUrl: './invoicereport.component.html',
-  providers: [BillingReportService, AppGlobals, DialogService, SharedService]
+    selector: 'app-invoicereport',
+    templateUrl: './invoicereport.component.html',
+    providers: [BillingReportService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class InvoiceAgeingReportComponent implements OnInit {
 

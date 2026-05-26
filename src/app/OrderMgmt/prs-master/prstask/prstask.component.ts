@@ -14,9 +14,10 @@ import { PrsActionComponent} from './action/prsaction.component';
 import { PrsFilterSession } from '../../ordermgmtfilterdata';
 
 @Component({
-  selector: 'app-prstask',
-  templateUrl: './prstask.component.html',
-  providers: [AppGlobals, DialogService, SharedService, PrsTaskService]
+    selector: 'app-prstask',
+    templateUrl: './prstask.component.html',
+    providers: [AppGlobals, DialogService, SharedService, PrsTaskService],
+    standalone: false
 })
 export class PrsTaskComponent implements OnInit {
   result: boolean = false;

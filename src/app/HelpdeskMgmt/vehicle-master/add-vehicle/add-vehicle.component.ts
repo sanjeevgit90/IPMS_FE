@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -10,14 +10,14 @@ import { FileuploadService } from '../../../service/fileupload.service';
 
 
 @Component({
-  selector: 'app-add-vehicle',
-  templateUrl: './add-vehicle.component.html',
-  providers: [VehicleMasterService,AppGlobals, DialogService, SharedService,FileuploadService]
-
+    selector: 'app-add-vehicle',
+    templateUrl: './add-vehicle.component.html',
+    providers: [VehicleMasterService, AppGlobals, DialogService, SharedService, FileuploadService],
+    standalone: false
 })
 export class AddVehicleComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private vehicleMasterService: VehicleMasterService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private vehicleMasterService: VehicleMasterService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService,private fileuploadService: FileuploadService) { }
 
  showLoading: boolean = false;
@@ -59,7 +59,7 @@ export class AddVehicleComponent implements OnInit {
   
 
 
-  addVehicleMasterForm: FormGroup;
+  addVehicleMasterForm: UntypedFormGroup;
   isSubmitted = false;
   
 

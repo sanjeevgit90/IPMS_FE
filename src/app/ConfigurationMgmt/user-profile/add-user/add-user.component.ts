@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -9,13 +9,14 @@ import { SharedService } from '../../../service/shared.service';
 import { FileuploadService } from '../../../service/fileupload.service';
 
 @Component({
-  selector: 'app-add-user',
-  templateUrl: './add-user.component.html',
-  providers: [UserProfileService, AppGlobals, DialogService, SharedService, FileuploadService]
+    selector: 'app-add-user',
+    templateUrl: './add-user.component.html',
+    providers: [UserProfileService, AppGlobals, DialogService, SharedService, FileuploadService],
+    standalone: false
 })
 export class AddUserComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private userProfileService: UserProfileService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private userProfileService: UserProfileService,
     private _global: AppGlobals, private dialogService: DialogService,
     private sharedService: SharedService, private fileuploadService: FileuploadService) { }
 
@@ -67,7 +68,7 @@ export class AddUserComponent implements OnInit {
   roleFormatData: any = [];
   districtFormatData: any = [];
   tlFlag: boolean = false;
-  addUserForm: FormGroup;
+  addUserForm: UntypedFormGroup;
   isSubmitted: boolean = false;
   back = function () {
     this.router.navigate(['/searchUsers']);

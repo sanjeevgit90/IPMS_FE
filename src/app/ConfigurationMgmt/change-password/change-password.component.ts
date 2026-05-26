@@ -1,4 +1,4 @@
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Component, OnInit, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ChangePasswordService } from './change-password.service';
@@ -8,20 +8,21 @@ import { SharedService } from 'src/app/service/shared.service';
 import { DialogService } from 'src/app/service/dialog.service';
 
 @Component({
-  selector: 'app-change-password',
-  templateUrl: './change-password.component.html',
-  providers: [ChangePasswordService, AppGlobals, DialogService, SharedService]
+    selector: 'app-change-password',
+    templateUrl: './change-password.component.html',
+    providers: [ChangePasswordService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class ChangePasswordComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private changePasswordService: ChangePasswordService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private changePasswordService: ChangePasswordService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService
   ) { }
 
   chngPasswordData = {
    "newPassword": null, "oldPassword": null
   };
-  changepasswordForm: FormGroup;
+  changepasswordForm: UntypedFormGroup;
   isSubmitted = false;
   errorMessage = "";
   showLoading: boolean = false;

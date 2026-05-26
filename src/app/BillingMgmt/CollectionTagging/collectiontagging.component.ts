@@ -13,9 +13,10 @@ import { CollectionTaggingService } from './collectiontagging.service';
 import { AddCollectionComponent } from './addcollection/addcollection.component';
 
 @Component({
-  selector: 'app-collectiontagging',
-  templateUrl: './collectiontagging.component.html',
-  providers: [CollectionTaggingService, AppGlobals, DialogService, SharedService]
+    selector: 'app-collectiontagging',
+    templateUrl: './collectiontagging.component.html',
+    providers: [CollectionTaggingService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class CollectionTaggingComponent implements OnInit {
 

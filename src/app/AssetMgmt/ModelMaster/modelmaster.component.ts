@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormGroupDirective } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, FormGroupDirective } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../global/app.global';
@@ -11,14 +11,14 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { ModelMasterFilterSession } from '../assetfilterdata';
 @Component({
-  selector: 'app-modelmaster',
-  templateUrl: './modelmaster.component.html',
-  providers: [ModelMasterService, AppGlobals, DialogService, SharedService]
-
+    selector: 'app-modelmaster',
+    templateUrl: './modelmaster.component.html',
+    providers: [ModelMasterService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class ModelMasterComponent implements OnInit {
   result: boolean = false;
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private modelMasterService: ModelMasterService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private modelMasterService: ModelMasterService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService) { }
 
   // search screen start
@@ -49,7 +49,7 @@ export class ModelMasterComponent implements OnInit {
   ModelData = {
     "modelname": null, "manufacture": {}, "description": null
   };
-  addModelForm: FormGroup;
+  addModelForm: UntypedFormGroup;
   isSubmitted = false;
   manufacturerList: any = [];
 

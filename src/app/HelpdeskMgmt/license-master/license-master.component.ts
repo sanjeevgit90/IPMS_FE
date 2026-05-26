@@ -10,9 +10,10 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
-  selector: 'app-license-master',
-  templateUrl: './license-master.component.html',
-  providers: [LicenseMasterService, AppGlobals, DialogService, SharedService]
+    selector: 'app-license-master',
+    templateUrl: './license-master.component.html',
+    providers: [LicenseMasterService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 
 export class LicenseMasterComponent implements OnInit {

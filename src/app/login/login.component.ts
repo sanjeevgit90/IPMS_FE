@@ -1,4 +1,4 @@
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Component, OnInit, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { LoginService } from './login.service';
@@ -8,20 +8,21 @@ import { AppGlobals } from '../global/app.global';
 import { DialogService } from '../service/dialog.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  providers: [LoginService, AppGlobals, PoTaskService, DialogService]
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    providers: [LoginService, AppGlobals, PoTaskService, DialogService],
+    standalone: false
 })
 export class LoginComponent implements OnInit {
 
   logindata: any;
   tokenTime: number;
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private loginService: LoginService, private _global: AppGlobals, private poTaskService: PoTaskService,private dialogService: DialogService) { }
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private loginService: LoginService, private _global: AppGlobals, private poTaskService: PoTaskService,private dialogService: DialogService) { }
   data = { username: "", password: "" };
   showLoading: boolean = false;
   errorHandle: boolean = false;
-  loginForm: FormGroup;
+  loginForm: UntypedFormGroup;
   isSubmitted = false;
   errorMessage = "";
   // Login function

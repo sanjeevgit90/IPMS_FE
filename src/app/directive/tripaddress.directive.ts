@@ -1,9 +1,10 @@
 import { Directive, ElementRef, Input, OnInit } from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 //import { Template } from '@angular/compiler/src/render3/r3_ast';
 
 @Directive({
-  selector: '[appTripaddress]'
+    selector: '[appTripaddress]',
+    standalone: false
 })
 export class TripaddressDirective {
 

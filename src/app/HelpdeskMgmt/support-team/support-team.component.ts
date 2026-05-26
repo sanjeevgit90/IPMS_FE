@@ -12,9 +12,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import { SupportFilterSession } from '../helpdeskfilterdata';
 
 @Component({
-  selector: 'app-support-team',
-  templateUrl: './support-team.component.html',
-  providers: [SupportTeamService, AppGlobals, DialogService, SharedService]
+    selector: 'app-support-team',
+    templateUrl: './support-team.component.html',
+    providers: [SupportTeamService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class SupportTeamComponent implements OnInit {
   result: boolean = false;

@@ -13,9 +13,10 @@ import { BillingScheduleService } from './billingschedule.service';
 import { AddScheduleComponent } from './addbillingschedule/addschedule.component';
 
 @Component({
-  selector: 'app-billingschedule',
-  templateUrl: './billingschedule.component.html',
-  providers: [BillingScheduleService, AppGlobals, DialogService, SharedService]
+    selector: 'app-billingschedule',
+    templateUrl: './billingschedule.component.html',
+    providers: [BillingScheduleService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class BillingScheduleComponent implements OnInit {
 

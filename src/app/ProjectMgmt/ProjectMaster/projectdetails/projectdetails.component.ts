@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, Optional, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -11,15 +11,15 @@ import { FileuploadService } from '../../../service/fileupload.service';
 import { ProjectApprovalTaskService } from '../../ProjectApproval/projectapproval.service';
 
 @Component({
-  selector: 'app-projectdetails',
-  templateUrl: './projectdetails.component.html',
-  providers: [ProjectMasterService, AppGlobals, DialogService, SharedService, FileuploadService, ProjectApprovalTaskService]
-
+    selector: 'app-projectdetails',
+    templateUrl: './projectdetails.component.html',
+    providers: [ProjectMasterService, AppGlobals, DialogService, SharedService, FileuploadService, ProjectApprovalTaskService],
+    standalone: false
 })
 export class ProjectdetailsComponent implements OnInit {
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private router: Router,
     private route: ActivatedRoute,
     private http: HttpClient,
@@ -45,7 +45,7 @@ export class ProjectdetailsComponent implements OnInit {
   edit = false;
   list = true;
   backToTask: boolean = false;
-  addProjectForm: FormGroup;
+  addProjectForm: UntypedFormGroup;
   poAttachment: any = [];
   planAttachment: any = [];
   isSubmitted = false;

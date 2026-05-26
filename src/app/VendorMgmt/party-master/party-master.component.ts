@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AppGlobals } from '../../global/app.global';
@@ -11,13 +11,14 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
-  selector: 'app-party-master',
-  templateUrl: './party-master.component.html',
-  providers: [PartyMasterService, AppGlobals, DialogService, SharedService]
+    selector: 'app-party-master',
+    templateUrl: './party-master.component.html',
+    providers: [PartyMasterService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class PartyMasterComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private partyMasterService: PartyMasterService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private partyMasterService: PartyMasterService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService) { }
 
   displayedColumns: string[] = ["partyNo", "partyName", "contactPersonName", "mobileNo", "natureOfServiceProviding", "action"];

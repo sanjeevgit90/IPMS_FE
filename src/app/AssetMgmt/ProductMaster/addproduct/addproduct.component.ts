@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -8,13 +8,14 @@ import { ProductMasterService } from '../productmaster.service';
 import { SharedService } from '../../../service/shared.service';
 
 @Component({
-  selector: 'app-addproduct',
-  templateUrl: './addproduct.component.html',
-  providers: [ProductMasterService, AppGlobals, DialogService, SharedService]
+    selector: 'app-addproduct',
+    templateUrl: './addproduct.component.html',
+    providers: [ProductMasterService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class AddProductComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private productService: ProductMasterService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private productService: ProductMasterService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService) { }
 
 
@@ -75,7 +76,7 @@ export class AddProductComponent implements OnInit {
   baseUomList: any = [];
   ConstantData = { "type": "" };
 
-  addProductForm: FormGroup;
+  addProductForm: UntypedFormGroup;
   isSubmitted = false;
 
   back = function () {

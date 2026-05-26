@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, FormGroupDirective, Validators, FormControl } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, FormGroupDirective, Validators, FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../global/app.global';
@@ -11,15 +11,17 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { map, startWith } from 'rxjs/operators';
 import { PoliceStnFilterSession } from '../UniqueSiteIdFilterData';
+import { Observable, of } from 'rxjs';
 @Component({
-  selector: 'app-police-station',
-  templateUrl: './police-station.component.html',
-  providers: [PoliceStationService, AppGlobals, DialogService, SharedService]
+    selector: 'app-police-station',
+    templateUrl: './police-station.component.html',
+    providers: [PoliceStationService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class PoliceStationComponent implements OnInit {
   result: boolean = false;
-  filteredOptions: any = [];
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private policeStationService: PoliceStationService,
+  filteredOptions: Observable<any[]> = of([]);
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private policeStationService: PoliceStationService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService) { }
   displayedColumns: string[] = ['policestationname', 'policestationcode', 'city', 'action'];
   PoliceMasterData: MatTableDataSource<any>;
@@ -60,7 +62,7 @@ export class PoliceStationComponent implements OnInit {
     "policestationname": "", "policestationcode": "", "city": ""
   };
   cityList: any = [];
-  addPoliceStationForm: FormGroup;
+  addPoliceStationForm: UntypedFormGroup;
   isSubmitted = false;
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

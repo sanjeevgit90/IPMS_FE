@@ -12,9 +12,10 @@ import { MatDialog, MatDialogConfig} from '@angular/material/dialog';
 import { BillingReportService } from '../billingreport.service';
 
 @Component({
-  selector: 'app-billingcomparsion',
-  templateUrl: './billingcomparsion.component.html',
-  providers: [BillingReportService, AppGlobals, DialogService, SharedService]
+    selector: 'app-billingcomparsion',
+    templateUrl: './billingcomparsion.component.html',
+    providers: [BillingReportService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class BillingComparsionomponent implements OnInit {
 

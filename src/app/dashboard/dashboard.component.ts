@@ -7,9 +7,10 @@ import { DashboardService } from './dashboard.service';
 //import * as HighCharts from 'highcharts';
 import * as Highcharts from 'highcharts';
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  providers: [DashboardService, DialogService, AppGlobals]
+    selector: 'app-dashboard',
+    templateUrl: './dashboard.component.html',
+    providers: [DashboardService, DialogService, AppGlobals],
+    standalone: false
 })
 export class DashboardComponent implements OnInit {
   constructor(private dashboardService: DashboardService, private dialogService: DialogService,

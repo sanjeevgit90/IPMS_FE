@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -11,14 +11,14 @@ import { SupportTeamService } from '../support-team.service';
 
 
 @Component({
-  selector: 'app-add-support-team',
-  templateUrl: './add-support-team.component.html',
-  providers: [SupportTeamService,AppGlobals, DialogService, SharedService,FileuploadService]
-
+    selector: 'app-add-support-team',
+    templateUrl: './add-support-team.component.html',
+    providers: [SupportTeamService, AppGlobals, DialogService, SharedService, FileuploadService],
+    standalone: false
 })
 export class AddSupportTeamComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private supportTeamService: SupportTeamService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private supportTeamService: SupportTeamService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService,private fileuploadService: FileuploadService) { }
 
  showLoading: boolean = false;
@@ -53,7 +53,7 @@ export class AddSupportTeamComponent implements OnInit {
   
 
 
-  addSupportTeamForm: FormGroup;
+  addSupportTeamForm: UntypedFormGroup;
   isSubmitted = false;
   
 

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Inject, Optional } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -16,13 +16,14 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FileuploadService } from '../../../service/fileupload.service';
 
 @Component({
-  selector: 'app-viewOEMDC',
-  templateUrl: './viewOEMDC.component.html',
-  providers: [OEMDeliveryChallanService, AppGlobals, DialogService, SharedService, FileuploadService]
+    selector: 'app-viewOEMDC',
+    templateUrl: './viewOEMDC.component.html',
+    providers: [OEMDeliveryChallanService, AppGlobals, DialogService, SharedService, FileuploadService],
+    standalone: false
 })
 export class ViewOEMDCComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private dcService: OEMDeliveryChallanService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private dcService: OEMDeliveryChallanService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService,
     private fileuploadService: FileuploadService) { }
 
@@ -50,7 +51,7 @@ export class ViewOEMDCComponent implements OnInit {
     "noofboxes":null, "courierdate": null, "courierDetails":null,"courierno":null,"dcstatus":null
   };
 
-  addDCForm: FormGroup;
+  addDCForm: UntypedFormGroup;
   isSubmitted = false;
 
   AssetEntityId = [];

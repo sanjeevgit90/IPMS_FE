@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -12,13 +12,14 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { CityInstallationReportService } from '../cityassetinstallation.service';
 
 @Component({
-  selector: 'app-addcityassetinstallation',
-  templateUrl: './addcityassetinstallation.component.html',
-  providers: [CityInstallationReportService, AppGlobals, DialogService, SharedService]
+    selector: 'app-addcityassetinstallation',
+    templateUrl: './addcityassetinstallation.component.html',
+    providers: [CityInstallationReportService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class AddCityInstallationComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private reportService: CityInstallationReportService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private reportService: CityInstallationReportService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService) { }
 
   showLoading: boolean = false;
@@ -60,7 +61,7 @@ export class AddCityInstallationComponent implements OnInit {
   districtList: any = [];
   stateList: any = [];
 
-  addCityForm: FormGroup;
+  addCityForm: UntypedFormGroup;
   isSubmitted = false;
 
   back = function () {

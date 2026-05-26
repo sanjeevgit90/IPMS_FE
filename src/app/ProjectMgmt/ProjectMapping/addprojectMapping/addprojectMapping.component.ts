@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, Optional, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -9,13 +9,14 @@ import { SharedService } from '../../../service/shared.service';
 import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
-  selector: 'app-addprojectMapping',
-  templateUrl: './addprojectMapping.component.html',
-  providers: [ProjectMappingService, AppGlobals, DialogService, SharedService]
+    selector: 'app-addprojectMapping',
+    templateUrl: './addprojectMapping.component.html',
+    providers: [ProjectMappingService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class AddProjectMappingComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private projectMappingService: ProjectMappingService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private projectMappingService: ProjectMappingService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService) { }
 
   showLoading: boolean = false;
@@ -32,7 +33,7 @@ export class AddProjectMappingComponent implements OnInit {
       return o1 == o2.entityId;
     }
  
-    ProjectMappingForm: FormGroup;
+    ProjectMappingForm: UntypedFormGroup;
     isSubmitted = false;
     filterFunc = function () {
       this.filterDiv = true;

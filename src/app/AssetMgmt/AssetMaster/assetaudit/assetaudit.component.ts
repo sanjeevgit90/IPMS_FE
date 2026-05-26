@@ -9,12 +9,13 @@ import { SharedService } from '../../../service/shared.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef,  MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-assetaudit',
-  templateUrl: './assetaudit.component.html',
-  providers: [AssetMasterService, AppGlobals, DialogService, SharedService]
+    selector: 'app-assetaudit',
+    templateUrl: './assetaudit.component.html',
+    providers: [AssetMasterService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 
 export class AssetAuditComponent {

@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormGroupDirective } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, FormGroupDirective } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../global/app.global';
@@ -11,13 +11,14 @@ import { MatPaginator } from '@angular/material/paginator';
 import { CategoryService } from '../CategoryMaster/categorymaster.service';
 import { CategoryFilterSession } from '../assetfilterdata';
 @Component({
-  selector: 'app-categorymaster',
-  templateUrl: './categorymaster.component.html',
-  providers: [CategoryService, AppGlobals, DialogService, SharedService]
+    selector: 'app-categorymaster',
+    templateUrl: './categorymaster.component.html',
+    providers: [CategoryService, AppGlobals, DialogService, SharedService],
+    standalone: false
 })
 export class CategoryMasterComponent implements OnInit {
   result: boolean = false;
-  constructor(private formBuilder: FormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private categoryService: CategoryService,
+  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private categoryService: CategoryService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService) { }
   // search screen start
   displayedColumns: string[] = ['categoryname', 'categorytype', 'parent', 'action'];
@@ -70,7 +71,7 @@ export class CategoryMasterComponent implements OnInit {
     this.isSubmitted = false;
 
   }
-  addCategoryForm: FormGroup;
+  addCategoryForm: UntypedFormGroup;
   isSubmitted = false;
   categoryList: any = [];
   cancel = function () {

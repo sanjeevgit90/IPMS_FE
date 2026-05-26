@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, Optional, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../../../global/app.global';
@@ -10,15 +10,15 @@ import { FileuploadService } from '../../../service/fileupload.service';
 import { ProjectApprovalTaskService } from '../../ProjectApproval/projectapproval.service';
 
 @Component({
-  selector: 'app-projectconfiguration',
-  templateUrl: './projectconfiguration.component.html',
-  providers: [ProjectMasterService, AppGlobals, DialogService, SharedService, FileuploadService, ProjectApprovalTaskService]
-
+    selector: 'app-projectconfiguration',
+    templateUrl: './projectconfiguration.component.html',
+    providers: [ProjectMasterService, AppGlobals, DialogService, SharedService, FileuploadService, ProjectApprovalTaskService],
+    standalone: false
 })
 export class ProjectconfigurationComponent implements OnInit {
 
   constructor(
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
     private router: Router,
     private route: ActivatedRoute,
     private http: HttpClient,
@@ -37,7 +37,7 @@ export class ProjectconfigurationComponent implements OnInit {
   AlllevelList: any = [];
   levelList: any = [];
   newLevelList: any = [];
-  addProjectForm: FormGroup;
+  addProjectForm: UntypedFormGroup;
   actionFlag: boolean = false; 
   backToTask: boolean = false;
   organization:any ;
