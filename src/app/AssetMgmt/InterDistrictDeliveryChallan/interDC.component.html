@@ -32,7 +32,7 @@
                 </button>
               }
               @if (interDistrictAdd) {
-                <button mat-flat-button color="accent" (click)="addDC()">
+                <button mat-flat-button color="accent" class="ms-2" (click)="addDC()">
                   <mat-icon aria-hidden="false">add</mat-icon> Add Delivery Challan
                 </button>
               }
@@ -80,7 +80,7 @@
                 <button mat-flat-button color="primary" (click)="search()">
                   <mat-icon aria-hidden="false">search</mat-icon> Search
                 </button>
-                <button mat-flat-button color="warn" (click)="cancel()">
+                <button mat-flat-button color="warn" class="ms-2" (click)="cancel()">
                   <mat-icon aria-hidden="false">cancel</mat-icon> Cancel
                 </button>
               </div>
@@ -156,7 +156,7 @@
                       }
 
                       @if (DCRecord.printflag && interDistrictEdit) {
-                        <a mat-flat-button color="warn" matTooltip="Add Courier Details"
+                        <a mat-flat-button color="warn" class="ms-1" matTooltip="Add Courier Details"
                           [disabled]="DCRecord.isDeleted"
                           (click)="openCourierdetails(DCRecord.entityId)"
                           title="Add Courier Details">
@@ -164,21 +164,21 @@
                         </a>
                       }
                       @if (!actionFlag && interDistrictDelete && DCRecord.taskid == null) {
-                        <a mat-flat-button color="warn" matTooltip="Delete this record"
+                        <a mat-flat-button color="warn" class="ms-1" matTooltip="Delete this record"
                           [disabled]="DCRecord.isdeleted" (click)="onDelete(DCRecord.entityId)"
                           >
                           <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
                         </a>
                       }
                       @if (DCRecord.taskid == null && approvalFlag) {
-                        <a mat-flat-button color="accent" matTooltip="Send to warehouse"
+                        <a mat-flat-button color="accent" class="ms-1" matTooltip="Send to warehouse"
                           [disabled]="DCRecord.isdeleted"
                           (click)="sendToWarhouse(DCRecord.entityId)" title="send">
                           <mat-icon aria-hidden="false">send</mat-icon>
                         </a>
                       }
                       @if (DCRecord.taskid != null && interDistrictEdit && actionFlag && DCRecord.dcstatus=='IDDC_PENDING') {
-                        <a mat-flat-button color="primary" matTooltip="Action"
+                        <a mat-flat-button color="primary" class="ms-1" matTooltip="Action"
                           [disabled]="DCRecord.isdeleted" (click)="action(DCRecord.taskid)"
                           title="Action">
                           <mat-icon aria-hidden="false">mouse</mat-icon>

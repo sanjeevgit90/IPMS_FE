@@ -140,104 +140,106 @@
                           <mat-form-field class="search-input">
                             <input matInput (keyup)="applyFilter($event)" placeholder="Search..." #input>
                           </mat-form-field>
+                          <button mat-flat-button color="accent" class="export-btn"
+                            (click)="exporter.exportTable('xlsx', {fileName:'Prs Report'})"
+                            matTooltip="Export to Excel">
+                            <mat-icon>send</mat-icon> Export
+                          </button>
                         </div>
 
-                        <button mat-flat-button color="accent" class="export-btn"
-                          (click)="exporter.exportTable('xlsx', {fileName:'Prs Report'})"
-                          matTooltip="Export to Excel">
-                          <mat-icon>send</mat-icon> Export
-                        </button>
                       </div>
 
-
-                      <table matTableExporter mat-table [dataSource]="PrsReportData" matSort class="mat-elevation-z8" #exporter="matTableExporter">
-
-
-                        <ng-container matColumnDef="prsNo">
-                          <th mat-header-cell *matHeaderCellDef mat-sort-header> PRS No </th>
+                      <div class="table-responsive">
+                        <table matTableExporter mat-table [dataSource]="PrsReportData" matSort class="mat-elevation-z8" #exporter="matTableExporter">
+  
+  
+                          <ng-container matColumnDef="prsNo">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> PRS No </th>
+                            <td mat-cell *matCellDef="let PrsReportData">
+                              <div class="block"> {{PrsReportData.prsNo}} </div>
+                            </td>
+                          </ng-container>
+                          <ng-container matColumnDef="projectPin">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Pin/Project </th>
+                            <td mat-cell *matCellDef="let PrsReportData">
+                              <div class="block"> {{PrsReportData.projectPin}} - {{PrsReportData.project}} </div>
+                            </td>
+                          </ng-container>
+                          <!-- <ng-container matColumnDef="prsDate">
+                          <th mat-header-cell *matHeaderCellDef mat-sort-header> PRS Date </th>
                           <td mat-cell *matCellDef="let PrsReportData">
-                            <div class="block"> {{PrsReportData.prsNo}} </div>
+                            <div class="block"> {{PrsReportData.prsDate | date : 'dd/MM/yyyy'}} </div>
+                          </td>
+                        </ng-container> -->
+                        <ng-container matColumnDef="purchaseOrderNo">
+                          <th mat-header-cell *matHeaderCellDef mat-sort-header> PO No. </th>
+                          <td mat-cell *matCellDef="let PrsReportData">
+                            <div class="block"> {{PrsReportData.purchaseOrderNumber}} </div>
                           </td>
                         </ng-container>
-                        <ng-container matColumnDef="projectPin">
-                          <th mat-header-cell *matHeaderCellDef mat-sort-header> Pin/Project </th>
+                        <ng-container matColumnDef="partyName">
+                          <th mat-header-cell *matHeaderCellDef mat-sort-header> Vendor </th>
                           <td mat-cell *matCellDef="let PrsReportData">
-                            <div class="block"> {{PrsReportData.projectPin}} - {{PrsReportData.project}} </div>
+                            <div class="block"> {{PrsReportData.partyName}} </div>
                           </td>
                         </ng-container>
-                        <!-- <ng-container matColumnDef="prsDate">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> PRS Date </th>
-                        <td mat-cell *matCellDef="let PrsReportData">
-                          <div class="block"> {{PrsReportData.prsDate | date : 'dd/MM/yyyy'}} </div>
-                        </td>
-                      </ng-container> -->
-                      <ng-container matColumnDef="purchaseOrderNo">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> PO No. </th>
-                        <td mat-cell *matCellDef="let PrsReportData">
-                          <div class="block"> {{PrsReportData.purchaseOrderNumber}} </div>
-                        </td>
-                      </ng-container>
-                      <ng-container matColumnDef="partyName">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Vendor </th>
-                        <td mat-cell *matCellDef="let PrsReportData">
-                          <div class="block"> {{PrsReportData.partyName}} </div>
-                        </td>
-                      </ng-container>
-                      <ng-container matColumnDef="invoiceNo">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Invoice No. </th>
-                        <td mat-cell *matCellDef="let PrsReportData">
-                          <div class="block"> {{PrsReportData.invoiceNo}} </div>
-                        </td>
-                      </ng-container>
-                      <ng-container matColumnDef="invoiceAmount">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Invoice Amount </th>
-                        <td mat-cell *matCellDef="let PrsReportData">
-                          <div class="block" style="text-align: right;"> {{PrsReportData.invoiceAmount | number : '1.2-2'}} </div>
-                        </td>
-                      </ng-container>
-                      <ng-container matColumnDef="paymentDueDate">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Payment Due Date </th>
-                        <td mat-cell *matCellDef="let PrsReportData">
-                          <div class="block"> {{PrsReportData.paymentDueDate | date : 'dd/MM/yyyy'}} </div>
-                        </td>
-                      </ng-container>
-                      <ng-container matColumnDef="approvalStatus">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
-                        <td mat-cell *matCellDef="let PrsReportData">
-                          <div class="block"> {{PrsReportData.approvalStatus}} </div>
-                        </td>
-                      </ng-container>
-                      <ng-container matColumnDef="totalWithoutTaxes">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> PO Amt w/o Tax </th>
-                        <td mat-cell *matCellDef="let PrsReportData">
-                          <div class="block" style="text-align: right;"> {{PrsReportData.totalWithoutTaxes | number : '1.2-2'}} </div>
-                        </td>
-                      </ng-container>
-                      <ng-container matColumnDef="totalTaxes">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> PO Tax </th>
-                        <td mat-cell *matCellDef="let PrsReportData">
-                          <div class="block" style="text-align: right;"> {{PrsReportData.totalTaxes | number : '1.2-2'}} </div>
-                        </td>
-                      </ng-container>
-                      <ng-container matColumnDef="poGrandTotalInr">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> PO Total </th>
-                        <td mat-cell *matCellDef="let PrsReportData">
-                          <div class="block" style="text-align: right;"> {{PrsReportData.poGrandTotalInr | number : '1.2-2'}} </div>
-                        </td>
-                      </ng-container>
-                      <ng-container matColumnDef="currency">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Currency </th>
-                        <td mat-cell *matCellDef="let PrsReportData">
-                          <div class="block"> {{PrsReportData.currency}} </div>
-                        </td>
-                      </ng-container>
+                        <ng-container matColumnDef="invoiceNo">
+                          <th mat-header-cell *matHeaderCellDef mat-sort-header> Invoice No. </th>
+                          <td mat-cell *matCellDef="let PrsReportData">
+                            <div class="block"> {{PrsReportData.invoiceNo}} </div>
+                          </td>
+                        </ng-container>
+                        <ng-container matColumnDef="invoiceAmount">
+                          <th mat-header-cell *matHeaderCellDef mat-sort-header> Invoice Amount </th>
+                          <td mat-cell *matCellDef="let PrsReportData">
+                            <div class="block" style="text-align: right;"> {{PrsReportData.invoiceAmount | number : '1.2-2'}} </div>
+                          </td>
+                        </ng-container>
+                        <ng-container matColumnDef="paymentDueDate">
+                          <th mat-header-cell *matHeaderCellDef mat-sort-header> Payment Due Date </th>
+                          <td mat-cell *matCellDef="let PrsReportData">
+                            <div class="block"> {{PrsReportData.paymentDueDate | date : 'dd/MM/yyyy'}} </div>
+                          </td>
+                        </ng-container>
+                        <ng-container matColumnDef="approvalStatus">
+                          <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+                          <td mat-cell *matCellDef="let PrsReportData">
+                            <div class="block"> {{PrsReportData.approvalStatus}} </div>
+                          </td>
+                        </ng-container>
+                        <ng-container matColumnDef="totalWithoutTaxes">
+                          <th mat-header-cell *matHeaderCellDef mat-sort-header> PO Amt w/o Tax </th>
+                          <td mat-cell *matCellDef="let PrsReportData">
+                            <div class="block" style="text-align: right;"> {{PrsReportData.totalWithoutTaxes | number : '1.2-2'}} </div>
+                          </td>
+                        </ng-container>
+                        <ng-container matColumnDef="totalTaxes">
+                          <th mat-header-cell *matHeaderCellDef mat-sort-header> PO Tax </th>
+                          <td mat-cell *matCellDef="let PrsReportData">
+                            <div class="block" style="text-align: right;"> {{PrsReportData.totalTaxes | number : '1.2-2'}} </div>
+                          </td>
+                        </ng-container>
+                        <ng-container matColumnDef="poGrandTotalInr">
+                          <th mat-header-cell *matHeaderCellDef mat-sort-header> PO Total </th>
+                          <td mat-cell *matCellDef="let PrsReportData">
+                            <div class="block" style="text-align: right;"> {{PrsReportData.poGrandTotalInr | number : '1.2-2'}} </div>
+                          </td>
+                        </ng-container>
+                        <ng-container matColumnDef="currency">
+                          <th mat-header-cell *matHeaderCellDef mat-sort-header> Currency </th>
+                          <td mat-cell *matCellDef="let PrsReportData">
+                            <div class="block"> {{PrsReportData.currency}} </div>
+                          </td>
+                        </ng-container>
+  
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                      </table>
 
-                      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                    </table>
-                    <mat-paginator [pageSize]="pageSizedisplay" [pageSizeOptions]="itemPerPage"
-                      showFirstLastButtons>
-                    </mat-paginator>
+                      </div>
+                      <mat-paginator [pageSize]="pageSizedisplay" [pageSizeOptions]="itemPerPage"
+                        showFirstLastButtons>
+                      </mat-paginator>
                   </div>
                 </div>
               </div>

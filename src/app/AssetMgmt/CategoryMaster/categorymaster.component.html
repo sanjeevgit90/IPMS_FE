@@ -20,7 +20,7 @@
             </ul>
           </div>
           <div class="col-sm-8">
-            <div class="col-auto float-right ml-auto">
+            <div class="col-auto float-end ml-auto">
               <!-- <button mat-flat-button color="warn" (click)="filterFunc()">
               <mat-icon aria-hidden="false">filter</mat-icon> Filter
             </button> -->
@@ -56,7 +56,7 @@
             <button mat-flat-button color="primary" (click)="search()">
               <mat-icon aria-hidden="false">search</mat-icon> Search
             </button>
-            <button mat-flat-button color="warn" (click)="cancelSearch()">
+            <button mat-flat-button color="warn" class="ms-2" (click)="cancelSearch()">
               <mat-icon aria-hidden="false">cancel</mat-icon> Cancel
             </button>
           </div>
@@ -149,12 +149,12 @@
                       </button>
                     }
 
-                    <button mat-flat-button color="warn" (click)="cancel()">
+                    <button mat-flat-button color="warn" class="ms-2" (click)="cancel()">
                       <mat-icon aria-hidden="false">close</mat-icon> Cancel
                     </button>
 
                     @if (edit) {
-                      <button mat-flat-button color="accent" (click)="addCategoryData('update')"
+                      <button mat-flat-button color="accent" class="ms-2" (click)="addCategoryData('update')"
                         >
                         <mat-icon aria-hidden="false">update</mat-icon> Update
                       </button>

@@ -160,7 +160,7 @@
                             </div>
                             <div class="col-sm-3">
                               <div class="form-group">
-                                <mat-form-field>
+                                <mat-form-field class="w-100">
                                   <textarea matInput name="remark" maxlength="200"
                                     [(ngModel)]="DCData.remark" formControlName="remark"
                                   placeholder="Enter Remarks"></textarea>
@@ -262,7 +262,7 @@
                               }
                               <div class="submit-section">
                                 @if (!disableEdit) {
-                                  <span class="submit-section">
+                                  <span class="submit-section me-2">
                                     <button mat-flat-button color="primary" (click)="addAssets(DCData.projectname)">
                                       <mat-icon aria-hidden="false">save</mat-icon> Add Assets +
                                     </button>
@@ -275,18 +275,18 @@
                                   </button>
                                 }
                                 @if (!disableEdit && edit) {
-                                  <button mat-flat-button color="accent" (click)="addDC('update')"
+                                  <button class="ms-2" mat-flat-button color="accent" (click)="addDC('update')"
                                     >
                                     <mat-icon aria-hidden="false">update</mat-icon> Update
                                   </button>
                                 }
                                 @if (!disableEdit && edit) {
-                                  <button mat-flat-button color="accent"
+                                  <button class="ms-2" mat-flat-button color="accent"
                                     (click)="sendToWarhouse(DCData)" title="send">
                                     <mat-icon aria-hidden="false">update</mat-icon> Send to warehouse
                                   </button>
                                 }
-                                <button mat-flat-button color="warn" (click)="back()">
+                                <button class="ms-2" mat-flat-button color="warn" (click)="back()">
                                   <mat-icon aria-hidden="false">cancel</mat-icon> Back
                                 </button>
                               </div>

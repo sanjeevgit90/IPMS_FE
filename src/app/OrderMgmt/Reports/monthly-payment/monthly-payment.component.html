@@ -94,13 +94,13 @@
                   <mat-form-field class="search-input">
                     <input matInput (keyup)="applyFilter($event)" placeholder="Search..." #input>
                   </mat-form-field>
+                  <button mat-flat-button color="accent" class="export-btn"
+                    (click)="exporter.exportTable('xlsx', {fileName:'Monthly Payment'})"
+                    matTooltip="Export to Excel">
+                    <mat-icon>send</mat-icon> Export
+                  </button>
                 </div>
 
-                <button mat-flat-button color="accent" class="export-btn"
-                  (click)="exporter.exportTable('xlsx', {fileName:'Monthly Payment'})"
-                  matTooltip="Export to Excel">
-                  <mat-icon>send</mat-icon> Export
-                </button>
               </div>
 
 

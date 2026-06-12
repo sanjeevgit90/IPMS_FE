@@ -8506,3 +8506,21 @@ body {
 	.mat-column-orgRegAddress {width: 100%;}
 	/* .nav-tabs .nav-item:last-child {width: 100%;} */
   }
+
+
+  .mat-column-action .mdc-button{
+	margin: 0px 5px;
+  }
+
+  
+  .float-right .mdc-button{
+	margin: 0px 5px;
+  }
+
+  .submit-section .mdc-button{
+	margin: 5px;
+  }
+
+  .float-right{
+	float: right;
+  }
