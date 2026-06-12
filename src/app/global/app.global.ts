@@ -19,6 +19,7 @@ export class AppGlobals {
 
     readonly pageNumer: number[] = [5, 10, 25, 50, 100];
     readonly pageSize: number = 10;
+    
     readonly matSelectDurationTime: number = 1000;
     readonly UserRights = sessionStorage.getItem('UserRights');
     readonly baseUomList: any[] = [

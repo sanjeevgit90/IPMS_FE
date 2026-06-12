@@ -65,7 +65,7 @@
 
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.vehicleName.errors }">
+                      <mat-form-field class="custom-field" [ngClass]="{ 'has-error': isSubmitted && formControls.vehicleName.errors }">
                         <input matInput name="vehicleName" type="text" placeholder="Vehicle Name" [(ngModel)]="VehicleData.vehicleName" formControlName="vehicleName"
                           maxlength="60" required>
                           @if (isSubmitted && formControls.vehicleName.errors) {
@@ -108,7 +108,7 @@
 
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width"
+                        <mat-form-field class="custom-field"
                           [ngClass]="{ 'has-error': isSubmitted && formControls.vendorName.errors }">
                           <input matInput name="vendorName" name="vendorName" type="text"
                             placeholder="Vendor Name"
@@ -180,7 +180,7 @@
 
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.vehicleRegNumber.errors }">
+                        <mat-form-field class="custom-field" [ngClass]="{ 'has-error': isSubmitted && formControls.vehicleRegNumber.errors }">
                           <input matInput name="vehicleRegNumber" type="text" placeholder="Vehicle Reg Number" [(ngModel)]="VehicleData.vehicleRegNumber"
                             formControlName="vehicleRegNumber" name="vehicleRegNumber" maxlength="60"
                             required>
@@ -199,7 +199,7 @@
 
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width">
+                          <mat-form-field class="custom-field">
                             <input matInput name="vehiclepurchaseDate" placeholder="Vehicle Purchase Date " type="text" [matDatepicker]="picker1" [(ngModel)]="VehicleData.vehiclepurchaseDate"
                               formControlName="vehiclepurchaseDate" name="vehiclepurchaseDate" required>
                               @if (isSubmitted && formControls.vehiclepurchaseDate.errors) {
@@ -219,7 +219,7 @@
 
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width">
+                            <mat-form-field class="custom-field">
                               <input matInput name="deliveryDate" placeholder="Vehicle Delivery Date " type="text" [matDatepicker]="picker2" [(ngModel)]="VehicleData.deliveryDate"
                                 formControlName="deliveryDate" name="deliveryDate" required>
                                 @if (isSubmitted && formControls.deliveryDate.errors) {
@@ -419,7 +419,7 @@
 
                               <div class="col-sm-3">
                                 <div class="form-group">
-                                  <mat-form-field class="example-full-width">
+                                  <mat-form-field class="custom-field">
                                     <input matInput name="remarks" type="text" placeholder="Remark" [(ngModel)]="VehicleData.remarks" formControlName="remarks"
                                       maxlength="60">
 

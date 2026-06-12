@@ -34,7 +34,7 @@
               }
 
               @if (rcAdd) {
-                <button mat-flat-button color="accent" (click)="addRC()">
+                <button mat-flat-button color="accent" class="ms-2" (click)="addRC()">
                   <mat-icon aria-hidden="false">add</mat-icon> Add RC
                 </button>
               }
@@ -48,7 +48,7 @@
             <div class="row">
               <div class="col-sm-12">
                 <div class="form-group">
-                  <mat-form-field class="example-full-width">
+                  <mat-form-field class="custom-field">
                     <input matInput name="rateContractNo" type="text" placeholder="Search by RC no."
                       [(ngModel)]="FilterData.rateContractNo">
                     </mat-form-field>
@@ -56,7 +56,7 @@
                 </div>
                 <div class="col-sm-12">
                   <div class="form-group">
-                    <mat-form-field class="example-full-width">
+                    <mat-form-field class="custom-field">
                       <mat-select [(ngModel)]="FilterData.accountName" name="accountName" [typeaheadDebounceInterval]="matSelectDuration"
                         placeholder="Search by Project">
                         <mat-option>-Search By Project-</mat-option>
@@ -70,7 +70,7 @@
                 </div>
                 <div class="col-sm-12">
                   <div class="form-group">
-                    <mat-form-field class="example-full-width">
+                    <mat-form-field class="custom-field">
                       <mat-select [(ngModel)]="FilterData.organisationId" [typeaheadDebounceInterval]="matSelectDuration"
                         name="organisationId"
                         placeholder="Search by Organisation">
@@ -85,7 +85,7 @@
                 </div>
                 <div class="col-sm-12">
                   <div class="form-group">
-                    <mat-form-field class="example-full-width">
+                    <mat-form-field class="custom-field">
                       <mat-select [(ngModel)]="FilterData.supplierName" [typeaheadDebounceInterval]="matSelectDuration"
                         name="supplierName"
                         placeholder="Search by Vendor">
@@ -100,7 +100,7 @@
                 </div>
                 <div class="col-sm-12">
                   <div class="form-group">
-                    <mat-form-field class="example-full-width">
+                    <mat-form-field class="custom-field">
                       <mat-select [(ngModel)]="FilterData.department"  [typeaheadDebounceInterval]="matSelectDuration"
                         name="department"
                         placeholder="Search by Department">
@@ -118,7 +118,7 @@
                 <button mat-flat-button color="primary" (click)="search()">
                   <mat-icon aria-hidden="false">search</mat-icon> Search
                 </button>
-                <button mat-flat-button color="warn" (click)="cancel()">
+                <button mat-flat-button color="warn" class="ms-2" (click)="cancel()">
                   <mat-icon aria-hidden="false">cancel</mat-icon> Cancel
                 </button>
               </div>
@@ -207,7 +207,7 @@
                           <a mat-menu-item
                             [routerLink]="['editRateContract', RCListData.entityId,'edit']"
                             >
-                            <mat-icon aria-hidden="false">edit</mat-icon> Edit
+                            <mat-icon aria-hidden="false" class="m-0">edit</mat-icon> Edit
                           </a>
                         }
                         @if (RCListData.approvalStatus=='APPROVED') {
@@ -221,7 +221,7 @@
                         @if (RCListData.approvalStatus=='PENDING' && rcDelete) {
                           <button mat-menu-item (click)="deleteRc(RCListData.entityId)" title="Delete"
                             >
-                            <mat-icon aria-hidden="false">delete</mat-icon> Delete
+                            <mat-icon aria-hidden="false" class="m-0">delete</mat-icon> Delete
                           </button>
                         }
                         <button mat-menu-item (click)="generateDuplicateOrder(RCListData.entityId)">
@@ -238,7 +238,7 @@
                     <a mat-flat-button color="primary" matTooltip="Edit this record"
                       [routerLink]="['editRateContract', RCListData.entityId,'edit']"
                       *ngIf="RCListData.approvalStatus=='PENDING' && rcEdit">
-                      <mat-icon aria-hidden="false">edit</mat-icon>
+                      <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                     </a>
 
                     <a mat-flat-button color="primary" class="red-btn"
@@ -249,7 +249,7 @@
 
                     <button mat-flat-button color="warn" matTooltip="Delete this record"
                       (click)="deleteRc(RCListData.entityId)" title="Delete" *ngIf="RCListData.approvalStatus=='PENDING' && rcDelete">
-                      <mat-icon aria-hidden="false">delete</mat-icon>
+                      <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
                     </button>
 
                     <button mat-flat-button color="warn" class="blue-btn"

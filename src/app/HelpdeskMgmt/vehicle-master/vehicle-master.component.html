@@ -42,7 +42,7 @@
             <div class="row">
               <div class="col-sm-12">
                 <div class="form-group">
-                  <mat-form-field class="example-full-width">
+                  <mat-form-field class="custom-field">
                     <input matInput name="vehicleType" type="text" placeholder="Search by Vehicle Type"
                       [(ngModel)]="FilterData.vehicleType">
                     </mat-form-field>
@@ -50,7 +50,7 @@
                 </div>
                 <div class="col-sm-12">
                   <div class="form-group">
-                    <mat-form-field class="example-full-width">
+                    <mat-form-field class="custom-field">
                       <input matInput name="vehicleName" type="text" placeholder="Search by Vehicle Name"
                         [(ngModel)]="FilterData.vehicleName">
                       </mat-form-field>
@@ -58,7 +58,7 @@
                   </div>
                   <div class="col-sm-12">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width">
+                      <mat-form-field class="custom-field">
                         <input matInput name="vehicleRegNumber" type="text"
                           placeholder="Search by Vehicle Reg No"
                           [(ngModel)]="FilterData.vehicleRegNumber">
@@ -153,12 +153,12 @@
                           <a mat-flat-button color="primary" matTooltip="Edit this record"
                             [routerLink]="['/updateVehicle', VehicleMasterData.vehicleRegNumber,'edit']"
                             title="Edit">
-                            <mat-icon aria-hidden="false">edit</mat-icon>
+                            <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                           </a>
                           <button mat-flat-button color="warn"
                             (click)="deleteVehicle(VehicleMasterData.vehicleRegNumber)"
                             matTooltip="Delete this record">
-                            <mat-icon aria-hidden="false">delete</mat-icon>
+                            <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
                           </button>
                         </td>
                       </ng-container>

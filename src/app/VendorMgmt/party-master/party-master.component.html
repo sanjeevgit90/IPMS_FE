@@ -39,7 +39,7 @@
             <div class="row">
               <div class="col-sm-12">
                 <div class="form-group">
-                  <mat-form-field class="example-full-width">
+                  <mat-form-field class="custom-field">
                     <input matInput name="partyNo" type="text" placeholder="Search by party no."
                       [(ngModel)]="FilterData.partyNo">
                     </mat-form-field>
@@ -47,7 +47,7 @@
                 </div>
                 <div class="col-sm-12">
                   <div class="form-group">
-                    <mat-form-field class="example-full-width">
+                    <mat-form-field class="custom-field">
                       <input matInput name="partyName" type="text" placeholder="Search by party name."
                         [(ngModel)]="FilterData.partyName">
                       </mat-form-field>
@@ -55,7 +55,7 @@
                   </div>
                   <div class="col-sm-12">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width">
+                      <mat-form-field class="custom-field">
                         <input matInput name="contactPersonName" type="text"
                           placeholder="Search by contact person."
                           [(ngModel)]="FilterData.contactPersonName">
@@ -146,7 +146,7 @@
                             <a mat-flat-button color="primary" matTooltip="Edit this record"
                               [routerLink]="['UpdateParty', PartyListData.entityId,'edit']"
                               >
-                              <mat-icon aria-hidden="false">edit</mat-icon>
+                              <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                             </a>
                           }
 
@@ -154,14 +154,14 @@
                             <button mat-flat-button color="warn"
                               (click)="deleteParty(PartyListData.entityId)"
                               matTooltip="Deactivate">
-                              <mat-icon aria-hidden="false">delete</mat-icon>
+                              <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
                             </button>
                           }
                           @if (partyDelete && PartyListData.isDeleted) {
                             <button mat-flat-button color="warn"
                               (click)="deleteParty(PartyListData.entityId)"
                               matTooltip="Activate">
-                              <mat-icon aria-hidden="false">edit</mat-icon>
+                              <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                             </button>
                           }
                         </td>

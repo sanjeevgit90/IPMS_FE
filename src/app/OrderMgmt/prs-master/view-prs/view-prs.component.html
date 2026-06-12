@@ -1,7 +1,7 @@
 <form name="viewPoform">
   <div class="row">
 
-    <div class="col-sm-10">
+    <div class="ps-4 col-sm-9">
       @if (taskHistoryList.length != 0) {
         <div>
           <div class="container viewPO table-responsive" style="padding-top: 15px;">
@@ -253,7 +253,7 @@
           }
           @if (prs.invoiceFileUpload!=null) {
             <tr>
-              <td colspan="2"><a href="{{baseUrl}}{{prs.invoiceFileUpload}}" target="_blank">
+              <td colspan="2"><a class="btn btn-link text-info" href="{{baseUrl}}{{prs.invoiceFileUpload}}" target="_blank">
               View Attachment</a>
             </td>
           </tr>
@@ -271,7 +271,7 @@
 
 
   </div>
-  <div class="col-sm-2">
+  <div class="col-sm-2 offset-sm-1">
     <div class="po-action">
       <button mat-flat-button color="primary" (click)="printComponent('table')">
         <mat-icon>print</mat-icon> Print

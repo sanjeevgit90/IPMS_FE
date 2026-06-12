@@ -37,7 +37,7 @@
                   @if (edit) {
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width">
+                        <mat-form-field class="custom-field">
                           <input matInput name="dcno" type="text" placeholder="DC No"
                             [(ngModel)]="DCData.dcno" formControlName="dcno" readonly="true"
                             maxlength="60">
@@ -49,7 +49,7 @@
 
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width"
+                        <mat-form-field class="custom-field"
                           [ngClass]="{ 'has-error': isSubmitted && formControls.consignor.errors }">
                           <mat-select [compareWith]="compareObjects"
                             [(ngModel)]="DCData.consignor"
@@ -79,7 +79,7 @@
 
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width"
+                        <mat-form-field class="custom-field"
                           [ngClass]="{ 'has-error': isSubmitted && formControls.fulladdress.errors }">
                           <mat-select [compareWith]="compareObjects"
                             [(ngModel)]="DCData.fulladdress" name="fulladdress"
@@ -109,7 +109,7 @@
 
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width">
+                        <mat-form-field class="custom-field">
                           <input matInput name="contactperson" type="text"
                             placeholder="Contact Person" [readonly]="true"
                             [(ngModel)]="DCData.contactperson" formControlName="contactperson">
@@ -120,7 +120,7 @@
 
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width">
+                          <mat-form-field class="custom-field">
                             <input matInput name="mobileno" type="text"
                               placeholder="Contact Details" [readonly]="true"
                               [(ngModel)]="DCData.mobileno" formControlName="mobileno">
@@ -131,7 +131,7 @@
 
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width">
+                            <mat-form-field class="custom-field">
                               <input matInput name="gstno" type="text" placeholder="GST No"
                                 [readonly]="true" [(ngModel)]="DCData.gstno"
                                 formControlName="gstno">
@@ -142,7 +142,7 @@
 
                           <div class="col-sm-3">
                             <div class="form-group">
-                              <mat-form-field class="example-full-width"
+                              <mat-form-field class="custom-field"
                                 [ngClass]="{ 'has-error': isSubmitted && formControls.projectname.errors }">
                                 <mat-select [compareWith]="compareObjects"
                                   [typeaheadDebounceInterval]="matSelectDuration"
@@ -171,7 +171,7 @@
 
                           <div class="col-sm-3">
                             <div class="form-group">
-                              <mat-form-field class="example-full-width">
+                              <mat-form-field class="custom-field">
                                 <input matInput name="dcdate" placeholder="DC Date" type="text"
                                   [matDatepicker]="picker" [(ngModel)]="DCData.dcdate"
                                   formControlName="dcdate" required>
@@ -192,7 +192,7 @@
 
                             <div class="col-sm-3">
                               <div class="form-group">
-                                <mat-form-field class="example-full-width">
+                                <mat-form-field class="custom-field">
                                   <input matInput name="consigneename" type="text"
                                     placeholder="Consignee Name" [(ngModel)]="DCData.consigneename"
                                     formControlName="consigneename">
@@ -202,7 +202,7 @@
 
                               <div class="col-sm-3">
                                 <div class="form-group">
-                                  <mat-form-field class="example-full-width">
+                                  <mat-form-field class="custom-field">
                                     <input matInput name="consigneecontact" type="text"
                                       placeholder="Consignee Contact Number"
                                       [(ngModel)]="DCData.consigneecontact"
@@ -214,7 +214,7 @@
 
                                 <div class="col-sm-3">
                                   <div class="form-group">
-                                    <mat-form-field class="example-full-width">
+                                    <mat-form-field class="w-100">
                                       <textarea matInput name="notes" maxlength="200"
                                         [(ngModel)]="DCData.shippedto" formControlName="shippedto"
                                       placeholder="Ship To "></textarea>
@@ -267,14 +267,14 @@
                                                 <a mat-flat-button color="primary" matTooltip="Edit this record"
                                                   (click)="updateAsset(AssetRecord.assetid)"
                                                   title="Edit Assets">
-                                                  <mat-icon aria-hidden="false">edit</mat-icon>
+                                                  <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                                                 </a>
                                               }
                                               @if (!disableEdit) {
                                                 <a mat-flat-button color="warn" matTooltip="Delete this record"
                                                   (click)="deleteAsset(AssetRecord)"
                                                   title="delete">
-                                                  <mat-icon aria-hidden="false">delete</mat-icon>
+                                                  <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
                                                 </a>
                                               }
                                             </td>
@@ -294,7 +294,7 @@
                                 <div class="row">
                                   <div class="col-sm-3">
                                     <div class="form-group">
-                                      <mat-form-field class="example-full-width">
+                                      <mat-form-field class="custom-field">
                                         <input matInput name="assets" type="text"
                                           placeholder="Total No. of Assets" [(ngModel)]="totalAssets"
                                           formControlName="totalAssets">
@@ -303,7 +303,7 @@
                                     </div>
                                     <div class="col-sm-3">
                                       <div class="form-group">
-                                        <mat-form-field class="example-full-width"
+                                        <mat-form-field class="custom-field"
                                           [ngClass]="{ 'has-error': isSubmitted && formControls.boxes.errors }">
                                           <input matInput name="boxes" type="text"
                                             placeholder="No. of boxes" [(ngModel)]="DCData.noofboxes"
@@ -332,15 +332,15 @@
                                     }
                                     @if (!disableEdit && add) {
                                       <button mat-flat-button color="accent"
-                                        [disabled]="disableAdd" (click)="addDC('save')">
+                                        [disabled]="disableAdd" class="ms-2" (click)="addDC('save')">
                                         <mat-icon aria-hidden="false">save</mat-icon> Save
                                       </button>
                                     }
-                                    <button mat-flat-button color="warn" (click)="back()">
+                                    <button mat-flat-button color="warn" class="ms-2" (click)="back()">
                                       <mat-icon aria-hidden="false">cancel</mat-icon> Back
                                     </button>
                                     @if (!disableEdit && edit) {
-                                      <button mat-flat-button color="accent"
+                                      <button mat-flat-button color="accent" class="ms-2"
                                         (click)="addDC('update')">
                                         <mat-icon aria-hidden="false">update</mat-icon> Update
                                       </button>

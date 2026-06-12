@@ -50,14 +50,14 @@
             <div class="row">
               <div class="col-sm-12">
                 <div class="form-group">
-                  <mat-form-field class="example-full-width">
+                  <mat-form-field class="custom-field">
                     <input matInput name="ticketno" type="text" placeholder="Search by ticketno" [(ngModel)]="FilterData.ticketNo">
                   </mat-form-field>
                 </div>
               </div>
               <div class="col-sm-12">
                 <div class="form-group">
-                  <mat-form-field class="example-full-width">
+                  <mat-form-field class="custom-field">
                     <mat-label>Priority</mat-label>
                     <mat-select [(ngModel)]="FilterData.priority" name="priority" placeholder="Search by priority">
                       <mat-option>-Select-</mat-option>
@@ -70,7 +70,7 @@
               </div>
               <div class="col-sm-12">
                 <div class="form-group">
-                  <mat-form-field class="example-full-width">
+                  <mat-form-field class="custom-field">
                     <mat-select [(ngModel)]="FilterData.accountName" name="projectid" [typeaheadDebounceInterval]="matSelectDuration" placeholder="Search by project name">
                       <mat-option>-Select-</mat-option>
                       @for (project of projectList; track project) {
@@ -84,7 +84,7 @@
               </div>
               <div class="col-sm-12">
                 <div class="form-group">
-                  <mat-form-field class="example-full-width">
+                  <mat-form-field class="custom-field">
                     <mat-select [(ngModel)]="FilterData.state" name="state" [typeaheadDebounceInterval]="matSelectDuration" placeholder="Search by state" [disabled]="disable" (selectionChange)="getActiveDistrictFromstate(FilterData.state)">
                       <mat-option>-Select-</mat-option>
                       @for (state of stateList; track state) {
@@ -98,7 +98,7 @@
               </div>
               <div class="col-sm-12">
                 <div class="form-group">
-                  <mat-form-field class="example-full-width">
+                  <mat-form-field class="custom-field">
                     <mat-select [(ngModel)]="FilterData.district" [typeaheadDebounceInterval]="matSelectDuration" [disabled]="disable" name="district" placeholder="Search by district">
                       <mat-option>-Select-</mat-option>
                       @for (district of districtList; track district) {
@@ -112,7 +112,7 @@
               </div>
               <div class="col-sm-12">
                 <div class="form-group">
-                  <mat-form-field class="example-full-width">
+                  <mat-form-field class="custom-field">
                     <input matInput name="fromdate" placeholder="Created Date (From date)" type="text" [matDatepicker]="picker" [(ngModel)]="FilterData.fromDate">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
@@ -121,7 +121,7 @@
               </div>
               <div class="col-sm-12">
                 <div class="form-group">
-                  <mat-form-field class="example-full-width">
+                  <mat-form-field class="custom-field">
                     <input matInput name="dcdate" placeholder="Created Date (To Date)" type="text" [matDatepicker]="picker1" [(ngModel)]="FilterData.toDate">
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>

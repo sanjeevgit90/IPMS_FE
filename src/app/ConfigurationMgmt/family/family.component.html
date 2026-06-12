@@ -38,7 +38,7 @@
 
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width"
+                      <mat-form-field class="custom-field"
                         [ngClass]="{ 'has-error': isSubmitted && formControls.memberName.errors }">
                         <input matInput name="memberName" type="text" placeholder="Member Name"
                           [(ngModel)]="FamilyData.memberName" formControlName="memberName"
@@ -58,7 +58,7 @@
 
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width"
+                        <mat-form-field class="custom-field"
                           [ngClass]="{ 'has-error': isSubmitted && formControls.memberContact.errors }">
                           <input matInput name="memberContact" type="text"
                             placeholder="Member Contact" [(ngModel)]="FamilyData.memberContact"
@@ -78,7 +78,7 @@
 
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width">
+                          <mat-form-field class="custom-field">
                             <input matInput name="dob" placeholder="Date of birth" type="text"
                               [matDatepicker]="picker" [(ngModel)]="FamilyData.dob"
                               formControlName="dob">
@@ -98,7 +98,7 @@
 
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width"
+                            <mat-form-field class="custom-field"
                               [ngClass]="{ 'has-error': isSubmitted && formControls.relationship.errors }">
                               <input matInput name="relationship" type="text"
                                 placeholder="Relationship" [(ngModel)]="FamilyData.relationship"
@@ -211,7 +211,7 @@
                               <button mat-flat-button color="primary"
                                 (click)="editData(FamilyMasterData.entityId)"
                                 matTooltip="Edit this record">
-                                <mat-icon aria-hidden="false">edit</mat-icon>
+                                <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                               </button>
                             }
 
@@ -219,7 +219,7 @@
                               <button mat-flat-button color="warn"
                                 (click)="onDelete(FamilyMasterData.entityId)"
                                 matTooltip="Delete this user">
-                                <mat-icon aria-hidden="false">delete</mat-icon>
+                                <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
                               </button>
                             }
                           </mat-cell>

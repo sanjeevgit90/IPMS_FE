@@ -36,7 +36,7 @@
                 <div class="row">
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width"
+                      <mat-form-field class="custom-field"
                         [ngClass]="{ 'has-error': isSubmitted && formControls.categoryName.errors }">
                         <input matInput name="categoryName" type="text"
                           placeholder="Ticket Category name"
@@ -60,7 +60,7 @@
 
                     <!-- <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width"
+                      <mat-form-field class="custom-field"
                         [ngClass]="{ 'has-error': isSubmitted && formControls.categoryType.errors }">
                         <input matInput name="categoryType" type="text" placeholder="Category Type"
                           [(ngModel)]="CategoryData.categoryType"
@@ -104,7 +104,7 @@
 
                     <!-- <div class="col-sm-3" *ngIf="((CategoryData.categoryType == 'Subcategory')||(CategoryData.categoryType == ''))">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width">
+                      <mat-form-field class="custom-field">
                         <input matInput name="parentCategoryId" type="text"
                           placeholder="Parent Ticket Category"
                           [(ngModel)]="CategoryData.parentCategoryId"
@@ -218,7 +218,7 @@
                         <button mat-flat-button color="primary" [disabled]="CategoryMasterData.isDeleted"
                           (click)="editon(CategoryMasterData.categoryName)"
                           matTooltip="Edit this record">
-                          <mat-icon aria-hidden="false">edit</mat-icon>
+                          <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                         </button>
                       }
 
@@ -226,7 +226,7 @@
                         <button mat-flat-button color="warn" [disabled]="CategoryMasterData.isDeleted"
                           (click)="deleteCategoryData(CategoryMasterData.categoryName)"
                           matTooltip="Delete this record">
-                          <mat-icon aria-hidden="false">delete</mat-icon>
+                          <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
                         </button>
                       }
                     </td>

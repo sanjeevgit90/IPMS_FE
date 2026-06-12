@@ -30,7 +30,7 @@
                   <div class="row">
                     <div class="col-sm-12">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width">
+                        <mat-form-field class="custom-field">
                           <input matInput name="ticketno" type="text" placeholder="Search by ticketno"
                             [(ngModel)]="FilterData.ticketNo">
                           </mat-form-field>
@@ -38,7 +38,7 @@
                       </div>
                       <div class="col-sm-12">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width">
+                          <mat-form-field class="custom-field">
                             <mat-label>Priority</mat-label>
                             <mat-select [(ngModel)]="FilterData.priority"  name="priority" placeholder="Search by priority">
                               <mat-option>-Select-</mat-option>
@@ -51,7 +51,7 @@
                       </div>
                       <div class="col-sm-12">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width">
+                          <mat-form-field class="custom-field">
                             <mat-select [(ngModel)]="FilterData.accountName" name="projectid"
                               placeholder="Search by project name"
                               [typeaheadDebounceInterval]="matSelectDuration">
@@ -84,7 +84,7 @@
                       </div>
                       <div class="col-sm-12">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width">
+                          <mat-form-field class="custom-field">
                             <input matInput name="dcdate" placeholder="Escalated Date" type="text"
                               [matDatepicker]="picker1" [(ngModel)]="FilterData.escalatedOn">
                               <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>

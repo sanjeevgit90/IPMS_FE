@@ -1,9 +1,10 @@
 @if (showLoading) {
   <app-loader></app-loader>
 }
+
 <form name="viewPoform">
   <div class="row" style="margin: 0px;">
-    <div class="col-sm-1"></div>
+    
     <div class="col-sm-9">
       <div class="viewPO" name="table" id="table">
 
@@ -171,8 +172,8 @@
   </div>
 </div>
 @if (deliveryChallanEdit) {
-  <div class="col-sm-2" >
-    <div class="po-action">
+  <div class="col-sm-3" >
+    <div class="po-action w-100">
       @if (!dc.printflag) {
         <button mat-flat-button color="primary" [disabled]="dc.isDeleted"
           (click)="printComponent('table');enableUpload(dc.entityId)">
@@ -180,7 +181,7 @@
         </button>
       }
       @if (dc.uploadflag) {
-        <div>
+        <div class="fileUpCss">
           <app-fileupload [files]="attachmentFiles" maxSize="2048" labelname="Upload Attachment" modulename="dc"
             [entitydata]="dc.entityId">
           </app-fileupload>

@@ -36,7 +36,7 @@
                 <div class="row">
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.scheduleDate.errors }">
+                      <mat-form-field class="custom-field" [ngClass]="{ 'has-error': isSubmitted && formControls.scheduleDate.errors }">
                         <input matInput name="scheduleDate" placeholder="Schedule Date " type="text"
                           [matDatepicker]="picker" [(ngModel)]="PoPaymentData.scheduleDate"
                           formControlName="scheduleDate">
@@ -56,7 +56,7 @@
 
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.amount.errors }">
+                        <mat-form-field class="custom-field" [ngClass]="{ 'has-error': isSubmitted && formControls.amount.errors }">
                           <input matInput name="amount" type="text" placeholder="Amount"
                             [(ngModel)]="PoPaymentData.amount"
                             formControlName="amount" maxlength="10" numbersOnly required>
@@ -73,7 +73,7 @@
                       </div>
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width">
+                          <mat-form-field class="custom-field">
                             <input matInput name="paymentMode" type="text" placeholder="Payment Mode"
                               [(ngModel)]="PoPaymentData.paymentMode" formControlName="paymentMode"
                               maxlength="60">
@@ -83,7 +83,7 @@
 
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width">
+                            <mat-form-field class="custom-field">
                               <input matInput name="paymentDate" placeholder="Actual Payment Date" type="text"
                                 [matDatepicker]="picker1" [(ngModel)]="PoPaymentData.paymentDate"
                                 formControlName="paymentDate">
@@ -97,7 +97,7 @@
 
                           <div class="col-sm-3">
                             <div class="form-group">
-                              <mat-form-field class="example-full-width">
+                              <mat-form-field class="custom-field">
                                 <input matInput name="ddNumber" type="text" placeholder="Cheque / DD number"
                                   [(ngModel)]="PoPaymentData.ddNumber" formControlName="ddNumber"
                                   maxlength="60">
@@ -107,7 +107,7 @@
 
                             <div class="col-sm-3">
                               <div class="form-group">
-                                <mat-form-field class="example-full-width" >
+                                <mat-form-field class="custom-field" >
                                   <input matInput name="ddBank" type="text" placeholder="Cheque / DD Bank and Branch"
                                     [(ngModel)]="PoPaymentData.ddBank" formControlName="ddBank"
                                     maxlength="60">
@@ -117,7 +117,7 @@
 
                               <div class="col-sm-3">
                                 <div class="form-group">
-                                  <mat-form-field class="example-full-width" >
+                                  <mat-form-field class="custom-field" >
                                     <input matInput name="invoiceNumber" type="text" placeholder="Invoice Number"
                                       [(ngModel)]="PoPaymentData.invoiceNumber" formControlName="invoiceNumber"
                                       maxlength="60">
@@ -128,7 +128,7 @@
 
                                 <div class="col-sm-3">
                                   <div class="form-group">
-                                    <mat-form-field class="example-full-width">
+                                    <mat-form-field class="custom-field">
                                       <input matInput name="invoiceDate" placeholder="Invoice Date" type="text"
                                         [matDatepicker]="picker2" [(ngModel)]="PoPaymentData.invoiceDate"
                                         formControlName="invoiceDate">
@@ -143,7 +143,7 @@
 
                                   <div class="col-sm-3">
                                     <div class="form-group">
-                                      <mat-form-field class="example-full-width" >
+                                      <mat-form-field class="custom-field" >
                                         <input matInput name="cashBackReceived" type="text" placeholder="CashBack Received"
                                           [(ngModel)]="PoPaymentData.cashBackReceived" formControlName="cashBackReceived"
                                           maxlength="60">
@@ -153,7 +153,7 @@
 
                                     <div class="col-sm-3">
                                       <div class="form-group">
-                                        <mat-form-field class="example-full-width" >
+                                        <mat-form-field class="custom-field" >
                                           <input matInput name="interestPaid" type="text" placeholder="Interest Paid"
                                             [(ngModel)]="PoPaymentData.interestPaid"  formControlName="interestPaid" numbersOnly
                                             maxlength="60">

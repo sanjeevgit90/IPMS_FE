@@ -43,7 +43,7 @@
             <div class="row">
               <div class="col-sm-12">
                 <div class="form-group">
-                  <mat-form-field class="example-full-width">
+                  <mat-form-field class="custom-field">
                     <input matInput name="city" type="text" placeholder="Search by city name"
                       [(ngModel)]="FilterData.city">
                     </mat-form-field>
@@ -51,7 +51,7 @@
                 </div>
                 <div class="col-sm-12">
                   <div class="form-group">
-                    <mat-form-field class="example-full-width">
+                    <mat-form-field class="custom-field">
                       <input matInput name="dcno" type="text" placeholder="Search by PO no"
                         [(ngModel)]="FilterData.pono">
                       </mat-form-field>
@@ -59,7 +59,7 @@
                   </div>
                   <div class="col-sm-12">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width">
+                      <mat-form-field class="custom-field">
                         <input matInput name="dcno" type="text" placeholder="Search by PO Reference No"
                           [(ngModel)]="FilterData.poreferenceno">
                         </mat-form-field>
@@ -67,7 +67,7 @@
                     </div>
                     <div class="col-sm-12">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width">
+                        <mat-form-field class="custom-field">
                           <input matInput name="installationdate" placeholder="Search by installation date"
                             type="text" [matDatepicker]="installationdate"
                             [(ngModel)]="FilterData.installationdate">
@@ -78,7 +78,7 @@
                       </div>
                       <div class="col-sm-12">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width">
+                          <mat-form-field class="custom-field">
                             <mat-select [(ngModel)]="FilterData.project" name="projectname" [typeaheadDebounceInterval]="matSelectDuration"
                               placeholder="Search by project name" >
                               <mat-option>-Select-</mat-option>
@@ -184,11 +184,11 @@
                             <button  mat-flat-button color="primary"  matTooltip="Edit this record" [disabled]="CityReportRecord.isDeleted"
                               [routerLink]="['/updateCityReport', CityReportRecord.entityId,'edit']"
                               title="Edit">
-                              <mat-icon aria-hidden="false">edit</mat-icon>
+                              <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                             </button>
                             <button  mat-flat-button color="warn" matTooltip="Delete this record" [disabled]="CityReportRecord.isDeleted"
                               (click)="onDelete(CityReportRecord.entityId)" title="delete">
-                              <mat-icon aria-hidden="false">delete</mat-icon>
+                              <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
                             </button>
 
                           </td>

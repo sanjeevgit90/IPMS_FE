@@ -159,7 +159,7 @@
                                   [disabled]="CollectionRecord.isdeleted"
                                   (click)="addCollection(CollectionRecord.entityid, 'edit')"
                                   title="Edit">
-                                  <mat-icon aria-hidden="false">edit</mat-icon>
+                                  <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                                 </button>
                               }
                               @if ((CollectionRecord.collectionstatus == 'DRAFT' )) {
@@ -167,7 +167,7 @@
                                   [disabled]="CollectionRecord.isdeleted"
                                   (click)="deleteCollection(CollectionRecord.entityid)"
                                   title="Edit">
-                                  <mat-icon aria-hidden="false">delete</mat-icon>
+                                  <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
                                 </button>
                               }
                               @if ((CollectionRecord.collectionstatus == 'DRAFT')) {

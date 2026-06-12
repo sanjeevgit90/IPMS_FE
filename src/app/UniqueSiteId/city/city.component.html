@@ -37,7 +37,7 @@
               <div class="row">
                 <div class="col-sm-12">
                   <div class="form-group">
-                    <mat-form-field class="example-full-width">
+                    <mat-form-field class="custom-field">
                       <input matInput name="citycode" type="text"  formControlName="citycode"
                         placeholder="Search by code" [(ngModel)]="FilterData.citycode">
                       </mat-form-field>
@@ -70,7 +70,7 @@
 
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width"
+                          <mat-form-field class="custom-field"
                             [ngClass]="{ 'has-error': isSubmitted && formControls.cityname.errors }">
                             <input matInput name="cityname" type="text" placeholder="City Name"
                               [(ngModel)]="CityName" formControlName="cityname" maxlength="60"
@@ -91,7 +91,7 @@
 
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width"
+                            <mat-form-field class="custom-field"
                               [ngClass]="{ 'has-error': isSubmitted && formControls.citycode.errors }">
                               <input matInput name="citycode" type="text" placeholder="City Code"
                                 [(ngModel)]="CityData.citycode" formControlName="citycode"
@@ -234,14 +234,14 @@
                               <button mat-flat-button color="primary"
                                 (click)="editon(CityMasterData.id.cityname, CityMasterData.id.district, CityMasterData.id.state)"
                                 matTooltip="Edit this record">
-                                <mat-icon aria-hidden="false">edit</mat-icon>
+                                <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                               </button>
                             }
                             @if (cityDelete) {
                               <button mat-flat-button color="warn"
                                 (click)="onDelete(CityMasterData.id.cityname, CityMasterData.id.district, CityMasterData.id.state)"
                                 matTooltip="Delete this record">
-                                <mat-icon aria-hidden="false">delete</mat-icon>
+                                <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
                               </button>
                             }
 

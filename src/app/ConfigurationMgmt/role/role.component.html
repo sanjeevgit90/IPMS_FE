@@ -38,7 +38,7 @@
           <div class="row">
             <div class="col-sm-12">
               <div class="form-group">
-                <mat-form-field class="example-full-width">
+                <mat-form-field class="custom-field">
                   <input matInput name="rolename" type="text" placeholder="Search by name"
                     [(ngModel)]="FilterData.rolename">
                   </mat-form-field>
@@ -100,7 +100,7 @@
                       <a mat-flat-button color="primary" matTooltip="Edit this record"
                         [routerLink]="['/updateRole', RoleMasterData.rolename,'edit']"
                         [disabled]="RoleMasterData.deleted">
-                        <mat-icon aria-hidden="false">edit</mat-icon>
+                        <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                       </a>
                     }
                     @if (RoleMasterData.deleted && roleDelete) {

@@ -41,7 +41,7 @@
         <div class="row">
           <div class="col-sm-12">
             <div class="form-group">
-              <mat-form-field class="example-full-width">
+              <mat-form-field class="custom-field">
                 <input matInput type="text" name="displayname" placeholder="Search by display name"
                   [(ngModel)]="FilterData.displayname">
                 </mat-form-field>
@@ -49,7 +49,7 @@
             </div>
             <div class="col-sm-12">
               <div class="form-group">
-                <mat-form-field class="example-full-width">
+                <mat-form-field class="custom-field">
                   <input matInput type="text" placeholder="Search by menu name"
                     [(ngModel)]="FilterData.menuname">
                   </mat-form-field>
@@ -78,7 +78,7 @@
                   <div class="row">
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width"
+                        <mat-form-field class="custom-field"
                           [ngClass]="{ 'has-error': isSubmitted && formControls.displayname.errors }">
                           <input matInput name="displayname" type="text"
                             placeholder="Display Name" [(ngModel)]="MenuData.displayname"
@@ -97,7 +97,7 @@
                       </div>
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width"
+                          <mat-form-field class="custom-field"
                             [ngClass]="{ 'has-error': isSubmitted && formControls.menuname.errors }">
                             <input matInput name="menuname" type="text" placeholder="Menu Name"
                               [(ngModel)]="MenuData.menuname" formControlName="menuname"
@@ -116,7 +116,7 @@
                         </div>
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width"
+                            <mat-form-field class="custom-field"
                               [ngClass]="{ 'has-error': isSubmitted && formControls.menuorder.errors }">
                               <input matInput name="menuorder" type="text" placeholder="Menu Order"
                                 [(ngModel)]="MenuData.menuorder" formControlName="menuorder"
@@ -136,7 +136,7 @@
 
                           <div class="col-sm-3">
                             <div class="form-group">
-                              <mat-form-field class="example-full-width"
+                              <mat-form-field class="custom-field"
                                 [ngClass]="{ 'has-error': isSubmitted && formControls.urlpath.errors }">
                                 <input matInput name="urlpath" type="text" placeholder="Page Url"
                                   [(ngModel)]="MenuData.urlpath" formControlName="urlpath"
@@ -174,7 +174,7 @@
 
                             <div class="col-sm-3">
                               <div class="form-group">
-                                <mat-form-field class="example-full-width">
+                                <mat-form-field class="custom-field">
                                   <input matInput name="description" type="text" placeholder="Menu Icon"
                                     [(ngModel)]="MenuData.description" formControlName="description"
                                     maxlength="60">
@@ -268,14 +268,14 @@
                                 <button mat-flat-button color="primary" [disabled]="MenuMasterData.isDeleted"
                                   (click)="editData(MenuMasterData.menuname)" matTooltip="Edit this record"
                                   >
-                                  <mat-icon aria-hidden="false">edit</mat-icon>
+                                  <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                                 </button>
                               }
 
                               @if (menuDelete) {
                                 <button mat-flat-button color="warn" (click)="onDelete(MenuMasterData.menuname)"
                                   matTooltip="Delete this record">
-                                  <mat-icon aria-hidden="false">delete</mat-icon>
+                                  <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
                                 </button>
                               }
 

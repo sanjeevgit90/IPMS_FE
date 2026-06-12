@@ -31,7 +31,7 @@
                 <div class="row">
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width"
+                      <mat-form-field class="custom-field"
                         [ngClass]="{ 'has-error': isSubmitted && formControls.problemReportValue.errors }">
                         <input matInput name="problemReportValue" type="text"
                           placeholder="Problem Report Name"
@@ -52,7 +52,7 @@
                     </div>
                     <!-- <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width"
+                      <mat-form-field class="custom-field"
                         [ngClass]="{ 'has-error': isSubmitted && formControls.projectId.errors }">
                         <input matInput name="projectId" type="text" placeholder="Category Type"
                           [(ngModel)]="ProblemReportData.projectId"
@@ -147,7 +147,7 @@
                           [disabled]="ProblemReportMasterData.isDeleted"
                           (click)="editon(ProblemReportMasterData.entityId)"
                           matTooltip="Edit this record">
-                          <mat-icon aria-hidden="false">edit</mat-icon>
+                          <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                         </button>
                       }
                       @if (ticketproblemReportedDelete) {
@@ -155,7 +155,7 @@
                           [disabled]="ProblemReportMasterData.isDeleted"
                           (click)="deleteProblemData(ProblemReportMasterData.entityId)"
                           matTooltip="Delete this record">
-                          <mat-icon aria-hidden="false">delete</mat-icon>
+                          <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
                         </button>
                       }
                     </td>

@@ -39,7 +39,7 @@
             <div class="row">
               <div class="col-sm-12">
                 <div class="form-group">
-                  <mat-form-field class="example-full-width">
+                  <mat-form-field class="custom-field">
                     <input matInput name="geographycode" type="text" formControlName="geographycode"
                       placeholder="Search by code" [(ngModel)]="FilterData.geographycode">
                     </mat-form-field>
@@ -93,7 +93,7 @@
 
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width"
+                        <mat-form-field class="custom-field"
                           [ngClass]="{ 'has-error': isSubmitted && formControls.geographycode.errors }">
                           <input matInput name="geographycode" type="text"
                             placeholder="Geography Code"
@@ -114,7 +114,7 @@
                       </div>
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width"
+                          <mat-form-field class="custom-field"
                             [ngClass]="{ 'has-error': isSubmitted && formControls.geographyname.errors }">
                             <input matInput name="geographyname" type="text"
                               placeholder="Geography Name" [(ngModel)]="GeographyName"
@@ -228,7 +228,7 @@
                             <button mat-flat-button color="primary"
                               (click)="editon(GeographyMasterData.id.geographyname, GeographyMasterData.id.parentgeography)"
                               matTooltip="Edit this record">
-                              <mat-icon aria-hidden="false">edit</mat-icon>
+                              <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                             </button>
                           }
 
@@ -236,7 +236,7 @@
                             <button mat-flat-button color="warn"
                               (click)="onDelete(GeographyMasterData.id.geographyname, GeographyMasterData.id.parentgeography)"
                               matTooltip="Delete this record">
-                              <mat-icon aria-hidden="false">delete</mat-icon>
+                              <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
                             </button>
                           }
                         </td>

@@ -36,7 +36,7 @@
                 <div class="row">
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width"
+                      <mat-form-field class="custom-field"
                         [ngClass]="{ 'has-error': isSubmitted && formControls.assetname.errors }">
                         <input matInput name="assetname" type="text" placeholder="Asset Name"
                           [(ngModel)]="AssetData.assetname" formControlName="assetname"
@@ -56,7 +56,7 @@
 
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width"
+                        <mat-form-field class="custom-field"
                           [ngClass]="{ 'has-error': isSubmitted && formControls.serialno.errors }">
                           <input matInput name="serialno" type="text" placeholder="Serial No"
                             [(ngModel)]="AssetData.serialno" formControlName="serialno"
@@ -76,7 +76,7 @@
 
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width">
+                          <mat-form-field class="custom-field">
                             <input matInput name="assettag" type="text" placeholder="Asset Tag"
                               [(ngModel)]="AssetData.assettag"  maxlength="60"
                               formControlName="assettag" >
@@ -86,7 +86,7 @@
                         </div>
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width"
+                            <mat-form-field class="custom-field"
                               [ngClass]="{ 'has-error': isSubmitted && formControls.category.errors }">
                               <mat-select [(ngModel)]="category" name="category"  placeholder="Category" formControlName="category" [typeaheadDebounceInterval]="matSelectDuration"
                                 (ngModelChange)="getActiveSubCategoryfromcategory(category)" required>
@@ -111,7 +111,7 @@
                         </div>
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width"
+                            <mat-form-field class="custom-field"
                               [ngClass]="{ 'has-error': isSubmitted && formControls.subcategory.errors }">
                               <mat-select [(ngModel)]="subcategory" name="subcategory" formControlName="subcategory" [typeaheadDebounceInterval]="matSelectDuration"
                                 placeholder="Sub Category" (ngModelChange)="getActiveProduct(subcategory)" required>
@@ -136,7 +136,7 @@
                         </div>
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width"
+                            <mat-form-field class="custom-field"
                               [ngClass]="{ 'has-error': isSubmitted && formControls.productid.errors }">
                               <mat-select [compareWith]="compareObjects" [(ngModel)]="AssetData.productid" name="productid" [typeaheadDebounceInterval]="matSelectDuration"
                                 placeholder="Product name" formControlName="productid" required>
@@ -162,7 +162,7 @@
 
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width"
+                            <mat-form-field class="custom-field"
                               [ngClass]="{ 'has-error': isSubmitted && formControls.projectname.errors }">
                               <mat-select [compareWith]="compareUser" [(ngModel)]="AssetData.projectname" name="projectname" [typeaheadDebounceInterval]="matSelectDuration"
                                 placeholder="Account name" formControlName="projectname" required>
@@ -187,7 +187,7 @@
                         </div>
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width"
+                            <mat-form-field class="custom-field"
                               [ngClass]="{ 'has-error': isSubmitted && formControls.vendorname.errors }">
                               <mat-select [compareWith]="compareUser" [(ngModel)]="AssetData.vendorname" name="vendorname" [typeaheadDebounceInterval]="matSelectDuration"
                                 placeholder="Vendor name" formControlName="vendorname" required>
@@ -213,7 +213,7 @@
 
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width">
+                            <mat-form-field class="custom-field">
                               <input matInput name="orderno" type="text" placeholder="Order No"
                                 [(ngModel)]="AssetData.orderno" formControlName="orderno"  maxlength="60">
                               </mat-form-field>
@@ -222,7 +222,7 @@
 
                           <div class="col-sm-3">
                             <div class="form-group">
-                              <mat-form-field class="example-full-width">
+                              <mat-form-field class="custom-field">
                                 <input matInput name="deliverychallanno" type="text" placeholder="Delivery Challan No"
                                   [(ngModel)]="AssetData.deliverychallanno" formControlName="deliverychallanno"  maxlength="60">
                                 </mat-form-field>
@@ -232,7 +232,7 @@
 
                             <div class="col-sm-3">
                               <div class="form-group">
-                                <mat-form-field class="example-full-width">
+                                <mat-form-field class="custom-field">
                                   <input matInput name="purchasedate" placeholder="Purchase Date" type="text"
                                     [matDatepicker]="picker" [(ngModel)]="AssetData.purchasedate"
                                     formControlName="purchasedate" required>
@@ -252,7 +252,7 @@
 
                               <div class="col-sm-3">
                                 <div class="form-group">
-                                  <mat-form-field class="example-full-width">
+                                  <mat-form-field class="custom-field">
                                     <input matInput name="warrantytilldate" placeholder="Warranty Till Date" type="text"
                                       [matDatepicker]="picker1" [(ngModel)]="AssetData.warrantytilldate"
                                       formControlName="warrantytilldate" required>
@@ -272,7 +272,7 @@
 
                                 <div class="col-sm-3">
                                   <div class="form-group">
-                                    <mat-form-field class="example-full-width"
+                                    <mat-form-field class="custom-field"
                                       [ngClass]="{ 'has-error': isSubmitted && formControls.eol.errors }">
                                       <mat-select [(ngModel)]="AssetData.eol" name="eol"  placeholder="End Of Life (EOL)" [typeaheadDebounceInterval]="matSelectDuration"
                                         formControlName="eol" required>
@@ -298,7 +298,7 @@
 
                                 <div class="col-sm-3">
                                   <div class="form-group">
-                                    <mat-form-field class="example-full-width">
+                                    <mat-form-field class="custom-field">
                                       <mat-select [(ngModel)]="AssetData.depreciation" name="depreciation" [typeaheadDebounceInterval]="matSelectDuration"
                                         formControlName="depreciation"  placeholder="Depreciation" >
                                         <mat-option >-Select-</mat-option>
@@ -315,7 +315,7 @@
 
                                 <div class="col-sm-3">
                                   <div class="form-group">
-                                    <mat-form-field class="example-full-width"
+                                    <mat-form-field class="custom-field"
                                       [ngClass]="{ 'has-error': isSubmitted && formControls.assetstatus.errors }">
                                       <mat-select [(ngModel)]="AssetData.assetstatus" name="assetstatus" [typeaheadDebounceInterval]="matSelectDuration"
                                         formControlName="assetstatus"  placeholder="Asset Status" required>
@@ -341,7 +341,7 @@
 
                                 <div class="col-sm-3">
                                   <div class="form-group">
-                                    <mat-form-field
+                                    <mat-form-field class="custom-field"
                                       [ngClass]="{ 'has-error': isSubmitted && formControls.state.errors }">
                                       <mat-label>State</mat-label>
                                       <mat-select [(ngModel)]="state" formControlName="state" [typeaheadDebounceInterval]="matSelectDuration"
@@ -368,7 +368,7 @@
 
                                 <div class="col-sm-3">
                                   <div class="form-group">
-                                    <mat-form-field
+                                    <mat-form-field class="custom-field"
                                       [ngClass]="{ 'has-error': isSubmitted && formControls.district .errors }">
                                       <mat-label>District</mat-label>
                                       <mat-select [(ngModel)]="district" [typeaheadDebounceInterval]="matSelectDuration"
@@ -395,7 +395,7 @@
 
                                 <div class="col-sm-3">
                                   <div class="form-group">
-                                    <mat-form-field class="example-full-width"
+                                    <mat-form-field class="custom-field"
                                       [ngClass]="{ 'has-error': isSubmitted && formControls.city.errors }">
                                       <mat-select [(ngModel)]="city" name="city" formControlName="city" placeholder="City" [typeaheadDebounceInterval]="matSelectDuration"
                                         (ngModelChange)="getActivePoliceStationFromCity(city)" required>
@@ -421,7 +421,7 @@
 
                                 <div class="col-sm-3">
                                   <div class="form-group">
-                                    <mat-form-field class="example-full-width"
+                                    <mat-form-field class="custom-field"
                                       [ngClass]="{ 'has-error': isSubmitted && formControls.policestation.errors }">
                                       <mat-select [(ngModel)]="policestation" name="policestation" formControlName="policestation" placeholder="Police Station"
                                         (ngModelChange)="getActiveLocationFromPoliceStation(policestation)" [typeaheadDebounceInterval]="matSelectDuration">
@@ -447,7 +447,7 @@
 
                                 <div class="col-sm-3">
                                   <div class="form-group">
-                                    <mat-form-field class="example-full-width"
+                                    <mat-form-field class="custom-field"
                                       [ngClass]="{ 'has-error': isSubmitted && formControls.location.errors }">
                                       <mat-select [(ngModel)]="AssetData.location" name="location" formControlName="location"
                                         placeholder="Unique Site Id" [typeaheadDebounceInterval]="matSelectDuration" required>
@@ -478,8 +478,8 @@
                                   </div>
                                 </div>
                                 <div class="col-sm-3">
-                                  <div class="form-group">
-                                    <mat-form-field class="example-full-width">
+                                  <div class="form-group w-100">
+                                    <mat-form-field class="w-100">
                                       <textarea matInput name="notes" maxlength="200"  [(ngModel)]="AssetData.notes" formControlName="notes" placeholder="Notes"></textarea>
                                     </mat-form-field>
                                   </div>
@@ -492,7 +492,7 @@
 
 
                                 @if (add) {
-                                  <button mat-flat-button color="accent" (click)="addAsset('save')">
+                                  <button mat-flat-button color="accent" class="me-2" (click)="addAsset('save')">
                                     <mat-icon aria-hidden="false">save</mat-icon> Save</button>
                                   }
 
@@ -501,7 +501,7 @@
                                     <mat-icon aria-hidden="false">cancel</mat-icon> Back</button>
 
                                     @if (edit) {
-                                      <button mat-flat-button color="accent" (click)="addAsset('update')">
+                                      <button mat-flat-button color="accent" class="ms-2" (click)="addAsset('update')">
                                         <mat-icon aria-hidden="false">update</mat-icon> Update</button>
                                       }
                                     </div>

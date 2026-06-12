@@ -66,7 +66,7 @@
 
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width"
+                      <mat-form-field class="custom-field"
                         [ngClass]="{ 'has-error': isSubmitted && formControls.address1.errors }">
                         <input matInput name="address1" type="text" placeholder="Address Line 1"
                           [(ngModel)]="PartyAddressData.address1"
@@ -85,7 +85,7 @@
 
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width">
+                        <mat-form-field class="custom-field">
                           <input matInput name="address2" type="text" placeholder="Address Line 2"
                             [(ngModel)]="PartyAddressData.address2"
                             formControlName="address2" maxlength="100">
@@ -95,7 +95,7 @@
 
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width">
+                          <mat-form-field class="custom-field">
                             <input matInput name="landmark" type="text" placeholder="Landmark"
                               [(ngModel)]="PartyAddressData.landmark"
                               formControlName="landmark" maxlength="100">
@@ -181,7 +181,7 @@
 
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width"
+                          <mat-form-field class="custom-field"
                             [ngClass]="{ 'has-error': isSubmitted && formControls.country.errors }">
                             <input matInput name="country" type="text" placeholder="Country"
                               [(ngModel)]="PartyAddressData.country"
@@ -200,7 +200,7 @@
 
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width"
+                            <mat-form-field class="custom-field"
                               [ngClass]="{ 'has-error': isSubmitted && formControls.pinCode.errors }">
                               <input matInput name="pinCode" type="text" placeholder="Pincode"
                                 [(ngModel)]="PartyAddressData.pinCode"
@@ -219,7 +219,7 @@
 
                           <div class="col-sm-3">
                             <div class="form-group">
-                              <mat-form-field class="example-full-width">
+                              <mat-form-field class="custom-field">
                                 <mat-label>Contact Person</mat-label>
                                 <input matInput name="contactPerson" type="text"
                                   placeholder="Please enter contact person."
@@ -231,7 +231,7 @@
 
                             <div class="col-sm-3">
                               <div class="form-group">
-                                <mat-form-field class="example-full-width">
+                                <mat-form-field class="custom-field">
                                   <mat-label>Contact No.</mat-label>
                                   <input matInput name="contactNo" type="text"
                                     placeholder="Please enter contact no."

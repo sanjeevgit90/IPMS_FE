@@ -24,8 +24,9 @@
               <button mat-flat-button color="warn" (click)="filterFunc()">
                 <mat-icon aria-hidden="false">filter</mat-icon> Filter
               </button>
+
               @if (oemDeliveryChallanAdd) {
-                <button mat-flat-button color="accent" (click)="addDC()">
+                <button mat-flat-button color="accent" class="ms-2" (click)="addDC()">
                   <mat-icon aria-hidden="false">add</mat-icon> Add Delivery Challan
                 </button>
               }
@@ -45,7 +46,7 @@
             <div class="row">
               <div class="col-sm-12">
                 <div class="form-group">
-                  <mat-form-field class="example-full-width">
+                  <mat-form-field class="custom-field">
                     <input matInput name="dcno" type="text" placeholder="Search by dc no"
                       [(ngModel)]="FilterData.dcno">
                     </mat-form-field>
@@ -53,7 +54,7 @@
                 </div>
                 <div class="col-sm-12">
                   <div class="form-group">
-                    <mat-form-field class="example-full-width">
+                    <mat-form-field class="custom-field">
                       <mat-select [(ngModel)]="FilterData.projectname" name="projectname"
                         placeholder="Search by project name"
                         [typeaheadDebounceInterval]="matSelectDuration">
@@ -73,7 +74,7 @@
                 <button mat-flat-button color="primary" (click)="search()">
                   <mat-icon aria-hidden="false">search</mat-icon> Search
                 </button>
-                <button mat-flat-button color="warn" (click)="cancel()">
+                <button mat-flat-button color="warn" class="ms-2" (click)="cancel()">
                   <mat-icon aria-hidden="false">cancel</mat-icon> Cancel
                 </button>
               </div>
@@ -146,13 +147,13 @@
                         <a mat-flat-button color="primary" matTooltip="Edit this record"
                           [disabled]="DCRecord.isdeleted"
                           [routerLink]="['/updateOEMDC', DCRecord.entityId,'edit']" title="Edit">
-                          <mat-icon aria-hidden="false">edit</mat-icon>
+                          <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                         </a>
                       }
                       @if (DCRecord.taskid == null && oemDeliveryChallanDelete && !actionFlag) {
                         <a mat-flat-button color="warn" matTooltip="Delete this record"  [disabled]="DCRecord.isdeleted"
                           (click)="onDelete(DCRecord.entityId)">
-                          <mat-icon aria-hidden="false">delete</mat-icon>
+                          <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
                         </a>
                       }
                       @if (DCRecord.taskid == null && approvalFlag) {
@@ -167,7 +168,7 @@
                           [routerLink]="['/updateOEMDCAsset', DCRecord.entityId,'viewDC']"
                           title="Edit Asset"
                           >
-                          <mat-icon aria-hidden="false">edit</mat-icon>
+                          <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                         </a>
                       }
 
@@ -176,7 +177,7 @@
                           [disabled]="DCRecord.isDeleted"
                           (click)="openCourierdetails(DCRecord.entityId)"
                           title="Add Courier Details">
-                          <mat-icon aria-hidden="false">edit</mat-icon>
+                          <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                         </a>
                       }
                       @if (actionFlag &&  DCRecord.taskid != null && DCRecord.dcstatus == 'OEM_DC_PENDING') {

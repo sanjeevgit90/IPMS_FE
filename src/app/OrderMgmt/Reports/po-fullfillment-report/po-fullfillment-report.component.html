@@ -32,7 +32,7 @@
                 <div class="row">
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width">
+                      <mat-form-field class="custom-field">
                         <mat-label>Project</mat-label>
                         <mat-select [(ngModel)]="ReportRequest.projectId"
                           formControlName="projectId">
@@ -48,7 +48,7 @@
 
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width">
+                      <mat-form-field class="custom-field">
                         <mat-label>Vendor</mat-label>
                         <mat-select [(ngModel)]="ReportRequest.partyId"
                           formControlName="partyId">
@@ -64,7 +64,7 @@
 
                   <div class="col-sm-2">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width">
+                      <mat-form-field class="custom-field">
                         <input matInput name="fromDate" placeholder="From date." type="text"
                           [matDatepicker]="picker1" [(ngModel)]="ReportRequest.fromDate"
                           formControlName="fromDate">
@@ -77,7 +77,7 @@
 
                     <div class="col-sm-2">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width">
+                        <mat-form-field class="custom-field">
                           <input matInput name="toDate" placeholder="To date." type="text"
                             [matDatepicker]="picker2" [(ngModel)]="ReportRequest.toDate"
                             formControlName="toDate">

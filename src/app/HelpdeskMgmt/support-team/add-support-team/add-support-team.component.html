@@ -44,7 +44,7 @@
 
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.firstName.errors }">
+                      <mat-form-field class="custom-field" [ngClass]="{ 'has-error': isSubmitted && formControls.firstName.errors }">
                         <input matInput name="firstName" type="text" placeholder="First Name" [(ngModel)]="SupportTeamData.firstName" formControlName="firstName"
                           maxlength="60" required>
                           @if (isSubmitted && formControls.firstName.errors) {
@@ -62,7 +62,7 @@
 
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.lastName.errors }">
+                        <mat-form-field class="custom-field" [ngClass]="{ 'has-error': isSubmitted && formControls.lastName.errors }">
                           <input matInput name="lastName" type="text" placeholder="Last Name" [(ngModel)]="SupportTeamData.lastName" formControlName="lastName"
                             maxlength="60" required>
                             @if (isSubmitted && formControls.lastName.errors) {
@@ -111,7 +111,7 @@
 
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.address.errors }">
+                          <mat-form-field class="custom-field" [ngClass]="{ 'has-error': isSubmitted && formControls.address.errors }">
                             <input matInput name="address" type="text" placeholder="Address" [(ngModel)]="SupportTeamData.address" formControlName="address"
                               maxlength="60">
 
@@ -121,7 +121,7 @@
 
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.pincode.errors }">
+                            <mat-form-field class="custom-field" [ngClass]="{ 'has-error': isSubmitted && formControls.pincode.errors }">
                               <input matInput name="pincode" type="text" placeholder="Pin code" [(ngModel)]="SupportTeamData.pincode" formControlName="pincode"
                                 maxlength="60" numberOnly>
 
@@ -193,7 +193,7 @@
 
                           <div class="col-sm-3">
                             <div class="form-group">
-                              <mat-form-field class="example-full-width">
+                              <mat-form-field class="custom-field">
                                 <input matInput name="serviceStartDate" placeholder="Service Start Date " type="text" [matDatepicker]="picker1" [(ngModel)]="SupportTeamData.serviceStartDate"
                                   formControlName="serviceStartDate" name="serviceStartDate">
                                   @if (isSubmitted && formControls.serviceStartDate.errors) {
@@ -215,7 +215,7 @@
 
                             <div class="col-sm-3">
                               <div class="form-group">
-                                <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.employeeId.errors }">
+                                <mat-form-field class="custom-field" [ngClass]="{ 'has-error': isSubmitted && formControls.employeeId.errors }">
                                   <input matInput name="employeeId" type="text" placeholder="Employee Id" [(ngModel)]="SupportTeamData.employeeId" formControlName="employeeId"
                                     maxlength="60" required>
                                     @if (isSubmitted && formControls.employeeId.errors) {

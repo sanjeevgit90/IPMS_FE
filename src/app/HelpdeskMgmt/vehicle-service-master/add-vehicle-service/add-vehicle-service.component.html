@@ -77,7 +77,7 @@
 
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width">
+                      <mat-form-field class="custom-field">
                         <input matInput name="servicePeriodFrom" placeholder="Service Period From" type="text"
                           [matDatepicker]="picker1" [(ngModel)]="VehicleServiceData.servicePeriodFrom"
                           formControlName="servicePeriodFrom" name="servicePeriodFrom" required>
@@ -99,7 +99,7 @@
 
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width">
+                        <mat-form-field class="custom-field">
                           <input matInput name="servicePeriodTo" placeholder="Service Period To " type="text"
                             [matDatepicker]="picker2" [(ngModel)]="VehicleServiceData.servicePeriodTo"
                             formControlName="servicePeriodTo" name="servicePeriodTo" required>
@@ -122,7 +122,7 @@
 
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width">
+                          <mat-form-field class="custom-field">
                             <input matInput name="serviceInvoiceNumber" type="text"
                               placeholder="Service Invoice Number"
                               [(ngModel)]="VehicleServiceData.serviceInvoiceNumber"
@@ -134,7 +134,7 @@
 
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width"
+                            <mat-form-field class="custom-field"
                               [ngClass]="{ 'has-error': isSubmitted && formControls.serviceCentreName.errors }">
                               <input matInput name="serviceCentreName" type="text"
                                 placeholder="Service Centre Name"
@@ -157,7 +157,7 @@
 
                           <div class="col-sm-3">
                             <div class="form-group">
-                              <mat-form-field class="example-full-width"
+                              <mat-form-field class="custom-field"
                                 [ngClass]="{ 'has-error': isSubmitted && formControls.kilometerReading.errors }">
                                 <input matInput name="kilometerReading" type="text"
                                   placeholder="Kilometer Reading"
@@ -196,7 +196,7 @@
 
                             <div class="col-sm-3">
                               <div class="form-group">
-                                <mat-form-field class="example-full-width">
+                                <mat-form-field class="custom-field">
                                   <input matInput name="nextServiceDueDate" placeholder="Next Service Due Date " type="text"
                                     [matDatepicker]="picker3" [(ngModel)]="VehicleServiceData.nextServiceDueDate"
                                     formControlName="nextServiceDueDate" name="nextServiceDueDate"  required>
@@ -225,7 +225,7 @@
                               @if (IsAFreeService !='YES') {
                                 <div class="col-sm-3">
                                   <div class="form-group">
-                                    <mat-form-field class="example-full-width">
+                                    <mat-form-field class="custom-field">
                                       <input matInput name="serviceCostIncurred" type="text"
                                         placeholder="Service Cost Incurred"
                                         [(ngModel)]="VehicleServiceData.serviceCostIncurred"
@@ -238,7 +238,7 @@
 
                                 <!-- <div class="col-sm-3">
                                 <div class="form-group">
-                                  <mat-form-field class="example-full-width">
+                                  <mat-form-field class="custom-field">
                                     <input matInput name="uploadedAttachment" type="text"
                                       placeholder="Attachment"
                                       [(ngModel)]="VehicleServiceData.uploadedAttachment"
@@ -258,7 +258,7 @@
 
                                 <div class="col-sm-3">
                                   <div class="form-group">
-                                    <mat-form-field class="example-full-width">
+                                    <mat-form-field class="custom-field">
                                       <input matInput name="remark" type="text"
                                         placeholder="Remark"
                                         [(ngModel)]="VehicleServiceData.remark"

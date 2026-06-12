@@ -41,7 +41,7 @@
 
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width"
+                      <mat-form-field class="custom-field"
                         [ngClass]="{ 'has-error': isSubmitted && formControls.licenseTag.errors }">
                         <input matInput name="licenseTag" type="text"
                           placeholder="License Tag"
@@ -63,7 +63,7 @@
 
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width"
+                        <mat-form-field class="custom-field"
                           [ngClass]="{ 'has-error': isSubmitted && formControls.softwareName.errors }">
                           <input matInput name="softwareName" type="text"
                             placeholder="Software Name"
@@ -84,7 +84,7 @@
 
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width"
+                          <mat-form-field class="custom-field"
                             [ngClass]="{ 'has-error': isSubmitted && formControls.serialNo.errors }">
                             <input matInput name="serialNo" type="text"
                               placeholder="Serial No"
@@ -107,7 +107,7 @@
 
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width"
+                            <mat-form-field class="custom-field"
                               [ngClass]="{ 'has-error': isSubmitted && formControls.licenseToName.errors }">
                               <input matInput name="licenseToName" type="text"
                                 placeholder="License To Name"
@@ -130,7 +130,7 @@
 
                           <div class="col-sm-3">
                             <div class="form-group">
-                              <mat-form-field class="example-full-width"
+                              <mat-form-field class="custom-field"
                                 [ngClass]="{ 'has-error': isSubmitted && formControls.licenseToEmail.errors }">
                                 <input matInput name="licenseToEmail" type="text"
                                   placeholder="License To Email"
@@ -151,7 +151,7 @@
 
                             <div class="col-sm-3">
                               <div class="form-group">
-                                <mat-form-field class="example-full-width"
+                                <mat-form-field class="custom-field"
                                   [ngClass]="{ 'has-error': isSubmitted && formControls.seats.errors }">
                                   <input matInput name="seats" type="text"
                                     placeholder="Seats"
@@ -172,7 +172,7 @@
 
                               <div class="col-sm-3">
                                 <div class="form-group">
-                                  <mat-form-field class="example-full-width"
+                                  <mat-form-field class="custom-field"
                                     [ngClass]="{ 'has-error': isSubmitted && formControls.orderNo.errors }">
                                     <input matInput name="orderNo" type="text"
                                       placeholder="Order No"
@@ -195,7 +195,7 @@
 
                                 <div class="col-sm-3">
                                   <div class="form-group">
-                                    <mat-form-field class="example-full-width"
+                                    <mat-form-field class="custom-field"
                                       [ngClass]="{ 'has-error': isSubmitted && formControls.category.errors }">
                                       <mat-select [(ngModel)]="LicenseData.category" name="category"
                                         [typeaheadDebounceInterval]="matSelectDuration" placeholder="Category" formControlName="category"
@@ -221,7 +221,7 @@
                                 </div>
                                 <!-- <div class="col-sm-3">
                                 <div class="form-group">
-                                  <mat-form-field class="example-full-width"
+                                  <mat-form-field class="custom-field"
                                     [ngClass]="{ 'has-error': isSubmitted && formControls.subCategory.errors }">
                                     <mat-select [(ngModel)]="LicenseData.subCategory" name="subCategory" formControlName="subCategory"
                                       placeholder="Sub Category">
@@ -302,7 +302,7 @@
 
                             <div class="col-sm-3">
                               <div class="form-group">
-                                <mat-form-field class="example-full-width">
+                                <mat-form-field class="custom-field">
                                   <input matInput name="purchaseDate" placeholder="Purchase Date " type="text"
                                     [matDatepicker]="picker1" [(ngModel)]="LicenseData.purchaseDate"
                                     formControlName="purchaseDate" name="purchaseDate">
@@ -324,7 +324,7 @@
 
                               <div class="col-sm-3">
                                 <div class="form-group">
-                                  <mat-form-field class="example-full-width"
+                                  <mat-form-field class="custom-field"
                                     [ngClass]="{ 'has-error': isSubmitted && formControls.purchaseCost.errors }">
                                     <input matInput name="purchaseCost" type="number"
                                       placeholder="Purchase Cost"
@@ -371,7 +371,7 @@
 
                                 <div class="col-sm-3">
                                   <div class="form-group">
-                                    <mat-form-field class="example-full-width">
+                                    <mat-form-field class="custom-field">
                                       <input matInput name="warranty" placeholder="Warrenty Date" type="text"
                                         [matDatepicker]="picker2" [(ngModel)]="LicenseData.warranty"
                                         formControlName="warranty" name="warranty">
@@ -413,7 +413,7 @@
                                 </div>
                                 <!--   <div class="col-sm-3">
                                 <div class="form-group">
-                                  <mat-form-field class="example-full-width">
+                                  <mat-form-field class="custom-field">
                                     <input matInput name="uploadedAttachment" type="text"
                                       placeholder="Attachment"
                                       [(ngModel)]="LicenseData.uploadedAttachment"
@@ -434,7 +434,7 @@
 
                                 <div class="col-sm-3">
                                   <div class="form-group">
-                                    <mat-form-field class="example-full-width">
+                                    <mat-form-field class="custom-field">
                                       <input matInput name="notes" type="text"
                                         placeholder="Notes"
                                         [(ngModel)]="LicenseData.notes"
@@ -459,11 +459,11 @@
                                     }
 
 
-                                    <button mat-flat-button color="warn" (click)="back()">
+                                    <button mat-flat-button color="warn" class="ms-2" (click)="back()">
                                       <mat-icon aria-hidden="false">cancel</mat-icon> Back</button>
 
                                       @if (edit) {
-                                        <button mat-flat-button color="accent" (click)="addLicense('update')">
+                                        <button mat-flat-button color="accent" class="ms-2" (click)="addLicense('update')">
                                           <mat-icon aria-hidden="false">update</mat-icon> Update</button>
                                         }
                                       </div>

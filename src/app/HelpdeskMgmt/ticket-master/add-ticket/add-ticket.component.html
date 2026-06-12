@@ -41,7 +41,7 @@
                   @if (edit||view) {
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width">
+                        <mat-form-field class="custom-field">
                           <input matInput name="Ticket No" type="text" placeholder="Ticket No"
                             [(ngModel)]="TicketData.ticketNo" formControlName="ticketNo"
                             maxlength="100" required readonly=true>
@@ -52,7 +52,7 @@
 
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width"
+                        <mat-form-field class="custom-field"
                           [ngClass]="{ 'has-error': isSubmitted && formControls.ticketTitle.errors }">
                           <input matInput name="Ticket Title" type="text"
                             placeholder="Ticket Title" [(ngModel)]="TicketData.ticketTitle"
@@ -230,7 +230,7 @@
 
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width">
+                          <mat-form-field class="custom-field">
                             <input matInput name="assettag" type="text"
                               placeholder="Asset Tag/IP Address" [(ngModel)]="assettag"
                               formControlName="assettag" maxlength="100">
@@ -243,7 +243,7 @@
 
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width">
+                            <mat-form-field class="custom-field">
                               <input readonly matInput name="category" type="text"
                                 placeholder="Category Type" [(ngModel)]="TicketData.category"
                                 formControlName="category" maxlength="100">
@@ -256,7 +256,7 @@
 
                           <div class="col-sm-3">
                             <div class="form-group">
-                              <mat-form-field class="example-full-width">
+                              <mat-form-field class="custom-field">
                                 <input readonly matInput name="subCategory" type="text"
                                   placeholder="Subcategory" [(ngModel)]="TicketData.subCategory"
                                   formControlName="subCategory" maxlength="100">
@@ -299,7 +299,7 @@
                             </div>
                             <div class="col-sm-3">
                               <div class="form-group">
-                                <mat-form-field class="example-full-width"
+                                <mat-form-field
                                   [ngClass]="{ 'has-error': isSubmitted && formControls.otherProblemDescription.errors }">
                                   <textarea matInput name="otherProblemDescription" maxlength="200"
                                     [(ngModel)]="TicketData.otherProblemDescription"
@@ -321,7 +321,7 @@
                             </div>
                             <!-- <div class="col-sm-3">
                             <div class="form-group">
-                              <mat-form-field class="example-full-width"
+                              <mat-form-field class="custom-field"
                                 [ngClass]="{ 'has-error': isSubmitted && formControls.attachment.errors }">
                                 <input matInput name="attachment" type="text"
                                   placeholder="Attachment"
@@ -458,7 +458,7 @@
 
                               <div class="col-sm-3">
                                 <div class="form-group">
-                                  <mat-form-field class="example-full-width"
+                                  <mat-form-field class="custom-field"
                                     [ngClass]="{ 'has-error': isSubmitted && formControls.contactName.errors }">
                                     <input matInput name="contactName" type="text"
                                       placeholder="Ticket Logged By" [(ngModel)]="TicketData.contactName"
@@ -510,7 +510,7 @@
 
                                 <div class="col-sm-3">
                                   <div class="form-group">
-                                    <mat-form-field class="example-full-width">
+                                    <mat-form-field class="custom-field">
                                       <input matInput name="email" type="text" placeholder="Email Id"
                                         [(ngModel)]="TicketData.email" formControlName="email"
                                         maxlength="200">
@@ -521,7 +521,7 @@
 
                                   <div class="col-sm-3">
                                     <div class="form-group">
-                                      <mat-form-field class="example-full-width">
+                                      <mat-form-field class="custom-field">
                                         <input matInput name="phone" type="text" placeholder="Phone No"
                                           [(ngModel)]="TicketData.phone" formControlName="phone"
                                           maxlength="10" numbersOnly>
@@ -533,7 +533,7 @@
 
                                     <!--  <div class="col-sm-3">
                                     <div class="form-group">
-                                      <mat-form-field class="example-full-width">
+                                      <mat-form-field class="custom-field">
                                         <input matInput name="dueDate" placeholder="Ticket Created Date Time" type="text"
                                           [matDatepicker]="picker1" [(ngModel)]="TicketData.dueDate"
                                           formControlName="dueDate" (dateChange)="generateSLADateTime()">
@@ -551,7 +551,7 @@
 
                                     <div class="col-sm-3">
                                       <div class="form-group">
-                                        <!-- <mat-form-field class="example-full-width">
+                                        <!-- <mat-form-field class="custom-field">
                                         <input matInput type="datetime-local"  name="dueDate" [(ngModel)]="TicketData.dueDate | date:'yyyy-MM-ddTHH:mm'"
                                           formControlName="dueDate" (ngModelChange)="generateSLADateTime()" >
                                           <div *ngIf="isSubmitted && formControls.dueDate.errors" class="error-text">
@@ -560,7 +560,7 @@
                                           </div>
                                         </mat-form-field> -->
 
-                                        <mat-form-field class="example-full-width">
+                                        <mat-form-field class="custom-field">
                                           <mat-label> Ticket Created Date Time </mat-label>
                                           <input matInput type="datetime-local" name="dueDate"
                                             [(ngModel)]="TicketData.dueDate" formControlName="dueDate"
@@ -585,7 +585,7 @@
 
                                       <div class="col-sm-3">
                                         <div class="form-group">
-                                          <!-- <mat-form-field class="example-full-width">
+                                          <!-- <mat-form-field class="custom-field">
                                           <input matInput name="resolutionDate" placeholder="SLA Resolution Date Time" type="text"
                                             [matDatepicker]="picker2" [(ngModel)]="TicketData.resolutionDate"
                                             formControlName="resolutionDate" >
@@ -597,7 +597,7 @@
                                             </mat-datepicker-toggle>
                                             <mat-datepicker #picker2></mat-datepicker>
                                           </mat-form-field> -->
-                                          <mat-form-field class="example-full-width">
+                                          <mat-form-field class="custom-field">
                                             <mat-label>SLA Resolution Date Time</mat-label>
                                             <input matInput type="datetime-local" name="resolutionDate"
                                               [ngModel]="TicketData.resolutionDate | date:'yyyy-MM-ddTHH:mm'"
@@ -613,7 +613,7 @@
 
                                         <div class="col-sm-3">
                                           <div class="form-group">
-                                            <mat-form-field class="example-full-width">
+                                            <mat-form-field class="custom-field">
                                               <mat-label>Assigned To</mat-label>
                                               <mat-select [compareWith]="compareUser"
                                                 [typeaheadDebounceInterval]="matSelectDuration"
@@ -634,7 +634,7 @@
 
                                         <!-- <div class="col-sm-3">
                                         <div class="form-group">
-                                          <mat-form-field class="example-full-width"
+                                          <mat-form-field class="custom-field"
                                             [ngClass]="{ 'has-error': isSubmitted && formControls.contactEmail.errors }">
                                             <input matInput name="contactEmail" type="text" placeholder="Contact Mail "
                                               [(ngModel)]="TicketData.contactEmail"
@@ -651,7 +651,7 @@
 
                                         <div class="col-sm-3">
                                           <div class="form-group">
-                                            <mat-form-field class="example-full-width">
+                                            <mat-form-field class="custom-field">
                                               <input readonly matInput name="contactEmail" type="text"
                                                 placeholder="Contact Mail " [(ngModel)]="contactEmail"
                                                 formControlName="contactEmail" maxlength="200">
@@ -662,7 +662,7 @@
 
                                           <div class="col-sm-3">
                                             <div class="form-group">
-                                              <mat-form-field class="example-full-width">
+                                              <mat-form-field class="custom-field">
                                                 <input readonly matInput name="mobileNo" type="text"
                                                   placeholder="Mobile No " [(ngModel)]="mobileNo"
                                                   formControlName="mobileNo" maxlength="15">
@@ -751,7 +751,7 @@
 
                                         <div class="col-sm-3">
                                           <div class="form-group">
-                                            <!-- <mat-form-field class="example-full-width">
+                                            <!-- <mat-form-field class="custom-field">
                                             <input matInput name="ticketClosedTime" placeholder="Ticket Closed Time" type="datetime-local"
                                               [matDatepicker]="picker3" [(ngModel)]="TicketData.ticketClosedTime"
                                               formControlName="ticketClosedTime">
@@ -760,7 +760,7 @@
                                               <mat-datepicker #picker3></mat-datepicker>
                                             </mat-form-field> -->
 
-                                            <mat-form-field class="example-full-width">
+                                            <mat-form-field class="custom-field">
                                               <mat-label>Ticket Closed Time</mat-label>
                                               <input matInput type="datetime-local" name="ticketClosedTime"
                                                 [(ngModel)]="TicketData.ticketClosedTime" [max]="maxDateDisabled"
@@ -832,7 +832,7 @@
 
                                         <!-- <div class="col-sm-3">
                                         <div class="form-group">
-                                          <mat-form-field class="example-full-width"
+                                          <mat-form-field class="custom-field"
                                             [ngClass]="{ 'has-error': isSubmitted && formControls.ticketSubcategory.errors }">
                                             <input matInput name="ticketSubcategory" type="text"
                                               placeholder="Ticket SubCategory"
@@ -907,7 +907,7 @@
 
                                         <div class="col-sm-3">
                                           <div class="form-group">
-                                            <mat-form-field class="example-full-width"
+                                            <mat-form-field
                                               [ngClass]="{ 'has-error': isSubmitted && formControls.resolution.errors }">
                                               <textarea matInput name="resolution" type="text"
                                                 placeholder="Problem Identified" [(ngModel)]="TicketData.resolution"

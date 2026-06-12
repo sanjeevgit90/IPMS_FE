@@ -34,7 +34,7 @@
               }
 
               @if (grnAdd) {
-                <button mat-flat-button color="accent" (click)="addGrn()">
+                <button mat-flat-button color="accent" class="ms-2" (click)="addGrn()">
                   <mat-icon aria-hidden="false">add</mat-icon> Add GRN
                 </button>
               }
@@ -48,7 +48,7 @@
             <div class="row">
               <div class="col-sm-12">
                 <div class="form-group">
-                  <mat-form-field class="example-full-width">
+                  <mat-form-field class="custom-field">
                     <input matInput name="grnNumber" type="text" placeholder="Search by GRN No."
                       [(ngModel)]="FilterData.grnNumber">
                     </mat-form-field>
@@ -56,7 +56,7 @@
                 </div>
                 <div class="col-sm-12">
                   <div class="form-group">
-                    <!-- <mat-form-field class="example-full-width">
+                    <!-- <mat-form-field class="custom-field">
                     <mat-select [(ngModel)]="FilterData.purchaseOrderNo" [typeaheadDebounceInterval]="matSelectDuration"
                       name="purchaseOrderNo" placeholder="Search by PO no.">
                       <mat-option>-Select-</mat-option>
@@ -64,7 +64,7 @@
                       {{po.selectionvalue}}</mat-option>
                     </mat-select>
                   </mat-form-field> -->
-                  <mat-form-field class="example-full-width">
+                  <mat-form-field class="custom-field">
                     <input matInput name="purchaseOrderNo" type="text" placeholder="Search by PO No."
                       [(ngModel)]="FilterData.purchaseOrderNo">
                     </mat-form-field>
@@ -75,7 +75,7 @@
                 <button mat-flat-button color="primary" (click)="search()">
                   <mat-icon aria-hidden="false">search</mat-icon> Search
                 </button>
-                <button mat-flat-button color="warn" (click)="cancel()">
+                <button mat-flat-button color="warn" class="ms-2" (click)="cancel()">
                   <mat-icon aria-hidden="false">cancel</mat-icon> Cancel
                 </button>
               </div>
@@ -142,31 +142,31 @@
                     <th mat-header-cell *matHeaderCellDef> Action </th>
                     <td mat-cell *matCellDef="let GrnMasterData">
                       @if (grnView) {
-                        <a mat-flat-button color="accent" matTooltip="View this record"
+                        <a mat-flat-button color="accent" class="small-icon-btn" matTooltip="View this record"
                           [routerLink]="['/grnMasterEdit', GrnMasterData.entityId,'view']">
-                          <mat-icon aria-hidden="false">visibility</mat-icon>
+                          <mat-icon aria-hidden="false" class="m-0">visibility</mat-icon>
                         </a>
                       }
 
                       @if (GrnMasterData.approvalStatus=='PENDING' && grnEdit) {
-                        <a mat-flat-button color="primary" matTooltip="Edit this record"
+                        <a mat-flat-button class="ms-1 small-icon-btn" color="primary" matTooltip="Edit this record"
                           [routerLink]="['/grnMasterEdit', GrnMasterData.entityId,'edit']">
-                          <mat-icon aria-hidden="false">edit</mat-icon>
+                          <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                         </a>
                       }
 
                       @if (GrnMasterData.approvalStatus=='PENDING' && grnDelete) {
-                        <button mat-flat-button color="warn"
+                        <button mat-flat-button class="ms-1 small-icon-btn" color="warn"
                           matTooltip="Delete this record" (click)="onDelete(GrnMasterData.entityId)"
                           title="Delete">
-                          <mat-icon aria-hidden="false">delete</mat-icon>
+                          <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
                         </button>
                       }
 
                       @if (GrnMasterData.approvalStatus=='PENDING' && grnEdit) {
-                        <button mat-flat-button color="accent"
+                        <button mat-flat-button class="m-1 small-icon-btn" color="accent"
                           matTooltip="Send for approval" (click)="saveTask(GrnMasterData.entityId)">
-                          <mat-icon aria-hidden="false">launch</mat-icon>
+                          <mat-icon aria-hidden="false" class="m-0">launch</mat-icon>
                         </button>
                       }
                     </td>

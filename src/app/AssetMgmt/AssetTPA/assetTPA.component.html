@@ -45,7 +45,7 @@
           <div class="row">
             <div class="col-sm-12">
               <div class="form-group">
-                <mat-form-field class="example-full-width">
+                <mat-form-field class="custom-field">
                   <mat-select [(ngModel)]="FilterData.category" name="category"
                     [typeaheadDebounceInterval]="matSelectDuration" placeholder="Search by Category"
                     (selectionChange)="getActiveSubCategoryfromcategory(FilterData.category)">
@@ -62,7 +62,7 @@
             </div>
             <div class="col-sm-12">
               <div class="form-group">
-                <mat-form-field class="example-full-width">
+                <mat-form-field class="custom-field">
                   <mat-select [(ngModel)]="FilterData.subcategory" name="subcategory"
                     [typeaheadDebounceInterval]="matSelectDuration"
                     placeholder="Search by Sub Category">
@@ -79,7 +79,7 @@
             </div>
             <div class="col-sm-12">
               <div class="form-group">
-                <mat-form-field class="example-full-width">
+                <mat-form-field class="custom-field">
                   <mat-select [(ngModel)]="FilterData.projectid" name="projectid"
                     [typeaheadDebounceInterval]="matSelectDuration"
                     placeholder="Search by project name">
@@ -95,7 +95,7 @@
             </div>
             <div class="col-sm-12">
               <div class="form-group">
-                <mat-form-field class="example-full-width">
+                <mat-form-field class="custom-field">
                   <mat-select [(ngModel)]="FilterData.state" [disabled]="disable" name="state"
                     [typeaheadDebounceInterval]="matSelectDuration" placeholder="Search by state"
                     (selectionChange)="getActiveDistrictFromstate(FilterData.state)">
@@ -111,7 +111,7 @@
             </div>
             <div class="col-sm-12">
               <div class="form-group">
-                <mat-form-field class="example-full-width">
+                <mat-form-field class="custom-field">
                   <mat-select [(ngModel)]="FilterData.district" [disabled]="disable" name="district"
                     [typeaheadDebounceInterval]="matSelectDuration" placeholder="Search by district"
                     (selectionChange)="getActiveCityFromDistrict(FilterData.district)">
@@ -128,7 +128,7 @@
             </div>
             <div class="col-sm-12">
               <div class="form-group">
-                <mat-form-field class="example-full-width">
+                <mat-form-field class="custom-field">
                   <mat-select [(ngModel)]="FilterData.assetstatus" name="assetstatus"
                     [typeaheadDebounceInterval]="matSelectDuration" placeholder="Asset Status">
                     <mat-option>-Select-</mat-option>

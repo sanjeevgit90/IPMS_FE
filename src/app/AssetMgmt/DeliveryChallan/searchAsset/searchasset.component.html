@@ -33,7 +33,7 @@
           <div class="row">
             <div class="col-sm-12">
               <div class="form-group">
-                <mat-form-field class="example-full-width">
+                <mat-form-field class="custom-field">
                   <input matInput name="assetname" type="text" placeholder="Search by asset name"
                     [(ngModel)]="FilterData.assetname">
                   </mat-form-field>
@@ -42,7 +42,7 @@
               @if (!disable) {
                 <div class="col-sm-12" >
                   <div class="form-group">
-                    <mat-form-field class="example-full-width">
+                    <mat-form-field class="custom-field">
                       <mat-select [(ngModel)]="FilterData.state" name="state"    placeholder="Search by state"
                         [typeaheadDebounceInterval]="matSelectDuration" (selectionChange)="getActiveDistrictFromstate(FilterData.state)">
                         <mat-option >-Select-</mat-option>
@@ -59,7 +59,7 @@
               @if (!disable) {
                 <div class="col-sm-12" >
                   <div class="form-group">
-                    <mat-form-field class="example-full-width">
+                    <mat-form-field class="custom-field">
                       <mat-select [(ngModel)]="FilterData.district" name="district"   placeholder="Search by district"
                         [typeaheadDebounceInterval]="matSelectDuration" (selectionChange)="getActiveCityFromDistrict(FilterData.district)">
                         <mat-option >-Select-</mat-option>
@@ -75,7 +75,7 @@
               }
               <div class="col-sm-12">
                 <div class="form-group">
-                  <mat-form-field class="example-full-width">
+                  <mat-form-field class="custom-field">
                     <mat-select [(ngModel)]="FilterData.city" name="city"  placeholder="Search by city"
                       [typeaheadDebounceInterval]="matSelectDuration" (selectionChange)="getActivePoliceStationFromCity(FilterData.city)">
                       <mat-option >-Select-</mat-option>
@@ -90,7 +90,7 @@
               </div>
               <div class="col-sm-12">
                 <div class="form-group">
-                  <mat-form-field class="example-full-width">
+                  <mat-form-field class="custom-field">
                     <mat-select [(ngModel)]="FilterData.policestation" name="policestation"
                       placeholder="Search by police station" [typeaheadDebounceInterval]="matSelectDuration" (selectionChange)="getActiveLocationFromPoliceStation(FilterData.policestation)">
                       <mat-option >-Select-</mat-option>
@@ -105,7 +105,7 @@
               </div>
               <div class="col-sm-12">
                 <div class="form-group">
-                  <mat-form-field class="example-full-width">
+                  <mat-form-field class="custom-field">
                     <mat-select [(ngModel)]="FilterData.location" name="location"  [typeaheadDebounceInterval]="matSelectDuration" placeholder="Search by location" >
                       <mat-option >-Select-</mat-option>
                       @for (location of locationList; track location) {
@@ -122,7 +122,7 @@
               <button mat-flat-button color="primary" (click)="search()">
                 <mat-icon aria-hidden="false">search</mat-icon> Search
               </button>
-              <button mat-flat-button color="warn" (click)="cancel()">
+              <button mat-flat-button color="warn" class="ms-2" (click)="cancel()">
                 <mat-icon aria-hidden="false">cancel</mat-icon> Cancel
               </button>
             </div>

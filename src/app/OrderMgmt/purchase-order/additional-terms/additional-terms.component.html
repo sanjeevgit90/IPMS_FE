@@ -37,7 +37,7 @@
                 <div class="row">
                   <div class="col-sm-4">
                     <!-- <div class="form-group">
-                    <mat-form-field class="example-full-width"
+                    <mat-form-field class="custom-field"
                       [ngClass]="{ 'has-error': isSubmitted && formControls.uploadedTermsAnnexure.errors }">
                       <mat-label>Upload Annexure</mat-label>
                       <input matInput name="uploadedTermsAnnexure" type="text"
@@ -56,7 +56,7 @@
 
                   <div class="col-sm-12">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width"
+                      <mat-form-field
                         [ngClass]="{ 'has-error': isSubmitted && formControls.additionalTerms.errors }">
                         <mat-label>Additional Terms & Conditions</mat-label>
                         <textarea matInput cols="55" rows="4" name="additionalTerms" type="text"
@@ -134,7 +134,7 @@
                     }
                     <div class="col-sm-12">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width">
+                        <mat-form-field>
                           <mat-label>Remarks</mat-label>
                           <textarea matInput cols="55" rows="4" name="remark" type="text"
                             placeholder="Please enter remarks." formControlName="remark"

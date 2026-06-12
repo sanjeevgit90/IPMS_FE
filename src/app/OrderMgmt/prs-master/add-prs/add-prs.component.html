@@ -43,7 +43,7 @@
                 <div class="row">
                   <div class="col-sm-4">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width"
+                      <mat-form-field class="custom-field"
                         [ngClass]="{ 'has-error': isSubmitted && formControls.prsNo.errors }">
                         <mat-label>PRS No.</mat-label>
                         <input matInput name="prsNo" type="text"
@@ -64,7 +64,7 @@
 
                     <div class="col-sm-4">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width"
+                        <mat-form-field class="custom-field"
                           [ngClass]="{ 'has-error': isSubmitted && formControls.prsDate.errors }">
                           <input matInput name="prsDate" placeholder="Please enter prs date."
                             type="text" [matDatepicker]="picker" [(ngModel)]="PrsData.prsDate"
@@ -88,7 +88,7 @@
 
                       <div class="col-sm-4">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width"
+                          <mat-form-field class="custom-field"
                             [ngClass]="{ 'has-error': isSubmitted && formControls.invoiceNo.errors }">
                             <mat-label>Invoice No.</mat-label>
                             <input matInput name="invoiceNo" type="text"
@@ -110,7 +110,7 @@
 
                         <div class="col-sm-4">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width"
+                            <mat-form-field class="custom-field"
                               [ngClass]="{ 'has-error': isSubmitted && formControls.projectName.errors }">
                               <mat-label>Project</mat-label>
                               <mat-select [(ngModel)]="PrsData.projectName"
@@ -140,7 +140,7 @@
                         @if (!PrsData.isUtilityPayment) {
                           <div class="col-sm-4">
                             <div class="form-group">
-                              <mat-form-field class="example-full-width">
+                              <mat-form-field class="custom-field">
                                 <mat-label>Purchase Order No.</mat-label>
                                 <!-- <mat-select [(ngModel)]="PrsData.purchaseOrderNo"
                                 [typeaheadDebounceInterval]="matSelectDuration"
@@ -169,7 +169,7 @@
                         @if (!PrsData.isUtilityPayment) {
                           <div class="col-sm-4">
                             <div class="form-group">
-                              <mat-form-field class="example-full-width">
+                              <mat-form-field class="custom-field">
                                 <mat-label>GRN No.</mat-label>
                                 <mat-select [(ngModel)]="PrsData.grnId"
                                   [typeaheadDebounceInterval]="matSelectDuration"
@@ -188,7 +188,7 @@
                         @if (PrsData.isUtilityPayment) {
                           <div class="col-sm-4">
                             <div class="form-group">
-                              <mat-form-field class="example-full-width">
+                              <mat-form-field class="custom-field">
                                 <mat-label>Office Location</mat-label>
                                 <mat-select [(ngModel)]="PrsData.office"
                                   [typeaheadDebounceInterval]="matSelectDuration"
@@ -207,7 +207,7 @@
                         @if (PrsData.isUtilityPayment) {
                           <div class="col-sm-4">
                             <div class="form-group">
-                              <mat-form-field class="example-full-width">
+                              <mat-form-field class="custom-field">
                                 <mat-label>Utility Type</mat-label>
                                 <mat-select [(ngModel)]="PrsData.billType"
                                   [typeaheadDebounceInterval]="matSelectDuration"
@@ -227,7 +227,7 @@
                         @if (PrsData.isUtilityPayment) {
                           <div class="col-sm-4">
                             <div class="form-group">
-                              <mat-form-field class="example-full-width">
+                              <mat-form-field class="custom-field">
                                 <mat-label>Bill/Agreement No.</mat-label>
                                 <input matInput name="billNo" type="text"
                                   placeholder="Please enter bill no." [(ngModel)]="PrsData.billNo"
@@ -248,7 +248,7 @@
 
                           <div class="col-sm-4">
                             <div class="form-group">
-                              <mat-form-field class="example-full-width">
+                              <mat-form-field class="custom-field">
                                 <mat-label>Issue Cheque To</mat-label>
                                 <mat-select [(ngModel)]="PrsData.issueChequeTo"
                                   [typeaheadDebounceInterval]="matSelectDuration"
@@ -267,7 +267,7 @@
                           </div>
                           <div class="col-sm-4">
                             <div class="form-group">
-                              <mat-form-field class="example-full-width"
+                              <mat-form-field class="custom-field"
                                 [ngClass]="{ 'has-error': isSubmitted && formControls.paymentDueDate.errors }">
                                 <input matInput name="invoiceDate"
                                   placeholder="Please enter invoice date." type="text"
@@ -293,7 +293,7 @@
 
                             <div class="col-sm-4">
                               <div class="form-group">
-                                <mat-form-field class="example-full-width"
+                                <mat-form-field class="custom-field"
                                   [ngClass]="{ 'has-error': isSubmitted && formControls.invoiceAmount.errors }">
                                   <mat-label>Invoice Amount</mat-label>
                                   <input matInput name="invoiceAmount" type="number"
@@ -316,7 +316,7 @@
 
                               <div class="col-sm-4">
                                 <div class="form-group">
-                                  <mat-form-field class="example-full-width"
+                                  <mat-form-field class="custom-field"
                                     [ngClass]="{ 'has-error': isSubmitted && formControls.paymentDueDate.errors }">
                                     <input matInput name="paymentDueDate"
                                       placeholder="Please enter Payment Due date." type="text"
@@ -341,7 +341,7 @@
                                 </div>
                                 <div class="col-sm-4">
                                   <div class="form-group">
-                                    <mat-form-field class="example-full-width">
+                                    <mat-form-field class="custom-field">
                                       <mat-label>Description</mat-label>
                                       <input matInput name="description" type="test"
                                         placeholder="Please enter description."
@@ -351,7 +351,7 @@
                                   </div>
                                   <div class="col-sm-4">
                                     <div class="form-group">
-                                      <mat-form-field class="example-full-width">
+                                      <mat-form-field class="custom-field">
                                         <mat-label>Note</mat-label>
                                         <input matInput name="note" type="text" placeholder="Please enter note."
                                           [(ngModel)]="PrsData.note" formControlName="note">
@@ -360,7 +360,7 @@
                                     </div>
                                     <div class="col-sm-4">
                                       <div class="form-group">
-                                        <mat-form-field class="example-full-width">
+                                        <mat-form-field class="custom-field">
                                           <mat-label>Department</mat-label>
                                           <mat-select [(ngModel)]="PrsData.department"
                                             [typeaheadDebounceInterval]="matSelectDuration"
@@ -378,7 +378,7 @@
                                     </div>
                                     <div class="col-sm-4">
                                       <div class="form-group">
-                                        <mat-form-field class="example-full-width">
+                                        <mat-form-field class="custom-field">
                                           <mat-label>Location</mat-label>
                                           <input matInput name="location" type="text"
                                             placeholder="Please enter location." [(ngModel)]="PrsData.location"
@@ -481,19 +481,19 @@
                                       }
 
                                       @if (edit && !taskFlag) {
-                                        <button mat-flat-button color="primary" (click)="saveTask(PrsData.entityId)"
+                                        <button mat-flat-button color="primary" class="ms-2" (click)="saveTask(PrsData.entityId)"
                                           >
                                           <mat-icon aria-hidden="false">update</mat-icon> Submit For Approval
                                         </button>
                                       }
                                       @if (edit && taskFlag) {
-                                        <button mat-flat-button color="primary" (click)="reSendTask()"
+                                        <button mat-flat-button color="primary" class="ms-2" (click)="reSendTask()"
                                           >
                                           <mat-icon aria-hidden="false">update</mat-icon> Re-Submit For Approval
                                         </button>
                                       }
 
-                                      <button mat-flat-button color="warn" (click)="cancel()">
+                                      <button mat-flat-button color="warn" class="ms-2" (click)="cancel()">
                                         <mat-icon aria-hidden="false">close</mat-icon> Cancel
                                       </button>
                                     </div>

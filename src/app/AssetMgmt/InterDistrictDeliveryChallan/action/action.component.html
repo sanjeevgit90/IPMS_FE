@@ -31,7 +31,7 @@
 
             <div class="row">
               <div class="col-sm-12">
-                <div class="form-group" class="example-full-width"
+                <div class="form-group" class="custom-field"
                   [ngClass]="{ 'has-error': isSubmitted && formControls.approvalStatus.errors }">
                   <mat-radio-group aria-label="Select an action"
                     [(ngModel)]="ActionData.approvalStatus" formControlName="approvalStatus"
@@ -62,7 +62,7 @@
               <div class="row">
                 <div class="col-sm-3">
                   <div class="form-group">
-                    <mat-form-field class="example-full-width">
+                    <mat-form-field class="custom-field">
                       <input matInput name="invoicedate" placeholder="Invoice Date" type="text"
                         [matDatepicker]="picker" [(ngModel)]="invoicedate"
                         formControlName="invoicedate" required>
@@ -73,7 +73,7 @@
                   </div>
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width">
+                      <mat-form-field class="custom-field">
                         <input matInput name="invoiceno" type="text" placeholder="Invoice No"
                           [(ngModel)]="invoiceno" formControlName="invoiceno">
                         </mat-form-field>
@@ -105,7 +105,7 @@
                 <div class="row mt-4">
                   <div class="col-sm-12">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width"
+                      <mat-form-field
                         [ngClass]="{ 'has-error': isSubmitted && formControls.remark.errors }">
                         <textarea matInput name="remark" maxlength="200" [(ngModel)]="ActionData.remark"
                         formControlName="remark" placeholder="Enter Remark" [value]="ActionData.approvalStatus"></textarea>

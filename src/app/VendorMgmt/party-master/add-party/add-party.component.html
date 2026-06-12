@@ -40,7 +40,7 @@
                 <div class="row">
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width"
+                      <mat-form-field class="custom-field"
                         [ngClass]="{ 'has-error': isSubmitted && formControls.partyType.errors }">
                         <mat-label>Party Type</mat-label>
                         <mat-select [(ngModel)]="PartyEntityData.partyType"
@@ -65,7 +65,7 @@
 
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width"
+                      <mat-form-field class="custom-field"
                         [ngClass]="{ 'has-error': isSubmitted && formControls.partyNo.errors }">
                         <mat-label>Party No.</mat-label>
                         <input matInput name="partyNo" type="text"
@@ -87,7 +87,7 @@
 
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width"
+                        <mat-form-field class="custom-field"
                           [ngClass]="{ 'has-error': isSubmitted && formControls.partyName.errors }">
                           <mat-label>Party Name</mat-label>
                           <input matInput name="partyName" type="text"
@@ -109,7 +109,7 @@
 
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width"
+                          <mat-form-field class="custom-field"
                             [ngClass]="{ 'has-error': isSubmitted && formControls.organisationId.errors }">
                             <mat-label>Organisation</mat-label>
                             <mat-select [(ngModel)]="PartyEntityData.organisationId"
@@ -138,7 +138,7 @@
 
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width"
+                          <mat-form-field class="custom-field"
                             [ngClass]="{ 'has-error': isSubmitted && formControls.contactPersonName.errors }">
                             <mat-label>Contact Person</mat-label>
                             <input matInput name="contactPersonName" type="text"
@@ -160,7 +160,7 @@
 
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width"
+                            <mat-form-field class="custom-field"
                               [ngClass]="{ 'has-error': isSubmitted && formControls.mobileNo.errors }">
                               <mat-label>Mobile No.</mat-label>
                               <input matInput name="mobileNo" type="text"
@@ -182,7 +182,7 @@
 
                           <div class="col-sm-3">
                             <div class="form-group">
-                              <mat-form-field class="example-full-width">
+                              <mat-form-field class="custom-field">
                                 <mat-label>Landline No.</mat-label>
                                 <input matInput name="landlineNo" type="text"
                                   placeholder="Please enter landline no."
@@ -195,7 +195,7 @@
 
                             <div class="col-sm-3">
                               <div class="form-group">
-                                <!-- <mat-form-field class="example-full-width"
+                                <!-- <mat-form-field class="custom-field"
                                 [ngClass]="{ 'has-error': isSubmitted && formControls.emailId.errors }">
                                 <mat-label>Email</mat-label>
                                 <input matInput name="emailId" type="email"
@@ -211,7 +211,7 @@
                                     address</div>
                                   </div>
                                 </mat-form-field> -->
-                                <mat-form-field class="example-full-width"
+                                <mat-form-field class="custom-field"
                                   [ngClass]="{ 'has-error': isSubmitted && formControls.emailId.errors }">
                                   <input matInput name="emailId" type="email" placeholder="Email Id"
                                     [(ngModel)]="PartyEntityData.emailId" formControlName="emailId"
@@ -236,7 +236,7 @@
                               <div class="col-sm-3">
                                 <div class="col-sm-12 padding-zero">
                                   <div class="form-group">
-                                    <mat-form-field class="example-full-width"
+                                    <mat-form-field class="custom-field"
                                       [ngClass]="{ 'has-error': isSubmitted && formControls.dateOfIncorporation.errors }">
                                       <input matInput name="dateOfIncorporation"
                                         placeholder="Please enter date of incorporation." type="text"
@@ -261,7 +261,7 @@
                                   </div>
                                   <div class="col-sm-12 padding-zero">
                                     <div class="form-group">
-                                      <mat-form-field class="example-full-width">
+                                      <mat-form-field class="custom-field">
                                         <mat-label>Contact Id</mat-label>
                                         <input matInput name="contactId" type="text"
                                           placeholder="Please enter contact id."
@@ -274,7 +274,7 @@
 
                                   <div class="col-sm-6">
                                     <!-- <div class="form-group">
-                                    <mat-form-field class="example-full-width">
+                                    <mat-form-field class="custom-field">
                                       <mat-label>Incorporation Certificate Attachment</mat-label>
                                       <input matInput name="dateOfIncorporationAttachment" type="text" placeholder="select attachment"
                                         [(ngModel)]="PartyEntityData.dateOfIncorporationAttachment" formControlName="dateOfIncorporationAttachment">
@@ -287,7 +287,7 @@
                                   <div class="col-sm-3 row">
                                     <div class="col-sm-12">
                                       <div class="form-group">
-                                        <mat-form-field class="example-full-width"
+                                        <mat-form-field class="custom-field"
                                           [ngClass]="{ 'has-error': isSubmitted && formControls.natureOfServiceProviding.errors }">
                                           <mat-label>Nature Of Service Providing</mat-label>
                                           <input matInput name="natureOfServiceProviding" type="text"
@@ -311,7 +311,7 @@
 
                                       <div class="col-sm-12">
                                         <div class="form-group">
-                                          <mat-form-field class="example-full-width"
+                                          <mat-form-field class="custom-field"
                                             [ngClass]="{ 'has-error': isSubmitted && formControls.smeRegNo.errors }">
                                             <mat-label>SME Reg. No.</mat-label>
                                             <input matInput name="smeRegNo" type="text"
@@ -339,7 +339,7 @@
                                     <div class="row">
                                       <div class="col-sm-4">
                                         <div class="form-group">
-                                          <mat-form-field class="example-full-width"
+                                          <mat-form-field class="custom-field"
                                             [ngClass]="{ 'has-error': isSubmitted && formControls.panNo.errors }">
                                             <mat-label>PAN No.</mat-label>
                                             <input matInput name="panNo" type="text"
@@ -362,7 +362,7 @@
 
                                         <div class="col-sm-4">
                                           <div class="form-group">
-                                            <mat-form-field class="example-full-width"
+                                            <mat-form-field class="custom-field"
                                               [ngClass]="{ 'has-error': isSubmitted && formControls.tanNo.errors }">
                                               <mat-label>TAN No.</mat-label>
                                               <input matInput name="tanNo" type="text"
@@ -384,7 +384,7 @@
 
                                           <div class="col-sm-4">
                                             <div class="form-group">
-                                              <mat-form-field class="example-full-width">
+                                              <mat-form-field class="custom-field">
                                                 <mat-label>ARN No.</mat-label>
                                                 <input matInput name="arnNo" type="text"
                                                   placeholder="Please enter pan no."
@@ -415,7 +415,7 @@
 
                                             <div class="col-sm-3">
                                               <div class="form-group">
-                                                <mat-form-field class="example-full-width">
+                                                <mat-form-field class="custom-field">
                                                   <mat-label>Bank Name</mat-label>
                                                   <input matInput name="bankName" type="text"
                                                     placeholder="Please enter bank name."
@@ -429,7 +429,7 @@
 
                                               <div class="col-sm-3">
                                                 <div class="form-group">
-                                                  <mat-form-field class="example-full-width">
+                                                  <mat-form-field class="custom-field">
                                                     <mat-label>Branch Name & Address</mat-label>
                                                     <input matInput name="branchNameandAddress" type="text"
                                                       placeholder="Please enter branch name & address."
@@ -441,7 +441,7 @@
 
                                                 <div class="col-sm-3">
                                                   <div class="form-group">
-                                                    <mat-form-field class="example-full-width">
+                                                    <mat-form-field class="custom-field">
                                                       <mat-label>Account Type</mat-label>
                                                       <input matInput name="accountType" type="text"
                                                         placeholder="Please enter account type."
@@ -453,7 +453,7 @@
 
                                                   <div class="col-sm-3">
                                                     <div class="form-group">
-                                                      <mat-form-field class="example-full-width">
+                                                      <mat-form-field class="custom-field">
                                                         <mat-label>Account No</mat-label>
                                                         <input matInput name="accountNo" type="text"
                                                           placeholder="Please enter account no."
@@ -465,7 +465,7 @@
 
                                                     <div class="col-sm-3">
                                                       <div class="form-group">
-                                                        <mat-form-field class="example-full-width">
+                                                        <mat-form-field class="custom-field">
                                                           <mat-label>MICR Code</mat-label>
                                                           <input matInput name="micrCode" type="text"
                                                             placeholder="Please enter micr code."
@@ -477,7 +477,7 @@
 
                                                       <div class="col-sm-3">
                                                         <div class="form-group">
-                                                          <mat-form-field class="example-full-width">
+                                                          <mat-form-field class="custom-field">
                                                             <mat-label>IFSC/NEFT Code</mat-label>
                                                             <input matInput name="ifscNeftCode" type="text"
                                                               placeholder="Please enter ifsc neft code."
@@ -489,7 +489,7 @@
 
                                                         <div class="col-sm-6">
                                                           <div class="form-group">
-                                                            <mat-form-field class="example-full-width">
+                                                            <mat-form-field class="custom-field">
                                                               <mat-label>Remarks</mat-label>
                                                               <input matInput name="remarks" type="text"
                                                                 placeholder="Please enter remarks."
@@ -501,7 +501,7 @@
 
                                                           <div class="col-sm-6">
                                                             <!-- <div class="form-group">
-                                                            <mat-form-field class="example-full-width">
+                                                            <mat-form-field class="custom-field">
                                                               <mat-label>Cancelled Cheque Attachment</mat-label>
                                                               <input matInput name="bankNameAttachment" type="text" placeholder="select attachment"
                                                                 [(ngModel)]="PartyEntityData.bankNameAttachment" formControlName="bankNameAttachment">

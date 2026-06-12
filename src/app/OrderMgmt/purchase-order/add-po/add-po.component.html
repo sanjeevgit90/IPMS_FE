@@ -49,7 +49,7 @@
                   </div>
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width"
+                      <mat-form-field class="custom-field"
                         [ngClass]="{ 'has-error': isSubmitted && formControls.purchaseOrderNo.errors }">
                         <mat-label>Purchase Order No.</mat-label>
                         <input matInput name="purchaseOrderNo" type="text"
@@ -71,8 +71,9 @@
 
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width"
+                        <mat-form-field class="custom-field"
                           [ngClass]="{ 'has-error': isSubmitted && formControls.orderDate.errors }">
+                          <mat-label>Please enter order date.</mat-label>
                           <input matInput name="orderDate" placeholder="Please enter order date."
                             type="text" [matDatepicker]="picker"
                             [(ngModel)]="POEntityData.orderDate" formControlName="orderDate"
@@ -96,7 +97,7 @@
 
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width">
+                          <mat-form-field class="custom-field">
                             <mat-label>Make PO From</mat-label>
                             <mat-select [(ngModel)]="POEntityData.poMadeFrom"
                               [typeaheadDebounceInterval]="matSelectDuration"
@@ -112,7 +113,7 @@
                       @if (POEntityData.poMadeFrom=='RC') {
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width"
+                            <mat-form-field class="custom-field"
                               [ngClass]="{ 'has-error': isSubmitted && formControls.rateContractId.errors }">
                               <mat-label>Rate Contract No.</mat-label>
                               <mat-select [(ngModel)]="POEntityData.rateContractId"
@@ -144,7 +145,7 @@
 
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width"
+                          <mat-form-field class="custom-field"
                             [ngClass]="{ 'has-error': isSubmitted && formControls.department.errors }">
                             <mat-label>Department</mat-label>
                             <mat-select [(ngModel)]="POEntityData.department"
@@ -174,7 +175,7 @@
 
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width"
+                          <mat-form-field class="custom-field"
                             [ngClass]="{ 'has-error': isSubmitted && formControls.accountName.errors }">
                             <mat-label>Project</mat-label>
                             <mat-select [(ngModel)]="POEntityData.accountName"
@@ -212,7 +213,7 @@
 
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width"
+                          <mat-form-field class="custom-field"
                             [ngClass]="{ 'has-error': isSubmitted && formControls.organisationId.errors }">
                             <mat-label>Organisation</mat-label>
                             <mat-select [(ngModel)]="POEntityData.organisationId"
@@ -243,7 +244,7 @@
 
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width"
+                          <mat-form-field class="custom-field"
                             [ngClass]="{ 'has-error': isSubmitted && formControls.orderType.errors }">
                             <mat-label>Order Type</mat-label>
                             <mat-select [(ngModel)]="POEntityData.orderType"
@@ -269,7 +270,7 @@
 
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width"
+                          <mat-form-field class="custom-field"
                             [ngClass]="{ 'has-error': isSubmitted && formControls.modeOfPayment.errors }">
                             <mat-label>Payment Term</mat-label>
                             <mat-select [(ngModel)]="POEntityData.modeOfPayment"
@@ -298,7 +299,7 @@
 
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width"
+                          <mat-form-field class="custom-field"
                             [ngClass]="{ 'has-error': isSubmitted && formControls.dispatchThrough.errors }">
                             <mat-label>Dispatch Through</mat-label>
                             <mat-select [(ngModel)]="POEntityData.dispatchThrough"
@@ -326,7 +327,7 @@
 
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width"
+                          <mat-form-field class="custom-field"
                             [ngClass]="{ 'has-error': isSubmitted && formControls.currency.errors }">
                             <mat-label>Currency</mat-label>
                             <mat-select [(ngModel)]="POEntityData.currency"
@@ -357,7 +358,7 @@
 
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width"
+                          <mat-form-field class="custom-field"
                             [ngClass]="{ 'has-error': isSubmitted && formControls.deliveryTerm.errors }">
                             <mat-label>Delivery Term</mat-label>
                             <mat-select [(ngModel)]="POEntityData.deliveryTerm"
@@ -386,7 +387,7 @@
 
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width">
+                          <mat-form-field class="custom-field">
                             <mat-label>Payment Method</mat-label>
                             <mat-select [(ngModel)]="POEntityData.paymentMethod"
                               [typeaheadDebounceInterval]="matSelectDuration"
@@ -404,7 +405,7 @@
 
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width"
+                          <mat-form-field class="custom-field"
                             [ngClass]="{ 'has-error': isSubmitted && formControls.suppliersReference.errors }">
                             <mat-label>Suppliers Reference</mat-label>
                             <input matInput name="boqNo" type="text"
@@ -428,7 +429,7 @@
                         @if (POEntityData.currency=='USD') {
                           <div class="col-sm-3">
                             <div class="form-group">
-                              <mat-form-field class="example-full-width">
+                              <mat-form-field class="custom-field">
                                 <mat-label>Discount Amount</mat-label>
                                 <input matInput name="discountAmt" type="number"
                                   placeholder="Please enter discount amount."
@@ -441,7 +442,7 @@
 
                           <div class="col-sm-6">
                             <div class="form-group">
-                              <mat-form-field class="example-full-width">
+                              <mat-form-field class="custom-field">
                                 <mat-label>Other Reference</mat-label>
                                 <input matInput cols="55" rows="4" name="otherReference" type="text"
                                   placeholder="Please enter other reference."
@@ -459,7 +460,7 @@
                             </div>
                             <div class="col-sm-3">
                               <div class="form-group">
-                                <mat-form-field class="example-full-width"
+                                <mat-form-field class="custom-field"
                                   [ngClass]="{ 'has-error': isSubmitted && formControls.supplierName.errors }">
                                   <mat-label>Supplier Name</mat-label>
                                   <mat-select [(ngModel)]="POEntityData.supplierName"
@@ -491,7 +492,7 @@
 
                             <div class="col-sm-3">
                               <div class="form-group">
-                                <mat-form-field class="example-full-width"
+                                <mat-form-field class="custom-field"
                                   [ngClass]="{ 'has-error': isSubmitted && formControls.supplierDetails.errors }">
                                   <mat-label>Supplier Address</mat-label>
                                   <mat-select [(ngModel)]="POEntityData.supplierDetails"
@@ -523,7 +524,7 @@
 
                             <div class="col-sm-3">
                               <div class="form-group">
-                                <mat-form-field class="example-full-width"
+                                <mat-form-field class="custom-field"
                                   [ngClass]="{ 'has-error': isSubmitted && formControls.billFromState.errors }">
                                   <mat-label>Bill From State</mat-label>
                                   <mat-select [(ngModel)]="POEntityData.billFromState"
@@ -553,7 +554,7 @@
 
                             <div class="col-sm-3">
                               <div class="form-group">
-                                <mat-form-field class="example-full-width">
+                                <mat-form-field class="custom-field">
                                   <mat-label>GST No.</mat-label>
                                   <input matInput name="billFromGstNo" type="text"
                                     placeholder="Please enter GSTIN."
@@ -565,7 +566,7 @@
 
                               <div class="col-sm-3">
                                 <div class="form-group">
-                                  <mat-form-field class="example-full-width"
+                                  <mat-form-field class="custom-field"
                                     [ngClass]="{ 'has-error': isSubmitted && formControls.buyerName.errors }">
                                     <mat-label>Purchaser Name</mat-label>
                                     <mat-select [(ngModel)]="POEntityData.buyerName"
@@ -596,7 +597,7 @@
 
                               <div class="col-sm-3">
                                 <div class="form-group">
-                                  <mat-form-field class="example-full-width"
+                                  <mat-form-field class="custom-field"
                                     [ngClass]="{ 'has-error': isSubmitted && formControls.invoiceToAddress.errors }">
                                     <mat-label>Invoice Postal Address</mat-label>
                                     <mat-select [(ngModel)]="POEntityData.invoiceToAddress"
@@ -626,7 +627,7 @@
 
                               <div class="col-sm-3">
                                 <div class="form-group">
-                                  <mat-form-field class="example-full-width"
+                                  <mat-form-field class="custom-field"
                                     [ngClass]="{ 'has-error': isSubmitted && formControls.billToAddress.errors }">
                                     <mat-label>Bill To Address</mat-label>
                                     <mat-select [(ngModel)]="POEntityData.billToAddress"
@@ -659,7 +660,7 @@
 
                               <div class="col-sm-3">
                                 <div class="form-group">
-                                  <mat-form-field class="example-full-width"
+                                  <mat-form-field class="custom-field"
                                     [ngClass]="{ 'has-error': isSubmitted && formControls.shipToAddress.errors }">
                                     <mat-label>Ship To Address</mat-label>
                                     <mat-select [(ngModel)]="POEntityData.shipToAddress"
@@ -696,7 +697,7 @@
                               </div>
                               <div class="col-sm-12">
                                 <div class="form-group">
-                                  <mat-form-field class="example-full-width"
+                                  <mat-form-field
                                     [ngClass]="{ 'has-error': isSubmitted && formControls.termsConditions.errors }">
                                     <mat-label>Terms & Conditions</mat-label>
                                     <textarea matInput cols="55" rows="4" name="termsConditions" type="text"
@@ -730,7 +731,7 @@
                               @if (view) {
                                 <div class="col-sm-12">
                                   <!-- <div class="form-group">
-                                  <mat-form-field class="example-full-width">
+                                  <mat-form-field class="custom-field">
                                     <mat-label>Upload Signed Copy</mat-label>
                                     <input matInput name="signedCopyPath" type="text"
                                       placeholder="Uplaod signed copy."
@@ -759,13 +760,13 @@
 
                             <div class="submit-section">
                               @if (add) {
-                                <button mat-flat-button color="primary" (click)="savePO()">
+                                <button mat-flat-button class="me-2" color="primary" (click)="savePO()">
                                   <mat-icon aria-hidden="false">save</mat-icon> Save
                                 </button>
                               }
 
                               @if (edit || view) {
-                                <button mat-flat-button color="primary" (click)="updatePO()">
+                                <button mat-flat-button class="me-2" color="primary" (click)="updatePO()">
                                   <mat-icon aria-hidden="false">update</mat-icon> Update
                                 </button>
                               }

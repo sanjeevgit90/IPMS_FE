@@ -35,7 +35,7 @@
 
               <div class="col-sm-3">
                 <div class="form-group">
-                  <mat-form-field class="example-full-width">
+                  <mat-form-field class="custom-field">
                     <input matInput name="dateofbilling" placeholder="Date of Billing" type="text"
                       [matDatepicker]="picker1" [(ngModel)]="ScheduleData.dateofbilling"
                       formControlName="dateofbilling" required>
@@ -55,7 +55,7 @@
 
                 <div class="col-sm-3">
                   <div class="form-group">
-                    <mat-form-field class="example-full-width"
+                    <mat-form-field class="custom-field"
                       [ngClass]="{ 'has-error': isSubmitted && formControls.milestoneno.errors }">
                       <input matInput name="milestoneno" type="text" placeholder="Milestone No"
                         [(ngModel)]="milestoneno" formControlName="milestoneno"
@@ -75,7 +75,7 @@
 
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width"
+                      <mat-form-field class="custom-field"
                         [ngClass]="{ 'has-error': isSubmitted && formControls.amountofbilling.errors }">
                         <input matInput name="amountofbilling" type="text" placeholder="Amount"
                           [(ngModel)]="ScheduleData.amountofbilling" formControlName="amountofbilling"
@@ -95,7 +95,7 @@
 
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width">
+                        <mat-form-field>
                           <textarea matInput name="remark" maxlength="500"  [(ngModel)]="ScheduleData.remark"
                           formControlName="remark" placeholder="Enter Remark" ></textarea>
                         </mat-form-field>

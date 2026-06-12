@@ -32,7 +32,7 @@
                 <div class="row">
                   <!-- <div class="col-sm-3">
                   <div class="form-group">
-                    <mat-form-field class="example-full-width">
+                    <mat-form-field class="custom-field">
                       <input matInput name="prsNo" type="text" placeholder="Search by Prs No."
                         [(ngModel)]="GrnData.prsNo" formControlName="prsNo">
                       </mat-form-field>
@@ -40,7 +40,7 @@
                   </div>
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width">
+                      <mat-form-field class="custom-field">
                         <input matInput name="purchaseOrderNumber" type="text" placeholder="Search by PO No."
                           [(ngModel)]="GrnData.purchaseOrderNumber" formControlName="purchaseOrderNumber">
                         </mat-form-field>
@@ -48,7 +48,7 @@
                     </div> -->
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width">
+                        <mat-form-field class="custom-field">
                           <mat-select [(ngModel)]="GrnData.purchaseOrderNo" name="purchaseOrderNo"
                             placeholder="Search By PO" formControlName="purchaseOrderNo">
                             <mat-option>-Search By PO-</mat-option>
@@ -62,7 +62,7 @@
                     </div>
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width">
+                        <mat-form-field class="custom-field">
                           <mat-select [(ngModel)]="GrnData.suppId" name="suppId"
                             placeholder="Search By Party Name" formControlName="suppId">
                             <mat-option>-Search By Party Name-</mat-option>
@@ -77,7 +77,7 @@
                     </div>
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width">
+                        <mat-form-field class="custom-field">
                           <input matInput name="fromDate"
                             placeholder="From date." type="text"
                             [matDatepicker]="picker1" [(ngModel)]="GrnData.fromDate"
@@ -89,7 +89,7 @@
                       </div>
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width">
+                          <mat-form-field class="custom-field">
                             <input matInput name="toDate"
                               placeholder="To date." type="text"
                               [matDatepicker]="picker2" [(ngModel)]="GrnData.toDate"

@@ -43,7 +43,7 @@
             <div class="row">
               <div class="col-sm-12">
                 <div class="form-group">
-                  <mat-form-field class="example-full-width">
+                  <mat-form-field class="custom-field">
                     <input matInput name="location" type="text" placeholder="Search by USID name"
                       [(ngModel)]="FilterData.location">
                     </mat-form-field>
@@ -51,7 +51,7 @@
                 </div>
                 <div class="col-sm-12">
                   <div class="form-group">
-                    <mat-form-field class="example-full-width">
+                    <mat-form-field class="custom-field">
                       <input matInput name="installationdate" placeholder="Search by installation date"
                         type="text" [matDatepicker]="installationdate"
                         [(ngModel)]="FilterData.installationdate">
@@ -62,7 +62,7 @@
                   </div>
                   <div class="col-sm-12">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width">
+                      <mat-form-field class="custom-field">
                         <mat-select [(ngModel)]="FilterData.project" name="projectname"
                           placeholder="Search by project name"
                           [typeaheadDebounceInterval]="matSelectDuration">
@@ -156,12 +156,12 @@
                           [disabled]="USIDReportRecord.isDeleted"
                           [routerLink]="['/updateUSIDReport', USIDReportRecord.entityId,'edit']"
                           title="Edit">
-                          <mat-icon aria-hidden="false">edit</mat-icon>
+                          <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                         </button>
                         <button  mat-flat-button color="warn" matTooltip="Delete this record"
                           [disabled]="USIDReportRecord.isDeleted"
                           (click)="onDelete(USIDReportRecord.entityId)" title="delete">
-                          <mat-icon aria-hidden="false">delete</mat-icon>
+                          <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
                         </button>
 
                       </td>

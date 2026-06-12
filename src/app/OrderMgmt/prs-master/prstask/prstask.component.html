@@ -45,7 +45,7 @@
           <div class="row">
             <div class="col-sm-12">
               <div class="form-group">
-                <mat-form-field class="example-full-width">
+                <mat-form-field class="custom-field">
                   <input matInput name="prsNo" type="text" placeholder="Search by PRS no."
                     [(ngModel)]="FilterData.prsNo">
                   </mat-form-field>
@@ -56,7 +56,7 @@
               <button mat-flat-button color="primary" (click)="search()">
                 <mat-icon aria-hidden="false">search</mat-icon> Search
               </button>
-              <button mat-flat-button color="warn" (click)="cancel()">
+              <button mat-flat-button color="warn" class="ms-2" (click)="cancel()">
                 <mat-icon aria-hidden="false">cancel</mat-icon> Cancel
               </button>
             </div>
@@ -68,7 +68,7 @@
           <!-- Add Family -->
           <div class="pro-overview tab-pane fade show active">
             <div class="card">
-              <div class="col-auto float-left ml-auto">
+              <div class="float-end p-2">
                 @if (!history) {
                   <button mat-flat-button color="accent" (click)="getHistoryTask()">
                     <mat-icon aria-hidden="false">search</mat-icon> PRS Action History
@@ -81,6 +81,7 @@
                   </button>
                 }
               </div>
+              <div class="clearfix"></div>
 
               <!-- Search Table -->
               <div class="row align-items-center">
@@ -88,7 +89,7 @@
                   <div class="total-rec">Total Records: {{totalRecords}}</div>
                 </div>
                 <div class="col-auto float-right ml-auto">
-                  <mat-form-field class="search-input">
+                  <mat-form-field class="search-input custom-field">
                     <input matInput (keyup)="applyFilter($event)" placeholder="Search..." #input>
                   </mat-form-field>
                 </div>

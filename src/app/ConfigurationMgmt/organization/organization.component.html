@@ -36,7 +36,7 @@
                 <div class="row">
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width"
+                      <mat-form-field class="custom-field"
                         [ngClass]="{ 'has-error': isSubmitted && formControls.orgName.errors }">
                         <input matInput name="orgName" type="text"
                           placeholder="Organization name"
@@ -59,7 +59,7 @@
 
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width"
+                        <mat-form-field class="custom-field"
                           [ngClass]="{ 'has-error': isSubmitted && formControls.orgCountry.errors }">
                           <input matInput name="orgCountry" type="text" placeholder="Country"
                             [(ngModel)]="OrganizationData.orgCountry"
@@ -78,7 +78,7 @@
                       </div>
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width"
+                          <mat-form-field class="custom-field"
                             [ngClass]="{ 'has-error': isSubmitted && formControls.orgDirectors.errors }">
                             <input matInput name="orgDirectors" type="text"
                               placeholder="Director Name"
@@ -100,7 +100,7 @@
 
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width"
+                            <mat-form-field class="custom-field"
                               [ngClass]="{ 'has-error': isSubmitted && formControls.orgPan.errors }">
                               <input matInput name="orgPan" type="text" placeholder="PAN No."
                                 [(ngModel)]="OrganizationData.orgPan" formControlName="orgPan"
@@ -120,7 +120,7 @@
 
                           <div class="col-sm-3">
                             <div class="form-group">
-                              <mat-form-field class="example-full-width"
+                              <mat-form-field class="custom-field"
                                 [ngClass]="{ 'has-error': isSubmitted && formControls.orgTan.errors }">
                                 <input matInput name="orgTan" type="text" placeholder="TAN No."
                                   [(ngModel)]="OrganizationData.orgTan" formControlName="orgTan"
@@ -140,7 +140,7 @@
 
                             <div class="col-sm-6">
                               <div class="form-group">
-                                <mat-form-field class="example-full-width"
+                                <mat-form-field
                                   [ngClass]="{ 'has-error': isSubmitted && formControls.orgRegAddress.errors }">
                                   <textarea matInput name="orgRegAddress" placeholder="Address"
                                     [(ngModel)]="OrganizationData.orgRegAddress"
@@ -246,14 +246,14 @@
                               @if (orgEdit) {
                                 <button mat-flat-button color="primary" (click)="editon(OrgMasterData.entityId)"
                                   matTooltip="Edit this record" [disabled]="OrgMasterData.isDeleted">
-                                  <mat-icon aria-hidden="false">edit</mat-icon>
+                                  <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                                 </button>
                               }
 
                               @if (orgDelete) {
                                 <button mat-flat-button color="warn" (click)="onDelete(OrgMasterData.entityId)"
                                   matTooltip="Delete this record">
-                                  <mat-icon aria-hidden="false">delete</mat-icon>
+                                  <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
                                 </button>
                               }
                             </td>

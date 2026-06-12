@@ -38,7 +38,7 @@
               <div class="row">
                 <div class="col-sm-3">
                   <div class="form-group">
-                    <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.productName.errors }">
+                    <mat-form-field class="custom-field" [ngClass]="{ 'has-error': isSubmitted && formControls.productName.errors }">
                       <mat-label>Product</mat-label>
                       <mat-select [(ngModel)]="ProductDetailsEntityData.productName"
                         formControlName="productName" [typeaheadDebounceInterval]="matSelectDuration" [compareWith]="compareObjects">
@@ -65,7 +65,7 @@
 
                 <div class="col-sm-3">
                   <div class="form-group">
-                    <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.hsnId.errors }">
+                    <mat-form-field class="custom-field" [ngClass]="{ 'has-error': isSubmitted && formControls.hsnId.errors }">
                       <mat-label>HSN Code</mat-label>
                       <mat-select [(ngModel)]="ProductDetailsEntityData.hsnId" [typeaheadDebounceInterval]="matSelectDuration"
                         formControlName="hsnId" (ngModelChange)="getPerticularHSN(ProductDetailsEntityData.hsnId)">
@@ -92,7 +92,7 @@
 
                 <div class="col-sm-3">
                   <div class="form-group">
-                    <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.rate.errors }">
+                    <mat-form-field class="custom-field" [ngClass]="{ 'has-error': isSubmitted && formControls.rate.errors }">
                       <mat-label>Rate</mat-label>
                       <input matInput name="rate" type="number"
                         [(ngModel)]="ProductDetailsEntityData.rate" formControlName="rate" (input)="cal()" step="any" min="0">
@@ -109,7 +109,7 @@
 
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.quantity.errors }">
+                      <mat-form-field class="custom-field" [ngClass]="{ 'has-error': isSubmitted && formControls.quantity.errors }">
                         <mat-label>Quantity</mat-label>
                         <input matInput name="quantity" type="number"
                           [(ngModel)]="ProductDetailsEntityData.quantity" formControlName="quantity" (input)="cal()" step="any" min="0">
@@ -126,7 +126,7 @@
 
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.amount.errors }">
+                        <mat-form-field class="custom-field" [ngClass]="{ 'has-error': isSubmitted && formControls.amount.errors }">
                           <mat-label>Amount</mat-label>
                           <input matInput name="amount" type="number"
                             [(ngModel)]="ProductDetailsEntityData.amount" formControlName="amount">
@@ -143,7 +143,7 @@
 
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width">
+                          <mat-form-field class="custom-field">
                             <mat-label>Discount %</mat-label>
                             <input matInput name="discount" type="number"
                               [(ngModel)]="ProductDetailsEntityData.discount" formControlName="discount" (input)="cal()" step="0.01" min="0">
@@ -153,7 +153,7 @@
 
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width">
+                            <mat-form-field class="custom-field">
                               <mat-label>Discount Amount</mat-label>
                               <input matInput name="discountAmount" type="number"
                                 [(ngModel)]="ProductDetailsEntityData.discountAmount" formControlName="discountAmount" (input)="cal()" step="0.01" min="0">
@@ -163,7 +163,7 @@
 
                           <div class="col-sm-3">
                             <div class="form-group">
-                              <mat-form-field class="example-full-width">
+                              <mat-form-field class="custom-field">
                                 <mat-label>Total Discount</mat-label>
                                 <input matInput name="totalDiscount" type="number"
                                   [(ngModel)]="ProductDetailsEntityData.totalDiscount" formControlName="totalDiscount" (input)="cal()" min="0">
@@ -173,7 +173,7 @@
 
                             <div class="col-sm-3">
                               <div class="form-group">
-                                <mat-form-field class="example-full-width">
+                                <mat-form-field class="custom-field">
                                   <mat-label>Total Amount</mat-label>
                                   <input matInput name="totalAmount" type="number"
                                     [(ngModel)]="ProductDetailsEntityData.totalAmount" formControlName="totalAmount" (input)="cal()" min="0">
@@ -184,7 +184,7 @@
                               @if ((isHistoricData=='NO') && (currency=='INR')) {
                                 <div class="col-sm-3">
                                   <div class="form-group">
-                                    <mat-form-field class="example-full-width">
+                                    <mat-form-field class="custom-field">
                                       <mat-label>CGST (%)</mat-label>
                                       <input matInput name="cgst" type="number"
                                         [(ngModel)]="ProductDetailsEntityData.cgst" formControlName="cgst">
@@ -196,7 +196,7 @@
                                 @if ((isHistoricData=='NO') && (currency=='INR')) {
                                   <div class="col-sm-3">
                                     <div class="form-group">
-                                      <mat-form-field class="example-full-width">
+                                      <mat-form-field class="custom-field">
                                         <mat-label>SGST (%)</mat-label>
                                         <input matInput name="sgst" type="number"
                                           [(ngModel)]="ProductDetailsEntityData.sgst" formControlName="sgst">
@@ -208,7 +208,7 @@
                                   @if (isHistoricData=='NO') {
                                     <div class="col-sm-3">
                                       <div class="form-group">
-                                        <mat-form-field class="example-full-width">
+                                        <mat-form-field class="custom-field">
                                           @if (currency=='INR') {
                                             <mat-label>IGST (%)</mat-label>
                                           }
@@ -225,7 +225,7 @@
                                     @if ((isHistoricData=='NO') && (currency=='INR')) {
                                       <div class="col-sm-3">
                                         <div class="form-group">
-                                          <mat-form-field class="example-full-width">
+                                          <mat-form-field class="custom-field">
                                             <mat-label>CGST Amount</mat-label>
                                             <input matInput name="cgstAmount" type="number"
                                               [(ngModel)]="ProductDetailsEntityData.cgstAmount" formControlName="cgstAmount">
@@ -237,7 +237,7 @@
                                       @if ((isHistoricData=='NO') && (currency=='INR')) {
                                         <div class="col-sm-3">
                                           <div class="form-group">
-                                            <mat-form-field class="example-full-width">
+                                            <mat-form-field class="custom-field">
                                               <mat-label>SGST Amount</mat-label>
                                               <input matInput name="sgstAmount" type="number"
                                                 [(ngModel)]="ProductDetailsEntityData.sgstAmount" formControlName="sgstAmount">
@@ -249,7 +249,7 @@
                                         @if (isHistoricData=='NO') {
                                           <div class="col-sm-3">
                                             <div class="form-group">
-                                              <mat-form-field class="example-full-width">
+                                              <mat-form-field class="custom-field">
                                                 @if (currency=='INR') {
                                                   <mat-label>IGST Amount</mat-label>
                                                 }
@@ -266,7 +266,7 @@
                                           @if (isHistoricData=='YES') {
                                             <div class="col-sm-3">
                                               <div class="form-group">
-                                                <mat-form-field class="example-full-width">
+                                                <mat-form-field class="custom-field">
                                                   <mat-label>Service Tax Amount (in Rs.)</mat-label>
                                                   <input matInput name="serviceTax" type="number"
                                                     [(ngModel)]="ProductDetailsEntityData.serviceTax" formControlName="serviceTax" (input)="cal()" step="0.01" min="0">
@@ -278,7 +278,7 @@
                                             @if (isHistoricData=='YES') {
                                               <div class="col-sm-3">
                                                 <div class="form-group">
-                                                  <mat-form-field class="example-full-width">
+                                                  <mat-form-field class="custom-field">
                                                     <mat-label>VAT Amount (in Rs.)</mat-label>
                                                     <input matInput name="vat" type="number"
                                                       [(ngModel)]="ProductDetailsEntityData.vat" formControlName="vat" (input)="cal()" step="0.01" min="0">
@@ -289,7 +289,7 @@
 
                                               <div class="col-sm-3">
                                                 <div class="form-group">
-                                                  <mat-form-field class="example-full-width">
+                                                  <mat-form-field class="custom-field">
                                                     <mat-label>Final Amount</mat-label>
                                                     <input matInput name="finalAmount" type="number"
                                                       [(ngModel)]="ProductDetailsEntityData.finalAmount" formControlName="finalAmount">
@@ -299,7 +299,7 @@
 
                                                 <div class="col-sm-3">
                                                   <div class="form-group">
-                                                    <mat-form-field class="example-full-width">
+                                                    <mat-form-field>
                                                       <mat-label>Description</mat-label>
                                                       <textarea matInput cols="55" rows="4" name="description" type="text"
                                                         placeholder="Please enter description."

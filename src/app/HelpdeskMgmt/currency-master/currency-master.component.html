@@ -32,7 +32,7 @@
                 <div class="row">
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width"
+                      <mat-form-field class="custom-field"
                         [ngClass]="{ 'has-error': isSubmitted && formControls.currencyName.errors }">
                         <input matInput name="currencyName" type="text"
                           placeholder="Currency Name" [(ngModel)]="CurrencyData.currencyName"
@@ -51,7 +51,7 @@
                     </div>
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width"
+                        <mat-form-field class="custom-field"
                           [ngClass]="{ 'has-error': isSubmitted && formControls.currencySymbol.errors }">
                           <input matInput name="currencySymbol" type="text"
                             placeholder="Currency Symbol"
@@ -121,14 +121,14 @@
                           <button mat-flat-button color="warn"
                             (click)="onDelete(CurrencyMasterData.currencyName,CurrencyMasterData.isDeleted)"
                             matTooltip="Deactivate this record">
-                            <mat-icon aria-hidden="false">delete</mat-icon>
+                            <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
                           </button>
                         }
                         @if (CurrencyMasterData.isDeleted) {
                           <button mat-flat-button color="basic" class="green-btn"
                             (click)="onDelete(CurrencyMasterData.currencyName,CurrencyMasterData.isDeleted)"
                             matTooltip="Activate this record">
-                            <mat-icon aria-hidden="false">delete</mat-icon>
+                            <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
                           </button>
                         }
                       </td>

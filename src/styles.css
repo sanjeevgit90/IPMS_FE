@@ -41,7 +41,7 @@ h5, .h5 {
 h6, .h6 {
 	font-size: 0.75rem;
 }
-a:hover,
+a, a:hover,
 a:active,
 a:focus {
 	text-decoration: none;
@@ -190,6 +190,12 @@ a:focus {
 .po-action {margin-top: 10px; background: #fff; box-shadow: 0px 1px 5px 5px #00000014; padding: 10px;}
 .po-action button {width: 100%; font-size: 1em; margin-bottom: 15px;
 padding-top: 3px; padding-bottom: 3px;}
+
+.po-action mat-icon {
+    position: absolute !important;
+    left: 14px;
+}
+
 .blue-btn {background-color: #007bff !important;}
 .red-btn {background-color: #f89224 !important;}
 .pink-btn {background-color: #f824b1 !important;}
@@ -257,7 +263,7 @@ padding-top: 3px; padding-bottom: 3px;}
 .sidebar-menu .menulist:hover a {color: #000 !important;}
 .export-btn {margin-left: 15px !important;}
 
-.filter-box {position: absolute; top: 120px; z-index: 1; right: 30px;
+.filter-box {position: absolute; top: 120px; z-index: 2; right: 30px;
 background-color: #fff; padding: 10px; border: solid 1px #ddd;
 box-shadow: 0px 5px 3px #00000063;
     border-radius: 0px 0px 4px 4px;
@@ -274,8 +280,8 @@ table.mat-table {width: 100%;}
 .mat-icon {  
     float: left;
     font-size: 18px !important;
-    margin-right: 1px;
-	margin-top: 8px;}
+    margin-right: 6px !important;
+}
 
 .mat-flat-button {margin-right: 3px !important;}	
 	
@@ -313,7 +319,7 @@ label {
 .mat-flat-button.mat-primary[disabled], .mat-flat-button.mat-accent[disabled], .mat-flat-button.mat-warn[disabled], .mat-flat-button[disabled][disabled], .mat-raised-button.mat-primary[disabled], .mat-raised-button.mat-accent[disabled], .mat-raised-button.mat-warn[disabled], .mat-raised-button[disabled][disabled], .mat-fab.mat-primary[disabled], .mat-fab.mat-accent[disabled], .mat-fab.mat-warn[disabled], .mat-fab[disabled][disabled], .mat-mini-fab.mat-primary[disabled], .mat-mini-fab.mat-accent[disabled], .mat-mini-fab.mat-warn[disabled], .mat-mini-fab[disabled][disabled] {
 	 pointer-events: none;
 }
-.upload-border {border-bottom: solid 1px #a9a7a7; margin-bottom: 15px; box-shadow: none !important;
+.upload-border {border-bottom: solid 1px #a9a7a7 !important; margin-bottom: 15px; border-radius: 0px !important; box-shadow: none !important;
 	padding: 0px 0px 12px 15px !important;}
 .card-action {padding:0px !important}
 .upload-style {margin: 0px; padding: 0px;}
@@ -326,11 +332,32 @@ label {
 .help-block {color: red;
     text-align: left;    padding: 3px 0px;   border-bottom: dashed 1px;
     margin-bottom: 5px;}
-.center-button {text-align: center; margin-top: 30px}
+.center-button {text-align: center; margin: 20px}
 .popup-modal {position: relative}
 .message-popup {text-align: center;    width: 100%;    display: block;
     font-weight: bold;    padding-top: 40px;}
-#close-icon {position: absolute; top: -10px;  right: -10px; cursor: pointer;}
+#close-icon {position: absolute; top: 10px;  right: -6px; cursor: pointer;}
+.mat-mdc-dialog-surface{
+	overflow: unset !important;
+}
+.mdc-button{
+	min-width: 50px !important;
+}
+
+.small-icon-btn {
+  width: 30px !important;
+  min-width: 30px !important;
+  height: 30px !important;
+  min-height: 30px !important;
+}
+
+.fileUpCss span.mdc-button__label {padding-left: 16px !important;}
+/* .small-icon-btn .mat-icon {
+  font-size: 18px !important;
+  width: 32px !important;
+  height: 32px !important;
+} */
+
 .mat-form-field-appearance-legacy .mat-form-field-wrapper {padding-bottom: 1em;}
 .col-form-label {padding: 0px; font-size: 15px; display: block}
 .form-group .mat-form-field {display: block}
@@ -341,14 +368,14 @@ label {
     font-size: 15px;
     height:36px;
 }
-th.mat-header-cell, td.mat-cell, td.mat-footer-cell {padding: 0px 10px !important;}
-.mat-header-cell {
+th.mat-mdc-header-cell, td.mat-cell, td.mat-footer-cell {padding: 0px 10px !important;}
+.mat-mdc-header-cell {
     color: #000;
-    background: #f6f6f6; border-top: solid 1px #ccc;
+    background: #f6f6f6 !important; border-top: solid 1px #ccc !important;
     font-weight: bold;
     font-size: 14px;
 }
-th .mat-header-cell {
+th .mat-mdc-header-cell {
     color: #000;
     background: #f6f6f6; border-top: solid 1px #ccc;
     font-weight: bold;
@@ -580,13 +607,13 @@ table.dataTable thead > tr > td.sorting {
 .deleterow {background: red !important; color: #fff;}
 .actionmenu .mat-icon {
 	margin: 0px !important;
-    line-height: 45px;
+    line-height: 25px;
 }
 .assets-upload {width: 50%; float: left;}
 .tickets-raised {width: 49%; float: right;}
 
-.dash-accent {border-bottom: solid 2px #ff4081;}
-.dash-primary {border-bottom: solid 2px #3f51b5;}
+.dash-accent {border-bottom: solid 2px #ff4081 !important;}
+.dash-primary {border-bottom: solid 2px #3f51b5 !important;}
 .card-main {margin-bottom: 15px !important;}
 .dashboard-card {text-align: center; padding: 5px; margin-bottom: 0px;}
 .dash-title {font-weight: bold; color: #f0522d; font-size: 14px; border-bottom: solid 1px #ddd;
@@ -1006,6 +1033,16 @@ table.dataTable thead > tr > td.sorting {
 .custom-file input[type="file"] {
 	height: 44px;
 }
+
+.custom-file textarea{
+	height: 70px !important;
+}
+
+.mdc-text-field--filled.mdc-text-field--disabled{
+	background: transparent !important;
+	border-bottom: 1px solid #e3e3e3 !important;
+}
+
 .bg-inverse-primary {
 	background: rgba(77, 138, 240, .2) !important;
 	color: #4d8af0 !important;
@@ -1339,7 +1376,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#741051', end
 	position: fixed;
 	right: 0;
 	top: 0; text-align: center;
-	/* z-index: 1002; */z-index: 1;
+	z-index: 1002;
 }
 .header .header-left {
 	float: left;
@@ -1432,9 +1469,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#741051', end
 .user-menu.nav > li > a {
 	color: #fff;
 	font-size: 14px;
-	line-height: 60px;
+	line-height: 65px;
 	padding: 0 15px;
-	height: 60px;
+	height: 68px;
 }
 .user-menu.nav > li > a:hover,
 .user-menu.nav > li > a:focus {
@@ -7745,6 +7782,30 @@ ul.comment-list li ul.children {
 	margin-bottom: 30px !important;
 }
 
+/* /New css 100626/ */
+.mdc-text-field--filled:not(.mdc-text-field--disabled){
+	background: transparent !important;
+	border-radius: 0 !important;
+}
+
+.custom-field {
+    width: 100%;
+}
+
+.custom-field .mat-mdc-text-field-wrapper {
+    height: 40px !important;
+	padding: .125rem;
+}
+
+.custom-field .mat-mdc-form-field-flex {
+    height: 40px !important;
+    align-items: center !important;
+}
+
+.custom-field .mat-mdc-input-element {
+    margin-top: 0 !important;
+}
+
 /*-----------------
 	64. Responsive
 -----------------------*/
@@ -8383,7 +8444,7 @@ body {
     }
     
     /*  Enable this to hide header
-    .mat-table .mat-header-cell {
+    .mat-table .mat-mdc-header-cell {
       
       border: 10px solid;
       clip: rect(0 0 0 0);

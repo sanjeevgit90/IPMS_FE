@@ -61,7 +61,7 @@
                   @if (!disable) {
                     <div class="col-sm-4" >
                       <div class="form-group">
-                        <mat-form-field class="example-full-width">
+                        <mat-form-field class="custom-field">
                           <mat-select [(ngModel)]="ReportData.district" name="district" placeholder="Search by district" [typeaheadDebounceInterval]="matSelectDuration"
                             (selectionChange)="getActiveCityFromDistrict(ReportData.district)" formControlName="district" required>
                             <mat-option >-Select-</mat-option>
@@ -132,7 +132,7 @@
                       <div class="row">
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width"
+                            <mat-form-field class="custom-field"
                               [ngClass]="{ 'has-error': isSubmitted && formControls.poreferenceno.errors }">
                               <input matInput name="poreferenceno" type="text"
                                 placeholder="PO reference No"
@@ -152,7 +152,7 @@
                           </div>
                           <div class="col-sm-3">
                             <div class="form-group">
-                              <mat-form-field class="example-full-width"
+                              <mat-form-field class="custom-field"
                                 [ngClass]="{ 'has-error': isSubmitted && formControls.pono.errors }">
                                 <input matInput name="pono" type="text"
                                   placeholder="PO No"
@@ -174,7 +174,7 @@
 
                             <div class="col-sm-3">
                               <div class="form-group">
-                                <mat-form-field class="example-full-width">
+                                <mat-form-field class="custom-field">
                                   <input matInput name="podate" placeholder="PO Date" type="text"
                                     [matDatepicker]="podate" [(ngModel)]="ReportData.podate"
                                     formControlName="podate" required>
@@ -194,7 +194,7 @@
 
                               <div class="col-sm-3">
                                 <div class="form-group">
-                                  <mat-form-field class="example-full-width"
+                                  <mat-form-field class="custom-field"
                                     [ngClass]="{ 'has-error': isSubmitted && formControls.customerdepartment.errors }">
                                     <input matInput name="customerdepartment" type="text"
                                       placeholder="Customer Department"
@@ -217,7 +217,7 @@
 
                                 <div class="col-sm-3">
                                   <div class="form-group">
-                                    <mat-form-field class="example-full-width">
+                                    <mat-form-field class="custom-field">
                                       <input matInput name="installationdate" placeholder="Installation Date" type="text"
                                         [matDatepicker]="installationdate" [(ngModel)]="ReportData.installationdate"
                                         formControlName="installationdate" required>
@@ -237,7 +237,7 @@
 
                                   <div class="col-sm-3">
                                     <div class="form-group">
-                                      <mat-form-field class="example-full-width"
+                                      <mat-form-field class="custom-field"
                                         [ngClass]="{ 'has-error': isSubmitted && formControls.contactperson.errors }">
                                         <input matInput name="contactperson" type="text"
                                           placeholder="Contact Person"
@@ -257,7 +257,7 @@
                                     </div>
                                     <div class="col-sm-3">
                                       <div class="form-group">
-                                        <mat-form-field class="example-full-width"
+                                        <mat-form-field class="custom-field"
                                           [ngClass]="{ 'has-error': isSubmitted && formControls.designation.errors }">
                                           <input matInput name="designation" type="text"
                                             placeholder="Designation"
@@ -277,7 +277,7 @@
                                       </div>
                                       <div class="col-sm-3">
                                         <div class="form-group">
-                                          <mat-form-field class="example-full-width"
+                                          <mat-form-field
                                             [ngClass]="{ 'has-error': isSubmitted && formControls.address.errors }">
                                             <textarea matInput name="address" maxlength="200"  [(ngModel)]="ReportData.address"
                                             formControlName="address" placeholder="Enter Address with Pin code" required></textarea>
@@ -296,7 +296,7 @@
                                       </div>
                                       <div class="col-sm-3">
                                         <div class="form-group">
-                                          <mat-form-field class="example-full-width"
+                                          <mat-form-field class="custom-field"
                                             [ngClass]="{ 'has-error': isSubmitted && formControls.telno.errors }">
                                             <input matInput name="telno" type="text"
                                               placeholder="Telephone No"
@@ -316,7 +316,7 @@
                                         </div>
                                         <div class="col-sm-3">
                                           <div class="form-group">
-                                            <mat-form-field class="example-full-width"
+                                            <mat-form-field class="custom-field"
                                               [ngClass]="{ 'has-error': isSubmitted && formControls.project.errors }">
                                               <mat-select [compareWith]="compareObjects" [(ngModel)]="ReportData.project" name="project" [typeaheadDebounceInterval]="matSelectDuration"
                                                 placeholder="Project name" formControlName="project" required>
@@ -392,7 +392,7 @@
 
                                         <div class="col-sm-8">
                                           <div class="form-group">
-                                            <mat-form-field class="example-full-width">
+                                            <mat-form-field>
                                               <textarea matInput name="remark" maxlength="200"
                                                 [(ngModel)]="ReportData.remark" formControlName="remark"
                                               placeholder="Enter Remark"></textarea>

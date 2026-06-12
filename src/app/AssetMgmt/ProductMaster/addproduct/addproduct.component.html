@@ -36,7 +36,7 @@
                 <div class="row">
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width"
+                      <mat-form-field class="custom-field"
                         [ngClass]="{ 'has-error': isSubmitted && formControls.productname.errors }">
                         <input matInput name="productname" type="text"
                           placeholder="Product Name" [(ngModel)]="ProductData.productname"
@@ -56,7 +56,7 @@
 
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width"
+                        <mat-form-field class="custom-field"
                           [ngClass]="{ 'has-error': isSubmitted && formControls.serialno.errors }">
                           <input matInput name="serialno" type="text" placeholder="Serial No"
                             [(ngModel)]="ProductData.serialno" formControlName="serialno"
@@ -76,7 +76,7 @@
 
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width">
+                          <mat-form-field class="custom-field">
                             <input matInput name="barcode" type="text" placeholder="barcode"
                               [(ngModel)]="ProductData.barcode" formControlName="barcode" maxlength="60"
                               >
@@ -87,7 +87,7 @@
 
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width"
+                            <mat-form-field class="custom-field"
                               [ngClass]="{ 'has-error': isSubmitted && formControls.producttype.errors }">
                               <mat-select [(ngModel)]="ProductData.producttype" name="producttype"
                                 formControlName="producttype" placeholder="Select Product type" required>
@@ -111,7 +111,7 @@
                         </div>
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width"
+                            <mat-form-field class="custom-field"
                               [ngClass]="{ 'has-error': isSubmitted && formControls.category.errors }">
                               <mat-select [(ngModel)]="ProductData.category" name="category"
                                 formControlName="category" placeholder="Category"
@@ -139,7 +139,7 @@
                         </div>
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width">
+                            <mat-form-field class="custom-field">
                               <mat-select [(ngModel)]="ProductData.subcategory"
                                 formControlName="subcategory" name="subcategory"
                                 [typeaheadDebounceInterval]="matSelectDuration"
@@ -158,7 +158,7 @@
                         </div>
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width">
+                            <mat-form-field class="custom-field">
                               <mat-select [(ngModel)]="ProductData.manufacturer" name="manufacturer"
                                 formControlName="manufacturer" placeholder="Manufacturer"
                                 [typeaheadDebounceInterval]="matSelectDuration"
@@ -177,7 +177,7 @@
                         </div>
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width">
+                            <mat-form-field class="custom-field">
                               <mat-select [(ngModel)]="ProductData.model" name="model"
                                 [typeaheadDebounceInterval]="matSelectDuration"
                                 placeholder="Model" formControlName="model" >
@@ -196,7 +196,7 @@
 
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width"
+                            <mat-form-field class="custom-field"
                               [ngClass]="{ 'has-error': isSubmitted && formControls.hsncode.errors }">
                               <mat-select [(ngModel)]="ProductData.hsncode" [compareWith]="compareObjects" formControlName="hsncode"
                                 name="hsncode" placeholder="Hsncode"
@@ -224,7 +224,7 @@
 
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width"
+                            <mat-form-field class="custom-field"
                               [ngClass]="{ 'has-error': isSubmitted && formControls.baseuom.errors }">
                               <mat-select [(ngModel)]="ProductData.baseuom"
                                 [typeaheadDebounceInterval]="matSelectDuration" name="baseuom"
@@ -252,7 +252,7 @@
 
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width">
+                            <mat-form-field>
                               <textarea matInput maxlength="200" formControlName="description"
                                 [(ngModel)]="ProductData.description"
                               placeholder="Enter description"></textarea>
@@ -262,7 +262,7 @@
                         </div>
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width">
+                            <mat-form-field>
                               <textarea matInput maxlength="200" formControlName="hsndescription"
                                 [(ngModel)]="ProductData.hsndescription"
                               placeholder="Enter HSN description"></textarea>
@@ -281,7 +281,7 @@
                         @if (ProductData.ishazardous) {
                           <div class="col-sm-3">
                             <div class="form-group">
-                              <mat-form-field class="example-full-width"
+                              <mat-form-field class="custom-field"
                                 [ngClass]="{ 'has-error': isSubmitted && formControls.hazardousgoodtype.errors }">
                                 <mat-select [(ngModel)]="ProductData.hazardousgoodtype" name="hazardousgoodtype"
                                   formControlName="hazardousgoodtype" placeholder="Select hazardous good type" required>

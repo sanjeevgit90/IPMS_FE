@@ -176,7 +176,7 @@
                                 @if (TicketTaskData.approvalStatus == 'ESCALATED') {
                                   <div class="col-sm-3">
                                     <div class="form-group">
-                                      <mat-form-field class="example-full-width"
+                                      <mat-form-field class="custom-field"
                                         [ngClass]="{ 'has-error': isSubmitted && formControls.vendorname.errors }">
                                         <mat-label>Vendor Name</mat-label>
                                         <mat-select [(ngModel)]="TaskData.vendorname"
@@ -208,7 +208,7 @@
                                 @if (TicketTaskData.approvalStatus=='RESOLVED') {
                                   <div class="col-sm-3">
                                     <div class="form-group">
-                                      <mat-form-field class="example-full-width">
+                                      <mat-form-field class="custom-field">
                                         <!-- <input matInput name="resolutionDate"
                                         placeholder="SLA Resolution Date Time" type="text"
                                         [matDatepicker]="picker4" [(ngModel)]="TaskData.resolutionDate"
@@ -239,7 +239,7 @@
                                 @if (TicketTaskData.approvalStatus=='CLOSED') {
                                   <div class="col-sm-3">
                                     <div class="form-group">
-                                      <mat-form-field class="example-full-width">
+                                      <mat-form-field class="custom-field">
                                         <!-- <input matInput name="ticketClosedTime"
                                         placeholder="Ticket Closed Time" type="text"
                                         [matDatepicker]="picker5" [(ngModel)]="TaskData.ticketClosedTime"
@@ -274,7 +274,7 @@
                                   <div class="col-sm-3"
                                     >
                                     <div class="form-group">
-                                      <mat-form-field class="example-full-width"
+                                      <mat-form-field class="custom-field"
                                         [ngClass]="{ 'has-error': isSubmitted && formControls.assignName.errors }">
                                         <mat-label>Assign To</mat-label>
                                         <mat-select [(ngModel)]="assignToUser"
@@ -303,7 +303,7 @@
 
                                 <div class="col-sm-3">
                                   <div class="form-group">
-                                    <mat-form-field class="example-full-width"
+                                    <mat-form-field class="custom-field"
                                       [ngClass]="{ 'has-error': isSubmitted && formControls.assignName.errors }">
                                       <mat-label>Ticket Category</mat-label>
                                       <mat-select [(ngModel)]="TaskData.ticketCategory"
@@ -335,7 +335,7 @@
 
                                 <div class="col-sm-3">
                                   <div class="form-group">
-                                    <mat-form-field class="example-full-width"
+                                    <mat-form-field class="custom-field"
                                       [ngClass]="{ 'has-error': isSubmitted && formControls.ticketSubcategory.errors }">
                                       <mat-label>Subcategory</mat-label>
                                       <mat-select [(ngModel)]="TaskData.ticketSubcategory"
@@ -366,7 +366,7 @@
 
                                 <div class="col-sm-3">
                                   <div class="form-group">
-                                    <mat-form-field class="example-full-width"
+                                    <mat-form-field class="custom-field"
                                       [ngClass]="{ 'has-error': isSubmitted && formControls.assignName.errors }">
                                       <mat-label>Classification</mat-label>
                                       <mat-select [(ngModel)]="classifications"
@@ -402,7 +402,7 @@
 
                                 <div class="col-sm-3">
                                   <div class="form-group">
-                                    <mat-form-field class="example-full-width" class="example-full-width"
+                                    <mat-form-field
                                       [ngClass]="{ 'has-error': isSubmitted && formControls.resolution.errors }">
                                       <mat-label>Ticket Resolution</mat-label>
 
@@ -428,7 +428,7 @@
 
                                 <!-- <div class="col-sm-3">
                                 <div class="form-group">
-                                  <mat-form-field class="example-full-width">
+                                  <mat-form-field class="custom-field">
                                     <input matInput name="attachment" type="text" placeholder="Attachment"
                                       [(ngModel)]="TicketTaskData.attachment" formControlName="attachment"
                                       maxlength="60" required>
@@ -449,7 +449,7 @@
 
                                 <div class="col-sm-3">
                                   <div class="form-group">
-                                    <mat-form-field class="example-full-width"
+                                    <mat-form-field
                                       [ngClass]="{ 'has-error': isSubmitted && formControls.remark.errors }">
                                       <textarea matInput name="remark" maxlength="250"
                                         [(ngModel)]="TaskData.remark" placeholder="Remark"
@@ -473,7 +473,7 @@
                                 @if (TicketTaskData.approvalStatus=='CLOSED') {
                                   <div class="col-sm-3">
                                     <div class="form-group">
-                                      <mat-form-field class="example-full-width"
+                                      <mat-form-field class="custom-field"
                                         [ngClass]="{ 'has-error': isSubmitted && formControls.trip.errors }">
                                         <mat-label>Trip</mat-label>
                                         <mat-select [(ngModel)]="TaskData.trip"
@@ -536,7 +536,7 @@
                                             </div>
                                             <div class="col-sm-4">
                                               <div class="form-group">
-                                                <mat-form-field class="example-full-width">
+                                                <mat-form-field class="custom-field">
                                                   <input matInput name="tripFromDate"
                                                     placeholder="Ticket Created Date Time" type="text"
                                                     [matDatepicker]="picker1"

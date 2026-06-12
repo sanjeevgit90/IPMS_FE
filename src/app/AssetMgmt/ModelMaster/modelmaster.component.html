@@ -42,7 +42,7 @@
           <div class="row">
             <div class="col-sm-12">
               <div class="form-group">
-                <mat-form-field class="example-full-width">
+                <mat-form-field class="custom-field">
                   <input matInput name="modelname" type="text" placeholder="Search by model name"
                     [(ngModel)]="FilterData.modelname">
                   </mat-form-field>
@@ -71,7 +71,7 @@
                   <div class="row">
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width"
+                        <mat-form-field class="custom-field"
                           [ngClass]="{ 'has-error': isSubmitted && formControls.modelname.errors }">
                           <input matInput name="modelname" type="text" placeholder="Model Name"
                             [(ngModel)]="ModelData.modelname" formControlName="modelname"
@@ -92,7 +92,7 @@
 
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width"
+                          <mat-form-field class="custom-field"
                             [ngClass]="{ 'has-error': isSubmitted && formControls.manufacture.errors }">
                             <mat-select [(ngModel)]="manufacturename" name=manufacture
                               formControlName="manufacture"
@@ -122,7 +122,7 @@
 
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width">
+                          <mat-form-field>
                             <textarea matInput maxlength="200" [(ngModel)]="ModelData.description"
                               placeholder="Enter description"
                             formControlName="description"></textarea>
@@ -201,7 +201,7 @@
                         <button mat-flat-button color="primary" [disabled]="ModelMasterData.isDeleted"
                           (click)="editon(ModelMasterData.modelname)" matTooltip="Edit this record"
                           >
-                          <mat-icon aria-hidden="false">edit</mat-icon>
+                          <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                         </button>
                       }
 
@@ -209,7 +209,7 @@
                         <button mat-flat-button color="warn" (click)="onDelete(ModelMasterData.modelname)"
                           [disabled]="ModelMasterData.isDeleted" matTooltip="Delete this record"
                           >
-                          <mat-icon aria-hidden="false">delete</mat-icon>
+                          <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
                         </button>
                       }
                     </td>

@@ -32,7 +32,7 @@
                 <div class="row">
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width">
+                      <mat-form-field class="custom-field">
                         <mat-label>Project</mat-label>
                         <mat-select [(ngModel)]="ReportRequest.accountName"
                           formControlName="accountName">
@@ -48,7 +48,7 @@
 
                   <div class="col-sm-2">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width">
+                      <mat-form-field class="custom-field">
                         <input matInput name="fromDate" placeholder="From date." type="text"
                           [matDatepicker]="picker1" [(ngModel)]="ReportRequest.fromDate"
                           formControlName="fromDate">
@@ -61,7 +61,7 @@
 
                     <div class="col-sm-2">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width">
+                        <mat-form-field class="custom-field">
                           <input matInput name="toDate" placeholder="To date." type="text"
                             [matDatepicker]="picker2" [(ngModel)]="ReportRequest.toDate"
                             formControlName="toDate">
@@ -90,7 +90,7 @@
                           @if (ReportRequest.wiseReport=='Category') {
                             <div class="col-sm-3">
                               <div class="form-group">
-                                <mat-form-field class="example-full-width">
+                                <mat-form-field class="custom-field">
                                   <mat-label>Category</mat-label>
                                   <mat-select [(ngModel)]="ReportRequest.category"
                                     formControlName="category"
@@ -108,7 +108,7 @@
                           @if (ReportRequest.wiseReport=='Category') {
                             <div class="col-sm-3">
                               <div class="form-group">
-                                <mat-form-field class="example-full-width">
+                                <mat-form-field class="custom-field">
                                   <mat-label>Sub-Category</mat-label>
                                   <mat-select [(ngModel)]="ReportRequest.subcategory"
                                     formControlName="subcategory">
@@ -125,7 +125,7 @@
                           @if (ReportRequest.wiseReport=='Product') {
                             <div class="col-sm-3">
                               <div class="form-group">
-                                <mat-form-field class="example-full-width">
+                                <mat-form-field class="custom-field">
                                   <mat-label>Product</mat-label>
                                   <mat-select [(ngModel)]="ReportRequest.productId"
                                     formControlName="productId">

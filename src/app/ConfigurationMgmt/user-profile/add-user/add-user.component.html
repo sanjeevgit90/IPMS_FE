@@ -34,7 +34,7 @@
                   </div>
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width"
+                      <mat-form-field class="custom-field"
                         [ngClass]="{ 'has-error': isSubmitted && formControls.firstName.errors }">
                         <input matInput name="firstName" type="text" placeholder="First Name"
                           [(ngModel)]="UserProfileData.firstName" formControlName="firstName"
@@ -53,7 +53,7 @@
                     </div>
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width"
+                        <mat-form-field class="custom-field"
                           [ngClass]="{ 'has-error': isSubmitted && formControls.lastName.errors }">
                           <input matInput name="lastName" type="text" placeholder="Last Name"
                             [(ngModel)]="UserProfileData.lastName" formControlName="lastName"
@@ -72,7 +72,7 @@
                       </div>
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width"
+                          <mat-form-field class="custom-field"
                             [ngClass]="{ 'has-error': isSubmitted && formControls.mobileNumber.errors }">
                             <input matInput name="mobileNumber" type="text" placeholder="Mobile No."
                               [(ngModel)]="UserProfileData.mobileNumber"
@@ -144,7 +144,7 @@
                           </div>
                           <div class="col-sm-6">
                             <div class="form-group">
-                              <mat-form-field class="example-full-width">
+                              <mat-form-field class="custom-field">
                                 <input matInput name="dob" placeholder="Date of birth" type="text"
                                   (click)="picker.open()" [matDatepicker]="picker"
                                   [(ngModel)]="UserProfileData.dob" formControlName="dob">
@@ -165,7 +165,7 @@
                             </div>
                             <div class="col-sm-6">
                               <div class="form-group">
-                                <mat-form-field class="example-full-width"
+                                <mat-form-field class="custom-field"
                                   [ngClass]="{ 'has-error': isSubmitted && formControls.emailId.errors }">
                                   <input matInput name="emailId" type="email" placeholder="Email Id"
                                     [(ngModel)]="UserProfileData.emailId" formControlName="emailId"
@@ -190,7 +190,7 @@
                               </div>
                               <div class="col-sm-6">
                                 <div class="form-group">
-                                  <mat-form-field class="example-full-width"
+                                  <mat-form-field class="custom-field"
                                     [ngClass]="{ 'has-error': isSubmitted && formControls.emergencyContactMobile.errors }">
                                     <input matInput name="emergencyContactMobile" type="text"
                                       placeholder="Emergency Mobile No."
@@ -222,7 +222,7 @@
                               </div>
                               <div class="col-sm-3">
                                 <div class="form-group">
-                                  <mat-form-field class="example-full-width"
+                                  <mat-form-field class="custom-field"
                                     [ngClass]="{ 'has-error': isSubmitted && formControls.emergencyContactPerson.errors }">
                                     <input matInput name="emergencyContactPerson" type="text"
                                       placeholder="Emergency Contact Name"
@@ -243,7 +243,7 @@
                                 </div>
                                 <div class="col-sm-6">
                                   <div class="form-group">
-                                    <mat-form-field class="example-full-width"
+                                    <mat-form-field class="custom-field"
                                       [ngClass]="{ 'has-error': isSubmitted && formControls.address.errors }">
                                       <input matInput name="address" type="text" placeholder="Address"
                                         [(ngModel)]="UserProfileData.address" formControlName="address"
@@ -316,7 +316,7 @@
                                   </div>
                                   <div class="col-sm-3">
                                     <div class="form-group">
-                                      <mat-form-field class="example-full-width"
+                                      <mat-form-field class="custom-field"
                                         [ngClass]="{ 'has-error': isSubmitted && formControls.country.errors }">
                                         <input matInput name="country" type="text" placeholder="Country"
                                           [(ngModel)]="UserProfileData.country" formControlName="country"
@@ -341,7 +341,7 @@
                                       </div>
                                       <div class="col-sm-3">
                                         <div class="form-group">
-                                          <mat-form-field class="example-full-width"
+                                          <mat-form-field class="custom-field"
                                             [ngClass]="{ 'has-error': isSubmitted && formControls.designation.errors }">
                                             <input matInput name="designation" type="text" placeholder="Designation"
                                               [(ngModel)]="UserProfileData.designation"
@@ -360,7 +360,7 @@
                                         </div>
                                         <div class="col-sm-3">
                                           <div class="form-group">
-                                            <mat-form-field class="example-full-width">
+                                            <mat-form-field class="custom-field">
                                               <input matInput name="doj" placeholder="Date of Joining"
                                                 (click)="picker1.open()" type="text" [matDatepicker]="picker1"
                                                 [(ngModel)]="UserProfileData.doj" formControlName="doj">
@@ -380,7 +380,7 @@
                                           </div>
                                           <div class="col-sm-3">
                                             <div class="form-group">
-                                              <mat-form-field class="example-full-width"
+                                              <mat-form-field class="custom-field"
                                                 [ngClass]="{ 'has-error': isSubmitted && formControls.employeeCode.errors }">
                                                 <input matInput name="employeeCode" type="text"
                                                   placeholder="Employee code"

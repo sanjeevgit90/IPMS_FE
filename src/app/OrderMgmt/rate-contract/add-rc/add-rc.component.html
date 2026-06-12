@@ -44,7 +44,7 @@
                 <div class="row">
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width"
+                      <mat-form-field class="custom-field"
                         [ngClass]="{ 'has-error': isSubmitted && formControls.rateContractNo.errors }">
                         <mat-label>Rate Contract No.</mat-label>
                         <input matInput name="rateContractNo" type="text"
@@ -66,7 +66,7 @@
 
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width"
+                        <mat-form-field class="custom-field"
                           [ngClass]="{ 'has-error': isSubmitted && formControls.contractDate.errors }">
                           <input matInput name="contractDate"
                             placeholder="Please enter contract date." type="text"
@@ -91,7 +91,7 @@
 
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width"
+                          <mat-form-field class="custom-field"
                             [ngClass]="{ 'has-error': isSubmitted && formControls.validTill.errors }">
                             <input matInput name="validTill"
                               placeholder="Please enter valid till." type="text"
@@ -116,7 +116,7 @@
 
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width"
+                            <mat-form-field class="custom-field"
                               [ngClass]="{ 'has-error': isSubmitted && formControls.department.errors }">
                               <mat-label>Department</mat-label>
                               <mat-select [(ngModel)]="RCEntityData.department" [typeaheadDebounceInterval]="matSelectDuration"
@@ -143,7 +143,7 @@
 
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width"
+                            <mat-form-field class="custom-field"
                               [ngClass]="{ 'has-error': isSubmitted && formControls.accountName.errors }">
                               <mat-label>Project</mat-label>
                               <mat-select [(ngModel)]="RCEntityData.accountName" [typeaheadDebounceInterval]="matSelectDuration"
@@ -170,7 +170,7 @@
 
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width"
+                            <mat-form-field class="custom-field"
                               [ngClass]="{ 'has-error': isSubmitted && formControls.organisationId.errors }">
                               <mat-label>Organisation</mat-label>
                               <mat-select [(ngModel)]="RCEntityData.organisationId" [typeaheadDebounceInterval]="matSelectDuration"
@@ -198,7 +198,7 @@
 
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width"
+                            <mat-form-field class="custom-field"
                               [ngClass]="{ 'has-error': isSubmitted && formControls.contractType.errors }">
                               <mat-label>Contract Type</mat-label>
                               <mat-select [(ngModel)]="RCEntityData.contractType" [typeaheadDebounceInterval]="matSelectDuration"
@@ -222,7 +222,7 @@
 
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width"
+                            <mat-form-field class="custom-field"
                               [ngClass]="{ 'has-error': isSubmitted && formControls.modeOfPayment.errors }">
                               <mat-label>Payment Term</mat-label>
                               <mat-select [(ngModel)]="RCEntityData.modeOfPayment" [typeaheadDebounceInterval]="matSelectDuration"
@@ -249,7 +249,7 @@
 
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width"
+                            <mat-form-field class="custom-field"
                               [ngClass]="{ 'has-error': isSubmitted && formControls.dispatchThrough.errors }">
                               <mat-label>Dispatch Through</mat-label>
                               <mat-select [(ngModel)]="RCEntityData.dispatchThrough" [typeaheadDebounceInterval]="matSelectDuration"
@@ -274,7 +274,7 @@
 
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width"
+                            <mat-form-field class="custom-field"
                               [ngClass]="{ 'has-error': isSubmitted && formControls.currency.errors }">
                               <mat-label>Currency</mat-label>
                               <mat-select [(ngModel)]="RCEntityData.currency" [typeaheadDebounceInterval]="matSelectDuration"
@@ -303,7 +303,7 @@
 
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width"
+                            <mat-form-field class="custom-field"
                               [ngClass]="{ 'has-error': isSubmitted && formControls.deliveryTerm.errors }">
                               <mat-label>Delivery Term</mat-label>
                               <mat-select [(ngModel)]="RCEntityData.deliveryTerm" [typeaheadDebounceInterval]="matSelectDuration"
@@ -330,7 +330,7 @@
 
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.maxLimit.errors }">
+                            <mat-form-field class="custom-field" [ngClass]="{ 'has-error': isSubmitted && formControls.maxLimit.errors }">
                               <mat-label>Max Limit</mat-label>
                               <input matInput name="maxLimit" type="number"
                                 placeholder="Please enter discount amount."
@@ -350,7 +350,7 @@
 
                           <div class="col-sm-6">
                             <div class="form-group">
-                              <mat-form-field class="example-full-width"
+                              <mat-form-field class="custom-field"
                                 [ngClass]="{ 'has-error': isSubmitted && formControls.suppliersReference.errors }">
                                 <mat-label>Suppliers Reference</mat-label>
                                 <input matInput name="boqNo" type="text"
@@ -372,7 +372,7 @@
 
                             <div class="col-sm-6">
                               <div class="form-group">
-                                <mat-form-field class="example-full-width">
+                                <mat-form-field class="custom-field">
                                   <mat-label>Other Reference</mat-label>
                                   <!-- <textarea matInput cols="55" rows="4" name="otherReference" type="text"
                                   placeholder="Please enter other reference."
@@ -392,7 +392,7 @@
                           <div class="row">
                             <div class="col-sm-3">
                               <div class="form-group">
-                                <mat-form-field class="example-full-width"
+                                <mat-form-field class="custom-field"
                                   [ngClass]="{ 'has-error': isSubmitted && formControls.supplierName.errors }">
                                   <mat-label>Supplier Name</mat-label>
                                   <mat-select [(ngModel)]="RCEntityData.supplierName" [typeaheadDebounceInterval]="matSelectDuration"
@@ -419,7 +419,7 @@
 
                             <div class="col-sm-3">
                               <div class="form-group">
-                                <mat-form-field class="example-full-width"
+                                <mat-form-field class="custom-field"
                                   [ngClass]="{ 'has-error': isSubmitted && formControls.supplierDetails.errors }">
                                   <mat-label>Supplier Address</mat-label>
                                   <mat-select [(ngModel)]="RCEntityData.supplierDetails" [typeaheadDebounceInterval]="matSelectDuration"
@@ -446,7 +446,7 @@
 
                             <div class="col-sm-3">
                               <div class="form-group">
-                                <mat-form-field class="example-full-width"
+                                <mat-form-field class="custom-field"
                                   [ngClass]="{ 'has-error': isSubmitted && formControls.billFromState.errors }">
                                   <mat-label>Bill From State</mat-label>
                                   <mat-select [(ngModel)]="RCEntityData.billFromState" [typeaheadDebounceInterval]="matSelectDuration"
@@ -474,7 +474,7 @@
 
                             <div class="col-sm-3">
                               <div class="form-group">
-                                <mat-form-field class="example-full-width">
+                                <mat-form-field class="custom-field">
                                   <mat-label>GST No.</mat-label>
                                   <input matInput name="billFromGstNo" type="text"
                                     placeholder="Please enter GSTIN."
@@ -486,7 +486,7 @@
 
                               <div class="col-sm-3">
                                 <div class="form-group">
-                                  <mat-form-field class="example-full-width"
+                                  <mat-form-field class="custom-field"
                                     [ngClass]="{ 'has-error': isSubmitted && formControls.buyerName.errors }">
                                     <mat-label>Purchaser Name</mat-label>
                                     <mat-select [(ngModel)]="RCEntityData.buyerName" [typeaheadDebounceInterval]="matSelectDuration"
@@ -513,7 +513,7 @@
 
                               <div class="col-sm-3">
                                 <div class="form-group">
-                                  <mat-form-field class="example-full-width"
+                                  <mat-form-field class="custom-field"
                                     [ngClass]="{ 'has-error': isSubmitted && formControls.invoiceToAddress.errors }">
                                     <mat-label>Invoice Postal Address</mat-label>
                                     <mat-select [(ngModel)]="RCEntityData.invoiceToAddress" [typeaheadDebounceInterval]="matSelectDuration"
@@ -540,7 +540,7 @@
 
                               <div class="col-sm-3">
                                 <div class="form-group">
-                                  <mat-form-field class="example-full-width"
+                                  <mat-form-field class="custom-field"
                                     [ngClass]="{ 'has-error': isSubmitted && formControls.billToAddress.errors }">
                                     <mat-label>Bill To Address</mat-label>
                                     <mat-select [(ngModel)]="RCEntityData.billToAddress" [typeaheadDebounceInterval]="matSelectDuration"
@@ -568,7 +568,7 @@
 
                               <div class="col-sm-3">
                                 <div class="form-group">
-                                  <mat-form-field class="example-full-width"
+                                  <mat-form-field class="custom-field"
                                     [ngClass]="{ 'has-error': isSubmitted && formControls.shipToAddress.errors }">
                                     <mat-label>Ship To Address</mat-label>
                                     <mat-select [(ngModel)]="RCEntityData.shipToAddress" [typeaheadDebounceInterval]="matSelectDuration"
@@ -598,7 +598,7 @@
                             <div class="row">
                               <div class="col-sm-12">
                                 <div class="form-group">
-                                  <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.termsConditions.errors }">
+                                  <mat-form-field [ngClass]="{ 'has-error': isSubmitted && formControls.termsConditions.errors }">
                                     <mat-label>Terms & Conditions</mat-label>
                                     <textarea matInput cols="55" rows="4" name="termsConditions" type="text"
                                       placeholder="Please enter terms & conditions."
@@ -626,7 +626,7 @@
                               @if (view) {
                                 <div class="col-sm-3">
                                   <!-- <div class="form-group">
-                                  <mat-form-field class="example-full-width">
+                                  <mat-form-field class="custom-field">
                                     <mat-label>Upload Signed Copy</mat-label>
                                     <input matInput name="signedCopyPath" type="text"
                                       placeholder="Uplaod signed copy."
@@ -661,7 +661,7 @@
                                 </button>
                               }
 
-                              <button mat-flat-button color="warn" (click)="cancel()">
+                              <button mat-flat-button color="warn" class="ms-2" (click)="cancel()">
                                 <mat-icon aria-hidden="false">close</mat-icon> Cancel
                               </button>
                             </div>

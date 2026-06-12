@@ -22,7 +22,7 @@
 
             <div class="col-auto float-right ml-auto">
 
-              <button mat-flat-button color="accent" (click)="addPoFulfilment()">
+              <button mat-flat-button color="accent" class="me-2" (click)="addPoFulfilment()">
                 <mat-icon aria-hidden="false">add</mat-icon> Add PO Payment
               </button>
               <button mat-flat-button color="warn" (click)="goBack()">
@@ -77,15 +77,15 @@
                   <th mat-header-cell *matHeaderCellDef> Action </th>
                   <td mat-cell *matCellDef="let PoFulfilmentMasterData">
 
-                    <a mat-flat-button color="primary" matTooltip="Edit this record"
+                    <a mat-flat-button color="primary" class="me-2" matTooltip="Edit this record"
                       [routerLink]="['/searchPurchaseOrder/EditPoFulfilment', PoFulfilmentMasterData.entityId,'edit']"
                       title="Edit">
-                      <mat-icon aria-hidden="false">edit</mat-icon>
+                      <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                     </a>
 
                     <button mat-flat-button color="warn" matTooltip="Delete this record" (click)="deleteFulfilment(PoFulfilmentMasterData.entityId)"
                       title="Delete">
-                      <mat-icon aria-hidden="false">delete</mat-icon>
+                      <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
                     </button>
                   </td>
                 </ng-container>

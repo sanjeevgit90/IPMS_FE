@@ -155,19 +155,19 @@
               </div>
               <div class="pro-edit">
                 <!-- <button mat-flat-button color="accent"  matTooltip="Edit profile">
-                <mat-icon aria-hidden="false">edit</mat-icon>
+                <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
               </button> -->
 
               @if (profileEdit) {
                 <a mat-flat-button color="accent" matTooltip="Edit profile" [routerLink]="['/updateUser', ProfileData.entityId,'editprofile']">
-                  <mat-icon aria-hidden="false">edit</mat-icon>
+                  <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                 </a>
               }
 
 
               @if (adminEdit) {
                 <a mat-flat-button color="primary" matTooltip="Edit user profile" [routerLink]="['/updateUser', ProfileData.entityId,'edit']">
-                  <mat-icon aria-hidden="false">edit</mat-icon>
+                  <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                 </a>
               }
 

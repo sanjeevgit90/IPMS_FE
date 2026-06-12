@@ -36,7 +36,7 @@
                 <div class="row">
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.fulfilmentDate.errors }">
+                      <mat-form-field class="custom-field" [ngClass]="{ 'has-error': isSubmitted && formControls.fulfilmentDate.errors }">
                         <input matInput name="fulfilmentDate" placeholder="Fulfilment Date " type="text"
                           [matDatepicker]="picker" [(ngModel)]="PoFulfilmentData.fulfilmentDate"
                           formControlName="fulfilmentDate">
@@ -56,7 +56,7 @@
 
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.delayReason.errors }">
+                        <mat-form-field class="custom-field" [ngClass]="{ 'has-error': isSubmitted && formControls.delayReason.errors }">
                           <input matInput name="delayReason" type="text" placeholder="Delay Reason"
                             [(ngModel)]="PoFulfilmentData.delayReason" formControlName="delayReason"
                             maxlength="60">
@@ -74,7 +74,7 @@
 
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.nextdeliveryDate.errors }">
+                          <mat-form-field class="custom-field" [ngClass]="{ 'has-error': isSubmitted && formControls.nextdeliveryDate.errors }">
                             <input matInput name="nextdeliveryDate" placeholder="Next Delivery Date " type="text"
                               [matDatepicker]="picker1" [(ngModel)]="PoFulfilmentData.nextdeliveryDate"
                               formControlName="nextdeliveryDate">
@@ -94,7 +94,7 @@
 
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width">
+                            <mat-form-field class="custom-field">
                               <mat-label>Delay Category</mat-label>
                               <mat-select [(ngModel)]="PoFulfilmentData.delayCategory"
                                 formControlName="delayCategory">
@@ -123,7 +123,7 @@
                               <mat-icon aria-hidden="false">update</mat-icon> Update</button>
                             }
 
-                            <button mat-flat-button color="warn" (click)="back()">
+                            <button mat-flat-button class="ms-2" color="warn" (click)="back()">
                               <mat-icon aria-hidden="false">cancel</mat-icon> Back</button>
                             </div>
 

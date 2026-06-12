@@ -25,7 +25,7 @@
                 <mat-icon aria-hidden="false">filter</mat-icon> Filter
               </button>
               @if (licenceAdd) {
-                <button mat-flat-button color="accent" (click)="addLicense()">
+                <button mat-flat-button color="accent" class="ms-2" (click)="addLicense()">
                   <mat-icon aria-hidden="false">add</mat-icon> Add License
                 </button>
               }
@@ -54,7 +54,7 @@
                   <div class="total-rec">Total Records: {{totalRecords}}</div>
                 </div>
                 <div class="col-auto float-right ml-auto">
-                  <mat-form-field class="search-input">
+                  <mat-form-field class="search-input custom-field">
                     <input matInput (keyup)="applyFilter($event)" placeholder="Search..." #input>
                   </mat-form-field>
                 </div>
@@ -99,18 +99,18 @@
                       <button mat-flat-button color="primary" matTooltip="Edit this record"
                         [routerLink]="['/updateLicense', LicenseMasterData.licenseTag,'edit']"
                         [disabled]="LicenseMasterData.isDeleted">
-                        <mat-icon aria-hidden="false">edit</mat-icon>
+                        <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                       </button>
                     }
 
 
 
                     @if (licenceDelete) {
-                      <button mat-flat-button color="warn"
+                      <button mat-flat-button color="warn" class="ms-2"
                         (click)="onDelete(LicenseMasterData.licenseTag)"
                         matTooltip="delete this record"
                         [disabled]="LicenseMasterData.isDeleted" >
-                        <mat-icon aria-hidden="false">delete</mat-icon>
+                        <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
                       </button>
                     }
 

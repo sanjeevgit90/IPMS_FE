@@ -42,7 +42,7 @@
                   @if (edit && ProjectData.approvalStatus=='APPROVED') {
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width">
+                        <mat-form-field class="custom-field">
                           <input matInput name="projectPin" type="text" placeholder="Project Pin" [(ngModel)]="ProjectData.projectPin" formControlName="projectPin" maxlength="60" readonly=true>
                         </mat-form-field>
                       </div>
@@ -50,7 +50,7 @@
                   }
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.projectType.errors }">
+                      <mat-form-field class="custom-field" [ngClass]="{ 'has-error': isSubmitted && formControls.projectType.errors }">
                         <mat-select [(ngModel)]="ProjectData.projectType" [typeaheadDebounceInterval]="matSelectDuration" name="projectType" placeholder="Project Type" formControlName="projectType" required>
                           <mat-option>-Select-</mat-option>
                           @for (type of projectTypeList; track type) {
@@ -72,7 +72,7 @@
                   </div>
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.projectName.errors }">
+                      <mat-form-field class="custom-field" [ngClass]="{ 'has-error': isSubmitted && formControls.projectName.errors }">
                         <input matInput name="projectName" type="text" placeholder="Project Name" [(ngModel)]="ProjectData.projectName" formControlName="projectName" maxlength="100" required>
                         @if (isSubmitted && formControls.projectName.errors) {
                           <div class="error-text">
@@ -88,7 +88,7 @@
 
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.clientName.errors }">
+                      <mat-form-field class="custom-field" [ngClass]="{ 'has-error': isSubmitted && formControls.clientName.errors }">
                         <input matInput name="clientName" type="text" placeholder="Client Name" [(ngModel)]="ProjectData.clientName" formControlName="clientName" maxlength="60" required>
                         @if (isSubmitted && formControls.clientName.errors) {
                           <div class="error-text">
@@ -102,7 +102,7 @@
                   </div>
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.organization.errors }">
+                      <mat-form-field class="custom-field" [ngClass]="{ 'has-error': isSubmitted && formControls.organization.errors }">
                         <mat-select [compareWith]="compareUser" [typeaheadDebounceInterval]="matSelectDuration" [(ngModel)]="ProjectData.organization" name="organization" placeholder="Organization" formControlName="organization" required>
                           <mat-option>-Select-</mat-option>
                           @for (org of organizationsList; track org) {
@@ -124,7 +124,7 @@
                   </div>
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.departmentName.errors }">
+                      <mat-form-field class="custom-field" [ngClass]="{ 'has-error': isSubmitted && formControls.departmentName.errors }">
                         <mat-select [compareWith]="compareUser" [typeaheadDebounceInterval]="matSelectDuration" [(ngModel)]="ProjectData.departmentName" name="departmentName" placeholder="Department Name" formControlName="departmentName" required>
                           <mat-option>-Select-</mat-option>
                           @for (dept of departmentList; track dept) {
@@ -146,7 +146,7 @@
                   </div>
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.projectManager.errors }">
+                      <mat-form-field class="custom-field" [ngClass]="{ 'has-error': isSubmitted && formControls.projectManager.errors }">
                         <mat-select [compareWith]="compareUser" [typeaheadDebounceInterval]="matSelectDuration" [(ngModel)]="ProjectData.projectManager" name="projectManager" placeholder="Project Manager Name" formControlName="projectManager" required>
                           <mat-option>-Select-</mat-option>
                           @for (user of userList; track user) {
@@ -168,7 +168,7 @@
                   </div>
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.accountManager.errors }">
+                      <mat-form-field class="custom-field" [ngClass]="{ 'has-error': isSubmitted && formControls.accountManager.errors }">
                         <mat-select [compareWith]="compareUser" [typeaheadDebounceInterval]="matSelectDuration" [(ngModel)]="ProjectData.accountManager" name="accountManager" placeholder="Account Manager Name" formControlName="accountManager" required>
                           <mat-option>-Select-</mat-option>
                           @for (user of userList; track user) {
@@ -191,7 +191,7 @@
 
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.practiceName.errors }">
+                      <mat-form-field class="custom-field" [ngClass]="{ 'has-error': isSubmitted && formControls.practiceName.errors }">
                         <input matInput name="practiceName" type="text" placeholder="Practice Name" [(ngModel)]="ProjectData.practiceName" formControlName="practiceName" required>
                         @if (isSubmitted && formControls.practiceName.errors) {
                           <div class="error-text">
@@ -207,7 +207,7 @@
 
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.projectLocation.errors }">
+                      <mat-form-field class="custom-field" [ngClass]="{ 'has-error': isSubmitted && formControls.projectLocation.errors }">
                         <input matInput name="projectLocation" type="text" placeholder="Project Location" [(ngModel)]="ProjectData.projectLocation" formControlName="projectLocation" maxlength="60" required>
                         @if (isSubmitted && formControls.projectLocation.errors) {
                           <div class="error-text">
@@ -222,7 +222,7 @@
                   </div>
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width">
+                      <mat-form-field class="custom-field">
                         <input matInput name="projectStartDate" placeholder="Project Start Date" type="text" [matDatepicker]="picker" [(ngModel)]="ProjectData.projectStartDate" formControlName="projectStartDate" required>
                         @if (isSubmitted && formControls.projectStartDate.errors) {
                           <div class="error-text">
@@ -242,7 +242,7 @@
 
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width">
+                      <mat-form-field class="custom-field">
                         <input matInput name="projectStopDate" placeholder="Project Stop Date" type="text" [matDatepicker]="picker1" [(ngModel)]="ProjectData.projectStopDate" formControlName="projectStopDate" required>
                         @if (isSubmitted && formControls.projectStopDate.errors) {
                           <div class="error-text">
@@ -262,7 +262,7 @@
 
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width">
+                      <mat-form-field class="custom-field">
                         <mat-select [(ngModel)]="ProjectData.projectStatus" [typeaheadDebounceInterval]="matSelectDuration" name="projectStatus" placeholder="Project Status" formControlName="projectStatus">
                           <mat-option>-Select-</mat-option>
                           @for (projectStatus of statusList; track projectStatus) {
@@ -276,7 +276,7 @@
                   </div>
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width">
+                      <mat-form-field>
                         <textarea matInput name="remark" maxlength="500" [(ngModel)]="ProjectData.remark" formControlName="remark" placeholder="Enter Remark"></textarea>
                       </mat-form-field>
                     </div>
@@ -301,7 +301,7 @@
 
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.percentagePaymentReceived.errors }">
+                      <mat-form-field class="custom-field" [ngClass]="{ 'has-error': isSubmitted && formControls.percentagePaymentReceived.errors }">
                         <input matInput name="percentagePaymentReceived" type="text" placeholder="Percentage Payment Received" [(ngModel)]="ProjectData.percentagePaymentReceived" formControlName="percentagePaymentReceived" required numbersOnly>
                         @if (isSubmitted && formControls.percentagePaymentReceived.errors) {
                           <div class="error-text">
@@ -316,7 +316,7 @@
                   </div>
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.percentageCompleted.errors }">
+                      <mat-form-field class="custom-field" [ngClass]="{ 'has-error': isSubmitted && formControls.percentageCompleted.errors }">
                         <input matInput name="percentageCompleted" type="text" placeholder="Percentage Completed" [(ngModel)]="ProjectData.percentageCompleted" formControlName="percentageCompleted" required numbersOnly>
                         @if (isSubmitted && formControls.percentageCompleted.errors) {
                           <div class="error-text">
@@ -331,14 +331,14 @@
                   </div>
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width">
+                      <mat-form-field class="custom-field">
                         <input matInput name="budget" type="text" placeholder="Budget" [(ngModel)]="ProjectData.budget" formControlName="budget">
                       </mat-form-field>
                     </div>
                   </div>
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.completionStatus.errors }">
+                      <mat-form-field class="custom-field" [ngClass]="{ 'has-error': isSubmitted && formControls.completionStatus.errors }">
                         <mat-select [(ngModel)]="ProjectData.completionStatus" [typeaheadDebounceInterval]="matSelectDuration" name="completionStatus" placeholder="Completion Status" formControlName="completionStatus" required>
                           <mat-option>-Select-</mat-option>
                           @for (status of completionStatusList; track status) {

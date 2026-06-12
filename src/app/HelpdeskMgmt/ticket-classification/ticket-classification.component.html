@@ -36,7 +36,7 @@
               <div class="row">
                 <div class="col-sm-3">
                   <div class="form-group">
-                    <mat-form-field class="example-full-width"
+                    <mat-form-field class="custom-field"
                       [ngClass]="{ 'has-error': isSubmitted && formControls.classificationValue.errors }">
                       <input matInput name="classificationValue" type="text"
                         placeholder="Classification Name"
@@ -141,7 +141,7 @@
                         [disabled]="ClassificationMasterData.isDeleted"
                         (click)="editon(ClassificationMasterData.entityId)"
                         matTooltip="Edit this record">
-                        <mat-icon aria-hidden="false">edit</mat-icon>
+                        <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                       </button>
                     }
                     @if (ticketClassificationsDelete) {
@@ -149,7 +149,7 @@
                         [disabled]="ClassificationMasterData.isDeleted"
                         (click)="deleteClassificationData(ClassificationMasterData.entityId)"
                         matTooltip="Delete this record">
-                        <mat-icon aria-hidden="false">delete</mat-icon>
+                        <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
                       </button>
                     }
                   </td>

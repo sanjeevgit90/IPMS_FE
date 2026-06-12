@@ -43,7 +43,7 @@
 
                       <div class="col-sm-12">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width"
+                          <mat-form-field class="custom-field"
                             [ngClass]="{ 'has-error': isSubmitted && formControls.departmentName.errors }">
                             <input matInput name="departmentName" type="text"
                               placeholder="Department Name"
@@ -66,7 +66,7 @@
 
                         <div class="col-sm-12">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width"
+                            <mat-form-field class="custom-field"
                               [ngClass]="{ 'has-error': isSubmitted && formControls.departmentCode.errors }">
                               <input matInput name="departmentCode" type="text"
                                 placeholder="Department Code"
@@ -161,7 +161,7 @@
                                 <button mat-flat-button color="primary" [disabled]="DepartmentMasterData.deleted"
                                   (click)="editon(DepartmentMasterData.departmentName)"
                                   matTooltip="Edit this record">
-                                  <mat-icon aria-hidden="false">edit</mat-icon>
+                                  <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                                 </button>
                               }
 

@@ -45,7 +45,7 @@
         <div class="row">
           <div class="col-sm-12">
             <div class="form-group">
-              <mat-form-field class="example-full-width">
+              <mat-form-field class="custom-field">
                 <input matInput name="constantname" type="text" placeholder="Search by constant name"
                   [(ngModel)]="FilterData.constantname">
                 </mat-form-field>
@@ -73,7 +73,7 @@
                 <div class="row">
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width"
+                      <mat-form-field class="custom-field"
                         [ngClass]="{ 'has-error': isSubmitted && formControls.constantnamefor.errors }">
                         <mat-select [(ngModel)]="AssetConstantMasterData.constantnamefor"
                           name="constantnamefor" formControlName="constantnamefor"
@@ -98,7 +98,7 @@
 
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width"
+                      <mat-form-field class="custom-field"
                         [ngClass]="{ 'has-error': isSubmitted && formControls.constantname.errors }">
                         <input matInput name="constantname" type="text"
                           placeholder="Constant Name"
@@ -120,7 +120,7 @@
                     </div>
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width"
+                        <mat-form-field class="custom-field"
                           [ngClass]="{ 'has-error': isSubmitted && formControls.term.errors }">
                           <input matInput name="term" type="text" placeholder="Term"
                             [(ngModel)]="AssetConstantMasterData.term" formControlName="term"
@@ -214,7 +214,7 @@
                           [disabled]="AssetConstantRecordData.isDeleted"
                           (click)="editon(AssetConstantRecordData.entityId)" matTooltip="Edit this record"
                           >
-                          <mat-icon aria-hidden="false">edit</mat-icon>
+                          <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                         </button>
                       }
 
@@ -222,7 +222,7 @@
                         <button mat-flat-button color="warn" [disabled]="AssetConstantRecordData.isDeleted"
                           (click)="onDelete(AssetConstantRecordData.entityId)"
                           matTooltip="Delete this record">
-                          <mat-icon aria-hidden="false">delete</mat-icon>
+                          <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
                         </button>
                       }
                     </td>

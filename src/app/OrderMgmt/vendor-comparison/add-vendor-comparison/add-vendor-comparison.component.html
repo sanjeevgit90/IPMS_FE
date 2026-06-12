@@ -36,7 +36,7 @@
                 <div class="row">
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.customerName.errors }">
+                      <mat-form-field class="custom-field" [ngClass]="{ 'has-error': isSubmitted && formControls.customerName.errors }">
                         <input matInput name="customerName" type="text" placeholder="Customer Name"
                           [(ngModel)]="VendorComparisonData.customerName" formControlName="customerName"
                           maxlength="60">
@@ -54,7 +54,7 @@
 
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.amount.errors }">
+                        <mat-form-field class="custom-field" [ngClass]="{ 'has-error': isSubmitted && formControls.amount.errors }">
                           <input matInput name="amount" type="text" placeholder="Amount"
                             [(ngModel)]="VendorComparisonData.amount"
                             formControlName="amount" maxlength="10" numbersOnly required>
@@ -72,7 +72,7 @@
 
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width" [ngClass]="{ 'has-error': isSubmitted && formControls.deliveryTime.errors }">
+                          <mat-form-field class="custom-field" [ngClass]="{ 'has-error': isSubmitted && formControls.deliveryTime.errors }">
                             <input matInput name="deliveryTime" placeholder="Delivery Date " type="text"
                               [matDatepicker]="picker" [(ngModel)]="VendorComparisonData.deliveryTime"
                               formControlName="deliveryTime">
@@ -92,7 +92,7 @@
 
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width">
+                            <mat-form-field class="custom-field">
                               <input matInput name="paymentTerms" type="text" placeholder="Payment Terms"
                                 [(ngModel)]="VendorComparisonData.paymentTerms" formControlName="paymentTerms"
                                 maxlength="200">
@@ -102,7 +102,7 @@
 
                           <div class="col-sm-3">
                             <div class="form-group">
-                              <mat-form-field class="example-full-width">
+                              <mat-form-field class="custom-field">
                                 <input matInput name="quality" type="text" placeholder="Quality"
                                   [(ngModel)]="VendorComparisonData.quality" formControlName="quality"
                                   maxlength="200">
@@ -112,7 +112,7 @@
 
                             <div class="col-sm-3">
                               <div class="form-group">
-                                <mat-form-field class="example-full-width">
+                                <mat-form-field>
                                   <mat-label>Remarks</mat-label>
                                   <textarea matInput cols="55" rows="4" name="remarks" type="text"
                                     placeholder="Please enter remarks."
@@ -128,12 +128,12 @@
 
 
                             @if (add) {
-                              <button mat-flat-button color="accent" (click)="addVendorComparison('save')">
+                              <button mat-flat-button color="accent" class="me-2" (click)="addVendorComparison('save')">
                                 <mat-icon aria-hidden="false">save</mat-icon> Save</button>
                               }
 
                               @if (edit) {
-                                <button mat-flat-button color="accent" (click)="addVendorComparison('update')">
+                                <button mat-flat-button color="accent" class="me-2" (click)="addVendorComparison('update')">
                                   <mat-icon aria-hidden="false">update</mat-icon> Update</button>
                                 }
 

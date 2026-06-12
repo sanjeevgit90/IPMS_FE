@@ -46,7 +46,7 @@
                     <br/><br/>
                     <div class="col-sm-12">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width">
+                        <mat-form-field>
                           <mat-label>Remarks</mat-label>
                           <textarea matInput cols="55" rows="4" name="remark" type="text"
                             placeholder="Please enter remarks." formControlName="remark"
@@ -57,7 +57,7 @@
                     </div>
                     <div class="col-sm-8">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width">
+                        <mat-form-field class="custom-field">
                           <input matInput name="uploadFile" type="text"
                             placeholder="Upload Attachment"
                             [(ngModel)]="TaskEntityData.uploadFile"

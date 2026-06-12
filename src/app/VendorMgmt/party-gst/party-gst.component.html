@@ -42,7 +42,7 @@
                   <div class="col-sm-3">
                     <div class="col-sm-12 padding-zero">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width"
+                        <mat-form-field class="custom-field"
                           [ngClass]="{ 'has-error': isSubmitted && formControls.gstNo.errors }">
                           <input matInput name="gstNo" type="text" placeholder="GST No"
                             [(ngModel)]="GSTData.gstNo" formControlName="gstNo"
@@ -94,7 +94,7 @@
 
                     <div class="col-sm-6">
                       <!-- <div class="form-group">
-                      <mat-form-field class="example-full-width">
+                      <mat-form-field class="custom-field">
                         <input matInput name="gstNoAttachment" type="text"
                           placeholder="GST No. Attachment" [(ngModel)]="GSTData.gstNoAttachment"
                           formControlName="gstNoAttachment">
@@ -173,21 +173,21 @@
                     <td mat-cell *matCellDef="let GstMasterData">
                       <button mat-flat-button color="primary" (click)="editData(GstMasterData.gstNo)"
                         matTooltip="Edit this record">
-                        <mat-icon aria-hidden="false">edit</mat-icon>
+                        <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                       </button>
 
                       @if (!GstMasterData.isDeleted) {
                         <button mat-flat-button color="warn"
                           (click)="onDelete(GstMasterData.entityId,GstMasterData.isDeleted)"
                           matTooltip="Deactivate this record">
-                          <mat-icon aria-hidden="false">delete</mat-icon>
+                          <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
                         </button>
                       }
                       @if (GstMasterData.isDeleted) {
                         <button mat-flat-button color="basic" class="green-btn"
                           (click)="onDelete(GstMasterData.entityId,GstMasterData.isDeleted)"
                           matTooltip="Activate this record">
-                          <mat-icon aria-hidden="false">delete</mat-icon>
+                          <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
                         </button>
                       }
                     </td>

@@ -35,7 +35,7 @@
 
                 <div class="col-sm-3">
                   <div class="form-group">
-                    <mat-form-field class="example-full-width">
+                    <mat-form-field class="custom-field">
                       <input matInput name="collectiondate" placeholder="Collection Date" type="text"
                         [matDatepicker]="picker1" [(ngModel)]="CollectionData.collectiondate"
                         formControlName="collectiondate" required>
@@ -54,7 +54,7 @@
                   </div>
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width"
+                      <mat-form-field class="custom-field"
                         [ngClass]="{ 'has-error': isSubmitted && formControls.invoiceid.errors }">
                         <mat-select [compareWith]="compareObjects" [(ngModel)]="CollectionData.invoiceid" name="invoiceid"
                           (ngModelChange)="getInvoice(CollectionData.invoiceid)"
@@ -81,7 +81,7 @@
                   </div>
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width"
+                      <mat-form-field class="custom-field"
                         [ngClass]="{ 'has-error': isSubmitted && formControls.invoiceValue.errors }">
                         <input matInput name="invoiceValue" type="text" placeholder="Invoice Pay Amount"
                           [(ngModel)]="invoiceValue"
@@ -101,7 +101,7 @@
                     </div>
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width"
+                        <mat-form-field class="custom-field"
                           [ngClass]="{ 'has-error': isSubmitted && formControls.tdsdeducted.errors }">
                           <input matInput name="tdsdeducted" type="text" placeholder="TDS deducted"
                             [(ngModel)]="CollectionData.tdsdeducted"
@@ -121,7 +121,7 @@
                       </div>
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width"
+                          <mat-form-field class="custom-field"
                             [ngClass]="{ 'has-error': isSubmitted && formControls.gsttdsdeducted.errors }">
                             <input matInput name="gsttdsdeducted" type="text" placeholder="GST Deducted"
                               [(ngModel)]="CollectionData.gsttdsdeducted" formControlName="gsttdsdeducted"
@@ -141,7 +141,7 @@
                         </div>
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width">
+                            <mat-form-field class="custom-field">
                               <input matInput name="otherdeducted" type="text" placeholder="Other deducted"
                                 [(ngModel)]="CollectionData.otherdeducted"
                                 (ngModelChange)="calculateCollection()"
@@ -153,7 +153,7 @@
 
                           <div class="col-sm-3">
                             <div class="form-group">
-                              <mat-form-field class="example-full-width">
+                              <mat-form-field class="custom-field">
                                 <mat-select [(ngModel)]="CollectionData.deductiondescription" name="deductiondescription"
                                   formControlName="deductiondescription" placeholder="Deduction Description">
                                   <mat-option value="Penalty">Penalty</mat-option>
@@ -169,7 +169,7 @@
 
                           <div class="col-sm-3">
                             <div class="form-group">
-                              <mat-form-field class="example-full-width"
+                              <mat-form-field class="custom-field"
                                 [ngClass]="{ 'has-error': isSubmitted && formControls.netamountcredieted.errors }">
                                 <input matInput name="netamountcredieted" type="text" placeholder="Net Amount Credieted"
                                   [(ngModel)]="CollectionData.netamountcredieted" formControlName="netamountcredieted"
@@ -188,7 +188,7 @@
                             </div>
                             <div class="col-sm-3">
                               <div class="form-group">
-                                <mat-form-field class="example-full-width"
+                                <mat-form-field class="custom-field"
                                   [ngClass]="{ 'has-error': isSubmitted && formControls.utrno.errors }">
                                   <input matInput name="utrno" type="text" placeholder="UTR No"
                                     [(ngModel)]="CollectionData.utrno" formControlName="utrno"

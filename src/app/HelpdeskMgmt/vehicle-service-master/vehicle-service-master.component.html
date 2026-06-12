@@ -92,13 +92,13 @@
                     [disabled]="VehicleServiceMasterData.isdeleted"
                     [routerLink]="['/updateVehicleService', VehicleServiceMasterData.vehicleRegistrationNumber,'edit']"
                     title="Edit">
-                    <mat-icon aria-hidden="false">edit</mat-icon>
+                    <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                   </button>
                   <button mat-flat-button color="warn"
                     [disabled]="VehicleServiceMasterData.isdeleted"
                     (click)="deleteVehicleService(VehicleServiceMasterData.vehicleRegistrationNumber)"
                     matTooltip="Delete this record">
-                    <mat-icon aria-hidden="false">delete</mat-icon>
+                    <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
                   </button>
                 </td>
               </ng-container>

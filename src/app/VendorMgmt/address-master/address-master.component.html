@@ -134,19 +134,19 @@
                     </a> -->
                     <button mat-flat-button color="primary" matTooltip="Edit this record" (click)="editAddress(AddressMasterData.entityId)"
                       title="Edit">
-                      <mat-icon aria-hidden="false">edit</mat-icon>
+                      <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                     </button>
 
                     @if (!AddressMasterData.isDeleted) {
                       <button mat-flat-button color="warn" (click)="onDelete(AddressMasterData.entityId,AddressMasterData.isDeleted)"
                         matTooltip="Deactivate this record">
-                        <mat-icon aria-hidden="false">delete</mat-icon>
+                        <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
                       </button>
                     }
                     @if (AddressMasterData.isDeleted) {
                       <button mat-flat-button color="basic" class="green-btn" (click)="onDelete(AddressMasterData.entityId,AddressMasterData.isDeleted)"
                         matTooltip="Activate this record">
-                        <mat-icon aria-hidden="false">delete</mat-icon>
+                        <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
                       </button>
                     }
                   </td>

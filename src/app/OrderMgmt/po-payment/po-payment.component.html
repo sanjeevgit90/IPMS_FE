@@ -22,13 +22,12 @@
 
             <div class="col-auto float-right ml-auto">
 
-              <button mat-flat-button color="accent" (click)="addPoPayment()">
+              <button mat-flat-button color="accent" class="me-2" (click)="addPoPayment()">
                 <mat-icon aria-hidden="false">add</mat-icon> Add PO Payment
               </button>
               <button mat-flat-button color="warn" (click)="goBack()">
                 <mat-icon aria-hidden="false">add</mat-icon> Back
               </button>
-
             </div>
 
 
@@ -108,12 +107,12 @@
                     <a mat-flat-button color="primary" matTooltip="Edit this record"
                       [routerLink]="['/searchPurchaseOrder/EditPoPayment', PoPaymentMasterData.entityId,'edit']"
                       title="Edit">
-                      <mat-icon aria-hidden="false">edit</mat-icon>
+                      <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                     </a>
 
-                    <button mat-flat-button color="warn" matTooltip="Delete this record" (click)="deletePayment(PoPaymentMasterData.entityId)"
+                    <button mat-flat-button color="warn" class="ms-2" matTooltip="Delete this record" (click)="deletePayment(PoPaymentMasterData.entityId)"
                       title="Delete">
-                      <mat-icon aria-hidden="false">delete</mat-icon>
+                      <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
                     </button>
                   </td>
                 </ng-container>

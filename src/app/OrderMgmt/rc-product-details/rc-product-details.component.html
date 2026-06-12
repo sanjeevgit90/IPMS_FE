@@ -71,11 +71,11 @@
                       <mat-card-actions>
                         <button mat-flat-button color="primary" matTooltip="Edit this record"
                           (click)="editProduct(produtcard.entityId)" title="Edit"> Edit
-                          <mat-icon aria-hidden="false">edit</mat-icon>
+                          <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                         </button>
                         <button mat-flat-button color="warn" matTooltip="Delete this record"
                           (click)="deleteProduct(produtcard.entityId)" title="Delete"> Delete
-                          <mat-icon aria-hidden="false">delete</mat-icon>
+                          <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
                         </button>
                       </mat-card-actions>
                     </mat-card>
@@ -176,12 +176,12 @@
 
                   <button mat-flat-button color="primary" matTooltip="Edit this record"
                     (click)="editProduct(ProductDetailsList.entityId)" title="Edit">
-                    <mat-icon aria-hidden="false">edit</mat-icon>
+                    <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                   </button>
 
                   <button mat-flat-button color="warn" matTooltip="Delete this record"
                     (click)="deleteProduct(ProductDetailsList.entityId)" title="Delete">
-                    <mat-icon aria-hidden="false">delete</mat-icon>
+                    <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
                   </button>
                 </td>
               </ng-container>
@@ -227,7 +227,7 @@
             </div>
             <div class="col-sm-8">
               <div class="form-group">
-                <mat-form-field class="example-full-width">
+                <mat-form-field class="custom-field">
                   <mat-label>Remarks</mat-label>
                   <textarea matInput cols="55" rows="4" name="remark" type="text"
                     placeholder="Please enter remarks."

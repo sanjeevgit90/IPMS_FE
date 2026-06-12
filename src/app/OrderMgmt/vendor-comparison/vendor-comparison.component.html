@@ -22,7 +22,7 @@
 
             <div class="col-auto float-right ml-auto">
 
-              <button mat-flat-button color="accent" (click)="addVendorComparison()">
+              <button mat-flat-button color="accent" class="me-2" (click)="addVendorComparison()">
                 <mat-icon aria-hidden="false">add</mat-icon> Add Vendor Comparison
               </button>
               <button mat-flat-button color="warn" (click)="goBack()">
@@ -66,14 +66,14 @@
                             <li>{{vc.quality}}</li>
                             <li>{{vc.remarks}}</li>
                             <li>
-                              <a mat-flat-button color="primary" matTooltip="Edit this record"
+                              <a mat-flat-button color="primary" class="me-2" matTooltip="Edit this record"
                                 [routerLink]="['/searchPurchaseOrder/EditVendorComparison', vc.entityId,'edit']"
                                 title="Edit">
-                                <mat-icon aria-hidden="false">edit</mat-icon>
+                                <mat-icon class="m-0" aria-hidden="false">edit</mat-icon>
                               </a>
                               <button mat-flat-button color="warn" matTooltip="Delete this record"
                                 (click)="deleteVendorComparison(vc.entityId)" title="Delete">
-                                <mat-icon aria-hidden="false">delete</mat-icon>
+                                <mat-icon class="m-0" aria-hidden="false">delete</mat-icon>
                               </button></li>
                             </ul>
                           </li>
@@ -142,12 +142,12 @@
                     <a mat-flat-button color="primary" matTooltip="Edit this record"
                       [routerLink]="['/searchPurchaseOrder/EditVendorComparison', VendorComparisonMasterData.entityId,'edit']"
                       title="Edit">
-                      <mat-icon aria-hidden="false">edit</mat-icon>
+                      <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                     </a>
                     <button mat-flat-button color="warn" matTooltip="Delete this record"
                       (click)="deleteVendorComparison(VendorComparisonMasterData.entityId)"
                       title="Delete">
-                      <mat-icon aria-hidden="false">delete</mat-icon>
+                      <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
                     </button>
                   </td>
                 </ng-container>

@@ -53,14 +53,14 @@
             <div class="row">
               <div class="col-sm-12">
                 <div class="form-group">
-                  <mat-form-field class="example-full-width">
+                  <mat-form-field class="custom-field">
                     <input matInput name="ticketno" type="text" placeholder="Search by Ticket No." [(ngModel)]="FilterData.ticketNo">
                   </mat-form-field>
                 </div>
               </div>
               <div class="col-sm-12">
                 <div class="form-group">
-                  <mat-form-field class="example-full-width">
+                  <mat-form-field class="custom-field">
                     <mat-label>Priority</mat-label>
                     <mat-select [(ngModel)]="FilterData.priority" name="priority" placeholder="Search by priority">
                       <mat-option>-Select-</mat-option>
@@ -73,7 +73,7 @@
               </div>
               <div class="col-sm-12">
                 <div class="form-group">
-                  <mat-form-field class="example-full-width">
+                  <mat-form-field class="custom-field">
                     <mat-select [(ngModel)]="FilterData.accountName" name="projectid" [typeaheadDebounceInterval]="matSelectDuration" placeholder="Search by project name">
                       <mat-option>-Select-</mat-option>
                       @for (project of projectList; track project) {
@@ -87,7 +87,7 @@
               </div>
               <div class="col-sm-12">
                 <div class="form-group">
-                  <mat-form-field class="example-full-width">
+                  <mat-form-field class="custom-field">
                     <mat-select [(ngModel)]="FilterData.state" name="state" [typeaheadDebounceInterval]="matSelectDuration" placeholder="Search by state" [disabled]="disable" (selectionChange)="getActiveDistrictFromstate(FilterData.state)">
                       <mat-option>-Select-</mat-option>
                       @for (state of stateList; track state) {
@@ -101,7 +101,7 @@
               </div>
               <div class="col-sm-12">
                 <div class="form-group">
-                  <mat-form-field class="example-full-width">
+                  <mat-form-field class="custom-field">
                     <mat-select [(ngModel)]="FilterData.district" [disabled]="disable" name="district" placeholder="Search by district" [typeaheadDebounceInterval]="matSelectDuration" (selectionChange)="getActiveLocationsFromDistrict(FilterData.district)">
                       <mat-option>-Select-</mat-option>
                       @for (district of districtList; track district) {
@@ -115,7 +115,7 @@
               </div>
               <div class="col-sm-12">
                 <div class="form-group">
-                  <mat-form-field class="example-full-width">
+                  <mat-form-field class="custom-field">
                     <mat-select [(ngModel)]="FilterData.location" [typeaheadDebounceInterval]="matSelectDuration" name="location" placeholder="Search by location" (selectionChange)="getAssetByLocation(FilterData.location)">
                       <mat-option>-Select-</mat-option>
                       @for (location of locationList; track location) {
@@ -129,7 +129,7 @@
               </div>
               <div class="col-sm-12">
                 <div class="form-group">
-                  <mat-form-field class="example-full-width">
+                  <mat-form-field class="custom-field">
                     <mat-select [(ngModel)]="FilterData.assetid" [typeaheadDebounceInterval]="matSelectDuration" name="assetid" placeholder="Search by asset name">
                       <mat-option>-Select-</mat-option>
                       @for (project of assetList; track project) {
@@ -263,12 +263,12 @@
 
                       @if (TicketMasterData.ticketStatus == 'DRAFT' && ticketMasterEdit) {
                         <a mat-flat-button color="primary" matTooltip="Edit this record" [routerLink]="['/updateTicket', TicketMasterData.entityId,'edit']" title="Edit">
-                          <mat-icon aria-hidden="false">edit</mat-icon>
+                          <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                         </a>
                       }
                       @if (!(TicketMasterData.ticketStatus == 'DRAFT' || TicketMasterData.ticketStatus == 'CLOSED' ) && hasRoleCHM && ticketMasterEdit) {
                         <a mat-flat-button color="primary" matTooltip="Edit this record" [routerLink]="['/updateTicket', TicketMasterData.entityId,'edit']" title="Edit">
-                          <mat-icon aria-hidden="false">edit</mat-icon>
+                          <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                         </a>
                       }
                       @if (TicketMasterData.ticketStatus == 'CLOSED' && ticketMasterEdit && hasRole) {

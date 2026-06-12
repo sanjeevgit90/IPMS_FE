@@ -36,7 +36,7 @@
                   @if (edit) {
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width">
+                        <mat-form-field class="custom-field">
                           <input matInput name="dcno" type="text" placeholder="DC No"
                             [(ngModel)]="DCData.dcno" formControlName="dcno" readonly="true"
                             maxlength="60">
@@ -46,7 +46,7 @@
                     }
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width"
+                        <mat-form-field class="custom-field"
                           [ngClass]="{ 'has-error': isSubmitted && formControls.mobileno.errors }">
                           <input matInput name="mobileno" type="text"
                             placeholder="TL Contact Details" [(ngModel)]="DCData.mobileno"
@@ -66,7 +66,7 @@
                       </div>
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width"
+                          <mat-form-field class="custom-field"
                             [ngClass]="{ 'has-error': isSubmitted && formControls.projectname.errors }">
                             <mat-select [compareWith]="compareObjects"
                               [typeaheadDebounceInterval]="matSelectDuration"
@@ -94,7 +94,7 @@
                       </div>
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width">
+                          <mat-form-field class="custom-field">
                             <input matInput name="dcdate" placeholder="DC Date" type="text"
                               [matDatepicker]="picker" [(ngModel)]="DCData.dcdate"
                               formControlName="dcdate" required>
@@ -114,7 +114,7 @@
                         </div>
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width">
+                            <mat-form-field class="custom-field">
                               <input matInput name="consigneename" type="text"
                                 placeholder="Consignee Name" [(ngModel)]="DCData.consigneename"
                                 formControlName="consigneename">
@@ -123,7 +123,7 @@
                           </div>
                           <div class="col-sm-3">
                             <div class="form-group">
-                              <mat-form-field class="example-full-width">
+                              <mat-form-field class="custom-field">
                                 <input matInput name="consigneecontact" type="text"
                                   placeholder="Consignee Contact Number"
                                   [(ngModel)]="DCData.consigneecontact"
@@ -133,7 +133,7 @@
                             </div>
                             <div class="col-sm-3">
                               <div class="form-group">
-                                <mat-form-field class="example-full-width"
+                                <mat-form-field class="custom-field"
                                   [ngClass]="{ 'has-error': isSubmitted && formControls.dcdate.errors }">
                                   <mat-select [(ngModel)]="DCData.shippedto"
                                     [typeaheadDebounceInterval]="matSelectDuration" name="shippedto"
@@ -160,7 +160,7 @@
                             </div>
                             <div class="col-sm-3">
                               <div class="form-group">
-                                <mat-form-field class="example-full-width">
+                                <mat-form-field>
                                   <textarea matInput name="remark" maxlength="200"
                                     [(ngModel)]="DCData.remark" formControlName="remark"
                                   placeholder="Enter Remarks"></textarea>
@@ -212,7 +212,7 @@
                                             <a mat-flat-button color="warn" matTooltip="Delete this record"
                                               (click)="deleteAsset(AssetRecord)"
                                               title="delete">
-                                              <mat-icon aria-hidden="false">delete</mat-icon>
+                                              <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
                                             </a>
                                           }
                                         </td>
@@ -232,7 +232,7 @@
                             <div class="row">
                               <div class="col-sm-3">
                                 <div class="form-group">
-                                  <mat-form-field class="example-full-width">
+                                  <mat-form-field class="custom-field">
                                     <input matInput name="assets" type="text"
                                       placeholder="Total No. of Assets" [(ngModel)]="totalAssets"
                                       formControlName="totalAssets">
@@ -241,7 +241,7 @@
                                 </div>
                                 <div class="col-sm-3">
                                   <div class="form-group">
-                                    <mat-form-field class="example-full-width"
+                                    <mat-form-field class="custom-field"
                                       [ngClass]="{ 'has-error': isSubmitted && formControls.boxes.errors }">
                                       <input matInput name="boxes" type="text"
                                         placeholder="No. of boxes" [(ngModel)]="DCData.noofboxes"

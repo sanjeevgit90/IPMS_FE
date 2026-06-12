@@ -39,7 +39,7 @@
                 <div class="row">
                   <div class="col-sm-12">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width">
+                      <mat-form-field class="custom-field">
                         <input matInput name="ticketno" type="text" placeholder="Search by ticketno"
                           [(ngModel)]="FilterData.ticketNo">
                         </mat-form-field>
@@ -47,7 +47,7 @@
                     </div>
                     <div class="col-sm-12">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width">
+                        <mat-form-field class="custom-field">
                           <mat-label>Priority</mat-label>
                           <mat-select [(ngModel)]="FilterData.priority" name="priority"
                             placeholder="Search by priority">
@@ -61,7 +61,7 @@
                     </div>
                     <div class="col-sm-12">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width">
+                        <mat-form-field class="custom-field">
                           <mat-select [(ngModel)]="FilterData.accountName" name="projectid"
                             [typeaheadDebounceInterval]="matSelectDuration"
                             placeholder="Search by project name">
@@ -78,7 +78,7 @@
                     </div>
                     <div class="col-sm-12">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width">
+                        <mat-form-field class="custom-field">
                           <mat-select [(ngModel)]="FilterData.state" name="state"
                             [typeaheadDebounceInterval]="matSelectDuration"
                             placeholder="Search by state" [disabled]="disable"
@@ -96,7 +96,7 @@
                     </div>
                     <div class="col-sm-12">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width">
+                        <mat-form-field class="custom-field">
                           <mat-select [(ngModel)]="FilterData.district" name="district"
                             [typeaheadDebounceInterval]="matSelectDuration"
                             placeholder="Search by district" [disabled]="disable"
@@ -114,7 +114,7 @@
                     </div>
                     <div class="col-sm-12">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width">
+                        <mat-form-field class="custom-field">
                           <mat-select [(ngModel)]="FilterData.location" name="location"
                             [typeaheadDebounceInterval]="matSelectDuration"
                             placeholder="Search by location">
@@ -131,7 +131,7 @@
                     </div>
                     <div class="col-sm-12">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width">
+                        <mat-form-field class="custom-field">
                           <input matInput name="fromdate" placeholder="Created Date (From date)"
                             type="text" [matDatepicker]="picker" [(ngModel)]="FilterData.fromDate">
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -141,7 +141,7 @@
                       </div>
                       <div class="col-sm-12">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width">
+                          <mat-form-field class="custom-field">
                             <input matInput name="dcdate" placeholder="Created Date (To Date)"
                               type="text" [matDatepicker]="picker1" [(ngModel)]="FilterData.toDate">
                               <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>

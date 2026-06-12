@@ -35,7 +35,7 @@
               </button>
             }
             @if (assetAdd) {
-              <button mat-flat-button color="accent" (click)="addAssets()">
+              <button mat-flat-button color="accent" class="ms-2" (click)="addAssets()">
                 <mat-icon aria-hidden="false">add</mat-icon> Add Asset
               </button>
             }
@@ -55,7 +55,7 @@
           <div class="row">
             <div class="col-sm-12">
               <div class="form-group">
-                <mat-form-field class="example-full-width">
+                <mat-form-field class="custom-field">
                   <input matInput name="assetname" type="text" placeholder="Search by asset name"
                     [(ngModel)]="FilterData.assetname">
                   </mat-form-field>
@@ -63,7 +63,7 @@
               </div>
               <!-- <div class="col-sm-12">
               <div class="form-group">
-                <mat-form-field class="example-full-width">
+                <mat-form-field class="custom-field">
                   <input matInput name="serialno" type="text" placeholder="Search by serial no"
                     [(ngModel)]="FilterData.serialno">
                   </mat-form-field>
@@ -71,7 +71,7 @@
               </div> -->
               <!-- <div class="col-sm-12">
               <div class="form-group">
-                <mat-form-field class="example-full-width">
+                <mat-form-field class="custom-field">
                   <input matInput name="assettag" type="text" placeholder="Search by asset tag"
                     [(ngModel)]="FilterData.assettag">
                   </mat-form-field>
@@ -79,7 +79,7 @@
               </div> -->
               <div class="col-sm-12">
                 <div class="form-group">
-                  <mat-form-field class="example-full-width">
+                  <mat-form-field class="custom-field">
                     <mat-select [(ngModel)]="FilterData.category" name="category" [typeaheadDebounceInterval]="matSelectDuration"
                       placeholder="Search by Category">
                       <mat-option>-Select-</mat-option>
@@ -95,7 +95,7 @@
               </div>
               <!-- <div class="col-sm-12">
               <div class="form-group">
-                <mat-form-field class="example-full-width">
+                <mat-form-field class="custom-field">
                   <mat-select [(ngModel)]="FilterData.subcategory" name="subcategory"  placeholder="Search by Sub Category" >
                     <mat-option >-Select-</mat-option>
                     <mat-option *ngFor="let category of subcategoryList" [value]="category.selectionvalue">
@@ -107,7 +107,7 @@
             </div> -->
             <div class="col-sm-12">
               <div class="form-group">
-                <mat-form-field class="example-full-width">
+                <mat-form-field class="custom-field">
                   <mat-select [(ngModel)]="FilterData.projectid" name="projectid" [typeaheadDebounceInterval]="matSelectDuration"
                     placeholder="Search by project name">
                     <mat-option>-Select-</mat-option>
@@ -122,7 +122,7 @@
             </div>
             <div class="col-sm-12">
               <div class="form-group">
-                <mat-form-field class="example-full-width">
+                <mat-form-field class="custom-field">
                   <mat-select [(ngModel)]="FilterData.state" name="state" [typeaheadDebounceInterval]="matSelectDuration"
                     placeholder="Search by state" [disabled]="disable"
                     (selectionChange)="getActiveDistrictFromstate(FilterData.state)">
@@ -138,7 +138,7 @@
             </div>
             <div class="col-sm-12">
               <div class="form-group">
-                <mat-form-field class="example-full-width">
+                <mat-form-field class="custom-field">
                   <mat-select [(ngModel)]="FilterData.district" name="district" [typeaheadDebounceInterval]="matSelectDuration"
                     placeholder="Search by district" [disabled]="disable"
                     (selectionChange)="getActiveCityFromDistrict(FilterData.district)">
@@ -155,7 +155,7 @@
             </div>
             <div class="col-sm-12">
               <div class="form-group">
-                <mat-form-field class="example-full-width">
+                <mat-form-field class="custom-field">
                   <mat-select [(ngModel)]="FilterData.city" name="city" placeholder="Search by city" [typeaheadDebounceInterval]="matSelectDuration"
                     (selectionChange)="getActivePoliceStationFromCity(FilterData.city)">
                     <mat-option>-Select-</mat-option>
@@ -170,7 +170,7 @@
             </div>
             <!-- <div class="col-sm-12">
             <div class="form-group">
-              <mat-form-field class="example-full-width">
+              <mat-form-field class="custom-field">
                 <mat-select [(ngModel)]="FilterData.policestation" name="policestation"  placeholder="Search by police station" (selectionChange)="getActiveLocationFromPoliceStation(FilterData.policestation)">
                   <mat-option >-Select-</mat-option>
                   <mat-option *ngFor="let policestation of policestationList" [value]="policestation.selectionvalue">
@@ -182,7 +182,7 @@
           </div> -->
           <div class="col-sm-12">
             <div class="form-group">
-              <mat-form-field class="example-full-width">
+              <mat-form-field class="custom-field">
                 <mat-select [(ngModel)]="FilterData.location" name="location" [typeaheadDebounceInterval]="matSelectDuration"
                   placeholder="Search by location">
                   <mat-option>-Select-</mat-option>
@@ -201,7 +201,7 @@
           <button mat-flat-button color="primary" (click)="search()">
             <mat-icon aria-hidden="false">search</mat-icon> Search
           </button>
-          <button mat-flat-button color="warn" (click)="cancel()">
+          <button mat-flat-button color="warn" class="me-2" (click)="cancel()">
             <mat-icon aria-hidden="false">cancel</mat-icon> Clear
           </button>
         </div>
@@ -224,12 +224,13 @@
               <mat-form-field class="search-input">
                 <input matInput (keyup)="applyFilter($event)" placeholder="Search..." #input>
               </mat-form-field>
+
+              <button mat-flat-button color="accent" class="export-btn me-2"
+                (click)="exporter.exportTable('xlsx', {fileName:'AssetRecord'})"
+                matTooltip="Export to Excel">
+                <mat-icon>send</mat-icon> Export
+              </button>
             </div>
-            <button mat-flat-button color="accent" class="export-btn"
-              (click)="exporter.exportTable('xlsx', {fileName:'AssetRecord'})"
-              matTooltip="Export to Excel">
-              <mat-icon>send</mat-icon> Export
-            </button>
           </div>
           <div style="overflow-x:auto;">
             <table mat-table [dataSource]="AssetRecord" matSort class="mat-elevation-z8">
@@ -288,12 +289,12 @@
                     [disabled]="AssetRecord.isdeleted"
                     [routerLink]="['/updateAsset', AssetRecord.entityId,'edit']"
                     *ngIf="assetEdit">
-                    <mat-icon aria-hidden="false">edit</mat-icon>
+                    <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                   </button>
                   <button mat-flat-button color="warn" matTooltip="Delete this record"
                     [disabled]="AssetRecord.isdeleted"
                     (click)="onDelete(AssetRecord.entityId)" *ngIf="assetDelete">
-                    <mat-icon aria-hidden="false">delete</mat-icon>
+                    <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
                   </button>
                   <button mat-flat-button color="accent" matTooltip="Audit Trail"
                     (click)="openAudit(AssetRecord.entityId)" title="Audit">
@@ -317,14 +318,14 @@
                         [disabled]="AssetRecord.isdeleted"
                         [routerLink]="['/updateAsset', AssetRecord.entityId,'edit']"
                         >
-                        <mat-icon aria-hidden="false">edit</mat-icon> Edit
+                        <mat-icon aria-hidden="false" class="m-0">edit</mat-icon> Edit
                       </button>
                     }
                     @if (assetDelete) {
                       <button mat-menu-item matTooltip="Delete this record"
                         [disabled]="AssetRecord.isdeleted"
                         (click)="onDelete(AssetRecord.entityId)">
-                        <mat-icon aria-hidden="false">delete</mat-icon> Delete
+                        <mat-icon aria-hidden="false" class="m-0">delete</mat-icon> Delete
                       </button>
                     }
                     <button mat-menu-item matTooltip="Audit Trail"

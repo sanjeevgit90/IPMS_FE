@@ -39,7 +39,7 @@
                 <div class="row">
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width">
+                      <mat-form-field class="custom-field">
                         <input matInput name="projectPin" type="text" placeholder="Project Pin"
                           [(ngModel)]="ProjectData.projectPin" formControlName="projectPin"
                           maxlength="60" readonly=true>
@@ -49,7 +49,7 @@
                     </div>
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width"
+                        <mat-form-field class="custom-field"
                           [ngClass]="{ 'has-error': isSubmitted && formControls.projectType.errors }">
                           <mat-select [(ngModel)]="ProjectData.projectType" name="projectType"
                             placeholder="Project Type" formControlName="projectType" required>
@@ -76,7 +76,7 @@
                     </div>
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width"
+                        <mat-form-field class="custom-field"
                           [ngClass]="{ 'has-error': isSubmitted && formControls.projectName.errors }">
                           <input matInput name="projectName" type="text"
                             placeholder="Project Name" [(ngModel)]="ProjectData.projectName"
@@ -97,7 +97,7 @@
 
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width"
+                          <mat-form-field class="custom-field"
                             [ngClass]="{ 'has-error': isSubmitted && formControls.clientName.errors }">
                             <input matInput name="clientName" type="text" placeholder="Client Name"
                               [(ngModel)]="ProjectData.clientName" formControlName="clientName"
@@ -117,7 +117,7 @@
                         </div>
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width"
+                            <mat-form-field class="custom-field"
                               [ngClass]="{ 'has-error': isSubmitted && formControls.organization.errors }">
                               <mat-select [compareWith]="compareObjects"
                                 [(ngModel)]="ProjectData.organization" name="organization"
@@ -145,7 +145,7 @@
                         </div>
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width"
+                            <mat-form-field class="custom-field"
                               [ngClass]="{ 'has-error': isSubmitted && formControls.departmentName.errors }">
                               <mat-select [compareWith]="compareObjects"
                                 [(ngModel)]="ProjectData.departmentName" name="departmentName"
@@ -174,7 +174,7 @@
                         </div>
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width"
+                            <mat-form-field class="custom-field"
                               [ngClass]="{ 'has-error': isSubmitted && formControls.projectManager.errors }">
                               <mat-select [compareWith]="compareUser"
                                 [(ngModel)]="ProjectData.projectManager" name="projectManager"
@@ -203,7 +203,7 @@
                         </div>
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width"
+                            <mat-form-field class="custom-field"
                               [ngClass]="{ 'has-error': isSubmitted && formControls.accountManager.errors }">
                               <mat-select [compareWith]="compareUser"
                                 [(ngModel)]="ProjectData.accountManager" name="accountManager"
@@ -233,7 +233,7 @@
 
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width"
+                            <mat-form-field class="custom-field"
                               [ngClass]="{ 'has-error': isSubmitted && formControls.practiceName.errors }">
                               <input matInput name="practiceName" type="text"
                                 placeholder="Practice Name" [(ngModel)]="ProjectData.practiceName"
@@ -254,7 +254,7 @@
 
                           <div class="col-sm-3">
                             <div class="form-group">
-                              <mat-form-field class="example-full-width"
+                              <mat-form-field class="custom-field"
                                 [ngClass]="{ 'has-error': isSubmitted && formControls.projectLocation.errors }">
                                 <input matInput name="projectLocation" type="text"
                                   placeholder="Project Location"
@@ -275,7 +275,7 @@
                             </div>
                             <div class="col-sm-3">
                               <div class="form-group">
-                                <mat-form-field class="example-full-width">
+                                <mat-form-field class="custom-field">
                                   <input matInput name="projectStartDate" placeholder="Project Start Date"
                                     type="text" [matDatepicker]="picker"
                                     [(ngModel)]="ProjectData.projectStartDate"
@@ -299,7 +299,7 @@
 
                               <div class="col-sm-3">
                                 <div class="form-group">
-                                  <mat-form-field class="example-full-width">
+                                  <mat-form-field class="custom-field">
                                     <input matInput name="projectStopDate" placeholder="Project Stop Date"
                                       type="text" [matDatepicker]="picker1"
                                       [(ngModel)]="ProjectData.projectStopDate"
@@ -323,7 +323,7 @@
 
                                 <div class="col-sm-3">
                                   <div class="form-group">
-                                    <mat-form-field class="example-full-width">
+                                    <mat-form-field class="custom-field">
                                       <mat-select [(ngModel)]="ProjectData.projectStatus" name="projectStatus"
                                         placeholder="Project Status" formControlName="projectStatus">
                                         <mat-option>-Select-</mat-option>
@@ -339,7 +339,7 @@
                                 </div>
                                 <div class="col-sm-3">
                                   <div class="form-group">
-                                    <mat-form-field class="example-full-width">
+                                    <mat-form-field>
                                       <textarea matInput name="remark" maxlength="500"
                                         [(ngModel)]="ProjectData.remark" formControlName="remark"
                                       placeholder="Enter Remark"></textarea>
@@ -375,7 +375,7 @@
 
                                 <div class="col-sm-3">
                                   <div class="form-group">
-                                    <mat-form-field class="example-full-width"
+                                    <mat-form-field class="custom-field"
                                       [ngClass]="{ 'has-error': isSubmitted && formControls.percentagePaymentReceived.errors }">
                                       <input matInput name="percentagePaymentReceived" type="text"
                                         placeholder="Percentage Payment Received"
@@ -396,7 +396,7 @@
                                   </div>
                                   <div class="col-sm-3">
                                     <div class="form-group">
-                                      <mat-form-field class="example-full-width"
+                                      <mat-form-field class="custom-field"
                                         [ngClass]="{ 'has-error': isSubmitted && formControls.percentageCompleted.errors }">
                                         <input matInput name="percentageCompleted" type="text"
                                           placeholder="Percentage Completed"
@@ -417,7 +417,7 @@
                                     </div>
                                     <div class="col-sm-3">
                                       <div class="form-group">
-                                        <mat-form-field class="example-full-width">
+                                        <mat-form-field class="custom-field">
                                           <input matInput name="budget" type="text" placeholder="Budget"
                                             [(ngModel)]="ProjectData.budget" formControlName="budget">
                                           </mat-form-field>
@@ -425,7 +425,7 @@
                                       </div>
                                       <div class="col-sm-3">
                                         <div class="form-group">
-                                          <mat-form-field class="example-full-width"
+                                          <mat-form-field class="custom-field"
                                             [ngClass]="{ 'has-error': isSubmitted && formControls.completionStatus.errors }">
                                             <mat-select [(ngModel)]="ProjectData.completionStatus"
                                               name="completionStatus" placeholder="Completion Status"
@@ -466,7 +466,7 @@
                                           @for (item of levelList; track item; let i = $index) {
                                             <div class="col-sm-3">
                                               <div class="form-group">
-                                                <mat-form-field class="example-full-width">
+                                                <mat-form-field class="custom-field">
                                                   <mat-label>{{item.workflowlevel}}</mat-label>
                                                   <mat-select [compareWith]="compareUser" [(ngModel)]="item.userid"
                                                     [ngModelOptions]="{standalone: true}" readonly=true>
@@ -520,7 +520,7 @@
                                           <button mat-flat-button matTooltip="Edit this record" color="primary"
                                             [disabled]="ProjectData.isDeleted"
                                             [routerLink]="['/searchProject/updateProjectDetails', ProjectData.entityId,'edit']">
-                                            <mat-icon aria-hidden="false">edit</mat-icon> Edit
+                                            <mat-icon aria-hidden="false" class="m-0">edit</mat-icon> Edit
                                           </button>
                                         }
 

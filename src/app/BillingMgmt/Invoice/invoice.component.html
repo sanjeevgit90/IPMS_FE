@@ -182,7 +182,7 @@
                                   [disabled]="InvoiceRecord.isdeleted"
                                   (click)="addInvoice(InvoiceRecord.entityid, 'edit')"
                                   title="Edit">
-                                  <mat-icon aria-hidden="false">edit</mat-icon> Edit
+                                  <mat-icon aria-hidden="false" class="m-0">edit</mat-icon> Edit
                                 </button>
                               }
                               @if (InvoiceRecord.invoicestatus == 'DRAFT' && invoiceDelete) {
@@ -190,7 +190,7 @@
                                   matTooltip="Delete this record"
                                   [disabled]="InvoiceRecord.isdeleted"
                                   (click)="onDelete(InvoiceRecord.entityid)" title="delete">
-                                  <mat-icon aria-hidden="false">delete</mat-icon> Delete
+                                  <mat-icon aria-hidden="false" class="m-0">delete</mat-icon> Delete
                                 </button>
                               }
                               @if (InvoiceRecord.invoicestatus == 'DRAFT') {
@@ -224,14 +224,14 @@
                             *ngIf="InvoiceRecord.invoicestatus == 'DRAFT' && invoiceEdit"
                             (click)="addInvoice(InvoiceRecord.entityid, 'edit')"
                             title="Edit">
-                            <mat-icon aria-hidden="false">edit</mat-icon>
+                            <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                           </button>
                           <button mat-flat-button color="warn"
                             matTooltip="Delete this record"
                             [disabled]="InvoiceRecord.isdeleted"
                             *ngIf="InvoiceRecord.invoicestatus == 'DRAFT' && invoiceDelete"
                             (click)="onDelete(InvoiceRecord.entityid)" title="delete">
-                            <mat-icon aria-hidden="false">delete</mat-icon>
+                            <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
                           </button>
                           <button mat-flat-button color="primary"
                             matTooltip="send this record"

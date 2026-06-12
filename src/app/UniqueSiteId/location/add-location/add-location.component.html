@@ -36,7 +36,7 @@
                 <div class="row">
                   <div class="col-sm-3">
                     <div class="form-group">
-                      <mat-form-field class="example-full-width" >
+                      <mat-form-field class="custom-field" >
                         <input matInput type="text" placeholder="Unique Site ID"
                           formControlName="locationid" maxlength="60" [readonly]="disablefield" required>
                           @if (hasError('locationid', 'required')) {
@@ -49,7 +49,7 @@
 
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width">
+                        <mat-form-field class="custom-field">
                           <mat-label>State</mat-label>
                           <mat-select formControlName="state"
                             [typeaheadDebounceInterval]="matSelectDuration"
@@ -74,7 +74,7 @@
 
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width">
+                        <mat-form-field class="custom-field">
                           <mat-label>District</mat-label>
                           <mat-select formControlName="district"
                             [typeaheadDebounceInterval]="matSelectDuration"
@@ -97,7 +97,7 @@
 
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width">
+                        <mat-form-field class="custom-field">
                           <mat-select name="city" formControlName="city"
                             [typeaheadDebounceInterval]="matSelectDuration"  placeholder="City"
                             (ngModelChange)="getActivePoliceStationFromCity(this.addLocationForm.value.city)"
@@ -121,7 +121,7 @@
 
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width">
+                        <mat-form-field class="custom-field">
                           <mat-select name="policestation"
                             [typeaheadDebounceInterval]="matSelectDuration" formControlName="policestation"
                             placeholder="Police Station">
@@ -144,7 +144,7 @@
 
                     <div class="col-sm-6">
                       <div class="form-group">
-                        <mat-form-field class="example-full-width">
+                        <mat-form-field class="custom-field">
                           <input matInput type="text" placeholder="Unique Site ID Address"
                             formControlName="locationaddress" maxlength="160" required>
                             @if (hasError('locationaddress', 'required')) {
@@ -156,7 +156,7 @@
                       </div>
                       <div class="col-sm-3">
                         <div class="form-group">
-                          <mat-form-field class="example-full-width">
+                          <mat-form-field class="custom-field">
                             <input matInput type="text" placeholder="Survey Date"
                               formControlName="surveydate" maxlength="60"
                               [matDatepicker]="picker1" required>
@@ -173,7 +173,7 @@
 
                         <div class="col-sm-3">
                           <div class="form-group">
-                            <mat-form-field class="example-full-width">
+                            <mat-form-field class="custom-field">
                               <input matInput type="text" placeholder="Approval Date"
                                 formControlName="approvaldate" maxlength="60"
                                 [matDatepicker]="picker2" required>
@@ -191,7 +191,7 @@
 
                           <div class="col-sm-3">
                             <div class="form-group">
-                              <mat-form-field class="example-full-width">
+                              <mat-form-field class="custom-field">
                                 <input matInput type="text" placeholder="Zip" formControlName="zip"
                                   maxlength="6" numbersOnly required>
                                   @if (hasError('zip', 'required')) {
@@ -204,7 +204,7 @@
 
                             <div class="col-sm-3">
                               <div class="form-group">
-                                <mat-form-field class="example-full-width">
+                                <mat-form-field class="custom-field">
                                   <input matInput type="text" placeholder="Country"
                                     formControlName="country" maxlength="60">
 
@@ -214,7 +214,7 @@
 
                               <div class="col-sm-2">
                                 <div class="form-group">
-                                  <mat-form-field class="example-full-width">
+                                  <mat-form-field class="custom-field">
                                     <input matInput type="text" placeholder="Latitude"
                                       formControlName="latitude" numbersOnly maxlength="60">
                                     </mat-form-field>
@@ -223,7 +223,7 @@
 
                                 <div class="col-sm-1">
                                   <div class="form-group">
-                                    <mat-form-field class="example-full-width">
+                                    <mat-form-field class="custom-field">
                                       <input matInput type="text" placeholder="longitude"
                                         formControlName="longitude" maxlength="60" numbersOnly>
 
@@ -233,7 +233,7 @@
 
                                   <div class="col-sm-3">
                                     <div class="form-group">
-                                      <mat-form-field class="example-full-width">
+                                      <mat-form-field class="custom-field">
                                         <input matInput type="text" placeholder="Contact Person"
                                           formControlName="contactperson" maxlength="60">
                                         </mat-form-field>
@@ -242,7 +242,7 @@
 
                                     <!-- <div class="col-sm-3">
                                     <div class="form-group">
-                                      <mat-form-field class="example-full-width">
+                                      <mat-form-field class="custom-field">
                                         <input matInput type="text" placeholder="Contact Person"
                                           formControlName="contact_person" maxlength="60">
                                         </mat-form-field>
@@ -251,7 +251,7 @@
 
                                     <div class="col-sm-3">
                                       <div class="form-group">
-                                        <mat-form-field class="example-full-width">
+                                        <mat-form-field class="custom-field">
                                           <input matInput type="text" placeholder="Email"
                                             formControlName="emailid" maxlength="60">
                                           </mat-form-field>
@@ -260,7 +260,7 @@
 
                                       <div class="col-sm-3">
                                         <div class="form-group">
-                                          <mat-form-field class="example-full-width">
+                                          <mat-form-field class="custom-field">
                                             <input matInput type="text" placeholder="Phone No."
                                               formControlName="phoneno" maxlength="10" numbersOnly>
                                             </mat-form-field>

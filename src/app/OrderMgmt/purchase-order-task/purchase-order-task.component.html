@@ -35,7 +35,7 @@
               </button>
             }
 
-            <button mat-flat-button color="accent" [routerLink]="['/historyTask']">
+            <button mat-flat-button color="accent" class="ms-2" [routerLink]="['/historyTask']">
               <mat-icon aria-hidden="false">add</mat-icon> Approval History
             </button>
           </div>
@@ -48,13 +48,13 @@
           <div class="row">
             <div class="col-sm-12">
               <div class="form-group">
-                <mat-form-field class="example-full-width">
+                <mat-form-field class="custom-field">
                   <input matInput name="purchaseOrderNo" type="text" placeholder="Search by PO no."
                     [(ngModel)]="FilterData.purchaseOrderNo">
                   </mat-form-field>
                 </div>
                 <div class="form-group">
-                  <mat-form-field class="example-full-width">
+                  <mat-form-field class="custom-field">
                     <mat-select [(ngModel)]="FilterData.accountName" name="accountName" [typeaheadDebounceInterval]="matSelectDuration"
                       placeholder="Search by Project">
                       <mat-option>-Search By Project-</mat-option>
@@ -66,7 +66,7 @@
                   </mat-form-field>
                 </div>
                 <div class="form-group">
-                  <mat-form-field class="example-full-width">
+                  <mat-form-field class="custom-field">
                     <mat-select [(ngModel)]="FilterData.supplierName" name="supplierName" [typeaheadDebounceInterval]="matSelectDuration"
                       placeholder="Search by Vendor">
                       <mat-option>-Search By Vendor-</mat-option>
@@ -78,7 +78,7 @@
                   </mat-form-field>
                 </div>
                 <div class="form-group">
-                  <mat-form-field class="example-full-width">
+                  <mat-form-field class="custom-field">
                     <mat-select [(ngModel)]="FilterData.stageName" name="stageName" [typeaheadDebounceInterval]="matSelectDuration"
                       placeholder="Search by Level">
                       <mat-option>-Search By Level-</mat-option>
@@ -103,7 +103,7 @@
               <button mat-flat-button color="primary" (click)="search()">
                 <mat-icon aria-hidden="false">search</mat-icon> Search
               </button>
-              <button mat-flat-button color="warn" (click)="cancel()">
+              <button mat-flat-button color="warn" class="ms-2" (click)="cancel()">
                 <mat-icon aria-hidden="false">cancel</mat-icon> Cancel
               </button>
             </div>
@@ -209,14 +209,14 @@
                       <a mat-flat-button color="primary" matTooltip="Edit PO"
                         [routerLink]="['/searchTask/UpdatePO', TaskListData.poId, 'edit', TaskListData.entityId]"
                         >
-                        <mat-icon aria-hidden="false">edit</mat-icon>
+                        <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                       </a>
                     }
                     @if (TaskListData.stageName=='PO TEAM' && TaskListData.poRcFlag=='PO') {
-                      <a mat-flat-button color="warn" matTooltip="Cancel PO"
+                      <a mat-flat-button color="warn" class="ms-1" matTooltip="Cancel PO"
                         [routerLink]="['/CancelPoTask', TaskListData.entityId, 'edit', TaskListData.poRcFlag]"
                         >
-                        <mat-icon aria-hidden="false">delete</mat-icon>
+                        <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
                       </a>
                     }
 
@@ -231,14 +231,14 @@
                       <a mat-flat-button color="primary" matTooltip="Edit RC"
                         [routerLink]="['/searchTask/editRateContract', TaskListData.poId, 'edit', TaskListData.entityId]"
                         >
-                        <mat-icon aria-hidden="false">edit</mat-icon>
+                        <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                       </a>
                     }
                     @if (TaskListData.stageName=='PO TEAM' && TaskListData.poRcFlag=='RC') {
-                      <a mat-flat-button color="warn" matTooltip="Cancel RC"
+                      <a mat-flat-button color="warn" class="ms-1" matTooltip="Cancel RC"
                         [routerLink]="['/CancelPoTask', TaskListData.entityId, 'edit', TaskListData.poRcFlag]"
                         >
-                        <mat-icon aria-hidden="false">delete</mat-icon>
+                        <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
                       </a>
                     }
 
