@@ -229,14 +229,14 @@
                                 </div>
                               }
                               @if (projectMasterView) {
-                                <a mat-flat-button color="accent"  matTooltip="View this record"
+                                <a mat-flat-button color="accent" class="small-icon-btn" matTooltip="View this record"
                                   [routerLink]="['/viewProject', ProjectRecord.entityId,'view']">
                                   <mat-icon aria-hidden="false">visibility</mat-icon>
                                 </a>
                               }
 
                               @if (ProjectRecord.approvalStatus == 'PENDING' || ProjectRecord.approvalStatus == 'APPROVED') {
-                                <button mat-flat-button color="primary" matTooltip="Edit this record"
+                                <button mat-flat-button color="primary" class="small-icon-btn me-2" matTooltip="Edit this record"
                                   [disabled]="ProjectRecord.isdeleted"
                                   [routerLink]="['updateProjectDetails', ProjectRecord.entityId,'edit']"
                                   title="Edit">
@@ -244,20 +244,20 @@
                                 </button>
                               }
                               @if (ProjectRecord.approvalStatus == 'PENDING' && projectMasterDelete ) {
-                                <button mat-flat-button color="warn"  matTooltip="Delete this record"
+                                <button mat-flat-button color="warn" class="small-icon-btn"  matTooltip="Delete this record"
                                   [disabled]="ProjectRecord.isdeleted"
                                   (click)="onDelete(ProjectRecord.entityId)" title="delete">
                                   <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
                                 </button>
                               }
                               @if (ProjectRecord.orgName !='Aurionpro Solutions Ltd') {
-                                <button mat-flat-button color="warn"  matTooltip="Enter Project Id"
+                                <button mat-flat-button color="warn" class="small-icon-btn"  matTooltip="Enter Project Id"
                                   (click)="onEdit(i)" title="edit">
                                   <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
                                 </button>
                               }
                               @if ((ProjectRecord.approvalStatus == 'PENDING')) {
-                                <button mat-flat-button color="primary" matTooltip="Send for Approval"
+                                <button mat-flat-button color="primary" class="small-icon-btn" matTooltip="Send for Approval"
                                   [disabled]="ProjectRecord.isdeleted"
                                   (click)="submitForApproval(ProjectRecord.entityId)" title="Edit">
                                   <mat-icon aria-hidden="false">send</mat-icon>
