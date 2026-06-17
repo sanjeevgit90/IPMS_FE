@@ -95,6 +95,7 @@
                       <div class="form-group">
                         <mat-form-field class="custom-field"
                           [ngClass]="{ 'has-error': isSubmitted && formControls.geographycode.errors }">
+                          <mat-label>Geography Code</mat-label>
                           <input matInput name="geographycode" type="text"
                             placeholder="Geography Code"
                             [(ngModel)]="GeographyData.geographycode"
@@ -116,6 +117,7 @@
                         <div class="form-group">
                           <mat-form-field class="custom-field"
                             [ngClass]="{ 'has-error': isSubmitted && formControls.geographyname.errors }">
+                            <mat-label>Geography Name</mat-label>
                             <input matInput name="geographyname" type="text"
                               placeholder="Geography Name" [(ngModel)]="GeographyName"
                               formControlName="geographyname" maxlength="60" required>

@@ -40,6 +40,7 @@
                   <div class="col-sm-3">
                     <div class="form-group">
                       <mat-form-field class="custom-field" [ngClass]="{ 'has-error': isSubmitted && formControls.hsncode.errors }">
+                        <mat-label>HSN Code</mat-label>
                         <input matInput name="hsncode" type="text" placeholder="HSN code" [(ngModel)]="HSNData.hsncode" formControlName="hsncode" maxlength="40" required>
                         @if (isSubmitted && formControls.hsncode.errors) {
                           <div class="error-text">
@@ -81,6 +82,7 @@
                   <div class="col-sm-2">
                     <div class="form-group">
                       <mat-form-field class="custom-field" [ngClass]="{ 'has-error': isSubmitted && formControls.cgst.errors }">
+                          <mat-label>CGST %</mat-label>
                         <input matInput name="cgst" type="number" placeholder="CGST %" [(ngModel)]="HSNData.cgst" formControlName="cgst" required>
                         @if (isSubmitted && formControls.cgst.errors) {
                           <div class="error-text">
@@ -98,6 +100,7 @@
                   <div class="col-sm-2">
                     <div class="form-group">
                       <mat-form-field class="custom-field" [ngClass]="{ 'has-error': isSubmitted && formControls.sgst.errors }">
+                        <mat-label>SGST %</mat-label>
                         <input matInput name="sgst" type="number" placeholder="SGST %" [(ngModel)]="HSNData.sgst" formControlName="sgst" required>
                         @if (isSubmitted && formControls.sgst.errors) {
                           <div class="error-text">
@@ -115,6 +118,7 @@
                     <div class="col-sm-2">
                       <div class="form-group">
                         <mat-form-field class="custom-field" [ngClass]="{ 'has-error': isSubmitted && formControls.igst.errors }">
+                          <mat-label>IGST %</mat-label>
                           <input matInput name="igst" type="number" placeholder="IGST %" [(ngModel)]="HSNData.igst" formControlName="igst" required>
                           @if (isSubmitted && formControls.igst.errors) {
                             <div class="error-text">
