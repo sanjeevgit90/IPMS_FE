@@ -372,7 +372,7 @@ export class SharedService {
 
   getApprovedRcList(header) {
 
-    var url = this._global.baseAPIUrl + 'ipms/ratecontract/rcapprovedselectionlist/';
+    var url = this._global.baseAPIUrl + 'ipms/ratecontract/rcapprovedselectionlist';
     return this._http.get(url, { headers: header });
   }
 
