@@ -36,9 +36,9 @@
                   <ng-container>
                     @for (item of levelList; track item; let i = $index) {
                       <div class="col-sm-3">
-                        <div class="form-group">
+                        <div class="form-group project-config">
                           <mat-form-field class="custom-field">
-                            <button class="close" (click)="deleteLevel(item)"><span
+                            <button class="btn close" (click)="deleteLevel(item)"><span
                             aria-hidden="true">&times;</span></button>
                             <mat-label>{{item.workflowlevel}} </mat-label>
                             <mat-select [compareWith]="compareUser"

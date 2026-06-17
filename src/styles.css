@@ -8534,3 +8534,12 @@ body {
     width: 90% !important;
     padding-left: 10px !important;
 }
+.project-config .close {
+	position: absolute;top: 2px;
+    right: -12px;
+    font-size: 22px;
+}
+.project-config .mat-mdc-select {
+    width: 90% !important;
+    padding-left: 0px !important;
+}
