@@ -23,61 +23,84 @@
         <div id="Dashboard" class="pro-overview tab-pane fade show active">
           <div class="card card-main">
             <div class="card-body">
-              <div class="row">
-                <div class="col-sm-3">
-                  <mat-card class="example-card dashboard-card dash-accent">
+              <div class="row align-items-stretch">
+                <div class="col-sm-3 d-flex">
+                  <mat-card class="example-card dashboard-card dash-accent h-100 w-100">
                     <mat-card-content>
-                      <p class="dash-title"> Purchase Order</p>
+                      <p class="dash-title">Purchase Order</p>
                       <div class="row countandval">
                         <div class="col-sm-6">
-                          <mat-icon class="approved-icon">check</mat-icon>
-                          <label class="dashboard-lbl">Approved</label>
-                          <p class="dash-count">{{dashboardData.approvedpo}}</p>
+                          <div class="dash-stat-metric">
+                            <div class="dash-stat-label">
+                              <mat-icon class="approved-icon">check</mat-icon>
+                              <label class="dashboard-lbl">Approved</label>
+                            </div>
+                            <p class="dash-count">{{dashboardData.approvedpo}}</p>
+                          </div>
                         </div>
                         <div class="col-sm-6">
-                          <mat-icon class="pending-icon">settings</mat-icon>
-                          <label class="dashboard-lbl">Pending</label>
-                          <p class="dash-count">{{dashboardData.pendingpo}}</p>
+                          <div class="dash-stat-metric">
+                            <div class="dash-stat-label">
+                              <mat-icon class="pending-icon">settings</mat-icon>
+                              <label class="dashboard-lbl">Pending</label>
+                            </div>
+                            <p class="dash-count">{{dashboardData.pendingpo}}</p>
+                          </div>
                         </div>
                       </div>
                     </mat-card-content>
                   </mat-card>
                 </div>
-                <div class="col-sm-3">
-                  <mat-card class="example-card dashboard-card dash-accent">
+                <div class="col-sm-3 d-flex">
+                  <mat-card class="example-card dashboard-card dash-accent h-100 w-100">
                     <mat-card-content>
-                      <p class="dash-title"> Rate Contract</p>
+                      <p class="dash-title">Rate Contract</p>
                       <div class="row countandval">
                         <div class="col-sm-6">
-                          <mat-icon class="approved-icon">check</mat-icon>
-                          <label class="dashboard-lbl">Approved</label>
-
-                          <p class="dash-count">{{dashboardData.approvedrc}}</p>
+                          <div class="dash-stat-metric">
+                            <div class="dash-stat-label">
+                              <mat-icon class="approved-icon">check</mat-icon>
+                              <label class="dashboard-lbl">Approved</label>
+                            </div>
+                            <p class="dash-count">{{dashboardData.approvedrc}}</p>
+                          </div>
                         </div>
                         <div class="col-sm-6">
-                          <mat-icon class="pending-icon">settings</mat-icon>
-                          <label class="dashboard-lbl">Pending</label>
-                          <p class="dash-count">{{dashboardData.pendingrc}}</p>
+                          <div class="dash-stat-metric">
+                            <div class="dash-stat-label">
+                              <mat-icon class="pending-icon">settings</mat-icon>
+                              <label class="dashboard-lbl">Pending</label>
+                            </div>
+                            <p class="dash-count">{{dashboardData.pendingrc}}</p>
+                          </div>
                         </div>
                       </div>
                     </mat-card-content>
                   </mat-card>
                 </div>
 
-                <div class="col-sm-3">
-                  <mat-card class="example-card dashboard-card dash-accent">
+                <div class="col-sm-3 d-flex">
+                  <mat-card class="example-card dashboard-card dash-accent h-100 w-100">
                     <mat-card-content>
-                      <p class="dash-title"> Vendor Invoice</p>
+                      <p class="dash-title">Vendor Invoice</p>
                       <div class="row countandval">
                         <div class="col-sm-6">
-                          <mat-icon class="approved-icon">check</mat-icon>
-                          <label class="dashboard-lbl">Approved</label>
-                          <p class="dash-count">{{dashboardData.approvedprs}}</p>
+                          <div class="dash-stat-metric">
+                            <div class="dash-stat-label">
+                              <mat-icon class="approved-icon">check</mat-icon>
+                              <label class="dashboard-lbl">Approved</label>
+                            </div>
+                            <p class="dash-count">{{dashboardData.approvedprs}}</p>
+                          </div>
                         </div>
                         <div class="col-sm-6">
-                          <mat-icon class="pending-icon">settings</mat-icon>
-                          <label class="dashboard-lbl">Pending</label>
-                          <p class="dash-count">{{dashboardData.pendingprs}}</p>
+                          <div class="dash-stat-metric">
+                            <div class="dash-stat-label">
+                              <mat-icon class="pending-icon">settings</mat-icon>
+                              <label class="dashboard-lbl">Pending</label>
+                            </div>
+                            <p class="dash-count">{{dashboardData.pendingprs}}</p>
+                          </div>
                         </div>
                       </div>
                     </mat-card-content>
