@@ -38,7 +38,7 @@
                     <div class="form-group">
                       <mat-form-field class="custom-field"
                         [ngClass]="{ 'has-error': isSubmitted && formControls.grnNumber.errors }">
-                        <input matInput name="grnNumber" type="text" placeholder="GRN No."
+                        <input matInput name="grnNumber" type="text" placeholder="GRN No. *"
                           [(ngModel)]="GrnData.grnNumber" formControlName="grnNumber"
                           maxlength="60" required>
                           @if (isSubmitted && formControls.grnNumber.errors) {
@@ -58,7 +58,7 @@
                         <mat-form-field class="custom-field"
                           [ngClass]="{ 'has-error': isSubmitted && formControls.grnDate.errors }">
                           <input matInput name="grnDate"
-                            placeholder="GRN date" type="text"
+                            placeholder="GRN date *" type="text"
                             [matDatepicker]="picker1" [(ngModel)]="GrnData.grnDate"
                             formControlName="grnDate" required>
                             @if (isSubmitted && formControls.grnDate.errors) {
@@ -81,7 +81,7 @@
                           <mat-form-field class="custom-field"
                             [ngClass]="{ 'has-error': isSubmitted && formControls.deliveryDate.errors }">
                             <input matInput name="deliveryDate"
-                              placeholder="Delivery date" type="text"
+                              placeholder="Delivery date *" type="text"
                               [matDatepicker]="picker2" [(ngModel)]="GrnData.deliveryDate"
                               formControlName="deliveryDate" required>
                               @if (isSubmitted && formControls.deliveryDate.errors) {
