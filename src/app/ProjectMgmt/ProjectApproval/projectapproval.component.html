@@ -78,24 +78,26 @@
               <div class="pro-overview tab-pane fade show active">
                 <div class="card">
 
-                  <div class="col-auto float-left ml-auto">
-                    @if (!history) {
-                      <button mat-flat-button color="accent" (click)="getHistoryTask()">
-                        <mat-icon aria-hidden="false">search</mat-icon> Project Approval History
-                      </button>
-                    }
-                    @if (history) {
-                      <button mat-flat-button color="accent" (click)="search()">
-                        <mat-icon aria-hidden="false">search</mat-icon> Pending Project Approval
-                      </button>
-                    }
-                  </div>
                   <!-- Search Table -->
-                  <div class="row align-items-center">
+                  <div class="row align-items-center mx-0">
+                    <div class="col-auto">
+                      @if (!history) {
+                        <button mat-flat-button color="accent" (click)="getHistoryTask()">
+                          <mat-icon aria-hidden="false">search</mat-icon> Project Approval History
+                        </button>
+                      }
+                      @if (history) {
+                        <button mat-flat-button color="accent" (click)="search()">
+                          <mat-icon aria-hidden="false">search</mat-icon> Pending Project Approval
+                        </button>
+                      }
+                    </div>
+
                     <div class="col">
                       <div class="total-rec">Total Records: {{totalRecords}}</div>
                     </div>
-                    <div class="col-auto float-right ml-auto">
+
+                    <div class="col-auto ml-auto">
                       <mat-form-field class="search-input">
                         <input matInput (keyup)="applyFilter($event)" placeholder="Search..." #input>
                       </mat-form-field>
