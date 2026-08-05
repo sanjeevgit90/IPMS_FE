@@ -8564,3 +8564,27 @@ body {
 	text-decoration: underline;
 	cursor: pointer;
 }
+
+.pro-overview .custom-field.has-error input::placeholder {
+  color: #f44336;   
+  opacity: 1;                 
+}
+.pro-overview .mat-mdc-form-field-error-wrapper{
+	padding: 0px;
+}
+
+
+.pro-overview .custom-field.has-error input::placeholder {
+  color: #f44336;
+}
+
+.pro-overview .custom-field.has-error .mat-mdc-select-placeholder,
+.pro-overview .custom-field.has-error .mat-mdc-select-arrow,
+.pro-overview .custom-field.has-error .mat-mdc-floating-label,
+.pro-overview .custom-field.has-error .mdc-floating-label {
+  color: #f44336 !important;
+}
+
+.cdk-overlay-pane{
+	width: 50% !important;
+}
