@@ -14,7 +14,7 @@ import { MatCheckbox } from '@angular/material/checkbox';
 @Component({
     selector: 'app-add-rc',
     templateUrl: './add-rc.component.html',
-    providers: [RateContractService, AppGlobals, DialogService, SharedService, FileuploadService, ProjectMasterService, OrganizationService],
+    providers: [AppGlobals, DialogService, SharedService, FileuploadService, ProjectMasterService, OrganizationService],
     standalone: false
 })
 export class AddRcComponent implements OnInit {
