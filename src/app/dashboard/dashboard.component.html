@@ -156,6 +156,58 @@
             </div>
           </div>
         </div>
+        <div class="card card-main">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col">
+                <div class="total-rec">Rate Contracts: {{showRcLoading ? 'Loading...' : totalRcRecords}}</div>
+              </div>
+            </div>
+            <table mat-table [dataSource]="rcListData" class="mat-elevation-z8">
+
+              <ng-container matColumnDef="rateContractNo">
+                <th mat-header-cell *matHeaderCellDef> RC No. </th>
+                <td mat-cell *matCellDef="let rcRecord" data-label="RC No.">
+                  <div class="block">{{rcRecord.rateContractNo}}</div>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="contractDate">
+                <th mat-header-cell *matHeaderCellDef> Contract Date </th>
+                <td mat-cell *matCellDef="let rcRecord" data-label="Contract Date">
+                  <div class="block">{{rcRecord.contractDate | date : 'dd/MM/yyyy'}}</div>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="validTill">
+                <th mat-header-cell *matHeaderCellDef> Valid Till </th>
+                <td mat-cell *matCellDef="let rcRecord" data-label="Valid Till">
+                  <div class="block">{{rcRecord.validTill | date : 'dd/MM/yyyy'}}</div>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="maxLimit">
+                <th mat-header-cell *matHeaderCellDef> Max Limit </th>
+                <td mat-cell *matCellDef="let rcRecord" data-label="Max Limit">
+                  <div class="block">{{rcRecord.maxLimit | number : '1.2-2'}}</div>
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="rcStatus">
+                <th mat-header-cell *matHeaderCellDef> RC Status </th>
+                <td mat-cell *matCellDef="let rcRecord" data-label="RC Status">
+                  <div class="block">{{getRcStatus(rcRecord.validTill)}}</div>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="rcDisplayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: rcDisplayedColumns;"></tr>
+            </table>
+            <mat-paginator #rcPaginator [pageSize]="pageSizedisplay" [pageSizeOptions]="itemPerPage"
+              showFirstLastButtons>
+            </mat-paginator>
+          </div>
+        </div>
       </div>
     </div>
   </div>

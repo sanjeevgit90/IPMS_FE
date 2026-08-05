@@ -1,25 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 //import { HttpClient } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../global/app.global';
 import { DialogService } from '../service/dialog.service';
 import { DashboardService } from './dashboard.service';
+import { RateContractService } from '../OrderMgmt/rate-contract/rate-contract.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 //import * as HighCharts from 'highcharts';
 import * as Highcharts from 'highcharts';
 
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
-    providers: [DashboardService, DialogService, AppGlobals],
+    providers: [DashboardService, DialogService, AppGlobals, RateContractService],
     standalone: false
 })
 export class DashboardComponent implements OnInit {
   constructor(private dashboardService: DashboardService, private dialogService: DialogService,
     private _global: AppGlobals,
-  private router: Router) { }
+    private router: Router,
+    private rateContractService: RateContractService) { }
   showLoading: boolean = false;
+  showRcLoading: boolean = false;
   dashboardData: any = [];
   errorMessage: string = "";
+  rcListData: MatTableDataSource<any> = new MatTableDataSource<any>([]);
+  rcDisplayedColumns: string[] = ['rateContractNo', 'contractDate', 'validTill', 'maxLimit', 'rcStatus'];
+  rcFilterData = { rateContractNo: null, organisationId: null, supplierName: null, department: null };
+  totalRcRecords: number = 0;
+  itemPerPage = this._global.pageNumer;
+  pageSizedisplay = this._global.pageSize;
+  @ViewChild('rcPaginator', { static: true }) rcPaginator: MatPaginator;
 
   dashboardCount = function () {
     const headers = { "Authorization": sessionStorage.getItem("token") };
@@ -52,9 +64,43 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  loadRcList = function () {
+    const headers = { Authorization: sessionStorage.getItem('token') };
+    this.showRcLoading = true;
+    this.rateContractService.getAllRcFromView(this.rcFilterData, headers).subscribe(resp => {
+      this.rcListData = new MatTableDataSource(resp.content || []);
+      this.rcListData.paginator = this.rcPaginator;
+      this.totalRcRecords = this.rcListData.data.length;
+      this.showRcLoading = false;
+    }, (error: any) => {
+      this.showRcLoading = false;
+      if (error.statusText == 'Unknown Error') {
+        this.dialogService.openConfirmDialog('Your session has been expired');
+        this.router.navigate(['/']);
+        return;
+      }
+      const errStr = error.error?.errorDetail?.[0] || error.message;
+      this.dialogService.openConfirmDialog(errStr);
+    });
+  }
+
+  getRcStatus(validTill: any): string {
+    if (validTill == null || validTill === '') {
+      return 'Active';
+    }
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const validDate = new Date(validTill);
+    if (isNaN(validDate.getTime())) {
+      return 'Active';
+    }
+    validDate.setHours(0, 0, 0, 0);
+    return validDate < today ? 'Expired' : 'Active';
+  }
+
   ngOnInit(): void {
     this.dashboardCount();
-
+    this.loadRcList();
   }
 
   columnChartBrowser() {
