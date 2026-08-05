@@ -12,16 +12,27 @@ import { MatPaginator } from '@angular/material/paginator';
 import { PrsFilterSession } from '../ordermgmtfilterdata';
 
 @Component({
-    selector: 'app-prs',
-    templateUrl: './prs.component.html',
-    providers: [PRSService, AppGlobals, DialogService, SharedService],
-    standalone: false
+  selector: 'app-prs',
+  templateUrl: './prs.component.html',
+  providers: [PRSService, AppGlobals, DialogService, SharedService],
+  standalone: false
 })
 export class PRSComponent implements OnInit {
   result: boolean = false;
   constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private prsService: PRSService,
-    private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService) { }
+    private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService) {
+    this.getDataFromState();
+  }
 
+  getDataFromState() {
+    const navigation = this.router.getCurrentNavigation();
+    const state = navigation?.extras.state;
+    if (state?.source === 'DASHBOARD') {
+      this.FilterData.approvalStatus = 'APPROVED';
+      this.search();
+    }
+    console.log(state?.source);
+  }
   displayedColumns: string[] = ['prsNo', 'purchaseOrderNumber', 'partyName',
     'invoiceAmount', 'approvalStatus', 'action'];
   PrsListData: MatTableDataSource<any>;
@@ -32,7 +43,7 @@ export class PRSComponent implements OnInit {
   itemPerPage = this._global.pageNumer;
   pageSizedisplay = this._global.pageSize;
   matSelectDuration = this._global.matSelectDurationTime;
-  FilterData = { "purchaseOrderNumber": null, "issueChequeTo": null, "prsNo": null };
+  FilterData = { "purchaseOrderNumber": null, "issueChequeTo": null, "prsNo": null, "approvalStatus": null };
   partyList: any = [];
   poList: any = [];
   prsAdd: boolean = false;
@@ -117,7 +128,7 @@ export class PRSComponent implements OnInit {
     }, (error: any) => {
       debugger;
       this.showLoading = false;
-      if(error.statusText=="Unknown Error"){
+      if (error.statusText == "Unknown Error") {
         this.dialogService.openConfirmDialog("Your session has been expired");
         this.router.navigate(['/']);
       }

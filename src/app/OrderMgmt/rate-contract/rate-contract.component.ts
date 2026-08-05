@@ -12,15 +12,27 @@ import { MatPaginator } from '@angular/material/paginator';
 import { RcFilterSession } from '../ordermgmtfilterdata';
 
 @Component({
-    selector: 'app-rate-contract',
-    templateUrl: './rate-contract.component.html',
-    providers: [RateContractService, AppGlobals, DialogService, SharedService],
-    standalone: false
+  selector: 'app-rate-contract',
+  templateUrl: './rate-contract.component.html',
+  providers: [AppGlobals, DialogService, SharedService],
+  standalone: false
 })
 export class RateContractComponent implements OnInit {
   result: boolean = false;
   constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private rateContractService: RateContractService,
-    private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService) { }
+    private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService) {
+    this.getDataFromState();
+  }
+
+  getDataFromState() {
+    const navigation = this.router.getCurrentNavigation();
+    const state = navigation?.extras.state;
+    if (state?.source === 'DASHBOARD') {
+      this.FilterData.approvalStatus = 'APPROVED';
+      this.search();
+    }
+    console.log(state?.source);
+  }
 
   displayedColumns: string[] = ['rateContractNo', 'contractDate', 'departmentName', 'accName', 'approvalStatus', 'action'];
   RCListData: MatTableDataSource<any>;
@@ -34,7 +46,7 @@ export class RateContractComponent implements OnInit {
   pageSizedisplay = this._global.pageSize;
   matSelectDuration = this._global.matSelectDurationTime;
 
-  FilterData = { "rateContractNo": null, "accountName": null, "organisationId": null, "supplierName": null, "department": null };
+  FilterData = { "rateContractNo": null, "accountName": null, "organisationId": null, "supplierName": null, "department": null, "approvalStatus": null };
 
   PageTitle = "RC Master";
 
@@ -164,7 +176,7 @@ export class RateContractComponent implements OnInit {
     }, (error: any) => {
       debugger;
       this.showLoading = false;
-      if(error.statusText=="Unknown Error"){
+      if (error.statusText == "Unknown Error") {
         this.dialogService.openConfirmDialog("Your session has been expired");
         this.router.navigate(['/']);
       }
@@ -185,7 +197,7 @@ export class RateContractComponent implements OnInit {
     }, (error: any) => {
       debugger;
       this.showLoading = false;
-      if(error.statusText=="Unknown Error"){
+      if (error.statusText == "Unknown Error") {
         this.dialogService.openConfirmDialog("Your session has been expired");
         this.router.navigate(['/']);
       }
@@ -207,7 +219,7 @@ export class RateContractComponent implements OnInit {
     }, (error: any) => {
       debugger;
       this.showLoading = false;
-      if(error.statusText=="Unknown Error"){
+      if (error.statusText == "Unknown Error") {
         this.dialogService.openConfirmDialog("Your session has been expired");
         this.router.navigate(['/']);
       }
