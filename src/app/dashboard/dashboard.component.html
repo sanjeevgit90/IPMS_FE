@@ -35,7 +35,7 @@
                               <mat-icon class="approved-icon">check</mat-icon>
                               <label class="dashboard-lbl">Approved</label>
                             </div>
-                            <p class="dash-count">{{dashboardData.approvedpo}}</p>
+                            <p class="dash-count hyperLink" (click)="navigateToPage('PO_APPROVED')">{{dashboardData.approvedpo}}</p>
                           </div>
                         </div>
                         <div class="col-sm-6">
@@ -62,7 +62,7 @@
                               <mat-icon class="approved-icon">check</mat-icon>
                               <label class="dashboard-lbl">Approved</label>
                             </div>
-                            <p class="dash-count">{{dashboardData.approvedrc}}</p>
+                            <p class="dash-count hyperLink" (click)="navigateToPage('RC_APPROVED')">{{dashboardData.approvedrc}}</p>
                           </div>
                         </div>
                         <div class="col-sm-6">
@@ -90,7 +90,7 @@
                               <mat-icon class="approved-icon">check</mat-icon>
                               <label class="dashboard-lbl">Approved</label>
                             </div>
-                            <p class="dash-count">{{dashboardData.approvedprs}}</p>
+                            <p class="dash-count hyperLink" (click)="navigateToPage('PRS_APPROVED')">{{dashboardData.approvedprs}}</p>
                           </div>
                         </div>
                         <div class="col-sm-6">
@@ -109,6 +109,7 @@
                 <div class="col-sm-3">
                   <mat-card class="example-card dashboard-card dash-primary">
                     <mat-card-content>
+                      <p class="dash-title">Assets</p>
                       <div class="assets-upload">
                         <p class="dash-title1"> Assets <br> uploaded</p>
                         <div class="row countandval">

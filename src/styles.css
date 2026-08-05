@@ -637,7 +637,8 @@ table.dataTable thead > tr > td.sorting {
 	align-items: center;
 	justify-content: center;
 	gap: 4px;
-	margin-top: 8px;
+	margin-top: 4px;
+	margin-bottom: 10px;
 }
 .dash-stat-metric .dash-count {margin-top: 4px;}
 .dash-stat-metric .dashboard-lbl {margin-bottom: 0;}

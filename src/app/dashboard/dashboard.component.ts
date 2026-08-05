@@ -11,10 +11,10 @@ import { MatPaginator } from '@angular/material/paginator';
 import * as Highcharts from 'highcharts';
 
 @Component({
-    selector: 'app-dashboard',
-    templateUrl: './dashboard.component.html',
-    providers: [DashboardService, DialogService, AppGlobals],
-    standalone: false
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html',
+  providers: [DashboardService, DialogService, AppGlobals],
+  standalone: false
 })
 export class DashboardComponent implements OnInit {
   constructor(private dashboardService: DashboardService, private dialogService: DialogService,
@@ -59,11 +59,32 @@ export class DashboardComponent implements OnInit {
   navigateToPage(pageName: string) {
     switch (pageName) {
       case "PO_PENDING":
-              this.router.navigate(['/searchTask']);
+        this.router.navigate(['/searchTask']);
         break;
       case "PRS_PENDING":
-              this.router.navigate(['/searchPrsTask']);
-        break;  
+        this.router.navigate(['/searchPrsTask']);
+        break;
+      case "PO_APPROVED":
+        this.router.navigate(['/searchPurchaseOrder'], {
+          state: {
+            source: 'DASHBOARD',          
+          }
+        });
+        break;
+      case "RC_APPROVED":
+        this.router.navigate(['/searchRateContract'], {
+          state: {
+            source: 'DASHBOARD',          
+          }
+        });
+        break;
+      case "PRS_APPROVED":
+        this.router.navigate(['/searchPrs'], {
+          state: {
+            source: 'DASHBOARD',          
+          }
+        });
+        break;
     }
   }
 
