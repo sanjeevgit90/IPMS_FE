@@ -8558,3 +8558,8 @@ body {
     width: 90% !important;
     padding-left: 0px !important;
 }
+.hyperLink {
+	color: blue;
+	text-decoration: underline;
+	cursor: pointer;
+}
