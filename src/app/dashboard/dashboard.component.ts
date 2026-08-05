@@ -13,7 +13,7 @@ import * as Highcharts from 'highcharts';
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
-    providers: [DashboardService, DialogService, AppGlobals, RateContractService],
+    providers: [DashboardService, DialogService, AppGlobals],
     standalone: false
 })
 export class DashboardComponent implements OnInit {
@@ -70,7 +70,7 @@ export class DashboardComponent implements OnInit {
   loadRcList = function () {
     const headers = { Authorization: sessionStorage.getItem('token') };
     this.showRcLoading = true;
-    this.rateContractService.getAllRcFromView(this.rcFilterData, headers).subscribe(resp => {
+    this.rateContractService.getAllRcFromViewCached(this.rcFilterData, headers).subscribe(resp => {
       const sortedContent = this.sortRcListByStatus(resp.content || []);
       this.rcMasterList = sortedContent;
       this.rcStatusFilter = null;

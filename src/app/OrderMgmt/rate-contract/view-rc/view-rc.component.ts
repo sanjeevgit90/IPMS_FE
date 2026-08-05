@@ -9,7 +9,7 @@ import { RateContractService } from '../../../OrderMgmt/rate-contract/rate-contr
 @Component({
     selector: 'app-view-rc',
     templateUrl: './view-rc.component.html',
-    providers: [RateContractService, AppGlobals, DialogService, SharedService],
+    providers: [AppGlobals, DialogService, SharedService],
     standalone: false
 })
 export class ViewRcComponent implements OnInit {

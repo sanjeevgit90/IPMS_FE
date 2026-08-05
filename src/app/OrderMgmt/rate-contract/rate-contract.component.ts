@@ -14,7 +14,7 @@ import { RcFilterSession } from '../ordermgmtfilterdata';
 @Component({
     selector: 'app-rate-contract',
     templateUrl: './rate-contract.component.html',
-    providers: [RateContractService, AppGlobals, DialogService, SharedService],
+    providers: [AppGlobals, DialogService, SharedService],
     standalone: false
 })
 export class RateContractComponent implements OnInit {

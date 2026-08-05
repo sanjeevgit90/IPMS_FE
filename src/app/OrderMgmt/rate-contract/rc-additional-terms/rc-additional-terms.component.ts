@@ -11,7 +11,7 @@ import { FileuploadService } from '../../../service/fileupload.service';
 @Component({
     selector: 'app-rc-additional-terms',
     templateUrl: './rc-additional-terms.component.html',
-    providers: [RateContractService, AppGlobals, DialogService, SharedService, FileuploadService],
+    providers: [AppGlobals, DialogService, SharedService, FileuploadService],
     standalone: false
 })
 export class RcAdditionalTermsComponent implements OnInit {
