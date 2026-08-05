@@ -68,7 +68,8 @@ export class DashboardComponent implements OnInit {
     const headers = { Authorization: sessionStorage.getItem('token') };
     this.showRcLoading = true;
     this.rateContractService.getAllRcFromView(this.rcFilterData, headers).subscribe(resp => {
-      this.rcListData = new MatTableDataSource(resp.content || []);
+      const sortedContent = this.sortRcListByStatus(resp.content || []);
+      this.rcListData = new MatTableDataSource(sortedContent);
       this.rcListData.paginator = this.rcPaginator;
       this.totalRcRecords = this.rcListData.data.length;
       this.showRcLoading = false;
@@ -96,6 +97,14 @@ export class DashboardComponent implements OnInit {
     }
     validDate.setHours(0, 0, 0, 0);
     return validDate < today ? 'Expired' : 'Active';
+  }
+
+  sortRcListByStatus(content: any[]): any[] {
+    return [...content].sort((a, b) => {
+      const aOrder = this.getRcStatus(a.validTill) === 'Expired' ? 1 : 0;
+      const bOrder = this.getRcStatus(b.validTill) === 'Expired' ? 1 : 0;
+      return aOrder - bOrder;
+    });
   }
 
   ngOnInit(): void {

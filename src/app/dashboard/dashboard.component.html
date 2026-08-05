@@ -196,7 +196,10 @@
               <ng-container matColumnDef="rcStatus">
                 <th mat-header-cell *matHeaderCellDef> RC Status </th>
                 <td mat-cell *matCellDef="let rcRecord" data-label="RC Status">
-                  <div class="block">{{getRcStatus(rcRecord.validTill)}}</div>
+                  <span class="badge"
+                    [ngClass]="getRcStatus(rcRecord.validTill) === 'Active' ? 'badge-success' : 'badge-danger'">
+                    {{getRcStatus(rcRecord.validTill)}}
+                  </span>
                 </td>
               </ng-container>
 
