@@ -26,6 +26,8 @@ export class DashboardComponent implements OnInit {
   dashboardData: any = [];
   errorMessage: string = "";
   rcListData: MatTableDataSource<any> = new MatTableDataSource<any>([]);
+  rcMasterList: any[] = [];
+  rcStatusFilter: 'Active' | 'Expired' | null = null;
   rcDisplayedColumns: string[] = ['rateContractNo', 'contractDate', 'validTill', 'maxLimit', 'rcStatus'];
   rcFilterData = { rateContractNo: null, organisationId: null, supplierName: null, department: null };
   totalRcRecords: number = 0;
@@ -70,9 +72,9 @@ export class DashboardComponent implements OnInit {
     this.showRcLoading = true;
     this.rateContractService.getAllRcFromView(this.rcFilterData, headers).subscribe(resp => {
       const sortedContent = this.sortRcListByStatus(resp.content || []);
-      this.rcListData = new MatTableDataSource(sortedContent);
-      this.rcListData.paginator = this.rcPaginator;
-      this.totalRcRecords = this.rcListData.data.length;
+      this.rcMasterList = sortedContent;
+      this.rcStatusFilter = null;
+      this.applyRcTableFilter();
       this.updateRcPieChartCounts(sortedContent);
       this.pieChartBrowser();
       this.showRcLoading = false;
@@ -120,6 +122,30 @@ export class DashboardComponent implements OnInit {
         this.rcActiveCount++;
       }
     });
+  }
+
+  applyRcTableFilter(): void {
+    const filtered = this.rcStatusFilter
+      ? this.rcMasterList.filter(rc => this.getRcStatus(rc.validTill) === this.rcStatusFilter)
+      : this.rcMasterList;
+    this.rcListData = new MatTableDataSource(filtered);
+    this.rcListData.paginator = this.rcPaginator;
+    this.totalRcRecords = filtered.length;
+  }
+
+  onPieSliceClick(status: 'Active' | 'Expired'): void {
+    this.rcStatusFilter = this.rcStatusFilter === status ? null : status;
+    this.applyRcTableFilter();
+    this.pieChartBrowser();
+  }
+
+  clearRcStatusFilter(): void {
+    if (!this.rcStatusFilter) {
+      return;
+    }
+    this.rcStatusFilter = null;
+    this.applyRcTableFilter();
+    this.pieChartBrowser();
   }
 
   ngOnInit(): void {
@@ -192,12 +218,21 @@ export class DashboardComponent implements OnInit {
     });
   }
   pieChartBrowser() {
+    const self = this;
     Highcharts.chart('pieChart', {
       chart: {
         plotBackgroundColor: null,
         plotBorderWidth: null,
         plotShadow: false,
-        type: 'pie'
+        type: 'pie',
+        events: {
+          click: function (event: Highcharts.PointerEventObject) {
+            const target = event.target;
+            if (target instanceof Element && !target.closest('.highcharts-point')) {
+              self.clearRcStatusFilter();
+            }
+          }
+        }
       },
       title: {
         text: 'Rate Contract'
@@ -212,6 +247,18 @@ export class DashboardComponent implements OnInit {
       },
 
       plotOptions: {
+        pie: {
+          allowPointSelect: true,
+          cursor: 'pointer',
+          point: {
+            events: {
+              click: function () {
+                const status = this.name === 'Active RC' ? 'Active' : 'Expired';
+                self.onPieSliceClick(status);
+              }
+            }
+          }
+        },
         series: {
           borderWidth: 0,
           dataLabels: {
@@ -230,13 +277,15 @@ export class DashboardComponent implements OnInit {
               name: 'Active RC',
               y: this.rcActiveCount,
               color: '#55ce63',
-              sliced: true,
-              selected: true
+              sliced: this.rcStatusFilter === 'Active',
+              selected: this.rcStatusFilter === 'Active'
             },
             {
               name: 'Expired RC',
               y: this.rcExpiredCount,
-              color: '#f62d51'
+              color: '#f62d51',
+              sliced: this.rcStatusFilter === 'Expired',
+              selected: this.rcStatusFilter === 'Expired'
             }]
         }
       ]
