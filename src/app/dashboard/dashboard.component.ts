@@ -224,18 +224,19 @@ export class DashboardComponent implements OnInit {
       series: [
         {
           name: '',
-          colorByPoint: true,
           type: undefined,
           data: [
             {
               name: 'Active RC',
               y: this.rcActiveCount,
+              color: '#55ce63',
               sliced: true,
               selected: true
             },
             {
               name: 'Expired RC',
-              y: this.rcExpiredCount
+              y: this.rcExpiredCount,
+              color: '#f62d51'
             }]
         }
       ]
