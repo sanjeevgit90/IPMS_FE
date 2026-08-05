@@ -29,6 +29,8 @@ export class DashboardComponent implements OnInit {
   rcDisplayedColumns: string[] = ['rateContractNo', 'contractDate', 'validTill', 'maxLimit', 'rcStatus'];
   rcFilterData = { rateContractNo: null, organisationId: null, supplierName: null, department: null };
   totalRcRecords: number = 0;
+  rcActiveCount: number = 0;
+  rcExpiredCount: number = 0;
   itemPerPage = this._global.pageNumer;
   pageSizedisplay = this._global.pageSize;
   @ViewChild('rcPaginator', { static: true }) rcPaginator: MatPaginator;
@@ -38,7 +40,6 @@ export class DashboardComponent implements OnInit {
     this.showLoading = true;
     this.dashboardService.getCount(headers).subscribe(resp => {
       this.dashboardData = resp[0];
-      this.pieChartBrowser();
       this.columnChartBrowser();
       console.log(this.dashboardData);
       this.showLoading = false;
@@ -72,6 +73,8 @@ export class DashboardComponent implements OnInit {
       this.rcListData = new MatTableDataSource(sortedContent);
       this.rcListData.paginator = this.rcPaginator;
       this.totalRcRecords = this.rcListData.data.length;
+      this.updateRcPieChartCounts(sortedContent);
+      this.pieChartBrowser();
       this.showRcLoading = false;
     }, (error: any) => {
       this.showRcLoading = false;
@@ -104,6 +107,18 @@ export class DashboardComponent implements OnInit {
       const aOrder = this.getRcStatus(a.validTill) === 'Expired' ? 1 : 0;
       const bOrder = this.getRcStatus(b.validTill) === 'Expired' ? 1 : 0;
       return aOrder - bOrder;
+    });
+  }
+
+  updateRcPieChartCounts(content: any[]): void {
+    this.rcActiveCount = 0;
+    this.rcExpiredCount = 0;
+    content.forEach(rc => {
+      if (this.getRcStatus(rc.validTill) === 'Expired') {
+        this.rcExpiredCount++;
+      } else {
+        this.rcActiveCount++;
+      }
     });
   }
 
@@ -185,7 +200,7 @@ export class DashboardComponent implements OnInit {
         type: 'pie'
       },
       title: {
-        text: 'Summary'
+        text: 'Rate Contract'
       },
       tooltip: {
         pointFormat: '{series.name}: <b>{point.y}</b>'
@@ -213,14 +228,14 @@ export class DashboardComponent implements OnInit {
           type: undefined,
           data: [
             {
-              name: 'Total Assets',
-              y: this.dashboardData.assets,
+              name: 'Active RC',
+              y: this.rcActiveCount,
               sliced: true,
               selected: true
             },
             {
-              name: 'Tickets Raised',
-              y: this.dashboardData.tickets
+              name: 'Expired RC',
+              y: this.rcExpiredCount
             }]
         }
       ]
