@@ -100,31 +100,79 @@
                         </div>
                       </div>
 
+                       @if (!PrsData.isUtilityPayment) {
                       <div class="col-sm-4">
                         <div class="form-group">
-                          <mat-form-field class="custom-field"
-                            [ngClass]="{ 'has-error': isSubmitted && formControls.projectName.errors }">
-                            <mat-label>Project</mat-label>
-                            <mat-select [(ngModel)]="PrsData.projectName"
-                              placeholder="Please Select Project"
-                              [typeaheadDebounceInterval]="matSelectDuration"
-                              formControlName="projectName" [compareWith]="compareObjects">
-                              <mat-option>-Select Project-</mat-option>
-                              @for (p of projectList; track p) {
-                                <mat-option value="{{p.selectionid}}" matTooltip="{{p.selectionvalue}}">
-                                {{p.selectionvalue}}</mat-option>
+                          <mat-form-field class="custom-field">
+                            <mat-label>Purchase Order No.</mat-label>
+                            <!-- <mat-select [(ngModel)]="PrsData.purchaseOrderNo"
+                            [typeaheadDebounceInterval]="matSelectDuration"
+                            formControlName="purchaseOrderNo"
+                            (ngModelChange)="getSelectedPurchaseOrder(PrsData.purchaseOrderNo)"
+                            [compareWith]="compareObjects">
+                            <mat-option>-Select-</mat-option>
+                            <mat-option *ngFor="let po of poList" value="{{po.selectionid}}">
+                            {{po.selectionvalue}}</mat-option>
+                          </mat-select> -->
+                          <input type="text" matInput [matAutocomplete]="Project"
+                            formControlName="purchaseOrderNo" [(ngModel)]="PrsData.purchaseOrderNo" (ngModelChange)="getSelectedPurchaseOrder(PrsData.purchaseOrderNo)"/>
+                            <mat-autocomplete #Project="matAutocomplete" [displayWith]="getName.bind(this)">
+                              @for (option of (filteredPoList | async)?? []; track option) {
+                                <mat-option
+                                  [value]="option.selectionid">
+                                  {{option.selectionvalue }}
+                                </mat-option>
                               }
-                            </mat-select>
-                            @if (isSubmitted && formControls.projectName.errors) {
-                              <mat-error>
-                                @if (formControls.projectName.errors.required) {
-                                  <span>Project is required</span>
-                                }
-                              </mat-error>
-                            }
+                            </mat-autocomplete>
                           </mat-form-field>
                         </div>
                       </div>
+                      }
+
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <mat-form-field class="custom-field"
+                          [ngClass]="{ 'has-error': isSubmitted && formControls.projectName.errors }">
+                          <mat-label>Project</mat-label>
+                          <mat-select [(ngModel)]="PrsData.projectName"
+                            placeholder="Please Select Project"
+                            [typeaheadDebounceInterval]="matSelectDuration"
+                            formControlName="projectName" [compareWith]="compareObjects">
+                            <mat-option>-Select Project-</mat-option>
+                            @for (p of projectList; track p) {
+                              <mat-option value="{{p.selectionid}}" matTooltip="{{p.selectionvalue}}">
+                              {{p.selectionvalue}}</mat-option>
+                            }
+                          </mat-select>
+                          @if (isSubmitted && formControls.projectName.errors) {
+                            <mat-error>
+                              @if (formControls.projectName.errors.required) {
+                                <span>Project is required</span>
+                              }
+                            </mat-error>
+                          }
+                        </mat-form-field>
+                      </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <mat-form-field class="custom-field">
+                          <mat-label>Department</mat-label>
+                          <mat-select [(ngModel)]="PrsData.department"
+                            [typeaheadDebounceInterval]="matSelectDuration"
+                            formControlName="department" [compareWith]="compareObjects">
+                            <mat-option>-Select Project-</mat-option>
+                            @for (dept of deptList; track dept) {
+                              <mat-option
+                                value="{{dept.selectionvalue}}">
+                              {{dept.selectionvalue}}</mat-option>
+                            }
+                          </mat-select>
+
+                        </mat-form-field>
+                      </div>
+                    </div>
 
                         <div class="col-sm-4">
                           <div class="form-group">
@@ -190,35 +238,6 @@
 
                           </div>
                         </div>
-
-                        @if (!PrsData.isUtilityPayment) {
-                          <div class="col-sm-4">
-                            <div class="form-group">
-                              <mat-form-field class="custom-field">
-                                <mat-label>Purchase Order No.</mat-label>
-                                <!-- <mat-select [(ngModel)]="PrsData.purchaseOrderNo"
-                                [typeaheadDebounceInterval]="matSelectDuration"
-                                formControlName="purchaseOrderNo"
-                                (ngModelChange)="getSelectedPurchaseOrder(PrsData.purchaseOrderNo)"
-                                [compareWith]="compareObjects">
-                                <mat-option>-Select-</mat-option>
-                                <mat-option *ngFor="let po of poList" value="{{po.selectionid}}">
-                                {{po.selectionvalue}}</mat-option>
-                              </mat-select> -->
-                              <input type="text" matInput [matAutocomplete]="Project"
-                                formControlName="purchaseOrderNo" [(ngModel)]="PrsData.purchaseOrderNo" (ngModelChange)="getSelectedPurchaseOrder(PrsData.purchaseOrderNo)"/>
-                                <mat-autocomplete #Project="matAutocomplete" [displayWith]="getName.bind(this)">
-                                  @for (option of (filteredPoList | async)?? []; track option) {
-                                    <mat-option
-                                      [value]="option.selectionid">
-                                      {{option.selectionvalue }}
-                                    </mat-option>
-                                  }
-                                </mat-autocomplete>
-                              </mat-form-field>
-                            </div>
-                          </div>
-                        }
 
                         @if (!PrsData.isUtilityPayment) {
                           <div class="col-sm-4">
@@ -339,24 +358,7 @@
                                         </mat-form-field>
                                       </div>
                                     </div>
-                                    <div class="col-sm-4">
-                                      <div class="form-group">
-                                        <mat-form-field class="custom-field">
-                                          <mat-label>Department</mat-label>
-                                          <mat-select [(ngModel)]="PrsData.department"
-                                            [typeaheadDebounceInterval]="matSelectDuration"
-                                            formControlName="department" [compareWith]="compareObjects">
-                                            <mat-option>-Select Project-</mat-option>
-                                            @for (dept of deptList; track dept) {
-                                              <mat-option
-                                                value="{{dept.selectionvalue}}">
-                                              {{dept.selectionvalue}}</mat-option>
-                                            }
-                                          </mat-select>
-
-                                        </mat-form-field>
-                                      </div>
-                                    </div>
+                                  
                                     <div class="col-sm-4">
                                       <div class="form-group">
                                         <mat-form-field class="custom-field">
