@@ -159,7 +159,7 @@ export class DashboardComponent implements OnInit {
         type: 'column'
       },
       title: {
-        text: 'Summary'
+        text: 'Purchase Order and Vendor Invoice'
       },
       tooltip: {
         pointFormat: '{series.name}: <b>{point.y}</b>'
