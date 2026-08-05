@@ -177,6 +177,7 @@ export class AddPrsComponent implements OnInit {
           this.attachBill = [];
           this.invoiceFileUpload = [];
           this.attachments = [];
+          this.router.navigate(['/searchPrs']);  
         })
     }, (error: any) => {
       debugger;
@@ -547,6 +548,24 @@ export class AddPrsComponent implements OnInit {
       this.showLoading = false;
       this.PoEntity = resp;
       this.PrsData.issueChequeTo = this.PoEntity.supplierName;
+
+      // Auto-bind Project (accountName) and Department
+      if (this.PoEntity.accountName != null) {
+        const matchedProject = this.projectList.find(p => p.selectionid == this.PoEntity.accountName);
+        if (matchedProject) {
+          this.PrsData.projectName = matchedProject.selectionid;
+          this.addPrsForm.patchValue({ projectName: matchedProject.selectionid });
+        }
+      }
+
+      if (this.PoEntity.department != null) {
+        const matchedDept = this.deptList.find(d => d.selectionid == this.PoEntity.department);
+        if (matchedDept) {
+          this.PrsData.department = matchedDept.selectionvalue;   // per your existing option value binding
+          this.addPrsForm.patchValue({ department: matchedDept.selectionvalue });
+        }
+      }
+
       this.getAllGrn(poId);
     }, (error: any) => {
       debugger;
