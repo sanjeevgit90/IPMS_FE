@@ -44,7 +44,7 @@
                               <mat-icon class="pending-icon">settings</mat-icon>
                               <label class="dashboard-lbl">Pending</label>
                             </div>
-                            <p class="dash-count">{{dashboardData.pendingpo}}</p>
+                            <p class="dash-count hyperLink" (click)="navigateToPage('PO_PENDING')">{{dashboardData.pendingpo}}</p>
                           </div>
                         </div>
                       </div>
@@ -71,7 +71,7 @@
                               <mat-icon class="pending-icon">settings</mat-icon>
                               <label class="dashboard-lbl">Pending</label>
                             </div>
-                            <p class="dash-count">{{dashboardData.pendingrc}}</p>
+                            <p class="dash-count hyperLink" (click)="navigateToPage('PO_PENDING')">{{dashboardData.pendingrc}}</p>
                           </div>
                         </div>
                       </div>
@@ -99,7 +99,7 @@
                               <mat-icon class="pending-icon">settings</mat-icon>
                               <label class="dashboard-lbl">Pending</label>
                             </div>
-                            <p class="dash-count">{{dashboardData.pendingprs}}</p>
+                            <p class="dash-count hyperLink" (click)="navigateToPage('PRS_PENDING')">{{dashboardData.pendingprs}}</p>
                           </div>
                         </div>
                       </div>

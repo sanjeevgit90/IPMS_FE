@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 //import { HttpClient } from '@angular/common/http';
-//import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { AppGlobals } from '../global/app.global';
 import { DialogService } from '../service/dialog.service';
 import { DashboardService } from './dashboard.service';
 //import * as HighCharts from 'highcharts';
 import * as Highcharts from 'highcharts';
+
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
@@ -14,7 +15,8 @@ import * as Highcharts from 'highcharts';
 })
 export class DashboardComponent implements OnInit {
   constructor(private dashboardService: DashboardService, private dialogService: DialogService,
-    private _global: AppGlobals,) { }
+    private _global: AppGlobals,
+  private router: Router) { }
   showLoading: boolean = false;
   dashboardData: any = [];
   errorMessage: string = "";
@@ -39,6 +41,16 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  navigateToPage(pageName: string) {
+    switch (pageName) {
+      case "PO_PENDING":
+              this.router.navigate(['/searchTask']);
+        break;
+      case "PRS_PENDING":
+              this.router.navigate(['/searchPrsTask']);
+        break;  
+    }
+  }
 
   ngOnInit(): void {
     this.dashboardCount();
