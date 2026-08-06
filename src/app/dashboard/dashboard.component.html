@@ -7,10 +7,11 @@
   <div class="page-wrapper">
     <div class="content container-fluid">
       <!-- Page Header -->
-      <div class="page-header">
+      <div class="page-header dashboard-page-header">
         <div class="row align-items-center">
           <div class="col">
             <h3 class="page-title">Dashboard</h3>
+            <p class="dashboard-page-subtitle">Overview of procurement, contracts, and operations</p>
           </div>
         </div>
       </div>
@@ -20,11 +21,11 @@
       <div class="tab-content">
 
         <!-- Add Menu -->
-        <div id="Dashboard" class="pro-overview tab-pane fade show active">
-          <div class="card card-main">
+        <div id="Dashboard" class="pro-overview tab-pane fade show active dashboard-page">
+          <div class="card card-main dashboard-panel">
             <div class="card-body">
-              <div class="row align-items-stretch">
-                <div class="col-sm-3 d-flex">
+              <div class="row align-items-stretch g-3 dashboard-kpi-row">
+                <div class="col-12 col-sm-6 col-lg-3 d-flex">
                   <mat-card class="example-card dashboard-card dash-accent h-100 w-100">
                     <mat-card-content>
                       <p class="dash-title">Purchase Order</p>
@@ -51,7 +52,7 @@
                     </mat-card-content>
                   </mat-card>
                 </div>
-                <div class="col-sm-3 d-flex">
+                <div class="col-12 col-sm-6 col-lg-3 d-flex">
                   <mat-card class="example-card dashboard-card dash-accent h-100 w-100">
                     <mat-card-content>
                       <p class="dash-title">Rate Contract</p>
@@ -79,7 +80,7 @@
                   </mat-card>
                 </div>
 
-                <div class="col-sm-3 d-flex">
+                <div class="col-12 col-sm-6 col-lg-3 d-flex">
                   <mat-card class="example-card dashboard-card dash-accent h-100 w-100">
                     <mat-card-content>
                       <p class="dash-title">Vendor Invoice</p>
@@ -106,65 +107,63 @@
                     </mat-card-content>
                   </mat-card>
                 </div>
-                <div class="col-sm-3">
-                  <mat-card class="example-card dashboard-card dash-primary">
+                <div class="col-12 col-sm-6 col-lg-3 d-flex">
+                  <mat-card class="example-card dashboard-card dash-primary h-100 w-100 dashboard-ops-card">
                     <mat-card-content>
-                      <p class="dash-title">Assets</p>
-                      <div class="assets-upload">
-                        <p class="dash-title1"> Assets <br> uploaded</p>
-                        <div class="row countandval">
-                          <div class="col-sm-12">
+                      <p class="dash-title">Operations</p>
+                      <div class="row countandval dashboard-ops-metrics">
+                        <div class="col-6">
+                          <div class="dash-stat-metric">
+                            <label class="dashboard-lbl">Assets <br> uploaded</label>
                             <p class="dash-count">{{dashboardData.assets}}</p>
                           </div>
                         </div>
-                      </div>
-                      <div class="tickets-raised">
-                        <p class="dash-title1"> Tickets <br>raised</p>
-                        <div class="row countandval">
-                          <div class="col-sm-12">
+                        <div class="col-6">
+                          <div class="dash-stat-metric">
+                            <label class="dashboard-lbl">Tickets <br> raised</label>
                             <p class="dash-count">{{dashboardData.tickets}}</p>
                           </div>
                         </div>
                       </div>
-                      <div style="clear: both;"></div>
                     </mat-card-content>
                   </mat-card>
                 </div>
-                <!-- <div class="col-sm-3">
-                <mat-card class="example-card dashboard-card dash-primary">
-                  <mat-card-content>
-                    <p class="dash-title1"> Tickets raised</p>
-                    <div class="row countandval">
-                      <div class="col-sm-12">
-                        <p class="dash-count">{{dashboardData.tickets}}</p>
-                      </div>
-                    </div>
-                  </mat-card-content>
-                </mat-card>
-              </div> -->
             </div>
           </div>
         </div>
-        <div class="card card-main">
+        <div class="card card-main dashboard-panel">
           <div class="card-body">
-            <div class="row">
-              <div class="col-sm-8">
-                <div id="columnChart" style="width:100%; height:350px;"></div>
+            <h4 class="dashboard-section-title">Analytics</h4>
+            <p class="dashboard-section-subtitle">Purchase summary and rate contract status. Click a pie slice to filter the table below.</p>
+            <div class="row g-3">
+              <div class="col-12 col-lg-8">
+                <div id="columnChart" class="dashboard-chart-panel"></div>
               </div>
-              <div class="col-sm-4">
-                <div id="pieChart" style="width:100%; height:350px;"></div>
+              <div class="col-12 col-lg-4">
+                <div id="pieChart" class="dashboard-chart-panel"></div>
               </div>
             </div>
           </div>
         </div>
-        <div class="card card-main">
+        <div class="card card-main dashboard-panel">
           <div class="card-body">
-            <div class="row align-items-center">
+            <div class="dashboard-section-header row align-items-center">
               <div class="col">
-                <div class="total-rec">Rate Contracts: {{showRcLoading ? 'Loading...' : totalRcRecords}}</div>
+                <h4 class="dashboard-section-title mb-0">Rate Contracts</h4>
+                <p class="dashboard-section-subtitle mb-0">
+                  @if (showRcLoading) {
+                    Loading records...
+                  } @else {
+                    {{totalRcRecords}} record(s)
+                    @if (rcStatusFilter) {
+                      <span class="dashboard-filter-chip">Filtered: {{rcStatusFilter}}</span>
+                    }
+                  }
+                </p>
               </div>
             </div>
-            <table mat-table [dataSource]="rcListData" class="mat-elevation-z8">
+            <div class="dashboard-table-wrap">
+            <table mat-table [dataSource]="rcListData" class="mat-elevation-z8 dashboard-rc-table">
 
               <ng-container matColumnDef="rateContractNo">
                 <th mat-header-cell *matHeaderCellDef> RC No. </th>
@@ -206,9 +205,15 @@
 
               <tr mat-header-row *matHeaderRowDef="rcDisplayedColumns"></tr>
               <tr mat-row *matRowDef="let row; columns: rcDisplayedColumns;"></tr>
+              <tr class="mat-row dashboard-empty-row" *matNoDataRow>
+                <td class="mat-cell dashboard-empty-cell" [attr.colspan]="rcDisplayedColumns.length">
+                  No rate contracts found.
+                </td>
+              </tr>
             </table>
+            </div>
             <mat-paginator #rcPaginator [pageSize]="pageSizedisplay" [pageSizeOptions]="itemPerPage"
-              showFirstLastButtons>
+              showFirstLastButtons class="dashboard-paginator">
             </mat-paginator>
           </div>
         </div>
