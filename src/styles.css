@@ -647,7 +647,139 @@ table.dataTable thead > tr > td.sorting {
 .pending-icon {border: solid 2px #f78c00; border-radius: 50%; height: 25px !important; width: 25px !important;
 	line-height: 22px; font-weight: bold; color: #f78c00; margin: 0; flex-shrink: 0;}
 
-.dashboard-lbl {font-size: 13px;}		
+.dashboard-lbl {font-size: 13px;}
+
+/* Dashboard page UI enhancements */
+.dashboard-page-header {
+	margin-bottom: 8px;
+}
+.dashboard-page-subtitle {
+	color: #6c757d;
+	font-size: 13px;
+	margin: 4px 0 0;
+}
+.dashboard-page .dashboard-panel {
+	border-radius: 8px;
+	overflow: hidden;
+}
+.dashboard-page .dashboard-card {
+	padding: 12px 10px;
+	border-radius: 8px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+	transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.dashboard-page .dashboard-card:hover {
+	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+.dashboard-page .dash-title {
+	font-size: 15px;
+	letter-spacing: 0.2px;
+}
+.dashboard-page .dash-count {
+	font-size: 22px;
+	line-height: 1.2;
+}
+.dashboard-page .hyperLink.dash-count {
+	color: #1565c0;
+	text-decoration: none;
+	border-bottom: 1px dashed #90caf9;
+	transition: color 0.2s ease, border-color 0.2s ease;
+}
+.dashboard-page .hyperLink.dash-count:hover,
+.dashboard-page .hyperLink.dash-count:focus {
+	color: #f0522d;
+	border-bottom-color: #f0522d;
+	outline: none;
+}
+.dashboard-page .approved-icon {
+	background: rgba(72, 216, 13, 0.12);
+}
+.dashboard-page .pending-icon {
+	background: rgba(247, 140, 0, 0.12);
+}
+.dashboard-page .dashboard-ops-metrics {
+	margin-top: 8px;
+}
+.dashboard-section-title {
+	color: #1f1f1f;
+	font-size: 16px;
+	font-weight: 600;
+	margin-bottom: 6px;
+	padding-bottom: 8px;
+	border-bottom: 2px solid #f0522d;
+}
+.dashboard-section-subtitle {
+	color: #6c757d;
+	font-size: 13px;
+	margin-bottom: 16px;
+}
+.dashboard-chart-panel {
+	width: 100%;
+	height: 350px;
+	border: 1px solid #e8e8e8;
+	border-radius: 6px;
+	padding: 8px;
+	background: #fff;
+}
+.dashboard-section-header {
+	margin-bottom: 12px;
+}
+.dashboard-filter-chip {
+	display: inline-block;
+	font-size: 12px;
+	font-weight: 500;
+	padding: 3px 10px;
+	border-radius: 12px;
+	background: #fff3e0;
+	color: #e65100;
+	margin-left: 8px;
+}
+.dashboard-table-wrap {
+	overflow-x: auto;
+	border-radius: 6px;
+}
+.dashboard-page .dashboard-rc-table {
+	width: 100%;
+	margin-top: 4px;
+}
+.dashboard-page .dashboard-rc-table .mat-mdc-header-cell,
+.dashboard-page .dashboard-rc-table .mat-header-cell {
+	font-weight: 600;
+	color: #1f1f1f;
+	background: #fafafa;
+}
+.dashboard-page .dashboard-rc-table .mat-mdc-row:hover,
+.dashboard-page .dashboard-rc-table tr.mat-row:hover {
+	background-color: #f9f9f9;
+}
+.dashboard-page .dashboard-rc-table .badge {
+	padding: 5px 10px;
+	font-size: 12px;
+	font-weight: 500;
+}
+.dashboard-empty-cell {
+	text-align: center;
+	color: #6c757d;
+	padding: 24px 12px !important;
+	font-style: italic;
+}
+.dashboard-paginator {
+	margin-top: 8px;
+}
+@media (max-width: 991px) {
+	.dashboard-chart-panel {
+		height: 300px;
+	}
+}
+@media (max-width: 575px) {
+	.dashboard-page .dash-count {
+		font-size: 20px;
+	}
+	.dashboard-chart-panel {
+		height: 260px;
+	}
+}
+
 .text-ellipsis {
 	display: block;
 	max-width: 100%;
