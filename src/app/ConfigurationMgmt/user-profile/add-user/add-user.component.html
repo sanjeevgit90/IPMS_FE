@@ -39,497 +39,462 @@
                         <input matInput name="firstName" type="text" placeholder="First Name"
                           [(ngModel)]="UserProfileData.firstName" formControlName="firstName"
                           maxlength="60" required>
-                          @if (isSubmitted && formControls.firstName.errors) {
-                            <div
-                              class="error-text">
-                              @if (formControls.firstName.errors.required) {
-                                <div>First
-                                name is required</div>
-                              }
-                            </div>
+                      </mat-form-field>
+                      @if (isSubmitted && formControls.firstName.errors) {
+                        <div class="error-text">
+                          @if (formControls.firstName.errors.required) {
+                            <div>First name is required</div>
                           }
-                        </mat-form-field>
-                      </div>
+                        </div>
+                      }
                     </div>
-                    <div class="col-sm-3">
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <mat-form-field class="custom-field"
+                        [ngClass]="{ 'has-error': isSubmitted && formControls.lastName.errors }">
+                        <input matInput name="lastName" type="text" placeholder="Last Name"
+                          [(ngModel)]="UserProfileData.lastName" formControlName="lastName"
+                          maxlength="60" required>
+                      </mat-form-field>
+                      @if (isSubmitted && formControls.lastName.errors) {
+                        <div class="error-text">
+                          @if (formControls.lastName.errors.required) {
+                            <div>Last name is required</div>
+                          }
+                        </div>
+                      }
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <mat-form-field class="custom-field"
+                        [ngClass]="{ 'has-error': isSubmitted && formControls.mobileNumber.errors }">
+                        <input matInput name="mobileNumber" type="text" placeholder="Mobile No."
+                          [(ngModel)]="UserProfileData.mobileNumber"
+                          formControlName="mobileNumber" maxlength="10" numbersOnly required>
+                      </mat-form-field>
+                      @if (isSubmitted && formControls.mobileNumber.errors) {
+                        <div class="error-text">
+                          @if (formControls.mobileNumber.errors.required) {
+                            <div>Mobile No. is required</div>
+                          }
+                        </div>
+                      }
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <mat-form-field class="custom-field"
+                        [ngClass]="{ 'has-error': isSubmitted && formControls.gender.errors }">
+                        <mat-label>Gender</mat-label>
+                        <mat-select [(ngModel)]="UserProfileData.gender"
+                          formControlName="gender" required>
+                          <mat-option>-Select-</mat-option>
+                          <mat-option value="Male">Male</mat-option>
+                          <mat-option value="Female">Female</mat-option>
+                          <mat-option value="Transgender">Transgender </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      @if (isSubmitted && formControls.gender.errors) {
+                        <div class="error-text">
+                          @if (formControls.gender.errors.required) {
+                            <div>Gender is required</div>
+                          }
+                        </div>
+                      }
+                    </div>
+                  </div>
+                  <div class="col-sm-6 row">
+                    <div class="col-sm-6">
                       <div class="form-group">
                         <mat-form-field class="custom-field"
-                          [ngClass]="{ 'has-error': isSubmitted && formControls.lastName.errors }">
-                          <input matInput name="lastName" type="text" placeholder="Last Name"
-                            [(ngModel)]="UserProfileData.lastName" formControlName="lastName"
-                            maxlength="60" required>
-                            @if (isSubmitted && formControls.lastName.errors) {
-                              <div
-                                class="error-text">
-                                @if (formControls.lastName.errors.required) {
-                                  <div>Last
-                                  name is required</div>
-                                }
-                              </div>
+                          [ngClass]="{ 'has-error': isSubmitted && formControls.bloodGroup.errors }">
+                          <mat-label>Blood Group</mat-label>
+                          <mat-select [(ngModel)]="UserProfileData.bloodGroup"
+                            formControlName="bloodGroup" required>
+                            <mat-option>-Select-</mat-option>
+                            <mat-option value="A+">A+</mat-option>
+                            <mat-option value="A-">A-</mat-option>
+                            <mat-option value="B+">B+ </mat-option>
+                            <mat-option value="B-">B- </mat-option>
+                            <mat-option value="o+">o+ </mat-option>
+                            <mat-option value="O-">O- </mat-option>
+                            <mat-option value="AB+">AB+ </mat-option>
+                            <mat-option value="AB-">AB- </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                        @if (isSubmitted && formControls.bloodGroup.errors) {
+                          <div class="error-text">
+                            @if (formControls.bloodGroup.errors.required) {
+                              <div>Blood group is required</div>
                             }
-                          </mat-form-field>
-                        </div>
+                          </div>
+                        }
                       </div>
-                      <div class="col-sm-3">
-                        <div class="form-group">
-                          <mat-form-field class="custom-field"
-                            [ngClass]="{ 'has-error': isSubmitted && formControls.mobileNumber.errors }">
-                            <input matInput name="mobileNumber" type="text" placeholder="Mobile No."
-                              [(ngModel)]="UserProfileData.mobileNumber"
-                              formControlName="mobileNumber" maxlength="10" numbersOnly required>
-                              @if (isSubmitted && formControls.mobileNumber.errors) {
-                                <div
-                                  class="error-text">
-                                  @if (formControls.mobileNumber.errors.required) {
-                                    <div>Mobile
-                                    No. is required</div>
-                                  }
-                                </div>
-                              }
-                            </mat-form-field>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <mat-form-field class="custom-field"
+                          [ngClass]="{ 'has-error': isSubmitted && formControls.dob.errors }">
+                          <input matInput name="dob" placeholder="Date of birth" type="text"
+                            (click)="picker.open()" [matDatepicker]="picker"
+                            [(ngModel)]="UserProfileData.dob" formControlName="dob">
+                          <mat-datepicker-toggle matSuffix [for]="picker">
+                          </mat-datepicker-toggle>
+                          <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                        @if (isSubmitted && formControls.dob.errors) {
+                          <div class="error-text">
+                            @if (formControls.dob.errors.required) {
+                              <div>Date of birth is required</div>
+                            }
                           </div>
+                        }
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <mat-form-field class="custom-field"
+                          [ngClass]="{ 'has-error': isSubmitted && formControls.emailId.errors }">
+                          <input matInput name="emailId" type="email" placeholder="Email Id"
+                            [(ngModel)]="UserProfileData.emailId" formControlName="emailId"
+                            email="true" maxlength="60" required
+                            matTooltip="ie. sanjeev.gupta@aurionpro.com">
+                        </mat-form-field>
+                        @if (isSubmitted && formControls.emailId.errors) {
+                          <div class="error-text">
+                            @if (formControls.emailId.errors.required) {
+                              <div>Email Id is required</div>
+                            }
+                            @if (formControls.emailId.errors.email) {
+                              <div>Email must be a valid email address</div>
+                            }
+                          </div>
+                        }
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <mat-form-field class="custom-field"
+                          [ngClass]="{ 'has-error': isSubmitted && formControls.emergencyContactMobile.errors }">
+                          <input matInput name="emergencyContactMobile" type="text"
+                            placeholder="Emergency Mobile No."
+                            [(ngModel)]="UserProfileData.emergencyContactMobile"
+                            formControlName="emergencyContactMobile" maxlength="10"
+                            numbersOnly required>
+                        </mat-form-field>
+                        @if (isSubmitted && formControls.emergencyContactMobile.errors) {
+                          <div class="error-text">
+                            @if (formControls.emergencyContactMobile.errors.required) {
+                              <div>Emergency Mobile No. is required</div>
+                            }
+                          </div>
+                        }
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    @if (profilepic) {
+                      <div class="col-sm-12">
+                        <app-fileupload [files]="profilefiles" maxSize="2048"
+                        labelname="Profile Image" modulename="userprofile"></app-fileupload>
+                      </div>
+                    }
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <mat-form-field class="custom-field"
+                        [ngClass]="{ 'has-error': isSubmitted && formControls.emergencyContactPerson.errors }">
+                        <input matInput name="emergencyContactPerson" type="text"
+                          placeholder="Emergency Contact Name"
+                          [(ngModel)]="UserProfileData.emergencyContactPerson"
+                          formControlName="emergencyContactPerson" maxlength="60" required>
+                      </mat-form-field>
+                      @if (isSubmitted && formControls.emergencyContactPerson.errors) {
+                        <div class="error-text">
+                          @if (formControls.emergencyContactPerson.errors.required) {
+                            <div>Emergency contact name is required</div>
+                          }
                         </div>
-                        <div class="col-sm-3">
-                          <div class="form-group">
-                            <mat-form-field>
-                              <mat-label>Gender</mat-label>
-                              <mat-select [(ngModel)]="UserProfileData.gender"
-                                formControlName="gender" required>
-                                <mat-option>-Select-</mat-option>
-                                <mat-option value="Male">Male</mat-option>
-                                <mat-option value="Female">Female</mat-option>
-                                <mat-option value="Transgender">Transgender </mat-option>
-                              </mat-select>
-                              @if (isSubmitted && formControls.gender.errors) {
-                                <div
-                                  class="error-text">
-                                  @if (formControls.gender.errors.required) {
-                                    <div>Gender is
-                                    required</div>
-                                  }
-                                </div>
-                              }
-                            </mat-form-field>
-                          </div>
+                      }
+                    </div>
+                  </div>
+                  <div class="col-sm-6">
+                    <div class="form-group">
+                      <mat-form-field class="custom-field"
+                        [ngClass]="{ 'has-error': isSubmitted && formControls.address.errors }">
+                        <input matInput name="address" type="text" placeholder="Address"
+                          [(ngModel)]="UserProfileData.address" formControlName="address"
+                          maxlength="160" required>
+                      </mat-form-field>
+                      @if (isSubmitted && formControls.address.errors) {
+                        <div class="error-text">
+                          @if (formControls.address.errors.required) {
+                            <div>Address is required</div>
+                          }
                         </div>
-                        <div class="col-sm-6 row">
-                          <div class="col-sm-6">
-                            <div class="form-group">
-                              <mat-form-field>
-                                <mat-label>Blood Group</mat-label>
-                                <mat-select [(ngModel)]="UserProfileData.bloodGroup"
-                                  formControlName="bloodGroup" required>
-                                  <mat-option>-Select-</mat-option>
-                                  <mat-option value="A+">A+</mat-option>
-                                  <mat-option value="A-">A-</mat-option>
-                                  <mat-option value="B+">B+ </mat-option>
-                                  <mat-option value="B-">B- </mat-option>
-                                  <mat-option value="o+">o+ </mat-option>
-                                  <mat-option value="O-">O- </mat-option>
-                                  <mat-option value="AB+">AB+ </mat-option>
-                                  <mat-option value="AB-">AB- </mat-option>
-                                </mat-select>
-                                @if (isSubmitted && formControls.bloodGroup.errors) {
-                                  <div
-                                    class="error-text">
-                                    @if (formControls.bloodGroup.errors.required) {
-                                      <div>Blood group
-                                        is
-                                      required</div>
-                                    }
-                                  </div>
-                                }
-                              </mat-form-field>
-                            </div>
-                          </div>
-                          <div class="col-sm-6">
-                            <div class="form-group">
-                              <mat-form-field class="custom-field">
-                                <input matInput name="dob" placeholder="Date of birth" type="text"
-                                  (click)="picker.open()" [matDatepicker]="picker"
-                                  [(ngModel)]="UserProfileData.dob" formControlName="dob">
-                                  @if (isSubmitted && formControls.dob.errors) {
-                                    <div
-                                      class="error-text">
-                                      @if (formControls.dob.errors.required) {
-                                        <div>Date of birth is
-                                        required</div>
-                                      }
-                                    </div>
-                                  }
-                                  <mat-datepicker-toggle matSuffix [for]="picker">
-                                  </mat-datepicker-toggle>
-                                  <mat-datepicker #picker></mat-datepicker>
-                                </mat-form-field>
-                              </div>
-                            </div>
-                            <div class="col-sm-6">
-                              <div class="form-group">
-                                <mat-form-field class="custom-field"
-                                  [ngClass]="{ 'has-error': isSubmitted && formControls.emailId.errors }">
-                                  <input matInput name="emailId" type="email" placeholder="Email Id"
-                                    [(ngModel)]="UserProfileData.emailId" formControlName="emailId"
-                                    email="true" maxlength="60" required
-                                    matTooltip="ie. sanjeev.gupta@aurionpro.com">
-                                    @if (isSubmitted && formControls.emailId.errors) {
-                                      <div
-                                        class="error-text">
-                                        @if (formControls.emailId.errors.required) {
-                                          <div>Email Id
-                                          is required</div>
-                                        }
-                                        @if (formControls.emailId.errors.email) {
-                                          <div>Email must be a
-                                            valid email
-                                          address</div>
-                                        }
-                                      </div>
-                                    }
-                                  </mat-form-field>
-                                </div>
-                              </div>
-                              <div class="col-sm-6">
-                                <div class="form-group">
-                                  <mat-form-field class="custom-field"
-                                    [ngClass]="{ 'has-error': isSubmitted && formControls.emergencyContactMobile.errors }">
-                                    <input matInput name="emergencyContactMobile" type="text"
-                                      placeholder="Emergency Mobile No."
-                                      [(ngModel)]="UserProfileData.emergencyContactMobile"
-                                      formControlName="emergencyContactMobile" maxlength="10"
-                                      numbersOnly required>
-                                      @if (isSubmitted && formControls.emergencyContactMobile.errors) {
-                                        <div
-                                          class="error-text">
-                                          @if (formControls.emergencyContactMobile.errors.required) {
-                                            <div
-                                              >
-                                              Emergency Mobile
-                                            No. is required</div>
-                                          }
-                                        </div>
-                                      }
-                                    </mat-form-field>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="col-sm-6">
-                                @if (profilepic) {
-                                  <div class="col-sm-12">
-                                    <app-fileupload [files]="profilefiles" maxSize="2048"
-                                    labelname="Profile Image" modulename="userprofile"></app-fileupload>
-                                  </div>
-                                }
-                              </div>
-                              <div class="col-sm-3">
-                                <div class="form-group">
-                                  <mat-form-field class="custom-field"
-                                    [ngClass]="{ 'has-error': isSubmitted && formControls.emergencyContactPerson.errors }">
-                                    <input matInput name="emergencyContactPerson" type="text"
-                                      placeholder="Emergency Contact Name"
-                                      [(ngModel)]="UserProfileData.emergencyContactPerson"
-                                      formControlName="emergencyContactPerson" maxlength="60" required>
-                                      @if (isSubmitted && formControls.emergencyContactPerson.errors) {
-                                        <div
-                                          class="error-text">
-                                          @if (formControls.emergencyContactPerson.errors.required) {
-                                            <div>
-                                              Emergency contact
-                                            name is required</div>
-                                          }
-                                        </div>
-                                      }
-                                    </mat-form-field>
-                                  </div>
-                                </div>
-                                <div class="col-sm-6">
-                                  <div class="form-group">
-                                    <mat-form-field class="custom-field"
-                                      [ngClass]="{ 'has-error': isSubmitted && formControls.address.errors }">
-                                      <input matInput name="address" type="text" placeholder="Address"
-                                        [(ngModel)]="UserProfileData.address" formControlName="address"
-                                        maxlength="160" required>
-                                        @if (isSubmitted && formControls.address.errors) {
-                                          <div
-                                            class="error-text">
-                                            @if (formControls.address.errors.required) {
-                                              <div>Address is
-                                              required</div>
-                                            }
-                                          </div>
-                                        }
-                                      </mat-form-field>
-                                    </div>
-                                  </div>
-                                  <div class="col-sm-3">
-                                    <div class="form-group">
-                                      <mat-form-field
-                                        [ngClass]="{ 'has-error': isSubmitted && formControls.state.errors }">
-                                        <mat-label>State</mat-label>
-                                        <mat-select [(ngModel)]="UserProfileData.state" formControlName="state"
-                                          [typeaheadDebounceInterval]="matSelectDuration"
-                                          (ngModelChange)="getAllDistrictByState(UserProfileData.state)">
-                                          <mat-option>-Select-</mat-option>
-                                          @for (stateData of stateList; track stateData) {
-                                            <mat-option
-                                              value="{{stateData.selectionid}}">
-                                            {{stateData.selectionvalue}}</mat-option>
-                                          }
-                                        </mat-select>
-                                        @if (isSubmitted && formControls.state .errors) {
-                                          <div
-                                            class="error-text">
-                                            @if (formControls.state.errors.required) {
-                                              <div>State is required
-                                              </div>
-                                            }
-                                          </div>
-                                        }
-                                      </mat-form-field>
-                                    </div>
-                                  </div>
-                                  <div class="col-sm-3">
-                                    <div class="form-group">
-                                      <mat-form-field
-                                        [ngClass]="{ 'has-error': isSubmitted && formControls.district .errors }">
-                                        <mat-label>District</mat-label>
-                                        <mat-select [(ngModel)]="UserProfileData.district"
-                                          [typeaheadDebounceInterval]="matSelectDuration"
-                                          formControlName="district">
-                                          <mat-option>-Select-</mat-option>
-                                          @for (districtData of districtList; track districtData) {
-                                            <mat-option
-                                              value="{{districtData.selectionid}}">
-                                            {{districtData.selectionvalue}}</mat-option>
-                                          }
-                                        </mat-select>
-                                        @if (isSubmitted && formControls.district.errors) {
-                                          <div
-                                            class="error-text">
-                                            @if (formControls.district .errors.required) {
-                                              <div>District is
-                                              required</div>
-                                            }
-                                          </div>
-                                        }
-                                      </mat-form-field>
-                                    </div>
-                                  </div>
-                                  <div class="col-sm-3">
-                                    <div class="form-group">
-                                      <mat-form-field class="custom-field"
-                                        [ngClass]="{ 'has-error': isSubmitted && formControls.country.errors }">
-                                        <input matInput name="country" type="text" placeholder="Country"
-                                          [(ngModel)]="UserProfileData.country" formControlName="country"
-                                          maxlength="60" required>
-                                          @if (isSubmitted && formControls.country.errors) {
-                                            <div
-                                              class="error-text">
-                                              @if (formControls.country.errors.required) {
-                                                <div>Country is
-                                                required</div>
-                                              }
-                                            </div>
-                                          }
-                                        </mat-form-field>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <hr>
-                                    <div class="row">
-                                      <div class="col-md-12">
-                                        <strong>Fill out organization information</strong>
-                                      </div>
-                                      <div class="col-sm-3">
-                                        <div class="form-group">
-                                          <mat-form-field class="custom-field"
-                                            [ngClass]="{ 'has-error': isSubmitted && formControls.designation.errors }">
-                                            <input matInput name="designation" type="text" placeholder="Designation"
-                                              [(ngModel)]="UserProfileData.designation"
-                                              formControlName="designation" maxlength="60" required>
-                                              @if (isSubmitted && formControls.designation.errors) {
-                                                <div
-                                                  class="error-text">
-                                                  @if (formControls.designation.errors.required) {
-                                                    <div>Designation is
-                                                    required</div>
-                                                  }
-                                                </div>
-                                              }
-                                            </mat-form-field>
-                                          </div>
-                                        </div>
-                                        <div class="col-sm-3">
-                                          <div class="form-group">
-                                            <mat-form-field class="custom-field">
-                                              <input matInput name="doj" placeholder="Date of Joining"
-                                                (click)="picker1.open()" type="text" [matDatepicker]="picker1"
-                                                [(ngModel)]="UserProfileData.doj" formControlName="doj">
-                                                @if (isSubmitted && formControls.doj.errors) {
-                                                  <div class="error-text">
-                                                    @if (formControls.doj.errors.required) {
-                                                      <div>Date of Joining is
-                                                      required</div>
-                                                    }
-                                                  </div>
-                                                }
-                                                <mat-datepicker-toggle matSuffix [for]="picker1">
-                                                </mat-datepicker-toggle>
-                                                <mat-datepicker #picker1></mat-datepicker>
-                                              </mat-form-field>
-                                            </div>
-                                          </div>
-                                          <div class="col-sm-3">
-                                            <div class="form-group">
-                                              <mat-form-field class="custom-field"
-                                                [ngClass]="{ 'has-error': isSubmitted && formControls.employeeCode.errors }">
-                                                <input matInput name="employeeCode" type="text"
-                                                  placeholder="Employee code"
-                                                  [(ngModel)]="UserProfileData.employeeCode"
-                                                  formControlName="employeeCode" maxlength="10" numbersOnly required>
-                                                  @if (isSubmitted && formControls.employeeCode.errors) {
-                                                    <div
-                                                      class="error-text">
-                                                      @if (formControls.employeeCode.errors.required) {
-                                                        <div>Employee code
-                                                        is required</div>
-                                                      }
-                                                    </div>
-                                                  }
-                                                </mat-form-field>
-                                              </div>
-                                            </div>
-                                            <div class="col-sm-3">
-                                              <div class="form-group">
-                                                <mat-form-field
-                                                  [ngClass]="{ 'has-error': isSubmitted && formControls.department.errors }">
-                                                  <mat-label>Department</mat-label>
-                                                  <mat-select [(ngModel)]="UserProfileData.department"
-                                                    [typeaheadDebounceInterval]="matSelectDuration"
-                                                    formControlName="department">
-                                                    <mat-option>-Select-</mat-option>
-                                                    @for (departmentData of departmentList; track departmentData) {
-                                                      <mat-option
-                                                        value="{{departmentData.selectionvalue}}">
-                                                      {{departmentData.selectionvalue}}</mat-option>
-                                                    }
-                                                  </mat-select>
-                                                  @if (isSubmitted && formControls.department .errors) {
-                                                    <div
-                                                      class="error-text">
-                                                      @if (formControls.department.errors.required) {
-                                                        <div>Department is
-                                                        required</div>
-                                                      }
-                                                    </div>
-                                                  }
-                                                </mat-form-field>
-                                              </div>
-                                            </div>
-                                            <div class="col-sm-3">
-                                              <div class="form-group">
-                                                <mat-form-field>
-                                                  <mat-select [ngModel]="UserProfileData.organizations"
-                                                    [compareWith]="compareOrg" placeholder="Organizations"
-                                                    formControlName="organizations"
-                                                    [typeaheadDebounceInterval]="matSelectDuration"
-                                                    (selectionChange)="SelectORG($event.value)" multiple>
-                                                    @for (organizationsData of organizationsList; track organizationsData) {
-                                                      <mat-option
-                                                        [value]="organizationsData.selectionid">
-                                                        {{organizationsData.selectionvalue}}
-                                                      </mat-option>
-                                                    }
-                                                  </mat-select>
-                                                </mat-form-field>
-                                              </div>
-                                            </div>
-                                            <div class="col-sm-3">
-                                              <div class="form-group">
-                                                <mat-form-field>
-                                                  <mat-select [ngModel]="UserProfileData.roles"
-                                                    [compareWith]="compareRole" placeholder="Roles"
-                                                    [typeaheadDebounceInterval]="matSelectDuration"
-                                                    formControlName="roles" (selectionChange)="SelectRole($event.value)"
-                                                    multiple>
-                                                    @for (RoleData of roleList; track RoleData) {
-                                                      <mat-option
-                                                        [value]="RoleData.selectionid">
-                                                        {{RoleData.selectionvalue}}
-                                                      </mat-option>
-                                                    }
-                                                  </mat-select>
-                                                </mat-form-field>
-                                              </div>
-                                            </div>
-                                            <div class="col-sm-3">
-                                              <div class="form-group">
-                                                <mat-form-field>
-                                                  <mat-label>Team Leader State</mat-label>
-                                                  <mat-select [(ngModel)]="tLState" formControlName="tLState"
-                                                    [typeaheadDebounceInterval]="matSelectDuration"
-                                                    (ngModelChange)="getAllTLDistrictByState(tLState)">
-                                                    <mat-option>-Select-</mat-option>
-                                                    @for (stateData of stateList; track stateData) {
-                                                      <mat-option
-                                                        value="{{stateData.selectionid}}">
-                                                      {{stateData.selectionvalue}}</mat-option>
-                                                    }
-                                                  </mat-select>
-                                                </mat-form-field>
-                                              </div>
-                                            </div>
-                                            <div class="col-sm-3">
-                                              <div class="form-group">
-                                                <mat-form-field>
-                                                  <mat-select [ngModel]="UserProfileData.mappeddistrict"
-                                                    [typeaheadDebounceInterval]="matSelectDuration"
-                                                    [compareWith]="compareTlDist" placeholder="Team Leaders District"
-                                                    formControlName="mappeddistrict"
-                                                    (selectionChange)="SelectDistrict($event.value)" multiple>
-                                                    @for (TlDistrictData of TLdistrictList; track TlDistrictData) {
-                                                      <mat-option
-                                                        [value]="TlDistrictData.selectionid">
-                                                        {{TlDistrictData.selectionvalue}}
-                                                      </mat-option>
-                                                    }
-                                                  </mat-select>
-                                                </mat-form-field>
-                                              </div>
-                                            </div>
-                                          </div>
-                                          <div class="submit-section">
-                                            @if (add) {
-                                              <button mat-flat-button color="accent" (click)="addUser()">
-                                                <mat-icon aria-hidden="false">save</mat-icon> Save
-                                              </button>
-                                            }
-                                            @if (edit) {
-                                              <button mat-flat-button color="warn" (click)="backprofile()">
-                                                <mat-icon aria-hidden="false">cancel</mat-icon> Back
-                                              </button>
-                                            }
-                                            @if (roleAdminbtn || add) {
-                                              <button mat-flat-button color="warn" (click)="back()">
-                                                <mat-icon aria-hidden="false">cancel</mat-icon> Back
-                                              </button>
-                                            }
-                                            @if (edit) {
-                                              <button mat-flat-button color="accent" (click)="updateprofile()">
-                                                <mat-icon aria-hidden="false">update</mat-icon> Update
-                                              </button>
-                                            }
-                                            @if (roleAdminbtn) {
-                                              <button mat-flat-button color="primary" (click)="updateroles()"
-                                                >
-                                                <mat-icon aria-hidden="false">update</mat-icon> Update
-                                              </button>
-                                            }
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </form>
+                      }
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <mat-form-field class="custom-field"
+                        [ngClass]="{ 'has-error': isSubmitted && formControls.state.errors }">
+                        <mat-label>State</mat-label>
+                        <mat-select [(ngModel)]="UserProfileData.state" formControlName="state"
+                          [typeaheadDebounceInterval]="matSelectDuration"
+                          (ngModelChange)="getAllDistrictByState(UserProfileData.state)">
+                          <mat-option>-Select-</mat-option>
+                          @for (stateData of stateList; track stateData) {
+                            <mat-option
+                              value="{{stateData.selectionid}}">
+                            {{stateData.selectionvalue}}</mat-option>
+                          }
+                        </mat-select>
+                      </mat-form-field>
+                      @if (isSubmitted && formControls.state.errors) {
+                        <div class="error-text">
+                          @if (formControls.state.errors.required) {
+                            <div>State is required</div>
+                          }
+                        </div>
+                      }
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <mat-form-field class="custom-field"
+                        [ngClass]="{ 'has-error': isSubmitted && formControls.district.errors }">
+                        <mat-label>District</mat-label>
+                        <mat-select [(ngModel)]="UserProfileData.district"
+                          [typeaheadDebounceInterval]="matSelectDuration"
+                          formControlName="district">
+                          <mat-option>-Select-</mat-option>
+                          @for (districtData of districtList; track districtData) {
+                            <mat-option
+                              value="{{districtData.selectionid}}">
+                            {{districtData.selectionvalue}}</mat-option>
+                          }
+                        </mat-select>
+                      </mat-form-field>
+                      @if (isSubmitted && formControls.district.errors) {
+                        <div class="error-text">
+                          @if (formControls.district.errors.required) {
+                            <div>District is required</div>
+                          }
+                        </div>
+                      }
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <mat-form-field class="custom-field"
+                        [ngClass]="{ 'has-error': isSubmitted && formControls.country.errors }">
+                        <input matInput name="country" type="text" placeholder="Country"
+                          [(ngModel)]="UserProfileData.country" formControlName="country"
+                          maxlength="60" required>
+                      </mat-form-field>
+                      @if (isSubmitted && formControls.country.errors) {
+                        <div class="error-text">
+                          @if (formControls.country.errors.required) {
+                            <div>Country is required</div>
+                          }
+                        </div>
+                      }
+                    </div>
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-md-12">
+                    <strong>Fill out organization information</strong>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <mat-form-field class="custom-field"
+                        [ngClass]="{ 'has-error': isSubmitted && formControls.designation.errors }">
+                        <input matInput name="designation" type="text" placeholder="Designation"
+                          [(ngModel)]="UserProfileData.designation"
+                          formControlName="designation" maxlength="60" required>
+                      </mat-form-field>
+                      @if (isSubmitted && formControls.designation.errors) {
+                        <div class="error-text">
+                          @if (formControls.designation.errors.required) {
+                            <div>Designation is required</div>
+                          }
+                        </div>
+                      }
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <mat-form-field class="custom-field"
+                        [ngClass]="{ 'has-error': isSubmitted && formControls.doj.errors }">
+                        <input matInput name="doj" placeholder="Date of Joining"
+                          (click)="picker1.open()" type="text" [matDatepicker]="picker1"
+                          [(ngModel)]="UserProfileData.doj" formControlName="doj">
+                        <mat-datepicker-toggle matSuffix [for]="picker1">
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                      </mat-form-field>
+                      @if (isSubmitted && formControls.doj.errors) {
+                        <div class="error-text">
+                          @if (formControls.doj.errors.required) {
+                            <div>Date of Joining is required</div>
+                          }
+                        </div>
+                      }
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <mat-form-field class="custom-field"
+                        [ngClass]="{ 'has-error': isSubmitted && formControls.employeeCode.errors }">
+                        <input matInput name="employeeCode" type="text"
+                          placeholder="Employee code"
+                          [(ngModel)]="UserProfileData.employeeCode"
+                          formControlName="employeeCode" maxlength="10" numbersOnly required>
+                      </mat-form-field>
+                      @if (isSubmitted && formControls.employeeCode.errors) {
+                        <div class="error-text">
+                          @if (formControls.employeeCode.errors.required) {
+                            <div>Employee code is required</div>
+                          }
+                        </div>
+                      }
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <mat-form-field class="custom-field"
+                        [ngClass]="{ 'has-error': isSubmitted && formControls.department.errors }">
+                        <mat-label>Department</mat-label>
+                        <mat-select [(ngModel)]="UserProfileData.department"
+                          [typeaheadDebounceInterval]="matSelectDuration"
+                          formControlName="department">
+                          <mat-option>-Select-</mat-option>
+                          @for (departmentData of departmentList; track departmentData) {
+                            <mat-option
+                              value="{{departmentData.selectionvalue}}">
+                            {{departmentData.selectionvalue}}</mat-option>
+                          }
+                        </mat-select>
+                      </mat-form-field>
+                      @if (isSubmitted && formControls.department.errors) {
+                        <div class="error-text">
+                          @if (formControls.department.errors.required) {
+                            <div>Department is required</div>
+                          }
+                        </div>
+                      }
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <mat-form-field>
+                        <mat-select [ngModel]="UserProfileData.organizations"
+                          [compareWith]="compareOrg" placeholder="Organizations"
+                          formControlName="organizations"
+                          [typeaheadDebounceInterval]="matSelectDuration"
+                          (selectionChange)="SelectORG($event.value)" multiple>
+                          @for (organizationsData of organizationsList; track organizationsData) {
+                            <mat-option
+                              [value]="organizationsData.selectionid">
+                              {{organizationsData.selectionvalue}}
+                            </mat-option>
+                          }
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <mat-form-field>
+                        <mat-select [ngModel]="UserProfileData.roles"
+                          [compareWith]="compareRole" placeholder="Roles"
+                          [typeaheadDebounceInterval]="matSelectDuration"
+                          formControlName="roles" (selectionChange)="SelectRole($event.value)"
+                          multiple>
+                          @for (RoleData of roleList; track RoleData) {
+                            <mat-option
+                              [value]="RoleData.selectionid">
+                              {{RoleData.selectionvalue}}
+                            </mat-option>
+                          }
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <mat-form-field>
+                        <mat-label>Team Leader State</mat-label>
+                        <mat-select [(ngModel)]="tLState" formControlName="tLState"
+                          [typeaheadDebounceInterval]="matSelectDuration"
+                          (ngModelChange)="getAllTLDistrictByState(tLState)">
+                          <mat-option>-Select-</mat-option>
+                          @for (stateData of stateList; track stateData) {
+                            <mat-option
+                              value="{{stateData.selectionid}}">
+                            {{stateData.selectionvalue}}</mat-option>
+                          }
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="col-sm-3">
+                    <div class="form-group">
+                      <mat-form-field>
+                        <mat-select [ngModel]="UserProfileData.mappeddistrict"
+                          [typeaheadDebounceInterval]="matSelectDuration"
+                          [compareWith]="compareTlDist" placeholder="Team Leaders District"
+                          formControlName="mappeddistrict"
+                          (selectionChange)="SelectDistrict($event.value)" multiple>
+                          @for (TlDistrictData of TLdistrictList; track TlDistrictData) {
+                            <mat-option
+                              [value]="TlDistrictData.selectionid">
+                              {{TlDistrictData.selectionvalue}}
+                            </mat-option>
+                          }
+                        </mat-select>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+                <div class="submit-section">
+                  @if (add) {
+                    <button mat-flat-button color="accent" (click)="addUser()">
+                      <mat-icon aria-hidden="false">save</mat-icon> Save
+                    </button>
+                  }
+                  @if (edit) {
+                    <button mat-flat-button color="warn" (click)="backprofile()">
+                      <mat-icon aria-hidden="false">cancel</mat-icon> Back
+                    </button>
+                  }
+                  @if (roleAdminbtn || add) {
+                    <button mat-flat-button color="warn" (click)="back()">
+                      <mat-icon aria-hidden="false">cancel</mat-icon> Back
+                    </button>
+                  }
+                  @if (edit) {
+                    <button mat-flat-button color="accent" (click)="updateprofile()">
+                      <mat-icon aria-hidden="false">update</mat-icon> Update
+                    </button>
+                  }
+                  @if (roleAdminbtn) {
+                    <button mat-flat-button color="primary" (click)="updateroles()"
+                      >
+                      <mat-icon aria-hidden="false">update</mat-icon> Update
+                    </button>
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
