@@ -102,42 +102,42 @@
         <div>
           <div class="submit-section1">
             @if (taskId==null) {
-              <button mat-flat-button color="accent" (click)="openTask()">
-                <mat-icon>send</mat-icon> Send For Approval
-              </button>
+            <button mat-flat-button color="accent" (click)="saveTask()">
+              <mat-icon>send</mat-icon> Send For Approval
+            </button>
             }
             @if (taskId!=null) {
-              <button mat-flat-button color="accent" (click)="openTask()">
-                <mat-icon>send</mat-icon> Re-send For Approval
-              </button>
+            <button mat-flat-button color="accent" (click)="saveTask()">
+              <mat-icon>send</mat-icon> Re-send For Approval
+            </button>
             }
           </div>
           @if (workflowDiv) {
-            <div class="card">
+            <!-- <div class="card">
               <div class="card-body">
-                <div class="row">
+                <div class="row"> -->
                   @if (rcId==null) {
-                    <div class="col-sm-4">
+                    <!-- <div class="col-sm-4">
                       <div class="form-group">
                         <mat-form-field>
                           <mat-label>Workflow</mat-label>
                           <mat-select [(ngModel)]="TaskData.workflowName" name="workflowName" [typeaheadDebounceInterval]="matSelectDuration"
                             required>
-                            <mat-option>-Select-</mat-option>
+                            <mat-option>-Select-</mat-option> -->
                             <!-- <mat-option value="TYPE A">TYPE A</mat-option>
                             <mat-option value="TYPE B">TYPE B</mat-option> -->
-                            @for (work of workflowList; track work) {
+                            <!-- @for (work of workflowList; track work) {
                               <mat-option
                                 value="{{work.selectionid}}">
                                 {{work.selectionvalue}}
                               </mat-option>
-                            }
-                          </mat-select>
+                            } -->
+                          <!-- </mat-select>
                         </mat-form-field>
                       </div>
-                    </div>
+                    </div> -->
                   }
-                  <div class="col-sm-12">
+                  <!-- <div class="col-sm-12">
                     <div class="form-group">
                       <mat-form-field>
                         <mat-label>Remarks</mat-label>
@@ -147,18 +147,18 @@
                         </textarea>
                       </mat-form-field>
                     </div>
-                  </div>
-                </div>
+                  </div> -->
+                <!-- </div>
                 <div class="submit-section">
                   <button mat-flat-button color="primary" (click)="saveTask()">
                     Submit
-                  </button>
+                  </button>                  
                   <button mat-flat-button color="warn" (click)="closeTask()">
                     Cancel
                   </button>
                 </div>
               </div>
-            </div>
+            </div> -->
           }
         </div>
       }
