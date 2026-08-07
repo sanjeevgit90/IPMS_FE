@@ -83,10 +83,10 @@ export class AddPoComponent implements OnInit {
 
   checked: boolean = false;
   checkChange(checked: boolean) {
-    debugger;
-    this.checked = !checked;
-    this.isHistoricData = this.checked ? "YES" : "NO";
-    this.POEntityData.currency = this.checked ? "INR" : null;
+    // debugger;
+    // this.checked = !checked;
+    // this.isHistoricData = this.checked ? "YES" : "NO";
+    // this.POEntityData.currency = this.checked ? "INR" : null;
   }
 
   compareObjects(o1: any, o2: any): boolean {
@@ -885,6 +885,8 @@ export class AddPoComponent implements OnInit {
       this.view = true;
       this.disableFieldsForUploadSignCopy();
     }
+
+    this.POEntityData.currency = 'INR'; 
 
     this.disabledField();
     this.getAllProjects();

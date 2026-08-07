@@ -622,16 +622,164 @@ table.dataTable thead > tr > td.sorting {
 .dash-title1 {font-weight: bold; color: #3f51b5; font-size: 14px; border-bottom: solid 1px #ddd;
     margin: 0px !important;    padding-bottom: 8px;text-shadow: none !important;
 }
-.dash-count {font-weight: bold; font-size: 20px; padding-top: 0px;}
+.dash-count {font-weight: bold; font-size: 20px; padding-top: 0px; margin-bottom: 0;}
 .countandval {margin-top: 5px;}
-.approved-icon {    border: solid 2px #48d80d;     margin-top: 12px;    margin-right: -10px;
-    border-radius: 50%;    height: 25px !important;    width: 25px !important;    line-height: 22px;
-	font-weight: bold;    color: #04ab04;}
-.pending-icon {    border: solid 2px #f78c00;     margin-top: 12px;    margin-right: -10px;
-		border-radius: 50%;    height: 25px !important;    width: 25px !important;    line-height: 22px;
-		font-weight: bold;    color: #f78c00;}
-                               
-.dashboard-lbl {font-size: 13px;}		
+.dash-accent .countandval {align-items: stretch;}
+.dash-stat-metric {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
+	height: 100%;
+}
+.dash-stat-label {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 4px;
+	margin-top: 4px;
+	margin-bottom: 10px;
+}
+.dash-stat-metric .dash-count {margin-top: 4px;}
+.dash-stat-metric .dashboard-lbl {margin-bottom: 0;}
+.approved-icon {border: solid 2px #48d80d; border-radius: 50%; height: 25px !important; width: 25px !important;
+	line-height: 22px; font-weight: bold; color: #04ab04; margin: 0; flex-shrink: 0;}
+.pending-icon {border: solid 2px #f78c00; border-radius: 50%; height: 25px !important; width: 25px !important;
+	line-height: 22px; font-weight: bold; color: #f78c00; margin: 0; flex-shrink: 0;}
+
+.dashboard-lbl {font-size: 13px;}
+
+/* Dashboard page UI enhancements */
+.dashboard-page-header {
+	margin-bottom: 8px;
+}
+.dashboard-page-subtitle {
+	color: #6c757d;
+	font-size: 13px;
+	margin: 4px 0 0;
+}
+.dashboard-page .dashboard-panel {
+	border-radius: 8px;
+	overflow: hidden;
+}
+.dashboard-page .dashboard-card {
+	padding: 12px 10px;
+	border-radius: 8px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+	transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.dashboard-page .dashboard-card:hover {
+	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+.dashboard-page .dash-title {
+	font-size: 15px;
+	letter-spacing: 0.2px;
+}
+.dashboard-page .dash-count {
+	font-size: 22px;
+	line-height: 1.2;
+}
+.dashboard-page .hyperLink.dash-count {
+	color: #1565c0;
+	text-decoration: none;
+	border-bottom: 1px dashed #90caf9;
+	transition: color 0.2s ease, border-color 0.2s ease;
+}
+.dashboard-page .hyperLink.dash-count:hover,
+.dashboard-page .hyperLink.dash-count:focus {
+	color: #f0522d;
+	border-bottom-color: #f0522d;
+	outline: none;
+}
+.dashboard-page .approved-icon {
+	background: rgba(72, 216, 13, 0.12);
+}
+.dashboard-page .pending-icon {
+	background: rgba(247, 140, 0, 0.12);
+}
+.dashboard-page .dashboard-ops-metrics {
+	margin-top: 8px;
+}
+.dashboard-section-title {
+	color: #1f1f1f;
+	font-size: 16px;
+	font-weight: 600;
+	margin-bottom: 6px;
+	padding-bottom: 8px;
+	border-bottom: 2px solid #f0522d;
+}
+.dashboard-section-subtitle {
+	color: #6c757d;
+	font-size: 13px;
+	margin-bottom: 16px;
+}
+.dashboard-chart-panel {
+	width: 100%;
+	height: 350px;
+	border: 1px solid #e8e8e8;
+	border-radius: 6px;
+	padding: 8px;
+	background: #fff;
+}
+.dashboard-section-header {
+	margin-bottom: 12px;
+}
+.dashboard-filter-chip {
+	display: inline-block;
+	font-size: 12px;
+	font-weight: 500;
+	padding: 3px 10px;
+	border-radius: 12px;
+	background: #fff3e0;
+	color: #e65100;
+	margin-left: 8px;
+}
+.dashboard-table-wrap {
+	overflow-x: auto;
+	border-radius: 6px;
+}
+.dashboard-page .dashboard-rc-table {
+	width: 100%;
+	margin-top: 4px;
+}
+.dashboard-page .dashboard-rc-table .mat-mdc-header-cell,
+.dashboard-page .dashboard-rc-table .mat-header-cell {
+	font-weight: 600;
+	color: #1f1f1f;
+	background: #fafafa;
+}
+.dashboard-page .dashboard-rc-table .mat-mdc-row:hover,
+.dashboard-page .dashboard-rc-table tr.mat-row:hover {
+	background-color: #f9f9f9;
+}
+.dashboard-page .dashboard-rc-table .badge {
+	padding: 5px 10px;
+	font-size: 12px;
+	font-weight: 500;
+}
+.dashboard-empty-cell {
+	text-align: center;
+	color: #6c757d;
+	padding: 24px 12px !important;
+	font-style: italic;
+}
+.dashboard-paginator {
+	margin-top: 8px;
+}
+@media (max-width: 991px) {
+	.dashboard-chart-panel {
+		height: 300px;
+	}
+}
+@media (max-width: 575px) {
+	.dashboard-page .dash-count {
+		font-size: 20px;
+	}
+	.dashboard-chart-panel {
+		height: 260px;
+	}
+}
+
 .text-ellipsis {
 	display: block;
 	max-width: 100%;
@@ -8542,4 +8690,393 @@ body {
 .project-config .mat-mdc-select {
     width: 90% !important;
     padding-left: 0px !important;
+}
+.hyperLink {
+	color: blue;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.pro-overview .custom-field.has-error input::placeholder {
+  color: #f44336;   
+  opacity: 1;                 
+}
+.pro-overview .mat-mdc-form-field-error-wrapper{
+	padding: 0px;
+}
+
+
+.pro-overview .custom-field.has-error input::placeholder {
+  color: #f44336;
+}
+
+.pro-overview .custom-field.has-error .mat-mdc-select-placeholder,
+.pro-overview .custom-field.has-error .mat-mdc-select-arrow,
+.pro-overview .custom-field.has-error .mat-mdc-floating-label,
+.pro-overview .custom-field.has-error .mdc-floating-label {
+  color: #f44336 !important;
+}
+
+.cdk-overlay-pane{
+	width: 50% !important;
+}
+
+/* ============================================================
+   IPMS Forms — Phase 4 (Create / Edit / View Data Entry)
+   Scoped to existing form wrappers; no logic changes.
+   ============================================================ */
+
+/* --- Section grouping & headings --- */
+.pro-overview .card-body > h3.strong,
+.pro-overview .card-body > h2.strong,
+.pro-overview .card-body > h3.blue-gradient,
+.pro-overview .card-body > h2.blue-gradient,
+.add-from > h3.strong,
+.add-from > h2.strong {
+	font-size: 1.05rem;
+	font-weight: 600;
+	color: #741051;
+	margin: 1.5rem 0 1rem;
+	padding: 0.5rem 0 0.5rem 0.75rem;
+	border-left: 3px solid #f0522d;
+	border-bottom: 1px solid #e5e7eb;
+	line-height: 1.4;
+}
+
+.pro-overview .card-body > h3.strong:first-of-type,
+.pro-overview .card-body > h2.strong:first-of-type,
+.pro-overview .card-body > h3.blue-gradient:first-of-type,
+.pro-overview .card-body > h2.blue-gradient:first-of-type {
+	margin-top: 0.5rem;
+}
+
+.blue-gradient {
+	font-size: 1.05rem;
+	font-weight: 600;
+	color: #741051;
+}
+
+.pro-overview .card-body .upload-border {
+	margin-top: 1.25rem;
+	padding-top: 0.75rem !important;
+	border-bottom: none !important;
+	border-top: 1px solid #e5e7eb !important;
+}
+
+/* --- Required field banner --- */
+.pro-overview .mandatory,
+.pro-overview1 .mandatory,
+.add-from .mandatory {
+	display: block;
+	text-align: right;
+	font-size: 0.8125rem;
+	font-weight: 500;
+	color: #c62828;
+	background: #fff5f5;
+	border: 1px solid #ffcdd2;
+	border-radius: 6px;
+	padding: 0.5rem 0.75rem;
+	margin-bottom: 1rem;
+}
+
+/* --- Form grid spacing --- */
+.pro-overview .card-body > .row,
+.pro-overview1 .card-body > .row,
+.add-from .row {
+	margin-bottom: 0.25rem;
+}
+
+.pro-overview .card-body > .row > [class*="col-"],
+.pro-overview1 .card-body > .row > [class*="col-"],
+.add-from .row > [class*="col-"] {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.pro-overview .form-group,
+.pro-overview1 .form-group,
+.add-from .form-group {
+	margin-bottom: 0;
+	padding-bottom: 1.35rem;
+	position: relative;
+}
+
+/* --- Input sizing & alignment --- */
+.pro-overview .custom-field,
+.pro-overview1 .custom-field,
+.add-from .custom-field {
+	width: 100%;
+	font-size: 14px;
+}
+
+.pro-overview .custom-field .mat-mdc-text-field-wrapper,
+.pro-overview1 .custom-field .mat-mdc-text-field-wrapper,
+.add-from .custom-field .mat-mdc-text-field-wrapper {
+	height: 44px !important;
+	padding: 0 0.25rem;
+}
+
+.pro-overview .custom-field .mat-mdc-form-field-flex,
+.pro-overview1 .custom-field .mat-mdc-form-field-flex,
+.add-from .custom-field .mat-mdc-form-field-flex {
+	height: 44px !important;
+	align-items: center !important;
+}
+
+.pro-overview .custom-field .mat-mdc-input-element,
+.pro-overview1 .custom-field .mat-mdc-input-element,
+.add-from .custom-field .mat-mdc-input-element {
+	font-size: 14px;
+	line-height: 1.4;
+}
+
+.pro-overview .custom-field .mat-mdc-floating-label,
+.pro-overview1 .custom-field .mat-mdc-floating-label,
+.add-from .custom-field .mat-mdc-floating-label {
+	font-size: 14px;
+}
+
+.pro-overview .custom-field .mat-mdc-form-field-required-marker,
+.pro-overview1 .custom-field .mat-mdc-form-field-required-marker {
+	color: #f44336;
+}
+
+/* --- Dropdown consistency --- */
+.pro-overview .custom-field .mat-mdc-select,
+.pro-overview1 .custom-field .mat-mdc-select,
+.add-from .custom-field .mat-mdc-select {
+	font-size: 14px;
+	line-height: 1.4;
+}
+
+.pro-overview .custom-field .mat-mdc-select-value,
+.pro-overview1 .custom-field .mat-mdc-select-value {
+	line-height: 1.4;
+}
+
+.pro-overview .custom-field .mat-mdc-select-arrow,
+.pro-overview1 .custom-field .mat-mdc-select-arrow {
+	color: #6c757d;
+}
+
+/* --- Date picker alignment --- */
+.pro-overview .custom-field .mat-datepicker-toggle,
+.pro-overview1 .custom-field .mat-datepicker-toggle,
+.add-from .custom-field .mat-datepicker-toggle {
+	display: inline-flex;
+	align-items: center;
+}
+
+.pro-overview .custom-field .mat-datepicker-toggle .mat-mdc-icon-button,
+.pro-overview1 .custom-field .mat-datepicker-toggle .mat-mdc-icon-button,
+.add-from .custom-field .mat-datepicker-toggle .mat-mdc-icon-button {
+	width: 36px;
+	height: 36px;
+	padding: 6px;
+}
+
+.pro-overview .custom-field .mat-mdc-form-field-icon-suffix,
+.pro-overview1 .custom-field .mat-mdc-form-field-icon-suffix {
+	align-self: center;
+}
+
+/* --- Validation messages (custom error-text + mat-error) --- */
+.pro-overview .error-text,
+.pro-overview1 .error-text,
+.add-from .error-text {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	text-align: left;
+	font-size: 0.75rem;
+	line-height: 1.3;
+	color: #f44336;
+	padding-top: 2px;
+}
+
+.pro-overview .mat-mdc-form-field-subscript-wrapper,
+.pro-overview1 .mat-mdc-form-field-subscript-wrapper,
+.add-from .mat-mdc-form-field-subscript-wrapper {
+	min-height: 1.25rem;
+}
+
+.pro-overview mat-error,
+.pro-overview1 mat-error,
+.add-from mat-error {
+	font-size: 0.75rem;
+	line-height: 1.3;
+	color: #f44336;
+}
+
+.pro-overview .help-block,
+.pro-overview1 .help-block {
+	font-size: 0.75rem;
+	color: #f44336;
+	border-bottom: none;
+	padding: 0.25rem 0 0;
+	margin-bottom: 0;
+}
+
+.pro-overview .custom-field.has-error .mat-mdc-text-field-wrapper,
+.pro-overview1 .custom-field.has-error .mat-mdc-text-field-wrapper,
+.add-from .custom-field.has-error .mat-mdc-text-field-wrapper {
+	border-bottom: 1px solid #f44336;
+}
+
+/* --- Radio & checkbox --- */
+.pro-overview .mat-mdc-radio-group,
+.pro-overview1 .mat-mdc-radio-group,
+.add-from .mat-mdc-radio-group {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem 1.25rem;
+	margin-bottom: 0.75rem;
+}
+
+.pro-overview .mat-mdc-radio-button .mdc-label,
+.pro-overview1 .mat-mdc-radio-button .mdc-label,
+.add-from .mat-mdc-radio-button .mdc-label,
+.pro-overview .mat-mdc-checkbox .mdc-label,
+.pro-overview1 .mat-mdc-checkbox .mdc-label,
+.add-from .mat-mdc-checkbox .mdc-label {
+	font-size: 14px;
+	line-height: 1.4;
+}
+
+.pro-overview .mat-mdc-checkbox,
+.pro-overview1 .mat-mdc-checkbox,
+.add-from .mat-mdc-checkbox {
+	margin-bottom: 0.5rem;
+}
+
+.pro-overview .mat-mdc-checkbox.block,
+.pro-overview1 .mat-mdc-checkbox.block {
+	display: block;
+	margin-bottom: 0.75rem;
+}
+
+/* --- Button placement --- */
+.pro-overview .card-body .submit-section,
+.pro-overview1 .card-body .submit-section {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	gap: 0.75rem;
+	margin: 2rem -1.25rem -1.25rem;
+	padding: 1.25rem;
+	border-top: 1px solid #e5e7eb;
+	background: #fafbfc;
+	border-radius: 0 0 8px 8px;
+}
+
+.pro-overview .submit-section .mdc-button,
+.pro-overview1 .submit-section .mdc-button,
+.pro-overview .submit-section .btn,
+.pro-overview1 .submit-section .btn {
+	margin: 0 !important;
+	min-width: 120px;
+}
+
+.pro-overview .submit-section .mat-icon,
+.pro-overview1 .submit-section .mat-icon {
+	float: none;
+	margin-right: 4px !important;
+	vertical-align: middle;
+}
+
+/* --- Inline add forms --- */
+.add-from {
+	border-radius: 8px;
+	padding: 1.25rem 1.5rem 1.5rem;
+	margin-bottom: 1.5rem;
+	border: 1px solid #e5e7eb;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+/* --- Read-only / view readability --- */
+.pro-overview .personal-info li,
+.pro-overview1 .personal-info li {
+	padding: 0.5rem 0;
+	border-bottom: 1px solid #f0f0f0;
+	line-height: 1.5;
+}
+
+.pro-overview .personal-info li .title,
+.pro-overview1 .personal-info li .title {
+	color: #6c757d;
+	font-weight: 500;
+}
+
+.pro-overview .personal-info li .text,
+.pro-overview1 .personal-info li .text {
+	color: #1f1f1f;
+}
+
+.viewPO table.table-bordered th,
+.viewPO table.table-bordered td {
+	padding: 0.5rem 0.75rem;
+	vertical-align: top;
+	line-height: 1.5;
+}
+
+.viewPO table.table-bordered th {
+	background: #f8f9fa;
+	font-weight: 600;
+}
+
+.pro-overview .custom-field input[readonly],
+.pro-overview1 .custom-field input[readonly],
+.pro-overview .custom-field textarea[readonly],
+.pro-overview1 .custom-field textarea[readonly] {
+	color: #495057;
+	cursor: default;
+}
+
+/* --- Form scroll areas --- */
+.form-scroll {
+	max-height: 420px;
+	overflow-y: auto;
+	padding-right: 0.5rem;
+	border: 1px solid #e5e7eb;
+	border-radius: 6px;
+	padding: 0.75rem;
+	margin-bottom: 1rem;
+}
+
+/* --- Dialog / popup forms --- */
+.popup-dialog .form-group {
+	padding-bottom: 1.25rem;
+	position: relative;
+}
+
+.popup-dialog .submit-section,
+.button-area-popup {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	gap: 0.75rem;
+	margin-top: 1rem;
+	padding-top: 1rem;
+	border-top: 1px solid #e5e7eb;
+}
+
+/* --- Responsive form layout --- */
+@media (max-width: 767px) {
+	.pro-overview .card-body .submit-section,
+	.pro-overview1 .card-body .submit-section {
+		margin-left: -1rem;
+		margin-right: -1rem;
+		margin-bottom: -1rem;
+		padding: 1rem;
+	}
+
+	.pro-overview .submit-section .mdc-button,
+	.pro-overview1 .submit-section .mdc-button {
+		flex: 1 1 100%;
+		min-width: 0;
+	}
 }

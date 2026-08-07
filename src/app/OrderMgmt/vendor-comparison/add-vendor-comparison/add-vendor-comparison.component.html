@@ -37,13 +37,13 @@
                   <div class="col-sm-3">
                     <div class="form-group">
                       <mat-form-field class="custom-field" [ngClass]="{ 'has-error': isSubmitted && formControls.customerName.errors }">
-                        <input matInput name="customerName" type="text" placeholder="Customer Name"
+                        <input matInput name="customerName" type="text" placeholder="Vendor Name"
                           [(ngModel)]="VendorComparisonData.customerName" formControlName="customerName"
                           maxlength="60">
                           @if (isSubmitted && formControls.customerName.errors) {
                             <div class="error-text">
                               @if (formControls.customerName.errors.required) {
-                                <div>Customer name is
+                                <div>Vendor name is
                                 required</div>
                               }
                             </div>
@@ -103,7 +103,7 @@
                           <div class="col-sm-3">
                             <div class="form-group">
                               <mat-form-field class="custom-field">
-                                <input matInput name="quality" type="text" placeholder="Quality"
+                                <input matInput name="quality" type="text" placeholder="Quantity"
                                   [(ngModel)]="VendorComparisonData.quality" formControlName="quality"
                                   maxlength="200">
                                 </mat-form-field>

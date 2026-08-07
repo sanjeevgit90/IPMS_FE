@@ -33,31 +33,51 @@
 
                 <div class="col-md-12 mandatory">*Fields are Mandatory</div>
                 <h3 class="blue-gradient">Basic Details
-                  <div class="form-group">
+                  
+                </h3>
+                <div class="form-group">
                     <mat-checkbox class="block" formControlName="isUtilityPayment"
                       [(ngModel)]="PrsData.isUtilityPayment">isUtilityPayment
                     </mat-checkbox>
 
                   </div>
-                </h3>
                 <div class="row">
                   <div class="col-sm-4">
                     <div class="form-group">
                       <mat-form-field class="custom-field"
                         [ngClass]="{ 'has-error': isSubmitted && formControls.prsNo.errors }">
                         <mat-label>PRS No.</mat-label>
-                        <input matInput name="prsNo" type="text"
-                          placeholder="Please enter PRS no." [(ngModel)]="PrsData.prsNo"
+                        <input matInput name="prsNo" type="text" [(ngModel)]="PrsData.prsNo"
                           formControlName="prsNo" maxlength="100" required>
-                          @if (isSubmitted && formControls.prsNo.errors) {
-                            <div
-                              class="error-text">
-                              @if (formControls.prsNo.errors.required) {
-                                <div>PRS No. is
-                                required</div>
+
+                        @if (isSubmitted && formControls.prsNo.errors) {
+                          <mat-error>
+                            @if (formControls.prsNo.errors.required) {
+                              <span>PRS No. is required</span>
+                            }
+                          </mat-error>
+                        }
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <mat-form-field class="custom-field"
+                        [ngClass]="{ 'has-error': isSubmitted && formControls.prsDate.errors }">
+                        <input matInput name="prsDate" placeholder="Please enter prs date. *"
+                          type="text" [matDatepicker]="picker" [(ngModel)]="PrsData.prsDate"
+                          formControlName="prsDate" required>
+                          @if (isSubmitted && formControls.prsDate.errors) {
+                            <mat-error>
+                              @if (formControls.prsDate.errors.required) {
+                                <span>PRS date is required</span>
                               }
-                            </div>
+                            </mat-error>
                           }
+                          <mat-datepicker-toggle matSuffix [for]="picker">
+                          </mat-datepicker-toggle>
+                          <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>
                       </div>
                     </div>
@@ -65,45 +85,134 @@
                     <div class="col-sm-4">
                       <div class="form-group">
                         <mat-form-field class="custom-field"
-                          [ngClass]="{ 'has-error': isSubmitted && formControls.prsDate.errors }">
-                          <input matInput name="prsDate" placeholder="Please enter prs date."
-                            type="text" [matDatepicker]="picker" [(ngModel)]="PrsData.prsDate"
-                            formControlName="prsDate" required>
-                            @if (isSubmitted && formControls.prsDate.errors) {
-                              <div
-                                class="error-text">
-                                @if (formControls.prsDate.errors.required) {
-                                  <div>PRS date
-                                  is required</div>
+                          [ngClass]="{ 'has-error': isSubmitted && formControls.invoiceNo.errors }">
+                          <mat-label>Invoice No.</mat-label>
+                          <input matInput name="invoiceNo" type="text"
+                            [(ngModel)]="PrsData.invoiceNo" formControlName="invoiceNo"
+                            maxlength="100" required>
+                            @if (isSubmitted && formControls.invoiceNo.errors) {
+                              <mat-error>
+                                @if (formControls.invoiceNo.errors.required) {
+                                  <span>Invoice No. is required</span>
                                 }
-                              </div>
+                              </mat-error>
                             }
-                            <mat-datepicker-toggle matSuffix [for]="picker">
-                            </mat-datepicker-toggle>
-                            <mat-datepicker #picker></mat-datepicker>
                           </mat-form-field>
-
                         </div>
                       </div>
 
+                       @if (!PrsData.isUtilityPayment) {
                       <div class="col-sm-4">
                         <div class="form-group">
-                          <mat-form-field class="custom-field"
-                            [ngClass]="{ 'has-error': isSubmitted && formControls.invoiceNo.errors }">
-                            <mat-label>Invoice No.</mat-label>
-                            <input matInput name="invoiceNo" type="text"
-                              placeholder="Please enter invoice No."
-                              [(ngModel)]="PrsData.invoiceNo" formControlName="invoiceNo"
-                              maxlength="100" required>
-                              @if (isSubmitted && formControls.invoiceNo.errors) {
-                                <div
-                                  class="error-text">
-                                  @if (formControls.invoiceNo.errors.required) {
-                                    <div>Invoice No. is
-                                    required</div>
-                                  }
-                                </div>
+                          <mat-form-field class="custom-field">
+                            <mat-label>Purchase Order No.</mat-label>
+                            <!-- <mat-select [(ngModel)]="PrsData.purchaseOrderNo"
+                            [typeaheadDebounceInterval]="matSelectDuration"
+                            formControlName="purchaseOrderNo"
+                            (ngModelChange)="getSelectedPurchaseOrder(PrsData.purchaseOrderNo)"
+                            [compareWith]="compareObjects">
+                            <mat-option>-Select-</mat-option>
+                            <mat-option *ngFor="let po of poList" value="{{po.selectionid}}">
+                            {{po.selectionvalue}}</mat-option>
+                          </mat-select> -->
+                          <input type="text" matInput [matAutocomplete]="Project"
+                            formControlName="purchaseOrderNo" [(ngModel)]="PrsData.purchaseOrderNo" (ngModelChange)="getSelectedPurchaseOrder(PrsData.purchaseOrderNo)"/>
+                            <mat-autocomplete #Project="matAutocomplete" [displayWith]="getName.bind(this)">
+                              @for (option of (filteredPoList | async)?? []; track option) {
+                                <mat-option
+                                  [value]="option.selectionid">
+                                  {{option.selectionvalue }}
+                                </mat-option>
                               }
+                            </mat-autocomplete>
+                          </mat-form-field>
+                        </div>
+                      </div>
+                      }
+
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <mat-form-field class="custom-field"
+                          [ngClass]="{ 'has-error': isSubmitted && formControls.projectName.errors }">
+                          <mat-label>Project</mat-label>
+                          <mat-select [(ngModel)]="PrsData.projectName"
+                            placeholder="Please Select Project"
+                            [typeaheadDebounceInterval]="matSelectDuration"
+                            formControlName="projectName" [compareWith]="compareObjects">
+                            <mat-option>-Select Project-</mat-option>
+                            @for (p of projectList; track p) {
+                              <mat-option value="{{p.selectionid}}" matTooltip="{{p.selectionvalue}}">
+                              {{p.selectionvalue}}</mat-option>
+                            }
+                          </mat-select>
+                          @if (isSubmitted && formControls.projectName.errors) {
+                            <mat-error>
+                              @if (formControls.projectName.errors.required) {
+                                <span>Project is required</span>
+                              }
+                            </mat-error>
+                          }
+                        </mat-form-field>
+                      </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                      <div class="form-group">
+                        <mat-form-field class="custom-field">
+                          <mat-label>Department</mat-label>
+                          <mat-select [(ngModel)]="PrsData.department"
+                            [typeaheadDebounceInterval]="matSelectDuration"
+                            formControlName="department" [compareWith]="compareObjects">
+                            <mat-option>-Select Project-</mat-option>
+                            @for (dept of deptList; track dept) {
+                              <mat-option
+                                value="{{dept.selectionvalue}}">
+                              {{dept.selectionvalue}}</mat-option>
+                            }
+                          </mat-select>
+
+                        </mat-form-field>
+                      </div>
+                    </div>
+
+                        <div class="col-sm-4">
+                          <div class="form-group">
+                            <mat-form-field class="custom-field"
+                              [ngClass]="{ 'has-error': isSubmitted && formControls.paymentDueDate.errors }">
+                              <input matInput name="invoiceDate"
+                                placeholder="Please enter invoice date. *" type="text"
+                                [matDatepicker]="picker1" [(ngModel)]="PrsData.invoiceDate"
+                                formControlName="invoiceDate" required>
+                                @if (isSubmitted && formControls.invoiceDate.errors) {
+                                  <mat-error>
+                                    @if (formControls.invoiceDate.errors.required) {
+                                      <span>Invoice Date is required</span>
+                                    }
+                                  </mat-error>
+                                }
+                                <mat-datepicker-toggle matSuffix [for]="picker1">
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #picker1></mat-datepicker>
+                              </mat-form-field>
+
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4">
+                          <div class="form-group">
+                            <mat-form-field class="custom-field"
+                                [ngClass]="{ 'has-error': isSubmitted && formControls.invoiceAmount.errors }">
+                                <mat-label>Invoice Amount</mat-label>
+                                <input matInput name="invoiceAmount" type="number"
+                                  [(ngModel)]="PrsData.invoiceAmount" formControlName="invoiceAmount"
+                                  required>
+                                  @if (isSubmitted && formControls.invoiceAmount.errors) {
+                                    <mat-error>
+                                      @if (formControls.invoiceAmount.errors.required) {
+                                        <span>Invoice amount is required</span>
+                                      }
+                                    </mat-error>
+                                  }
                             </mat-form-field>
                           </div>
                         </div>
@@ -111,60 +220,25 @@
                         <div class="col-sm-4">
                           <div class="form-group">
                             <mat-form-field class="custom-field"
-                              [ngClass]="{ 'has-error': isSubmitted && formControls.projectName.errors }">
-                              <mat-label>Project</mat-label>
-                              <mat-select [(ngModel)]="PrsData.projectName"
-                                placeholder="Please Select Project"
-                                [typeaheadDebounceInterval]="matSelectDuration"
-                                formControlName="projectName" [compareWith]="compareObjects">
-                                <mat-option>-Select Project-</mat-option>
-                                @for (p of projectList; track p) {
-                                  <mat-option value="{{p.selectionid}}" matTooltip="{{p.selectionvalue}}">
-                                  {{p.selectionvalue}}</mat-option>
+                              [ngClass]="{ 'has-error': isSubmitted && formControls.paymentDueDate.errors }">
+                              <input matInput name="paymentDueDate"
+                                placeholder="Please enter Payment Due date. *" type="text"
+                                [matDatepicker]="picker2" [(ngModel)]="PrsData.paymentDueDate"
+                                formControlName="paymentDueDate" required>
+                                @if (isSubmitted && formControls.paymentDueDate.errors) {
+                                  <mat-error>
+                                    @if (formControls.paymentDueDate.errors.required) {
+                                      <span>Payment Due Date is required</span>
+                                    }
+                                  </mat-error>
                                 }
-                              </mat-select>
-                              @if (isSubmitted && formControls.projectName.errors) {
-                                <div
-                                  class="error-text">
-                                  @if (formControls.projectName.errors.required) {
-                                    <div>Project is
-                                      required
-                                    </div>
-                                  }
-                                </div>
-                              }
-                            </mat-form-field>
+                                <mat-datepicker-toggle matSuffix [for]="picker2">
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #picker2></mat-datepicker>
+                              </mat-form-field>
+
                           </div>
                         </div>
-
-                        @if (!PrsData.isUtilityPayment) {
-                          <div class="col-sm-4">
-                            <div class="form-group">
-                              <mat-form-field class="custom-field">
-                                <mat-label>Purchase Order No.</mat-label>
-                                <!-- <mat-select [(ngModel)]="PrsData.purchaseOrderNo"
-                                [typeaheadDebounceInterval]="matSelectDuration"
-                                formControlName="purchaseOrderNo"
-                                (ngModelChange)="getSelectedPurchaseOrder(PrsData.purchaseOrderNo)"
-                                [compareWith]="compareObjects">
-                                <mat-option>-Select-</mat-option>
-                                <mat-option *ngFor="let po of poList" value="{{po.selectionid}}">
-                                {{po.selectionvalue}}</mat-option>
-                              </mat-select> -->
-                              <input type="text" matInput [matAutocomplete]="Project"
-                                formControlName="purchaseOrderNo" [(ngModel)]="PrsData.purchaseOrderNo" (ngModelChange)="getSelectedPurchaseOrder(PrsData.purchaseOrderNo)"/>
-                                <mat-autocomplete #Project="matAutocomplete" [displayWith]="getName.bind(this)">
-                                  @for (option of (filteredPoList | async)?? []; track option) {
-                                    <mat-option
-                                      [value]="option.selectionid">
-                                      {{option.selectionvalue }}
-                                    </mat-option>
-                                  }
-                                </mat-autocomplete>
-                              </mat-form-field>
-                            </div>
-                          </div>
-                        }
 
                         @if (!PrsData.isUtilityPayment) {
                           <div class="col-sm-4">
@@ -265,80 +339,7 @@
                               </mat-form-field>
                             </div>
                           </div>
-                          <div class="col-sm-4">
-                            <div class="form-group">
-                              <mat-form-field class="custom-field"
-                                [ngClass]="{ 'has-error': isSubmitted && formControls.paymentDueDate.errors }">
-                                <input matInput name="invoiceDate"
-                                  placeholder="Please enter invoice date." type="text"
-                                  [matDatepicker]="picker1" [(ngModel)]="PrsData.invoiceDate"
-                                  formControlName="invoiceDate" required>
-                                  @if (isSubmitted && formControls.invoiceDate.errors) {
-                                    <div
-                                      class="error-text">
-                                      @if (formControls.invoiceDate.errors.required) {
-                                        <div>Invoice Date
-                                          is required
-                                        </div>
-                                      }
-                                    </div>
-                                  }
-                                  <mat-datepicker-toggle matSuffix [for]="picker1">
-                                  </mat-datepicker-toggle>
-                                  <mat-datepicker #picker1></mat-datepicker>
-                                </mat-form-field>
-
-                              </div>
-                            </div>
-
-                            <div class="col-sm-4">
-                              <div class="form-group">
-                                <mat-form-field class="custom-field"
-                                  [ngClass]="{ 'has-error': isSubmitted && formControls.invoiceAmount.errors }">
-                                  <mat-label>Invoice Amount</mat-label>
-                                  <input matInput name="invoiceAmount" type="number"
-                                    placeholder="Please enter invoice amount."
-                                    [(ngModel)]="PrsData.invoiceAmount" formControlName="invoiceAmount"
-                                    required>
-                                    @if (isSubmitted && formControls.invoiceAmount.errors) {
-                                      <div
-                                        class="error-text">
-                                        @if (formControls.invoiceAmount.errors.required) {
-                                          <div>Invoice
-                                            amount is
-                                          required</div>
-                                        }
-                                      </div>
-                                    }
-                                  </mat-form-field>
-                                </div>
-                              </div>
-
-                              <div class="col-sm-4">
-                                <div class="form-group">
-                                  <mat-form-field class="custom-field"
-                                    [ngClass]="{ 'has-error': isSubmitted && formControls.paymentDueDate.errors }">
-                                    <input matInput name="paymentDueDate"
-                                      placeholder="Please enter Payment Due date." type="text"
-                                      [matDatepicker]="picker2" [(ngModel)]="PrsData.paymentDueDate"
-                                      formControlName="paymentDueDate" required>
-                                      @if (isSubmitted && formControls.paymentDueDate.errors) {
-                                        <div
-                                          class="error-text">
-                                          @if (formControls.paymentDueDate.errors.required) {
-                                            <div>Payment Due
-                                              Date is required
-                                            </div>
-                                          }
-                                        </div>
-                                      }
-                                      <mat-datepicker-toggle matSuffix [for]="picker2">
-                                      </mat-datepicker-toggle>
-                                      <mat-datepicker #picker2></mat-datepicker>
-                                    </mat-form-field>
-
-                                  </div>
-                                </div>
+                       
                                 <div class="col-sm-4">
                                   <div class="form-group">
                                     <mat-form-field class="custom-field">
@@ -358,24 +359,7 @@
                                         </mat-form-field>
                                       </div>
                                     </div>
-                                    <div class="col-sm-4">
-                                      <div class="form-group">
-                                        <mat-form-field class="custom-field">
-                                          <mat-label>Department</mat-label>
-                                          <mat-select [(ngModel)]="PrsData.department"
-                                            [typeaheadDebounceInterval]="matSelectDuration"
-                                            formControlName="department" [compareWith]="compareObjects">
-                                            <mat-option>-Select Project-</mat-option>
-                                            @for (dept of deptList; track dept) {
-                                              <mat-option
-                                                value="{{dept.selectionvalue}}">
-                                              {{dept.selectionvalue}}</mat-option>
-                                            }
-                                          </mat-select>
-
-                                        </mat-form-field>
-                                      </div>
-                                    </div>
+                                  
                                     <div class="col-sm-4">
                                       <div class="form-group">
                                         <mat-form-field class="custom-field">

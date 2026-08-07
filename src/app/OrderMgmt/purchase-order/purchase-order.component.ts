@@ -14,16 +14,28 @@ import { PoFilterSession } from '../ordermgmtfilterdata';
 //import { MatSelect } from '@angular/material/select';
 
 @Component({
-    selector: 'app-purchase-order',
-    templateUrl: './purchase-order.component.html',
-    providers: [PurchaseOrderService, AppGlobals, DialogService, SharedService, PoTaskService],
-    standalone: false
+  selector: 'app-purchase-order',
+  templateUrl: './purchase-order.component.html',
+  providers: [PurchaseOrderService, AppGlobals, DialogService, SharedService, PoTaskService],
+  standalone: false
 })
 export class PurchaseOrderComponent implements OnInit {
   result: boolean = false;
 
   constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private purchaseOrderService: PurchaseOrderService,
-    private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService, private poTaskService: PoTaskService) { }
+    private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService, private poTaskService: PoTaskService) {
+    this.getDataFromState();
+  }
+
+  getDataFromState() {
+    const navigation = this.router.getCurrentNavigation();
+    const state = navigation?.extras.state;
+    if (state?.source === 'DASHBOARD') {
+      this.FilterData.approvalStatus = 'APPROVED';
+      this.search();
+    }
+    console.log(state?.source);
+  }
 
   displayedColumns: string[] = ['purchaseOrderNo', 'vendor', 'departmentName', 'workflowName', 'amount', 'action'];
   POListData: MatTableDataSource<any>;
@@ -44,7 +56,7 @@ export class PurchaseOrderComponent implements OnInit {
   matSelectDuration = this._global.matSelectDurationTime;
   filterlbl: string = "Filter";
 
-  FilterData = { "purchaseOrderNo": null, "accountName": null, "organisationId": null, "supplierName": null, "department": null ,"approvalStatus":null};
+  FilterData = { "purchaseOrderNo": null, "accountName": null, "organisationId": null, "supplierName": null, "department": null, "approvalStatus": null };
   poDuplicate = { "entityId": null, "isAmendedFlag": "NO" };
   TaskData = { "poId": null, "poRcFlag": null, "remark": null, "workflowType": null };
 
@@ -101,7 +113,7 @@ export class PurchaseOrderComponent implements OnInit {
       this.totalRecords = this.POListData.filteredData.length;
     }, (error: any) => {
       this.showLoading = false;
-      if(error.statusText=="Unknown Error"){
+      if (error.statusText == "Unknown Error") {
         this.dialogService.openConfirmDialog("Your session has been expired");
         this.router.navigate(['/']);
       }
@@ -199,7 +211,7 @@ export class PurchaseOrderComponent implements OnInit {
       this.supplierPartyList = resp;
     }, (error: any) => {
       //this.showLoading = false;
-      if(error.statusText=="Unknown Error"){
+      if (error.statusText == "Unknown Error") {
         this.dialogService.openConfirmDialog("Your session has been expired");
         this.router.navigate(['/']);
         return;
@@ -219,7 +231,7 @@ export class PurchaseOrderComponent implements OnInit {
       this.projectList = resp;
     }, (error: any) => {
       //this.showLoading = false;
-      if(error.statusText=="Unknown Error"){
+      if (error.statusText == "Unknown Error") {
         this.dialogService.openConfirmDialog("Your session has been expired");
         this.router.navigate(['/']);
       }
@@ -238,7 +250,7 @@ export class PurchaseOrderComponent implements OnInit {
       //this.showLoading = false;
     }, (error: any) => {
       //this.showLoading = false;
-      if(error.statusText=="Unknown Error"){
+      if (error.statusText == "Unknown Error") {
         this.dialogService.openConfirmDialog("Your session has been expired");
         this.router.navigate(['/']);
       }
@@ -260,7 +272,7 @@ export class PurchaseOrderComponent implements OnInit {
     }, (error: any) => {
       debugger;
       //this.showLoading = false;
-      if(error.statusText=="Unknown Error"){
+      if (error.statusText == "Unknown Error") {
         this.dialogService.openConfirmDialog("Your session has been expired");
         this.router.navigate(['/']);
       }
@@ -295,8 +307,8 @@ export class PurchaseOrderComponent implements OnInit {
       });
   }
 
-  amendPoId:number = null;
-  getPoId = function(poId:number) {
+  amendPoId: number = null;
+  getPoId = function (poId: number) {
     this.amendPoId = poId;
     console.log(this.amendPoId);
   }
@@ -322,11 +334,11 @@ export class PurchaseOrderComponent implements OnInit {
       if (Object.keys(filterSession).length === 0 && filterSession.constructor === Object) {
         return;
       }
-      else{
+      else {
         this.search();
       }
     }
-    if (filterSession != null) { 
+    if (filterSession != null) {
       this.result = !Object.values(filterSession).every(o => o === null || o === "");
     } else {
       this.result = false;
