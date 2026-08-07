@@ -146,4 +146,10 @@ export class UpdatePoTaskComponent implements OnInit {
     this.baseUrl = this._global.baseUrl;
   }
 
+  onStatusChange(event: string, userRole: string) {
+    this.addPoTaskForm.patchValue({
+      remark: `${event} BY ${userRole}`
+    });
+  }
+
 }
