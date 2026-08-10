@@ -73,7 +73,7 @@
                           <mat-form-field class="custom-field"
                             [ngClass]="{ 'has-error': isSubmitted && formControls.cityname.errors }">
                             <mat-label>City Name</mat-label>
-                            <input matInput name="cityname" type="text" placeholder="City Name"
+                            <input matInput name="cityname" type="text"
                               [(ngModel)]="CityName" formControlName="cityname" maxlength="60"
                               required>
                               @if (isSubmitted && formControls.cityname.errors) {
@@ -95,7 +95,7 @@
                             <mat-form-field class="custom-field"
                               [ngClass]="{ 'has-error': isSubmitted && formControls.citycode.errors }">
                               <mat-label>City Code</mat-label>
-                              <input matInput name="citycode" type="text" placeholder="City Code"
+                              <input matInput name="citycode" type="text"
                                 [(ngModel)]="CityData.citycode" formControlName="citycode"
                                 maxlength="4" numbersOnly required>
                                 @if (isSubmitted && formControls.citycode.errors) {

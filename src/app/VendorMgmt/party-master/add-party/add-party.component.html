@@ -69,7 +69,6 @@
                         [ngClass]="{ 'has-error': isSubmitted && formControls.partyNo.errors }">
                         <mat-label>Party No.</mat-label>
                         <input matInput name="partyNo" type="text"
-                          placeholder="Please enter party no."
                           [(ngModel)]="PartyEntityData.partyNo" formControlName="partyNo"
                           maxlength="100" required>
                           @if (isSubmitted && formControls.partyNo.errors) {
@@ -91,7 +90,6 @@
                           [ngClass]="{ 'has-error': isSubmitted && formControls.partyName.errors }">
                           <mat-label>Party Name</mat-label>
                           <input matInput name="partyName" type="text"
-                            placeholder="Please enter party name."
                             [(ngModel)]="PartyEntityData.partyName" formControlName="partyName"
                             maxlength="100" required>
                             @if (isSubmitted && formControls.partyName.errors) {
@@ -142,7 +140,6 @@
                             [ngClass]="{ 'has-error': isSubmitted && formControls.contactPersonName.errors }">
                             <mat-label>Contact Person</mat-label>
                             <input matInput name="contactPersonName" type="text"
-                              placeholder="Please enter contact person."
                               [(ngModel)]="PartyEntityData.contactPersonName"
                               formControlName="contactPersonName" maxlength="100" required>
                               @if (isSubmitted && formControls.contactPersonName.errors) {
@@ -164,7 +161,6 @@
                               [ngClass]="{ 'has-error': isSubmitted && formControls.mobileNo.errors }">
                               <mat-label>Mobile No.</mat-label>
                               <input matInput name="mobileNo" type="text"
-                                placeholder="Please enter mobile no."
                                 [(ngModel)]="PartyEntityData.mobileNo" formControlName="mobileNo"
                                 maxlength="10" minlength="10" numbersOnly required>
                                 @if (isSubmitted && formControls.mobileNo.errors) {
@@ -291,7 +287,6 @@
                                           [ngClass]="{ 'has-error': isSubmitted && formControls.natureOfServiceProviding.errors }">
                                           <mat-label>Nature Of Service Providing</mat-label>
                                           <input matInput name="natureOfServiceProviding" type="text"
-                                            placeholder="Please enter nature of service providing."
                                             [(ngModel)]="PartyEntityData.natureOfServiceProviding"
                                             formControlName="natureOfServiceProviding" maxlength="100"
                                             required>
@@ -315,7 +310,6 @@
                                             [ngClass]="{ 'has-error': isSubmitted && formControls.smeRegNo.errors }">
                                             <mat-label>SME Reg. No.</mat-label>
                                             <input matInput name="smeRegNo" type="text"
-                                              placeholder="Please enter sme reg. no."
                                               [(ngModel)]="PartyEntityData.smeRegNo"
                                               formControlName="smeRegNo" maxlength="100" required>
                                               @if (isSubmitted && formControls.smeRegNo.errors) {
@@ -343,7 +337,6 @@
                                             [ngClass]="{ 'has-error': isSubmitted && formControls.panNo.errors }">
                                             <mat-label>PAN No.</mat-label>
                                             <input matInput name="panNo" type="text"
-                                              placeholder="Please enter pan no."
                                               [(ngModel)]="PartyEntityData.panNo" formControlName="panNo"
                                               maxlength="10" required>
                                               @if (isSubmitted && formControls.panNo.errors) {
@@ -366,7 +359,6 @@
                                               [ngClass]="{ 'has-error': isSubmitted && formControls.tanNo.errors }">
                                               <mat-label>TAN No.</mat-label>
                                               <input matInput name="tanNo" type="text"
-                                                placeholder="Please enter tan no."
                                                 [(ngModel)]="PartyEntityData.tanNo" formControlName="tanNo"
                                                 maxlength="10" required>
                                                 @if (isSubmitted && formControls.tanNo.errors) {

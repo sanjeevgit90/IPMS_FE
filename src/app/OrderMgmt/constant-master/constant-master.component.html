@@ -72,7 +72,7 @@
                             [ngClass]="{ 'has-error': isSubmitted && formControls.value.errors }">
                             <mat-label>Value</mat-label>
                             <input matInput name="value" type="text"
-                              placeholder="Enter value" [(ngModel)]="ConstantData.value"
+                               [(ngModel)]="ConstantData.value"
                               formControlName="value" maxlength="100" required>
                               @if (isSubmitted && formControls.value.errors) {
                                 <div
