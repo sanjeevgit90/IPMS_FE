@@ -8717,8 +8717,22 @@ body {
   color: #f44336 !important;
 }
 
-.cdk-overlay-pane{
+/* CDK overlay: menus/selects must size to content so ConnectedPositionStrategy anchors to trigger.
+   Dialog width is scoped separately to avoid breaking action menus on listing pages. */
+.cdk-overlay-pane {
+	width: auto !important;
+	max-width: calc(100vw - 16px);
+}
+
+.cdk-overlay-pane:has(.mat-mdc-dialog-container) {
 	width: 50% !important;
+	max-width: min(90vw, 960px);
+}
+
+/* Action menu panel — shared across listing pages using class="actionmenu" */
+.mat-mdc-menu-panel.actionmenu {
+	min-width: 160px;
+	max-width: 280px;
 }
 
 /* ============================================================
