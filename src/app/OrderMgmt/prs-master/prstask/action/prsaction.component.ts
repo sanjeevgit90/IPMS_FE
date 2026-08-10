@@ -34,7 +34,7 @@ export class PrsActionComponent implements OnInit {
   PageTitle = "Action";
   
   ActionData = {
-    "approvalStatus": null, "remark": null, 
+    "approvalStatus": null, "remark": null, "stageName": null
   };
   taskHistoryList:any=[];
   addAssetForm: UntypedFormGroup;
@@ -120,6 +120,12 @@ export class PrsActionComponent implements OnInit {
   }
   get formControls() {
     return this.addAssetForm.controls;
+  }
+
+  onStatusChange(event: string) {
+    this.addAssetForm.patchValue({
+      remark: `${event} BY ${this.ActionData.stageName}`
+    });
   }
 
 }

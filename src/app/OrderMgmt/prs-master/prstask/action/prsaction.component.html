@@ -53,8 +53,8 @@
             <div class="col-sm-12">
               <div class="form-group" class="custom-field"
                 [ngClass]="{ 'has-error': isSubmitted && formControls.approvalStatus.errors }">
-                <mat-radio-group aria-label="Select an action" [(ngModel)]="ActionData.approvalStatus" formControlName="approvalStatus" required>
-                  <mat-radio-button value="APPROVED" >Approve</mat-radio-button>
+                <mat-radio-group aria-label="Select an action" [(ngModel)]="ActionData.approvalStatus" formControlName="approvalStatus" (change)="onStatusChange($event.value)" required>
+                  <mat-radio-button value="APPROVED">Approve</mat-radio-button>
                   <mat-radio-button value="REJECTED">Reject</mat-radio-button>
                 </mat-radio-group>
                 @if (isSubmitted && formControls.approvalStatus.errors) {
@@ -76,7 +76,7 @@
             <div class="col-sm-12">
               <div class="form-group">
                 <mat-form-field>
-                  <textarea matInput name="remark" maxlength="200"  [(ngModel)]="ActionData.remark" formControlName="remark" placeholder="Enter Remark"></textarea>
+                  <textarea matInput name="remark" maxlength="200"  [(ngModel)]="ActionData.remark" formControlName="remark" placeholder="Enter Remark" [value]="ActionData.remark"></textarea>
                 </mat-form-field>
               </div>
 
