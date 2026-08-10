@@ -6,6 +6,7 @@ import { AppGlobals } from '../../../global/app.global';
 import { DialogService } from '../../../service/dialog.service';
 import { SharedService } from '../../../service/shared.service';
 import { VendorPaymentsService } from '../payments.service';
+import { PRSService } from '../../prs-master/prs.service';
 
 @Component({
     selector: 'app-add-payments',
@@ -16,7 +17,7 @@ import { VendorPaymentsService } from '../payments.service';
 export class AddVendorPaymentComponent implements OnInit {
 
   constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private prsService: VendorPaymentsService,
-    private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService) { }
+    private prsMasterService: PRSService, private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService) { }
 
 
   showLoading: boolean = false;
@@ -33,6 +34,8 @@ export class AddVendorPaymentComponent implements OnInit {
 
   addPaymentForm: UntypedFormGroup;
   isSubmitted = false;
+
+  invoiceAmount: any;
 
   prsId: any = null;
 
@@ -128,11 +131,28 @@ export class AddVendorPaymentComponent implements OnInit {
     });
 
     this.prsId = this.route.snapshot.params.prsid;
+    this.getPrsDetails(this.prsId);
+
     if (this.route.snapshot.params.page == 'edit') {
       this.PageTitle = "Update Payments";
       this.editon(this.route.snapshot.params.id);
       //this.disabledField();
     }
+  }
+
+
+  getPrsDetails(id) {
+    const headers = { "Authorization": sessionStorage.getItem("token") };
+    this.prsMasterService.getPrsById(id, headers).subscribe((resp: any) => {
+      this.invoiceAmount = resp.invoiceAmount;
+      
+      if (this.route.snapshot.params.page !== 'edit') {
+        this.PaymentData.amount = this.invoiceAmount;
+      }
+    }, (error: any) => {
+      const errStr = error?.error?.errorDetail?.[0] || "Error fetching PRS details.";
+      this.dialogService.openConfirmDialog(errStr);
+    });
   }
 
   get formControls() {

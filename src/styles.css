@@ -8899,7 +8899,7 @@ body {
 .pro-overview1 .error-text,
 .add-from .error-text {
 	position: absolute;
-	bottom: 0;
+	bottom: -15px;
 	left: 0;
 	right: 0;
 	text-align: left;

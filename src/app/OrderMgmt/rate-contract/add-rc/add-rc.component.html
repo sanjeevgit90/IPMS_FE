@@ -48,7 +48,6 @@
                         [ngClass]="{ 'has-error': isSubmitted && formControls.rateContractNo.errors }">
                         <mat-label>Rate Contract No.</mat-label>
                         <input matInput name="rateContractNo" type="text"
-                          placeholder="Please enter rc no."
                           [(ngModel)]="RCEntityData.rateContractNo" formControlName="rateContractNo"
                           maxlength="100" required>
                           @if (isSubmitted && formControls.rateContractNo.errors) {
@@ -354,7 +353,6 @@
                                 [ngClass]="{ 'has-error': isSubmitted && formControls.suppliersReference.errors }">
                                 <mat-label>Suppliers Reference</mat-label>
                                 <input matInput name="boqNo" type="text"
-                                  placeholder="Please enter suppliers reference."
                                   [(ngModel)]="RCEntityData.suppliersReference" formControlName="suppliersReference"
                                   maxlength="100" required>
                                   @if (isSubmitted && formControls.suppliersReference.errors) {
