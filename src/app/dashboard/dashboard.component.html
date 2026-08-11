@@ -80,6 +80,34 @@
                   </mat-card>
                 </div>
 
+                 <div class="col-12 col-sm-6 col-lg-3 d-flex">
+                  <mat-card class="example-card dashboard-card dash-accent h-100 w-100">
+                    <mat-card-content>
+                      <p class="dash-title">GRN</p>
+                      <div class="row countandval">
+                        <div class="col-sm-6">
+                          <div class="dash-stat-metric">
+                            <div class="dash-stat-label">
+                              <mat-icon class="approved-icon">check</mat-icon>
+                              <label class="dashboard-lbl">Approved</label>
+                            </div>
+                            <p class="dash-count hyperLink" (click)="navigateToPage('GRN_APPROVED')">{{dashboardData.approvedgrn}}</p>
+                          </div>
+                        </div>
+                        <div class="col-sm-6">
+                          <div class="dash-stat-metric">
+                            <div class="dash-stat-label">
+                              <mat-icon class="pending-icon">settings</mat-icon>
+                              <label class="dashboard-lbl">Pending</label>
+                            </div>
+                            <p class="dash-count hyperLink" (click)="navigateToPage('GRN_PENDING')">{{dashboardData.pendinggrn}}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </mat-card-content>
+                  </mat-card>
+                </div>
+
                 <div class="col-12 col-sm-6 col-lg-3 d-flex">
                   <mat-card class="example-card dashboard-card dash-accent h-100 w-100">
                     <mat-card-content>
@@ -107,7 +135,7 @@
                     </mat-card-content>
                   </mat-card>
                 </div>
-                <div class="col-12 col-sm-6 col-lg-3 d-flex">
+                <!-- <div class="col-12 col-sm-6 col-lg-3 d-flex">
                   <mat-card class="example-card dashboard-card dash-primary h-100 w-100 dashboard-ops-card">
                     <mat-card-content>
                       <p class="dash-title">Operations</p>
@@ -127,7 +155,7 @@
                       </div>
                     </mat-card-content>
                   </mat-card>
-                </div>
+                </div> -->
             </div>
           </div>
         </div>
