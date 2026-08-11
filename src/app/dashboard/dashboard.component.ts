@@ -85,6 +85,20 @@ export class DashboardComponent implements OnInit {
           }
         });
         break;
+        case "GRN_PENDING":
+        this.router.navigate(['/grnTaskSearch'], {
+          state: {
+            source: 'DASHBOARD',          
+          }
+        });
+        break;
+        case "GRN_APPROVED":
+        this.router.navigate(['/grnMasterSearch'], {
+          state: {
+            source: 'DASHBOARD',          
+          }
+        });
+        break;
     }
   }
 
