@@ -1,6 +1,5 @@
 name: Test IPMS Windows Runner
 
-
 on:
   workflow_dispatch:
 
