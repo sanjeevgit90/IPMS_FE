@@ -39,15 +39,16 @@ export class UpdateGrnTaskComponent implements OnInit {
   list = true;
 
   addGrnTaskForm: UntypedFormGroup;
+
   isSubmitted = false;
-  baseUrl: any = null;
+  baseUrl: any = null;  
 
   TaskEntityData = {
     "entityId": null, "grnId": null, "stageName": null, "workflowName": null,
     "assignToRole": null, "assignToUser": null, "approvalStatus": null,
     "remark": null
   };
-
+  
   cancel = function () {
     this.router.navigate(['/grnTaskSearch']);
   }
@@ -135,6 +136,12 @@ export class UpdateGrnTaskComponent implements OnInit {
     }
 
     this.baseUrl = this._global.baseUrl;
+  }
+
+  onStatusChange(event: string) {
+    this.addGrnTaskForm.patchValue({
+      remark: `${event} BY ${this.TaskEntityData.assignToRole}`
+    });
   }
 
 }

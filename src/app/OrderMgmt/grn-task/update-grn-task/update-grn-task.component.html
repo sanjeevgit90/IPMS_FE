@@ -101,12 +101,12 @@
                   <div class= "form-control">
                     <label class="radio-inline">
                       <input type="radio" value="APPROVED" name="approvalStatus"
-                        [(ngModel)]="TaskEntityData.approvalStatus" formControlName="approvalStatus">
+                        [(ngModel)]="TaskEntityData.approvalStatus" formControlName="approvalStatus" (change)="onStatusChange(TaskEntityData.approvalStatus)">
                         APPROVED
                       </label>
                       <label class="radio-inline">
                         <input type="radio" value= "REJECTED" name="approvalStatus"
-                          [(ngModel)]="TaskEntityData.approvalStatus" formControlName="approvalStatus">
+                          [(ngModel)]="TaskEntityData.approvalStatus" formControlName="approvalStatus" (change)="onStatusChange(TaskEntityData.approvalStatus)">
                           REJECTED
                         </label>
                       </div>
@@ -118,7 +118,7 @@
                           <mat-label>Remarks</mat-label>
                           <textarea matInput cols="55" rows="4" name="remark" type="text"
                             placeholder="Please enter remarks." formControlName="remark"
-                            [(ngModel)]="TaskEntityData.remark" maxlength="250" required>
+                            [(ngModel)]="TaskEntityData.remark" [value]="TaskEntityData.remark" maxlength="250" required>
                           </textarea>
                         </mat-form-field>
                       </div>
