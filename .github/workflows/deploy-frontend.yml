@@ -9,38 +9,42 @@ jobs:
 
     steps:
 
-      # 1. Checkout source code
       - name: Checkout Frontend
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
-      # 2. Check Node.js
       - name: Check Node Version
         shell: powershell
         run: |
-          Write-Host "Node Version:"
           node --version
-
-          Write-Host "NPM Version:"
           npm --version
 
-      # 3. Install dependencies
       - name: Install Dependencies
         shell: powershell
         run: |
           npm ci --legacy-peer-deps
 
-      # 4. Build Angular
       - name: Build Angular Application
         shell: powershell
         run: |
           npm run build
 
-      # 5. Verify build output
       - name: Verify Build
         shell: powershell
         run: |
           Write-Host "Build completed."
-
-          Write-Host ""
-          Write-Host "Generated files:"
           Get-ChildItem -Path .\dist -Recurse | Select-Object FullName
+
+      - name: Test IIS Folder Permission
+        shell: powershell
+        run: |
+          $testFile = "C:\inetpub\wwwroot\ipms\github-runner-test.txt"
+
+          "GitHub Runner deployment permission test" |
+            Out-File -FilePath $testFile -Encoding utf8
+
+          Write-Host "Test file created successfully:"
+          Get-Item $testFile
+
+          Remove-Item $testFile -Force
+
+          Write-Host "Test file removed successfully."
