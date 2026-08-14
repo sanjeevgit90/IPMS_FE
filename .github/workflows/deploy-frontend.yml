@@ -1,50 +1,264 @@
-name: Build IPMS Frontend
+name: Deploy IPMS Frontend
 
 on:
   workflow_dispatch:
 
 jobs:
-  build-frontend:
+  deploy-frontend:
     runs-on: self-hosted
 
     steps:
 
+      # 1. Checkout source code
       - name: Checkout Frontend
         uses: actions/checkout@v5
 
+      # 2. Check Node.js and NPM
       - name: Check Node Version
         shell: powershell
         run: |
+          Write-Host "Node Version:"
           node --version
+
+          Write-Host "NPM Version:"
           npm --version
 
+      # 3. Install dependencies
       - name: Install Dependencies
         shell: powershell
         run: |
           npm ci --legacy-peer-deps
 
+      # 4. Build Angular application
       - name: Build Angular Application
         shell: powershell
         run: |
           npm run build
 
+      # 5. Verify Angular build
       - name: Verify Build
         shell: powershell
         run: |
-          Write-Host "Build completed."
-          Get-ChildItem -Path .\dist -Recurse | Select-Object FullName
+          Write-Host "Angular build completed."
 
-      - name: Test IIS Folder Permission
+          if (!(Test-Path ".\dist")) {
+            Write-Error "Angular dist folder was not created."
+            exit 1
+          }
+
+          Write-Host ""
+          Write-Host "Angular build structure:"
+          Get-ChildItem -Path ".\dist" -Recurse |
+            Select-Object FullName
+
+      # 6. Deploy Angular application to IIS
+      - name: Deploy to IIS
         shell: powershell
         run: |
-          $testFile = "C:\inetpub\wwwroot\ipms\github-runner-test.txt"
 
-          "GitHub Runner deployment permission test" |
-            Out-File -FilePath $testFile -Encoding utf8
+          # =========================================
+          # Configuration
+          # =========================================
 
-          Write-Host "Test file created successfully:"
-          Get-Item $testFile
+          $source = Join-Path $env:GITHUB_WORKSPACE "dist\ipms_fe\browser"
+          $target = "C:\inetpub\wwwroot\ipms"
+          $backupRoot = "C:\inetpub\wwwroot\ipms-backups"
 
-          Remove-Item $testFile -Force
+          Write-Host "======================================"
+          Write-Host "IPMS FRONTEND DEPLOYMENT"
+          Write-Host "======================================"
 
-          Write-Host "Test file removed successfully."
+          Write-Host "Source:"
+          Write-Host $source
+
+          Write-Host "Target:"
+          Write-Host $target
+
+          # =========================================
+          # Verify Angular build
+          # =========================================
+
+          if (!(Test-Path $source)) {
+
+            Write-Error "Angular browser build not found:"
+            Write-Error $source
+
+            exit 1
+          }
+
+          if (!(Test-Path "$source\index.html")) {
+
+            Write-Error "index.html not found in Angular browser build."
+
+            exit 1
+          }
+
+          Write-Host ""
+          Write-Host "Angular browser build verified."
+
+          # =========================================
+          # Verify IIS target
+          # =========================================
+
+          if (!(Test-Path $target)) {
+
+            Write-Error "IIS deployment folder does not exist:"
+            Write-Error $target
+
+            exit 1
+          }
+
+          # =========================================
+          # Create backup directory
+          # =========================================
+
+          if (!(Test-Path $backupRoot)) {
+
+            New-Item `
+              -ItemType Directory `
+              -Path $backupRoot `
+              -Force | Out-Null
+          }
+
+          $timestamp = Get-Date -Format "yyyyMMdd-HHmmss"
+
+          $backupPath = Join-Path $backupRoot $timestamp
+
+          New-Item `
+            -ItemType Directory `
+            -Path $backupPath `
+            -Force | Out-Null
+
+          Write-Host ""
+          Write-Host "Backup directory:"
+          Write-Host $backupPath
+
+          # =========================================
+          # Backup current application
+          # =========================================
+
+          Write-Host ""
+          Write-Host "Creating backup..."
+
+          Get-ChildItem $target -Force |
+            Where-Object {
+              $_.Name -ne "uploadFile" -and
+              $_.Name -ne "web.config"
+            } |
+            Copy-Item `
+              -Destination $backupPath `
+              -Recurse `
+              -Force
+
+          # Backup web.config
+          if (Test-Path "$target\web.config") {
+
+            Copy-Item `
+              "$target\web.config" `
+              "$backupPath\web.config" `
+              -Force
+
+            Write-Host "web.config backed up."
+          }
+
+          Write-Host "Backup completed."
+
+          # =========================================
+          # Remove old Angular files
+          #
+          # PRESERVE:
+          #   web.config
+          #   uploadFile
+          # =========================================
+
+          Write-Host ""
+          Write-Host "Removing old Angular application files..."
+
+          Get-ChildItem $target -Force |
+            Where-Object {
+              $_.Name -ne "uploadFile" -and
+              $_.Name -ne "web.config"
+            } |
+            Remove-Item `
+              -Recurse `
+              -Force
+
+          Write-Host "Old Angular files removed."
+
+          # =========================================
+          # Copy new Angular application
+          # =========================================
+
+          Write-Host ""
+          Write-Host "Copying Angular browser build..."
+
+          Copy-Item `
+            "$source\*" `
+            $target `
+            -Recurse `
+            -Force
+
+          Write-Host "New Angular application copied."
+
+          # =========================================
+          # Verify web.config
+          # =========================================
+
+          if (!(Test-Path "$target\web.config")) {
+
+            Write-Error "Deployment failed: web.config is missing."
+
+            exit 1
+          }
+
+          Write-Host "web.config preserved successfully."
+
+          # =========================================
+          # Verify uploadFile
+          # =========================================
+
+          if (!(Test-Path "$target\uploadFile")) {
+
+            Write-Error "Deployment failed: uploadFile folder is missing."
+
+            exit 1
+          }
+
+          Write-Host "uploadFile folder preserved successfully."
+
+          # =========================================
+          # Verify Angular application
+          # =========================================
+
+          if (!(Test-Path "$target\index.html")) {
+
+            Write-Error "Deployment failed: index.html not found."
+
+            exit 1
+          }
+
+          Write-Host "index.html found successfully."
+
+          # =========================================
+          # Deployment successful
+          # =========================================
+
+          Write-Host ""
+          Write-Host "======================================"
+          Write-Host "FRONTEND DEPLOYMENT SUCCESSFUL"
+          Write-Host "======================================"
+
+          Write-Host "Deployment Path:"
+          Write-Host $target
+
+          Write-Host ""
+          Write-Host "Backup Path:"
+          Write-Host $backupPath
+
+          Write-Host ""
+          Write-Host "Preserved:"
+          Write-Host "  - web.config"
+          Write-Host "  - uploadFile"
+
+          Write-Host ""
+          Write-Host "======================================"
