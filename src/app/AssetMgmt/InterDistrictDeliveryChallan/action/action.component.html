@@ -108,7 +108,7 @@
                       <mat-form-field
                         [ngClass]="{ 'has-error': isSubmitted && formControls.remark.errors }">
                         <textarea matInput name="remark" maxlength="200" [(ngModel)]="ActionData.remark"
-                        formControlName="remark" placeholder="Enter Remark" [value]="ActionData.approvalStatus"></textarea>
+                        formControlName="remark" placeholder="Enter Remark" [value]="ActionData.remark"></textarea>
                         @if (isSubmitted && formControls.remark.errors) {
                           <div class="error-text">
                             @if (formControls.remark.errors.required) {

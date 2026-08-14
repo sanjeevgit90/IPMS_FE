@@ -48,7 +48,7 @@ export class ActionComponent implements OnInit {
   signedFiles: any = [];
 
   ActionData = {
-    "approvalStatus": null, "remark": null, "assignToRole": null
+    "approvalStatus": null, "remark": null, "assignToRole": null, "stageName": null
   };
 
   addAssetForm: UntypedFormGroup;
@@ -262,7 +262,7 @@ export class ActionComponent implements OnInit {
 
   onStatusChange(event : string) {
     this.addAssetForm.patchValue({
-      remark: event
+      remark: `${event} BY ${this.ActionData.assignToRole}`
     });
   }
 
