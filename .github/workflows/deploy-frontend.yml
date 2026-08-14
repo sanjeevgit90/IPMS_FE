@@ -1,0 +1,46 @@
+name: Build IPMS Frontend
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-frontend:
+    runs-on: self-hosted
+
+    steps:
+
+      # 1. Checkout source code
+      - name: Checkout Frontend
+        uses: actions/checkout@v4
+
+      # 2. Check Node.js
+      - name: Check Node Version
+        shell: powershell
+        run: |
+          Write-Host "Node Version:"
+          node --version
+
+          Write-Host "NPM Version:"
+          npm --version
+
+      # 3. Install dependencies
+      - name: Install Dependencies
+        shell: powershell
+        run: |
+          npm ci
+
+      # 4. Build Angular
+      - name: Build Angular Application
+        shell: powershell
+        run: |
+          npm run build
+
+      # 5. Verify build output
+      - name: Verify Build
+        shell: powershell
+        run: |
+          Write-Host "Build completed."
+
+          Write-Host ""
+          Write-Host "Generated files:"
+          Get-ChildItem -Path .\dist -Recurse | Select-Object FullName
