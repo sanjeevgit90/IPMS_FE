@@ -1,0 +1,44 @@
+name: Test IPMS Windows Runner
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-runner:
+    runs-on: self-hosted
+
+    steps:
+      - name: Test Physical Server
+        shell: powershell
+        run: |
+          Write-Host "======================================"
+          Write-Host "IPMS SELF-HOSTED RUNNER TEST"
+          Write-Host "======================================"
+
+          Write-Host "Computer Name:"
+          Write-Host $env:COMPUTERNAME
+
+          Write-Host ""
+          Write-Host "Current User:"
+          whoami
+
+          Write-Host ""
+          Write-Host "Java Version:"
+          java -version
+
+          Write-Host ""
+          Write-Host "Node Version:"
+          node --version
+
+          Write-Host ""
+          Write-Host "NPM Version:"
+          npm --version
+
+          Write-Host ""
+          Write-Host "Maven Version:"
+          mvn --version
+
+          Write-Host ""
+          Write-Host "======================================"
+          Write-Host "RUNNER TEST COMPLETED"
+          Write-Host "======================================"
