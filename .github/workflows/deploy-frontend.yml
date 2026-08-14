@@ -9,11 +9,17 @@ jobs:
 
     steps:
 
+      # =========================================
       # 1. Checkout source code
+      # =========================================
+
       - name: Checkout Frontend
         uses: actions/checkout@v5
 
+      # =========================================
       # 2. Check Node.js and NPM
+      # =========================================
+
       - name: Check Node Version
         shell: powershell
         run: |
@@ -23,22 +29,32 @@ jobs:
           Write-Host "NPM Version:"
           npm --version
 
+      # =========================================
       # 3. Install dependencies
+      # =========================================
+
       - name: Install Dependencies
         shell: powershell
         run: |
           npm ci --legacy-peer-deps
 
+      # =========================================
       # 4. Build Angular application
+      # =========================================
+
       - name: Build Angular Application
         shell: powershell
         run: |
           npm run build
 
+      # =========================================
       # 5. Verify Angular build
+      # =========================================
+
       - name: Verify Build
         shell: powershell
         run: |
+
           Write-Host "Angular build completed."
 
           if (!(Test-Path ".\dist")) {
@@ -46,12 +62,31 @@ jobs:
             exit 1
           }
 
+          $source = Join-Path $env:GITHUB_WORKSPACE "dist\ipms_fe\browser"
+
+          if (!(Test-Path $source)) {
+            Write-Error "Angular browser build was not found:"
+            Write-Error $source
+            exit 1
+          }
+
+          if (!(Test-Path "$source\index.html")) {
+            Write-Error "index.html was not found in Angular browser build."
+            exit 1
+          }
+
           Write-Host ""
-          Write-Host "Angular build structure:"
-          Get-ChildItem -Path ".\dist" -Recurse |
+          Write-Host "Angular browser build verified."
+
+          Write-Host ""
+          Write-Host "Build structure:"
+          Get-ChildItem -Path $source -Recurse |
             Select-Object FullName
 
+      # =========================================
       # 6. Deploy Angular application to IIS
+      # =========================================
+
       - name: Deploy to IIS
         shell: powershell
         run: |
@@ -71,6 +106,7 @@ jobs:
           Write-Host "Source:"
           Write-Host $source
 
+          Write-Host ""
           Write-Host "Target:"
           Write-Host $target
 
@@ -97,7 +133,7 @@ jobs:
           Write-Host "Angular browser build verified."
 
           # =========================================
-          # Verify IIS target
+          # Verify IIS target folder
           # =========================================
 
           if (!(Test-Path $target)) {
@@ -109,7 +145,7 @@ jobs:
           }
 
           # =========================================
-          # Create backup directory
+          # Create backup root directory
           # =========================================
 
           if (!(Test-Path $backupRoot)) {
@@ -118,7 +154,15 @@ jobs:
               -ItemType Directory `
               -Path $backupRoot `
               -Force | Out-Null
+
+            Write-Host ""
+            Write-Host "Backup root directory created:"
+            Write-Host $backupRoot
           }
+
+          # =========================================
+          # Create timestamped backup directory
+          # =========================================
 
           $timestamp = Get-Date -Format "yyyyMMdd-HHmmss"
 
@@ -135,10 +179,13 @@ jobs:
 
           # =========================================
           # Backup current application
+          #
+          # Do NOT backup uploadFile because
+          # it contains runtime/user uploaded files.
           # =========================================
 
           Write-Host ""
-          Write-Host "Creating backup..."
+          Write-Host "Creating application backup..."
 
           Get-ChildItem $target -Force |
             Where-Object {
@@ -150,7 +197,10 @@ jobs:
               -Recurse `
               -Force
 
-          # Backup web.config
+          # =========================================
+          # Backup web.config separately
+          # =========================================
+
           if (Test-Path "$target\web.config") {
 
             Copy-Item `
@@ -161,10 +211,10 @@ jobs:
             Write-Host "web.config backed up."
           }
 
-          Write-Host "Backup completed."
+          Write-Host "Application backup completed."
 
           # =========================================
-          # Remove old Angular files
+          # Remove old Angular application files
           #
           # PRESERVE:
           #   web.config
@@ -183,14 +233,14 @@ jobs:
               -Recurse `
               -Force
 
-          Write-Host "Old Angular files removed."
+          Write-Host "Old Angular application files removed."
 
           # =========================================
-          # Copy new Angular application
+          # Copy new Angular browser build
           # =========================================
 
           Write-Host ""
-          Write-Host "Copying Angular browser build..."
+          Write-Host "Copying new Angular application..."
 
           Copy-Item `
             "$source\*" `
@@ -240,7 +290,63 @@ jobs:
           Write-Host "index.html found successfully."
 
           # =========================================
-          # Deployment successful
+          # Backup Retention
+          #
+          # Keep latest 5 backups
+          # =========================================
+
+          Write-Host ""
+          Write-Host "======================================"
+          Write-Host "BACKUP RETENTION"
+          Write-Host "======================================"
+
+          $keepBackups = 5
+
+          $backups = Get-ChildItem $backupRoot -Directory |
+            Sort-Object LastWriteTime -Descending
+
+          Write-Host "Total backups found: $($backups.Count)"
+          Write-Host "Backups to keep: $keepBackups"
+
+          if ($backups.Count -gt $keepBackups) {
+
+            $backupsToDelete = $backups |
+              Select-Object -Skip $keepBackups
+
+            foreach ($oldBackup in $backupsToDelete) {
+
+              Write-Host ""
+              Write-Host "Deleting old backup:"
+              Write-Host $oldBackup.FullName
+
+              Remove-Item `
+                $oldBackup.FullName `
+                -Recurse `
+                -Force
+            }
+
+            Write-Host ""
+            Write-Host "Old backups removed successfully."
+          }
+          else {
+
+            Write-Host ""
+            Write-Host "No old backups need to be removed."
+          }
+
+          # =========================================
+          # Display remaining backups
+          # =========================================
+
+          Write-Host ""
+          Write-Host "Remaining backups:"
+
+          Get-ChildItem $backupRoot -Directory |
+            Sort-Object LastWriteTime -Descending |
+            Select-Object Name, LastWriteTime
+
+          # =========================================
+          # Final deployment message
           # =========================================
 
           Write-Host ""
@@ -248,6 +354,7 @@ jobs:
           Write-Host "FRONTEND DEPLOYMENT SUCCESSFUL"
           Write-Host "======================================"
 
+          Write-Host ""
           Write-Host "Deployment Path:"
           Write-Host $target
 
@@ -259,6 +366,10 @@ jobs:
           Write-Host "Preserved:"
           Write-Host "  - web.config"
           Write-Host "  - uploadFile"
+
+          Write-Host ""
+          Write-Host "Backup Retention:"
+          Write-Host "  - Latest 5 backups retained"
 
           Write-Host ""
           Write-Host "======================================"
