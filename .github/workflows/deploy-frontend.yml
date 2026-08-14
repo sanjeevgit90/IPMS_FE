@@ -27,7 +27,7 @@ jobs:
       - name: Install Dependencies
         shell: powershell
         run: |
-          npm ci
+          npm ci --legacy-peer-deps
 
       # 4. Build Angular
       - name: Build Angular Application
