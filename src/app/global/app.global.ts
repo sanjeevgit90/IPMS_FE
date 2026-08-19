@@ -10,8 +10,10 @@ export class AppGlobals {
     // readonly baseUrl: string = 'https://ipms.aurionpro.com/';
     // readonly baseAPIUrl: string = 'http://localhost:8095/';
     // readonly baseUrl: string = 'http://localhost:4200/';
-    readonly baseAPIUrl: string = 'http://172.16.3.166:8080/ipms/'; // Production Deployment
-    readonly baseUrl: string = 'http://172.16.3.166/';
+    // readonly baseAPIUrl: string = 'http://172.16.3.166:8080/ipms/'; // Production Deployment
+    // readonly baseUrl: string = 'http://172.16.3.166/';
+    readonly baseAPIUrl: string = 'http://125.21.206.29:8080/ipms/'; // Production Deployment
+    readonly baseUrl: string = 'http://125.21.206.29/';
 
     // readonly baseAPIUrl: string = 'https://ipmstest.aurionpro.com:8092/ipms/'; // UAT Deployment
     // readonly baseUrl: string = 'https://ipmstest.aurionpro.com/'
