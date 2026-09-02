@@ -1,0 +1,77 @@
+@if (isAuthenticated) {
+  <div class="procurement-ai-chat-root">
+    @if (panelOpen) {
+      <div class="chat-window procurement-ai-panel">
+        <div class="procurement-ai-panel-header">
+          <strong>Procurement Assistant</strong>
+          <button type="button" class="btn btn-link procurement-ai-close" (click)="togglePanel()" aria-label="Close chat">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+        <div class="chat-contents procurement-ai-messages" #chatScroll>
+          <div class="chat-content-wrap">
+            <div class="chat-wrap-inner">
+              <div class="chats">
+                @for (msg of messages; track $index) {
+                  <div class="chat-bubble"
+                    [class.chat-right]="msg.fromUser"
+                    [class.chat-left]="!msg.fromUser"
+                    [class.chat]="true">
+                    <div class="chat-body">
+                      <div class="chat-content">
+                        <p [class.text-danger]="msg.isError">{{ msg.text }}</p>
+                      </div>
+                    </div>
+                  </div>
+                }
+                @if (isLoading) {
+                  <div class="chat-bubble chat-left chat">
+                    <div class="chat-body">
+                      <div class="chat-content">
+                        <p><em>Thinking...</em></p>
+                      </div>
+                    </div>
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="chat-footer">
+          <div class="message-bar">
+            <div class="message-inner">
+              <div class="message-area">
+                <div class="input-group">
+                  <input
+                    class="form-control"
+                    type="text"
+                    [(ngModel)]="draftMessage"
+                    [disabled]="isLoading"
+                    (keydown)="onEnter($event)"
+                    placeholder="Ask about PO status..."
+                    aria-label="Chat message" />
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    (click)="send()"
+                    [disabled]="!canSend">
+                    Send
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+    <button
+      type="button"
+      mat-fab
+      color="primary"
+      class="procurement-ai-fab"
+      (click)="togglePanel()"
+      aria-label="Open procurement assistant">
+      <mat-icon>chat</mat-icon>
+    </button>
+  </div>
+}

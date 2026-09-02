@@ -178,6 +178,7 @@ import { PoFullfillmentReportComponent } from './OrderMgmt/Reports/po-fullfillme
 import { ProjectMappingComponent } from './ProjectMgmt/ProjectMapping/project-mapping.component';
 import { AddProjectMappingComponent } from './ProjectMgmt/ProjectMapping/addprojectMapping/addprojectMapping.component';
 import { CourierDetailsComponent } from './AssetMgmt/DeliveryChallan/courierDetails/courierDetails.component';
+import { ProcurementAiChatComponent } from './procurement-ai/procurement-ai-chat.component';
 
 @NgModule({ declarations: [
         AppComponent,
@@ -310,7 +311,8 @@ import { CourierDetailsComponent } from './AssetMgmt/DeliveryChallan/courierDeta
         ProjectattachmentComponent,
         ProjecttabComponent, PoFullfillmentReportComponent,
         ProjectMappingComponent, AddProjectMappingComponent,
-        CourierDetailsComponent
+        CourierDetailsComponent,
+        ProcurementAiChatComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         AppRoutingModule,
