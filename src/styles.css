@@ -2838,12 +2838,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#741051', end
 }
 .chat-left .chat-content {
 	background-color: #fff;
-	border: 1px solid #eaeaea;
-	color: #888;
+	border: 1px solid #b8b6b6;
+	color: #333333;
 	float: left;
 	position: relative;
-	padding: 8px 15px;
-	border-radius: 2px 20px 20px 2px;
+	padding: 8px 10px;
+	border-radius: 2px 15px 15px 2px;
 	max-width: 60%;
 }
 .avatar {
