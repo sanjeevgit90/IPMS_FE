@@ -21,6 +21,10 @@
                       <div class="chat-content">
                         <p [class.text-danger]="msg.isError">{{ msg.text }}</p>
                       </div>
+                      @if (!msg.fromUser && !msg.isError && msg.structuredSection) {
+                        <app-procurement-ai-structured-section [section]="msg.structuredSection">
+                        </app-procurement-ai-structured-section>
+                      }
                       @if (!msg.fromUser && !msg.isError && msg.suggestedQuestions?.length) {
                         <div class="procurement-ai-suggestions">
                           <span class="procurement-ai-suggestions-label">Suggested questions:</span>

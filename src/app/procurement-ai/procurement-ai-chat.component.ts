@@ -4,6 +4,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { ChatMessage } from './models/procurement-chat.model';
 import { ProcurementAiChatService } from './procurement-ai-chat.service';
+import { mapApiResponseToChatMessage } from './utils/procurement-chat-response.mapper';
 
 @Component({
   selector: 'app-procurement-ai-chat',
@@ -82,11 +83,7 @@ export class ProcurementAiChatComponent {
 
     this.chatService.sendMessage(text).subscribe({
       next: (response) => {
-        this.messages.push({
-          text: response.message,
-          fromUser: false,
-          suggestedQuestions: this.normalizeSuggestedQuestions(response.suggestedQuestions)
-        });
+        this.messages.push(mapApiResponseToChatMessage(response));
         this.isLoading = false;
         this.scrollToBottom();
       },
@@ -100,13 +97,6 @@ export class ProcurementAiChatComponent {
         this.scrollToBottom();
       }
     });
-  }
-
-  private normalizeSuggestedQuestions(questions?: string[] | null): string[] | undefined {
-    if (!questions?.length) {
-      return undefined;
-    }
-    return questions;
   }
 
   private refreshAuthState(): void {

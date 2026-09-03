@@ -1,0 +1,21 @@
+@if (section) {
+  <section class="procurement-ai-structured-section" [attr.aria-label]="section.title">
+    <h4 class="procurement-ai-structured-title">{{ section.title }}</h4>
+    <dl class="procurement-ai-structured-fields">
+      @for (field of section.fields; track field.label) {
+        <div class="procurement-ai-structured-row">
+          <dt>{{ field.label }}</dt>
+          <dd [class.procurement-ai-structured-value-emphasis]="field.emphasize">
+            @if (field.type === 'status') {
+              <span [class]="statusBadgeClass(field)" [attr.aria-label]="'Status: ' + formatValue(field)">
+                {{ formatValue(field) }}
+              </span>
+            } @else {
+              {{ formatValue(field) }}
+            }
+          </dd>
+        </div>
+      }
+    </dl>
+  </section>
+}
