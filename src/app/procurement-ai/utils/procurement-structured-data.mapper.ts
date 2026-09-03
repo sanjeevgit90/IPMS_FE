@@ -15,7 +15,6 @@ import {
 
 const ITEM_COLUMN_DEFINITIONS: StructuredItemColumn[] = [
   { key: 'product', label: 'Product / Item', type: 'text', align: 'left' },
-  { key: 'productCode', label: 'Product Code', type: 'text', align: 'left' },
   { key: 'quantity', label: 'Quantity', type: 'number', align: 'right' },
   { key: 'unit', label: 'Unit', type: 'text', align: 'left' },
   { key: 'unitPrice', label: 'Unit Price', type: 'amount', align: 'right' }

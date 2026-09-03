@@ -16,6 +16,7 @@ export interface ChatMessage {
   text: string;
   fromUser: boolean;
   isError?: boolean;
+  suppressMessageText?: boolean;
   suggestedQuestions?: string[];
   structuredSection?: StructuredSection;
 }

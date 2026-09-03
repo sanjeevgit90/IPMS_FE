@@ -68,7 +68,7 @@ describe('procurement-structured-data.mapper', () => {
     expect(section?.itemsTable?.rows.length).toBe(2);
   });
 
-  it('does not include a Line Total column', () => {
+  it('does not include Product Code or Line Total columns', () => {
     const data: PurchaseOrderItemsData = {
       type: 'PURCHASE_ORDER_ITEMS',
       purchaseOrderNo: 'chatboat_1',
@@ -79,7 +79,8 @@ describe('procurement-structured-data.mapper', () => {
     const section = mapStructuredDataToSection(data);
 
     const columnKeys = section?.itemsTable?.columns.map(column => column.key);
-    expect(columnKeys).toEqual(['product', 'productCode', 'quantity', 'unit', 'unitPrice']);
+    expect(columnKeys).toEqual(['product', 'quantity', 'unit', 'unitPrice']);
+    expect((columnKeys as string[]).includes('productCode')).toBeFalse();
     expect((columnKeys as string[]).includes('lineTotal')).toBeFalse();
   });
 

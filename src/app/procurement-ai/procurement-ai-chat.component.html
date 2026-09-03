@@ -18,9 +18,11 @@
                     [class.chat-left]="!msg.fromUser"
                     [class.chat]="true">
                     <div class="chat-body">
-                      <div class="chat-content">
-                        <p [class.text-danger]="msg.isError">{{ msg.text }}</p>
-                      </div>
+                      @if (msg.fromUser || msg.isError || !msg.suppressMessageText) {
+                        <div class="chat-content">
+                          <p [class.text-danger]="msg.isError">{{ msg.text }}</p>
+                        </div>
+                      }
                       @if (!msg.fromUser && !msg.isError && msg.structuredSection) {
                         <app-procurement-ai-structured-section [section]="msg.structuredSection">
                         </app-procurement-ai-structured-section>

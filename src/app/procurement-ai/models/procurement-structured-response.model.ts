@@ -12,7 +12,6 @@ export interface StructuredField {
 
 export interface StructuredItemRow {
   product?: string;
-  productCode?: string;
   quantity?: number;
   unit?: string;
   unitPrice?: number;

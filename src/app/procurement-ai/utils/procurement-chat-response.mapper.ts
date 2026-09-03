@@ -1,15 +1,18 @@
 import { ChatMessage, ProcurementChatResponse } from '../models/procurement-chat.model';
+import { isPurchaseOrderItemsData } from '../models/ai-structured-response.model';
 import { mapStructuredDataToSection } from './procurement-structured-data.mapper';
 
 export function mapApiResponseToChatMessage(response: ProcurementChatResponse): ChatMessage {
+  const suppressMessageText = !!response.data && isPurchaseOrderItemsData(response.data);
+
   return {
     text: response.message,
     fromUser: false,
+    suppressMessageText,
     suggestedQuestions: normalizeSuggestedQuestions(response.suggestedQuestions),
     structuredSection: mapStructuredDataToSection(response.data)
   };
 }
-
 export function normalizeSuggestedQuestions(questions?: string[] | null): string[] | undefined {
   if (!questions?.length) {
     return undefined;

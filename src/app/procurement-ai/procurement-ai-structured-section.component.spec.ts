@@ -38,7 +38,6 @@ describe('ProcurementAiStructuredSectionComponent', () => {
         headerFields: [{ label: 'PO Number', type: 'text', value: 'chatboat_1', emphasize: true }],
         columns: [
           { key: 'product', label: 'Product / Item', type: 'text', align: 'left' },
-          { key: 'productCode', label: 'Product Code', type: 'text', align: 'left' },
           { key: 'quantity', label: 'Quantity', type: 'number', align: 'right' },
           { key: 'unit', label: 'Unit', type: 'text', align: 'left' },
           { key: 'unitPrice', label: 'Unit Price', type: 'amount', align: 'right' }
@@ -56,11 +55,12 @@ describe('ProcurementAiStructuredSectionComponent', () => {
     expect(compiled.querySelector('.procurement-ai-items-table')).not.toBeNull();
     expect(compiled.textContent).toContain('Core Dark Fiber Cable');
     expect(compiled.textContent).not.toContain('Line Total');
+    expect(compiled.textContent).not.toContain('Product Code');
     expect(compiled.textContent).toContain('USD 200.00');
     expect(compiled.textContent).toContain('chatboat_1');
   });
 
-  it('renders missing optional product code as an em dash', () => {
+  it('renders product, quantity, unit, and unit price cells', () => {
     fixture.componentInstance.section = {
       title: 'Purchase Order Items',
       presentationType: 'items-table',
@@ -68,13 +68,12 @@ describe('ProcurementAiStructuredSectionComponent', () => {
         headerFields: [{ label: 'PO Number', type: 'text', value: 'chatboat_1', emphasize: true }],
         columns: [
           { key: 'product', label: 'Product / Item', type: 'text', align: 'left' },
-          { key: 'productCode', label: 'Product Code', type: 'text', align: 'left' },
           { key: 'quantity', label: 'Quantity', type: 'number', align: 'right' },
           { key: 'unit', label: 'Unit', type: 'text', align: 'left' },
           { key: 'unitPrice', label: 'Unit Price', type: 'amount', align: 'right' }
         ],
         rows: [
-          { product: 'Core Dark Fiber Cable', quantity: 1, unit: 'Box', unitPrice: 200 }
+          { product: 'Core Dark Fiber Cable', quantity: 10, unit: 'Box', unitPrice: 200 }
         ],
         emptyMessage: 'No items/products were found for this purchase order.',
         currencyCode: 'USD'
@@ -86,7 +85,9 @@ describe('ProcurementAiStructuredSectionComponent', () => {
       fixture.nativeElement.querySelectorAll('.procurement-ai-items-table tbody td')
     ) as HTMLElement[];
     expect(cells[0].textContent?.trim()).toBe('Core Dark Fiber Cable');
-    expect(cells[1].textContent?.trim()).toBe('—');
+    expect(cells[1].textContent?.trim()).toBe('10');
+    expect(cells[2].textContent?.trim()).toBe('Box');
+    expect(cells[3].textContent?.trim()).toBe('USD 200.00');
   });
 
   it('renders empty-state message when there are no items', () => {

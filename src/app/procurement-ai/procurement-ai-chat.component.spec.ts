@@ -25,7 +25,7 @@ const purchaseOrderDetailsResponse = {
 };
 
 const purchaseOrderItemsResponse = {
-  message: 'Here are the items/products in PO chatboat_1.',
+  message: 'Here are the items from the PO chatboat_1: * 1 x Core Dark Fiber Cable (Box, quantity: 10, unit price: $200.00, line total: 2,000.00)',
   source: 'PURCHASE_ORDER',
   data: {
     type: 'PURCHASE_ORDER_ITEMS',
@@ -109,6 +109,7 @@ describe('ProcurementAiChatComponent', () => {
     fixture.detectChanges();
 
     const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.textContent).toContain('Here are the details for PO test123.');
     expect(compiled.textContent).toContain('Purchase Order Details');
     expect(compiled.textContent).toContain('test123');
     expect(compiled.textContent).toContain('July 19, 2023');
@@ -127,10 +128,13 @@ describe('ProcurementAiChatComponent', () => {
     expect(compiled.textContent).toContain('chatboat_1');
     expect(compiled.textContent).toContain('Core Dark Fiber Cable');
     expect(compiled.textContent).toContain('Patch Panel');
+    expect(compiled.textContent).not.toContain('Product Code');
     expect(compiled.textContent).not.toContain('Line Total');
+    expect(compiled.textContent).not.toContain('Here are the items from the PO chatboat_1');
     expect(compiled.querySelector('.procurement-ai-items-table')).not.toBeNull();
     expect(compiled.querySelectorAll('.procurement-ai-items-table tbody tr').length).toBe(2);
     expect(compiled.querySelector('.procurement-ai-suggestion-chip')).not.toBeNull();
+    expect(component.messages[component.messages.length - 1].suppressMessageText).toBeTrue();
   });
 
   it('does not display suggestions when the array is empty', () => {
@@ -234,6 +238,7 @@ describe('ProcurementAiChatComponent', () => {
     component.send();
     fixture.detectChanges();
 
+    expect(fixture.nativeElement.textContent).not.toContain('No items found.');
     expect(fixture.nativeElement.querySelector('.procurement-ai-items-empty')?.textContent)
       .toContain('No items/products were found for this purchase order.');
   });
