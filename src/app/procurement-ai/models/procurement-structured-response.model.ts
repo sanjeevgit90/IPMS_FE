@@ -11,12 +11,11 @@ export interface StructuredField {
 }
 
 export interface StructuredItemRow {
-  productName?: string;
+  product?: string;
   productCode?: string;
   quantity?: number;
   unit?: string;
   unitPrice?: number;
-  lineTotal?: number;
 }
 
 export interface StructuredItemColumn {

@@ -14,12 +14,11 @@ import {
 } from '../models/procurement-structured-response.model';
 
 const ITEM_COLUMN_DEFINITIONS: StructuredItemColumn[] = [
-  { key: 'productName', label: 'Product / Item', type: 'text', align: 'left' },
+  { key: 'product', label: 'Product / Item', type: 'text', align: 'left' },
   { key: 'productCode', label: 'Product Code', type: 'text', align: 'left' },
   { key: 'quantity', label: 'Quantity', type: 'number', align: 'right' },
   { key: 'unit', label: 'Unit', type: 'text', align: 'left' },
-  { key: 'unitPrice', label: 'Unit Price', type: 'amount', align: 'right' },
-  { key: 'lineTotal', label: 'Line Total', type: 'amount', align: 'right' }
+  { key: 'unitPrice', label: 'Unit Price', type: 'amount', align: 'right' }
 ];
 
 export function mapStructuredDataToSection(
@@ -71,7 +70,7 @@ function mapPurchaseOrderItems(data: PurchaseOrderItemsData): StructuredSection 
   const rows = items
     .map(item => sanitizePurchaseOrderItem(item))
     .filter(row => hasRenderableItemRow(row));
-  const columns = buildVisibleItemColumns(rows);
+  const columns = [...ITEM_COLUMN_DEFINITIONS];
   const headerFields: StructuredField[] = [];
   addTextField(headerFields, 'PO Number', data.purchaseOrderNo, true);
 
@@ -91,19 +90,11 @@ function mapPurchaseOrderItems(data: PurchaseOrderItemsData): StructuredSection 
 
 function sanitizePurchaseOrderItem(item: PurchaseOrderItemData): StructuredItemRow {
   return {
-    productName: hasRenderableString(item.productName) ? item.productName.trim() : undefined,
-    productCode: hasRenderableString(item.productCode) ? item.productCode.trim() : undefined,
+    product: hasRenderableString(item.product) ? item.product.trim() : undefined,
     quantity: isValidNumber(item.quantity) ? item.quantity : undefined,
     unit: hasRenderableString(item.unit) ? item.unit.trim() : undefined,
-    unitPrice: isValidNumber(item.unitPrice) ? item.unitPrice : undefined,
-    lineTotal: isValidNumber(item.lineTotal) ? item.lineTotal : undefined
+    unitPrice: isValidNumber(item.unitPrice) ? item.unitPrice : undefined
   };
-}
-
-function buildVisibleItemColumns(rows: StructuredItemRow[]): StructuredItemColumn[] {
-  return ITEM_COLUMN_DEFINITIONS.filter(column =>
-    rows.some(row => hasRenderableCellValue(row[column.key]))
-  );
 }
 
 function hasRenderableItemRow(row: StructuredItemRow): boolean {

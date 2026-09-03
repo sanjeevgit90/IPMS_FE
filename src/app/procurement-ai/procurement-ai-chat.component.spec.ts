@@ -33,19 +33,16 @@ const purchaseOrderItemsResponse = {
     currency: 'USD',
     items: [
       {
-        productName: 'Core Dark Fiber Cable',
-        productCode: 'CDF-001',
+        product: 'Core Dark Fiber Cable',
         quantity: 1,
         unit: 'Box',
-        unitPrice: 200,
-        lineTotal: 200
+        unitPrice: 200
       },
       {
-        productName: 'Patch Panel',
+        product: 'Patch Panel',
         quantity: 2,
         unit: 'Each',
-        unitPrice: 50,
-        lineTotal: 100
+        unitPrice: 50
       }
     ]
   },
@@ -130,6 +127,7 @@ describe('ProcurementAiChatComponent', () => {
     expect(compiled.textContent).toContain('chatboat_1');
     expect(compiled.textContent).toContain('Core Dark Fiber Cable');
     expect(compiled.textContent).toContain('Patch Panel');
+    expect(compiled.textContent).not.toContain('Line Total');
     expect(compiled.querySelector('.procurement-ai-items-table')).not.toBeNull();
     expect(compiled.querySelectorAll('.procurement-ai-items-table tbody tr').length).toBe(2);
     expect(compiled.querySelector('.procurement-ai-suggestion-chip')).not.toBeNull();

@@ -14,12 +14,11 @@ export interface PurchaseOrderDetailsData extends AiStructuredResponse {
 }
 
 export interface PurchaseOrderItemData {
-  productName?: string;
-  productCode?: string;
+  product?: string;
+  description?: string;
   quantity?: number;
   unit?: string;
   unitPrice?: number;
-  lineTotal?: number;
 }
 
 export interface PurchaseOrderItemsData extends AiStructuredResponse {

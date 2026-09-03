@@ -31,19 +31,16 @@ describe('procurement-structured-data.mapper', () => {
     ]);
   });
 
-  it('maps PURCHASE_ORDER_ITEMS to an items table section', () => {
+  it('maps PURCHASE_ORDER_ITEMS product field to the Product / Item column', () => {
     const data: PurchaseOrderItemsData = {
       type: 'PURCHASE_ORDER_ITEMS',
       purchaseOrderNo: 'chatboat_1',
-      currency: 'USD',
       items: [
         {
-          productName: 'Core Dark Fiber Cable',
-          productCode: 'CDF-001',
+          product: 'Core Dark Fiber Cable',
           quantity: 1,
           unit: 'Box',
-          unitPrice: 200,
-          lineTotal: 200
+          unitPrice: 200
         }
       ]
     };
@@ -53,7 +50,7 @@ describe('procurement-structured-data.mapper', () => {
     expect(section?.presentationType).toBe('items-table');
     expect(section?.title).toBe('Purchase Order Items');
     expect(section?.itemsTable?.rows.length).toBe(1);
-    expect(section?.itemsTable?.rows[0].productName).toBe('Core Dark Fiber Cable');
+    expect(section?.itemsTable?.rows[0].product).toBe('Core Dark Fiber Cable');
     expect(section?.itemsTable?.headerFields?.[0].value).toBe('chatboat_1');
   });
 
@@ -62,8 +59,8 @@ describe('procurement-structured-data.mapper', () => {
       type: 'PURCHASE_ORDER_ITEMS',
       purchaseOrderNo: 'chatboat_1',
       items: [
-        { productName: 'Item A', quantity: 1, unit: 'Box', unitPrice: 10 },
-        { productName: 'Item B', quantity: 2, unit: 'Each', unitPrice: 5, lineTotal: 10 }
+        { product: 'Item A', quantity: 1, unit: 'Box', unitPrice: 10 },
+        { product: 'Item B', quantity: 2, unit: 'Each', unitPrice: 5 }
       ]
     };
     const section = mapStructuredDataToSection(data);
@@ -71,20 +68,35 @@ describe('procurement-structured-data.mapper', () => {
     expect(section?.itemsTable?.rows.length).toBe(2);
   });
 
-  it('omits columns when optional values are missing across all rows', () => {
+  it('does not include a Line Total column', () => {
     const data: PurchaseOrderItemsData = {
       type: 'PURCHASE_ORDER_ITEMS',
       purchaseOrderNo: 'chatboat_1',
       items: [
-        { productName: 'Core Dark Fiber Cable', quantity: 1, unit: 'Box', unitPrice: 200 }
+        { product: 'Core Dark Fiber Cable', quantity: 1, unit: 'Box', unitPrice: 200 }
       ]
     };
     const section = mapStructuredDataToSection(data);
 
     const columnKeys = section?.itemsTable?.columns.map(column => column.key);
-    expect(columnKeys).toEqual(['productName', 'quantity', 'unit', 'unitPrice']);
-    expect(columnKeys).not.toContain('productCode');
-    expect(columnKeys).not.toContain('lineTotal');
+    expect(columnKeys).toEqual(['product', 'productCode', 'quantity', 'unit', 'unitPrice']);
+    expect((columnKeys as string[]).includes('lineTotal')).toBeFalse();
+  });
+
+  it('keeps quantity, unit, and unit price columns', () => {
+    const data: PurchaseOrderItemsData = {
+      type: 'PURCHASE_ORDER_ITEMS',
+      purchaseOrderNo: 'chatboat_1',
+      items: [
+        { product: 'Core Dark Fiber Cable', quantity: 1, unit: 'Box', unitPrice: 200 }
+      ]
+    };
+    const section = mapStructuredDataToSection(data);
+
+    const row = section?.itemsTable?.rows[0];
+    expect(row?.quantity).toBe(1);
+    expect(row?.unit).toBe('Box');
+    expect(row?.unitPrice).toBe(200);
   });
 
   it('handles an empty item list with an empty-state message', () => {
@@ -106,19 +118,20 @@ describe('procurement-structured-data.mapper', () => {
       purchaseOrderNo: 'chatboat_1',
       items: [
         {
-          productName: 'Cable',
+          product: 'Cable',
           quantity: 1,
           unit: 'Box',
           unitPrice: 10,
-          ...( { productId: '999', organizationId: '42' } as Record<string, unknown> )
+          ...( { productId: '999', organizationId: '42', lineTotal: 100 } as Record<string, unknown> )
         }
       ]
     };
     const section = mapStructuredDataToSection(data);
 
     const row = section?.itemsTable?.rows[0] as Record<string, unknown> | undefined;
-    expect(row?.productName).toBe('Cable');
+    expect(row?.product).toBe('Cable');
     expect(row?.productId).toBeUndefined();
     expect(row?.organizationId).toBeUndefined();
+    expect(row?.lineTotal).toBeUndefined();
   });
 });
