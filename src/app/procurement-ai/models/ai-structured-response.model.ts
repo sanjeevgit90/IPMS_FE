@@ -13,6 +13,26 @@ export interface PurchaseOrderDetailsData extends AiStructuredResponse {
   currency?: string;
 }
 
+export interface PurchaseOrderItemData {
+  productName?: string;
+  productCode?: string;
+  quantity?: number;
+  unit?: string;
+  unitPrice?: number;
+  lineTotal?: number;
+}
+
+export interface PurchaseOrderItemsData extends AiStructuredResponse {
+  type: 'PURCHASE_ORDER_ITEMS';
+  purchaseOrderNo?: string;
+  currency?: string;
+  items?: PurchaseOrderItemData[];
+}
+
 export function isPurchaseOrderDetailsData(data: AiStructuredResponse): data is PurchaseOrderDetailsData {
   return data.type === 'PURCHASE_ORDER_DETAILS';
+}
+
+export function isPurchaseOrderItemsData(data: AiStructuredResponse): data is PurchaseOrderItemsData {
+  return data.type === 'PURCHASE_ORDER_ITEMS';
 }

@@ -48,9 +48,50 @@
   font-weight: 600;
 }
 
+.procurement-ai-items-header-fields {
+  margin-bottom: 8px;
+}
+
+.procurement-ai-items-empty {
+  margin: 0;
+  font-size: 12px;
+  color: #6c757d;
+}
+
+.procurement-ai-items-table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.procurement-ai-items-table {
+  margin-bottom: 0;
+  font-size: 12px;
+  width: 100%;
+  min-width: 520px;
+}
+
+.procurement-ai-items-table th {
+  background: #f6f6f6;
+  border-top: 1px solid #e5e7eb;
+  color: #1f1f1f;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.procurement-ai-items-table td,
+.procurement-ai-items-table th {
+  padding: 6px 8px;
+  vertical-align: top;
+  word-break: break-word;
+}
+
 @media (max-width: 480px) {
   .procurement-ai-structured-row {
     grid-template-columns: 1fr;
     gap: 2px;
+  }
+
+  .procurement-ai-items-table {
+    min-width: 100%;
   }
 }

@@ -1,21 +1,66 @@
 @if (section) {
   <section class="procurement-ai-structured-section" [attr.aria-label]="section.title">
     <h4 class="procurement-ai-structured-title">{{ section.title }}</h4>
-    <dl class="procurement-ai-structured-fields">
-      @for (field of section.fields; track field.label) {
-        <div class="procurement-ai-structured-row">
-          <dt>{{ field.label }}</dt>
-          <dd [class.procurement-ai-structured-value-emphasis]="field.emphasize">
-            @if (field.type === 'status') {
-              <span [class]="statusBadgeClass(field)" [attr.aria-label]="'Status: ' + formatValue(field)">
+
+    @if (isItemsTable(section) && section.itemsTable) {
+      @if (section.itemsTable.headerFields?.length) {
+        <dl class="procurement-ai-structured-fields procurement-ai-items-header-fields">
+          @for (field of section.itemsTable.headerFields; track field.label) {
+            <div class="procurement-ai-structured-row">
+              <dt>{{ field.label }}</dt>
+              <dd [class.procurement-ai-structured-value-emphasis]="field.emphasize">
                 {{ formatValue(field) }}
-              </span>
-            } @else {
-              {{ formatValue(field) }}
-            }
-          </dd>
+              </dd>
+            </div>
+          }
+        </dl>
+      }
+
+      @if (!section.itemsTable.rows.length) {
+        <p class="procurement-ai-items-empty">{{ section.itemsTable.emptyMessage }}</p>
+      } @else {
+        <div class="procurement-ai-items-table-wrapper">
+          <table class="table table-sm procurement-ai-items-table">
+            <thead>
+              <tr>
+                @for (column of section.itemsTable.columns; track column.key) {
+                  <th [class.text-end]="column.align === 'right'">{{ column.label }}</th>
+                }
+              </tr>
+            </thead>
+            <tbody>
+              @for (row of section.itemsTable.rows; track $index) {
+                <tr>
+                  @for (column of section.itemsTable.columns; track column.key) {
+                    <td
+                      [class.text-end]="column.align === 'right'"
+                      [attr.data-label]="column.label">
+                      {{ formatCellValue(column, row, section.itemsTable.currencyCode) }}
+                    </td>
+                  }
+                </tr>
+              }
+            </tbody>
+          </table>
         </div>
       }
-    </dl>
+    } @else if (isFieldsSection(section) && section.fields?.length) {
+      <dl class="procurement-ai-structured-fields">
+        @for (field of section.fields; track field.label) {
+          <div class="procurement-ai-structured-row">
+            <dt>{{ field.label }}</dt>
+            <dd [class.procurement-ai-structured-value-emphasis]="field.emphasize">
+              @if (field.type === 'status') {
+                <span [class]="statusBadgeClass(field)" [attr.aria-label]="'Status: ' + formatValue(field)">
+                  {{ formatValue(field) }}
+                </span>
+              } @else {
+                {{ formatValue(field) }}
+              }
+            </dd>
+          </div>
+        }
+      </dl>
+    }
   </section>
 }

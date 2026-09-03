@@ -6,6 +6,51 @@ import { MatIconModule } from '@angular/material/icon';
 import { of } from 'rxjs';
 import { ProcurementAiChatComponent } from './procurement-ai-chat.component';
 import { ProcurementAiChatService } from './procurement-ai-chat.service';
+import { ProcurementAiStructuredSectionComponent } from './procurement-ai-structured-section.component';
+
+const purchaseOrderDetailsResponse = {
+  message: 'Here are the details for PO test123.',
+  source: 'PURCHASE_ORDER',
+  data: {
+    type: 'PURCHASE_ORDER_DETAILS',
+    purchaseOrderNo: 'test123',
+    orderDate: '2023-07-19',
+    projectName: '3D City Jaipur',
+    supplierName: ' Savitri techno industries limited',
+    approvalStatus: 'PENDING',
+    totalAmount: 0,
+    currency: 'AFA-Afghani'
+  },
+  suggestedQuestions: ['Which supplier is associated with PO test123?']
+};
+
+const purchaseOrderItemsResponse = {
+  message: 'Here are the items/products in PO chatboat_1.',
+  source: 'PURCHASE_ORDER',
+  data: {
+    type: 'PURCHASE_ORDER_ITEMS',
+    purchaseOrderNo: 'chatboat_1',
+    currency: 'USD',
+    items: [
+      {
+        productName: 'Core Dark Fiber Cable',
+        productCode: 'CDF-001',
+        quantity: 1,
+        unit: 'Box',
+        unitPrice: 200,
+        lineTotal: 200
+      },
+      {
+        productName: 'Patch Panel',
+        quantity: 2,
+        unit: 'Each',
+        unitPrice: 50,
+        lineTotal: 100
+      }
+    ]
+  },
+  suggestedQuestions: ['Show me the details of PO chatboat_1']
+};
 
 describe('ProcurementAiChatComponent', () => {
   let component: ProcurementAiChatComponent;
@@ -16,7 +61,10 @@ describe('ProcurementAiChatComponent', () => {
     chatService = jasmine.createSpyObj('ProcurementAiChatService', ['sendMessage']);
 
     await TestBed.configureTestingModule({
-      declarations: [ProcurementAiChatComponent],
+      declarations: [
+        ProcurementAiChatComponent,
+        ProcurementAiStructuredSectionComponent
+      ],
       imports: [FormsModule, MatButtonModule, MatIconModule],
       providers: [
         { provide: ProcurementAiChatService, useValue: chatService },
@@ -40,6 +88,7 @@ describe('ProcurementAiChatComponent', () => {
     chatService.sendMessage.and.returnValue(of({
       message: 'The status of PO test123 is PENDING.',
       source: 'PURCHASE_ORDER',
+      data: null,
       suggestedQuestions: [
         'Show me the details of PO test123',
         'Which supplier is associated with PO test123?'
@@ -55,10 +104,42 @@ describe('ProcurementAiChatComponent', () => {
     expect(suggestionChips[0].textContent).toContain('Show me the details of PO test123');
   });
 
+  it('renders PURCHASE_ORDER_DETAILS structured card from response.data', () => {
+    chatService.sendMessage.and.returnValue(of(purchaseOrderDetailsResponse));
+
+    component.draftMessage = 'Show me the details of PO test123';
+    component.send();
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.textContent).toContain('Purchase Order Details');
+    expect(compiled.textContent).toContain('test123');
+    expect(compiled.textContent).toContain('July 19, 2023');
+    expect(compiled.querySelector('.procurement-ai-items-table')).toBeNull();
+  });
+
+  it('renders PURCHASE_ORDER_ITEMS as a table from response.data', () => {
+    chatService.sendMessage.and.returnValue(of(purchaseOrderItemsResponse));
+
+    component.draftMessage = 'Show the items/products in PO chatboat_1';
+    component.send();
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.textContent).toContain('Purchase Order Items');
+    expect(compiled.textContent).toContain('chatboat_1');
+    expect(compiled.textContent).toContain('Core Dark Fiber Cable');
+    expect(compiled.textContent).toContain('Patch Panel');
+    expect(compiled.querySelector('.procurement-ai-items-table')).not.toBeNull();
+    expect(compiled.querySelectorAll('.procurement-ai-items-table tbody tr').length).toBe(2);
+    expect(compiled.querySelector('.procurement-ai-suggestion-chip')).not.toBeNull();
+  });
+
   it('does not display suggestions when the array is empty', () => {
     chatService.sendMessage.and.returnValue(of({
       message: 'Please provide a purchase order number.',
       source: null,
+      data: null,
       suggestedQuestions: []
     }));
 
@@ -75,27 +156,24 @@ describe('ProcurementAiChatComponent', () => {
       of({
         message: 'The status of PO test123 is PENDING.',
         source: 'PURCHASE_ORDER',
+        data: null,
         suggestedQuestions: ['Show me the details of PO test123']
       }),
       of({
-        message: 'PO test123 details...',
-        source: 'PURCHASE_ORDER',
+        ...purchaseOrderItemsResponse,
         suggestedQuestions: []
       })
     );
 
     component.draftMessage = 'What is the status of PO test123?';
     component.send();
-    fixture.detectChanges();
 
     component.onSuggestedQuestionClick('Show me the details of PO test123');
-    fixture.detectChanges();
 
     expect(chatService.sendMessage).toHaveBeenCalledTimes(2);
     expect(chatService.sendMessage).toHaveBeenCalledWith('Show me the details of PO test123');
-    expect(component.messages.filter(message => message.fromUser).map(message => message.text)).toContain(
-      'Show me the details of PO test123'
-    );
+    expect(component.messages.some(message => message.structuredSection?.presentationType === 'items-table'))
+      .toBeTrue();
   });
 
   it('displays suggestions only on the AI message that returned them', () => {
@@ -103,11 +181,13 @@ describe('ProcurementAiChatComponent', () => {
       of({
         message: 'First response',
         source: 'PURCHASE_ORDER',
+        data: null,
         suggestedQuestions: ['Follow up question']
       }),
       of({
         message: 'Second response',
         source: 'PURCHASE_ORDER',
+        data: null,
         suggestedQuestions: ['Another follow up']
       })
     );
@@ -123,27 +203,48 @@ describe('ProcurementAiChatComponent', () => {
     expect(suggestionLists[1].textContent).toContain('Another follow up');
   });
 
-  it('keeps normal typed-question behavior working', () => {
+  it('keeps normal typed-question behavior working when data is null', () => {
     chatService.sendMessage.and.returnValue(of({
-      message: 'Typed response',
+      message: 'The status of PO test123 is PENDING.',
       source: 'PURCHASE_ORDER',
+      data: null,
       suggestedQuestions: []
     }));
 
-    component.draftMessage = 'Typed question';
+    component.draftMessage = 'What is the status of PO test123?';
     component.send();
     fixture.detectChanges();
 
-    expect(chatService.sendMessage).toHaveBeenCalledWith('Typed question');
-    expect(component.draftMessage).toBe('');
-    expect(component.messages[0]).toEqual({ text: 'Typed question', fromUser: true });
-    expect(component.messages[1].text).toBe('Typed response');
+    expect(chatService.sendMessage).toHaveBeenCalledWith('What is the status of PO test123?');
+    expect(fixture.nativeElement.querySelector('.procurement-ai-structured-section')).toBeNull();
+    expect(component.messages[1].text).toBe('The status of PO test123 is PENDING.');
+  });
+
+  it('shows empty-state message for PURCHASE_ORDER_ITEMS with no rows', () => {
+    chatService.sendMessage.and.returnValue(of({
+      message: 'No items found.',
+      source: 'PURCHASE_ORDER',
+      data: {
+        type: 'PURCHASE_ORDER_ITEMS',
+        purchaseOrderNo: 'chatboat_1',
+        items: []
+      },
+      suggestedQuestions: []
+    }));
+
+    component.draftMessage = 'Show items';
+    component.send();
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('.procurement-ai-items-empty')?.textContent)
+      .toContain('No items/products were found for this purchase order.');
   });
 
   it('prevents duplicate submissions while a request is in progress', () => {
     chatService.sendMessage.and.returnValue(of({
       message: 'Response',
       source: 'PURCHASE_ORDER',
+      data: null,
       suggestedQuestions: ['Next question']
     }));
 
