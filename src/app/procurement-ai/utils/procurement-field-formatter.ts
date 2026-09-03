@@ -52,6 +52,18 @@ export function formatStructuredAmount(
   return code ? `${code} ${formattedAmount}` : formattedAmount;
 }
 
+export function formatUserFriendlyStatus(value?: string | null): string {
+  if (!value?.trim()) {
+    return '—';
+  }
+
+  return value
+    .trim()
+    .replace(/_/g, ' ')
+    .toLowerCase()
+    .replace(/\b\w/g, character => character.toUpperCase());
+}
+
 export function getStatusBadgeClass(status: string | number | null | undefined): string {
   const normalized = String(status ?? '').trim().toUpperCase();
 

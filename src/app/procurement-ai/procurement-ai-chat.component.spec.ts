@@ -49,6 +49,24 @@ const purchaseOrderItemsResponse = {
   suggestedQuestions: ['Show me the details of PO chatboat_1']
 };
 
+const purchaseOrderApprovalResponse = {
+  message: 'The pending approver for PO chatboat_1 is ravindra.singh@aurionpro.com.',
+  source: 'PURCHASE_ORDER',
+  data: {
+    type: 'PURCHASE_ORDER_APPROVAL',
+    purchaseOrderNo: 'chatboat_1',
+    approvalStatus: 'DELIVERY_HEAD_PENDING',
+    approvers: [
+      {
+        approvalLevel: 'DELIVERY HEAD',
+        approverEmail: 'ravindra.singh@aurionpro.com',
+        status: 'PENDING'
+      }
+    ]
+  },
+  suggestedQuestions: ['Show me the details of PO chatboat_1']
+};
+
 describe('ProcurementAiChatComponent', () => {
   let component: ProcurementAiChatComponent;
   let fixture: ComponentFixture<ProcurementAiChatComponent>;
@@ -133,6 +151,22 @@ describe('ProcurementAiChatComponent', () => {
     expect(compiled.textContent).not.toContain('Here are the items from the PO chatboat_1');
     expect(compiled.querySelector('.procurement-ai-items-table')).not.toBeNull();
     expect(compiled.querySelectorAll('.procurement-ai-items-table tbody tr').length).toBe(2);
+    expect(compiled.querySelector('.procurement-ai-suggestion-chip')).not.toBeNull();
+    expect(component.messages[component.messages.length - 1].suppressMessageText).toBeTrue();
+  });
+
+  it('renders PURCHASE_ORDER_APPROVAL structured table without plain-text message', () => {
+    chatService.sendMessage.and.returnValue(of(purchaseOrderApprovalResponse));
+
+    component.draftMessage = 'Who needs to approve PO chatboat_1?';
+    component.send();
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    expect(compiled.textContent).toContain('Purchase Order Approval');
+    expect(compiled.textContent).toContain('Delivery Head Pending');
+    expect(compiled.textContent).toContain('ravindra.singh@aurionpro.com');
+    expect(compiled.textContent).not.toContain('The pending approver for PO chatboat_1');
     expect(compiled.querySelector('.procurement-ai-suggestion-chip')).not.toBeNull();
     expect(component.messages[component.messages.length - 1].suppressMessageText).toBeTrue();
   });

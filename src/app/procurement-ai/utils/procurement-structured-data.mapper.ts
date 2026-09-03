@@ -1,23 +1,35 @@
 import {
   AiStructuredResponse,
+  isPurchaseOrderApprovalData,
   isPurchaseOrderDetailsData,
   isPurchaseOrderItemsData,
+  PurchaseOrderApprovalData,
+  PurchaseOrderApproverData,
   PurchaseOrderDetailsData,
   PurchaseOrderItemData,
   PurchaseOrderItemsData
 } from '../models/ai-structured-response.model';
 import {
+  StructuredApproverColumn,
+  StructuredApproverRow,
   StructuredField,
   StructuredItemColumn,
   StructuredItemRow,
   StructuredSection
 } from '../models/procurement-structured-response.model';
+import { formatUserFriendlyStatus } from './procurement-field-formatter';
 
 const ITEM_COLUMN_DEFINITIONS: StructuredItemColumn[] = [
   { key: 'product', label: 'Product / Item', type: 'text', align: 'left' },
   { key: 'quantity', label: 'Quantity', type: 'number', align: 'right' },
   { key: 'unit', label: 'Unit', type: 'text', align: 'left' },
   { key: 'unitPrice', label: 'Unit Price', type: 'amount', align: 'right' }
+];
+
+const APPROVER_COLUMN_DEFINITIONS: StructuredApproverColumn[] = [
+  { key: 'approvalLevel', label: 'Approval Level', type: 'text', align: 'left' },
+  { key: 'approverEmail', label: 'Email', type: 'text', align: 'left' },
+  { key: 'status', label: 'Status', type: 'status', align: 'left' }
 ];
 
 export function mapStructuredDataToSection(
@@ -35,6 +47,10 @@ export function mapStructuredDataToSection(
     case 'PURCHASE_ORDER_ITEMS':
       return isPurchaseOrderItemsData(data)
         ? mapPurchaseOrderItems(data)
+        : undefined;
+    case 'PURCHASE_ORDER_APPROVAL':
+      return isPurchaseOrderApprovalData(data)
+        ? mapPurchaseOrderApproval(data)
         : undefined;
     default:
       return undefined;
@@ -85,6 +101,41 @@ function mapPurchaseOrderItems(data: PurchaseOrderItemsData): StructuredSection 
       currencyCode: currency
     }
   };
+}
+
+function mapPurchaseOrderApproval(data: PurchaseOrderApprovalData): StructuredSection {
+  const approvers = Array.isArray(data.approvers) ? data.approvers : [];
+  const rows = approvers
+    .map(approver => sanitizePurchaseOrderApprover(approver))
+    .filter(row => hasRenderableApproverRow(row));
+  const headerFields: StructuredField[] = [];
+
+  addTextField(headerFields, 'PO Number', data.purchaseOrderNo, true);
+  addFriendlyStatusField(headerFields, 'Approval Status', data.approvalStatus);
+
+  return {
+    title: 'Purchase Order Approval',
+    capabilityType: 'PURCHASE_ORDER',
+    presentationType: 'approvers-table',
+    approversTable: {
+      headerFields,
+      columns: [...APPROVER_COLUMN_DEFINITIONS],
+      rows,
+      emptyMessage: 'No pending approvals for this purchase order.'
+    }
+  };
+}
+
+function sanitizePurchaseOrderApprover(approver: PurchaseOrderApproverData): StructuredApproverRow {
+  return {
+    approvalLevel: hasRenderableString(approver.approvalLevel) ? approver.approvalLevel.trim() : undefined,
+    approverEmail: hasRenderableString(approver.approverEmail) ? approver.approverEmail.trim() : undefined,
+    status: hasRenderableString(approver.status) ? approver.status.trim() : undefined
+  };
+}
+
+function hasRenderableApproverRow(row: StructuredApproverRow): boolean {
+  return APPROVER_COLUMN_DEFINITIONS.some(column => hasRenderableCellValue(row[column.key]));
 }
 
 function sanitizePurchaseOrderItem(item: PurchaseOrderItemData): StructuredItemRow {
@@ -151,6 +202,18 @@ function addStatusField(fields: StructuredField[], label: string, value?: string
     label,
     type: 'status',
     value: value.trim()
+  });
+}
+
+function addFriendlyStatusField(fields: StructuredField[], label: string, value?: string | null): void {
+  if (!hasRenderableString(value)) {
+    return;
+  }
+
+  fields.push({
+    label,
+    type: 'status',
+    value: formatUserFriendlyStatus(value)
   });
 }
 

@@ -28,10 +28,27 @@ export interface PurchaseOrderItemsData extends AiStructuredResponse {
   items?: PurchaseOrderItemData[];
 }
 
+export interface PurchaseOrderApproverData {
+  approvalLevel?: string;
+  approverEmail?: string;
+  status?: string;
+}
+
+export interface PurchaseOrderApprovalData extends AiStructuredResponse {
+  type: 'PURCHASE_ORDER_APPROVAL';
+  purchaseOrderNo?: string;
+  approvalStatus?: string;
+  approvers?: PurchaseOrderApproverData[];
+}
+
 export function isPurchaseOrderDetailsData(data: AiStructuredResponse): data is PurchaseOrderDetailsData {
   return data.type === 'PURCHASE_ORDER_DETAILS';
 }
 
 export function isPurchaseOrderItemsData(data: AiStructuredResponse): data is PurchaseOrderItemsData {
   return data.type === 'PURCHASE_ORDER_ITEMS';
+}
+
+export function isPurchaseOrderApprovalData(data: AiStructuredResponse): data is PurchaseOrderApprovalData {
+  return data.type === 'PURCHASE_ORDER_APPROVAL';
 }

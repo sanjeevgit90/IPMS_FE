@@ -1,5 +1,6 @@
 import { mapStructuredDataToSection } from './procurement-structured-data.mapper';
 import {
+  PurchaseOrderApprovalData,
   PurchaseOrderDetailsData,
   PurchaseOrderItemsData
 } from '../models/ai-structured-response.model';
@@ -134,5 +135,82 @@ describe('procurement-structured-data.mapper', () => {
     expect(row?.productId).toBeUndefined();
     expect(row?.organizationId).toBeUndefined();
     expect(row?.lineTotal).toBeUndefined();
+  });
+
+  it('maps PURCHASE_ORDER_APPROVAL to an approvers table section', () => {
+    const data: PurchaseOrderApprovalData = {
+      type: 'PURCHASE_ORDER_APPROVAL',
+      purchaseOrderNo: 'chatboat_1',
+      approvalStatus: 'DELIVERY_HEAD_PENDING',
+      approvers: [
+        {
+          approvalLevel: 'DELIVERY HEAD',
+          approverEmail: 'ravindra.singh@aurionpro.com',
+          status: 'PENDING'
+        }
+      ]
+    };
+
+    const section = mapStructuredDataToSection(data);
+
+    expect(section?.presentationType).toBe('approvers-table');
+    expect(section?.title).toBe('Purchase Order Approval');
+    expect(section?.approversTable?.rows.length).toBe(1);
+    expect(section?.approversTable?.rows[0].approvalLevel).toBe('DELIVERY HEAD');
+    expect(section?.approversTable?.rows[0].approverEmail).toBe('ravindra.singh@aurionpro.com');
+    expect(section?.approversTable?.headerFields?.map(field => field.label))
+      .toEqual(['PO Number', 'Approval Status']);
+    expect(section?.approversTable?.headerFields?.[1].value).toBe('Delivery Head Pending');
+  });
+
+  it('renders multiple approvers as multiple rows', () => {
+    const data: PurchaseOrderApprovalData = {
+      type: 'PURCHASE_ORDER_APPROVAL',
+      purchaseOrderNo: 'chatboat_1',
+      approvalStatus: 'PENDING',
+      approvers: [
+        { approvalLevel: 'DELIVERY HEAD', approverEmail: 'one@example.com', status: 'PENDING' },
+        { approvalLevel: 'FINANCE HEAD', approverEmail: 'two@example.com', status: 'PENDING' }
+      ]
+    };
+    const section = mapStructuredDataToSection(data);
+
+    expect(section?.approversTable?.rows.length).toBe(2);
+  });
+
+  it('handles empty approvers with an empty-state message', () => {
+    const data: PurchaseOrderApprovalData = {
+      type: 'PURCHASE_ORDER_APPROVAL',
+      purchaseOrderNo: 'chatboat_1',
+      approvalStatus: 'APPROVED',
+      approvers: []
+    };
+    const section = mapStructuredDataToSection(data);
+
+    expect(section?.approversTable?.rows.length).toBe(0);
+    expect(section?.approversTable?.emptyMessage)
+      .toBe('No pending approvals for this purchase order.');
+  });
+
+  it('does not expose unsupported approver fields from payloads', () => {
+    const data: PurchaseOrderApprovalData = {
+      type: 'PURCHASE_ORDER_APPROVAL',
+      purchaseOrderNo: 'chatboat_1',
+      approvalStatus: 'PENDING',
+      approvers: [
+        {
+          approvalLevel: 'DELIVERY HEAD',
+          approverEmail: 'ravindra.singh@aurionpro.com',
+          status: 'PENDING',
+          ...( { approverName: 'Ravindra', taskId: 99 } as Record<string, unknown> )
+        }
+      ]
+    };
+    const section = mapStructuredDataToSection(data);
+
+    const row = section?.approversTable?.rows[0] as Record<string, unknown> | undefined;
+    expect(row?.approvalLevel).toBe('DELIVERY HEAD');
+    expect(row?.approverName).toBeUndefined();
+    expect(row?.taskId).toBeUndefined();
   });
 });

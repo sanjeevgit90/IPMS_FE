@@ -1,9 +1,17 @@
 import { ChatMessage, ProcurementChatResponse } from '../models/procurement-chat.model';
-import { isPurchaseOrderItemsData } from '../models/ai-structured-response.model';
+import {
+  AiStructuredResponse,
+  isPurchaseOrderApprovalData,
+  isPurchaseOrderItemsData
+} from '../models/ai-structured-response.model';
 import { mapStructuredDataToSection } from './procurement-structured-data.mapper';
 
+function shouldSuppressMessageText(data?: AiStructuredResponse | null): boolean {
+  return !!data && (isPurchaseOrderItemsData(data) || isPurchaseOrderApprovalData(data));
+}
+
 export function mapApiResponseToChatMessage(response: ProcurementChatResponse): ChatMessage {
-  const suppressMessageText = !!response.data && isPurchaseOrderItemsData(response.data);
+  const suppressMessageText = shouldSuppressMessageText(response.data);
 
   return {
     text: response.message,

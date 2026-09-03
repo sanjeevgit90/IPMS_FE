@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 import {
+  StructuredApproverColumn,
+  StructuredApproverRow,
   StructuredField,
   StructuredItemColumn,
   StructuredItemRow,
@@ -8,6 +10,7 @@ import {
 import {
   formatStructuredAmount,
   formatStructuredField,
+  formatUserFriendlyStatus,
   getStatusBadgeClass
 } from './utils/procurement-field-formatter';
 
@@ -23,6 +26,10 @@ export class ProcurementAiStructuredSectionComponent {
 
   isItemsTable(section: StructuredSection): boolean {
     return section.presentationType === 'items-table' && !!section.itemsTable;
+  }
+
+  isApproversTable(section: StructuredSection): boolean {
+    return section.presentationType === 'approvers-table' && !!section.approversTable;
   }
 
   isFieldsSection(section: StructuredSection): boolean {
@@ -51,6 +58,22 @@ export class ProcurementAiStructuredSectionComponent {
     return value === null || value === undefined || value === ''
       ? '—'
       : String(value).trim();
+  }
+
+  formatApproverCellValue(column: StructuredApproverColumn, row: StructuredApproverRow): string {
+    const value = row[column.key];
+
+    if (column.type === 'status') {
+      return formatUserFriendlyStatus(typeof value === 'string' ? value : String(value ?? ''));
+    }
+
+    return value === null || value === undefined || value === ''
+      ? '—'
+      : String(value).trim();
+  }
+
+  approverStatusBadgeClass(row: StructuredApproverRow): string {
+    return getStatusBadgeClass(row.status);
   }
 
   statusBadgeClass(field: StructuredField): string {
