@@ -53,18 +53,40 @@ export class ProcurementAiChatComponent {
 
   send(): void {
     const text = this.draftMessage.trim();
+    if (!text) {
+      return;
+    }
+    this.draftMessage = '';
+    this.submitMessage(text);
+  }
+
+  onSuggestedQuestionClick(question: string): void {
+    this.submitMessage(question);
+  }
+
+  onEnter(event: KeyboardEvent): void {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      this.send();
+    }
+  }
+
+  private submitMessage(text: string): void {
     if (!text || this.isLoading || !this.isAuthenticated) {
       return;
     }
 
     this.messages.push({ text, fromUser: true });
-    this.draftMessage = '';
     this.isLoading = true;
     this.scrollToBottom();
 
     this.chatService.sendMessage(text).subscribe({
       next: (response) => {
-        this.messages.push({ text: response.message, fromUser: false });
+        this.messages.push({
+          text: response.message,
+          fromUser: false,
+          suggestedQuestions: this.normalizeSuggestedQuestions(response.suggestedQuestions)
+        });
         this.isLoading = false;
         this.scrollToBottom();
       },
@@ -80,11 +102,11 @@ export class ProcurementAiChatComponent {
     });
   }
 
-  onEnter(event: KeyboardEvent): void {
-    if (event.key === 'Enter' && !event.shiftKey) {
-      event.preventDefault();
-      this.send();
+  private normalizeSuggestedQuestions(questions?: string[] | null): string[] | undefined {
+    if (!questions?.length) {
+      return undefined;
     }
+    return questions;
   }
 
   private refreshAuthState(): void {

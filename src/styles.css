@@ -2746,7 +2746,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#741051', end
     display: block;
     float: right;
     margin: 0;
-    max-width: 60%;
+    max-width: 80%;
     padding: 8px 15px;
     position: relative;
 }
@@ -2844,7 +2844,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#741051', end
 	position: relative;
 	padding: 8px 10px;
 	border-radius: 2px 15px 15px 2px;
-	max-width: 60%;
+	max-width: 80%;
+	margin-bottom: 10px;
 }
 .avatar {
 	background-color: #aaa;

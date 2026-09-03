@@ -21,6 +21,22 @@
                       <div class="chat-content">
                         <p [class.text-danger]="msg.isError">{{ msg.text }}</p>
                       </div>
+                      @if (!msg.fromUser && !msg.isError && msg.suggestedQuestions?.length) {
+                        <div class="procurement-ai-suggestions">
+                          <span class="procurement-ai-suggestions-label">Suggested questions:</span>
+                          <div class="procurement-ai-suggestion-list">
+                            @for (question of msg.suggestedQuestions; track question) {
+                              <button
+                                type="button"
+                                class="procurement-ai-suggestion-chip"
+                                [disabled]="isLoading"
+                                (click)="onSuggestedQuestionClick(question)">
+                                {{ question }}
+                              </button>
+                            }
+                          </div>
+                        </div>
+                      }
                     </div>
                   </div>
                 }
