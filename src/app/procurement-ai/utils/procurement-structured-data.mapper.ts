@@ -2,10 +2,13 @@ import {
   AiStructuredResponse,
   isPurchaseOrderApprovalData,
   isPurchaseOrderDetailsData,
+  isPurchaseOrderGrnsData,
   isPurchaseOrderItemsData,
   PurchaseOrderApprovalData,
   PurchaseOrderApproverData,
   PurchaseOrderDetailsData,
+  PurchaseOrderGrnData,
+  PurchaseOrderGrnsData,
   PurchaseOrderItemData,
   PurchaseOrderItemsData
 } from '../models/ai-structured-response.model';
@@ -13,6 +16,8 @@ import {
   StructuredApproverColumn,
   StructuredApproverRow,
   StructuredField,
+  StructuredGrnColumn,
+  StructuredGrnRow,
   StructuredItemColumn,
   StructuredItemRow,
   StructuredSection
@@ -30,6 +35,13 @@ const APPROVER_COLUMN_DEFINITIONS: StructuredApproverColumn[] = [
   { key: 'approvalLevel', label: 'Approval Level', type: 'text', align: 'left' },
   { key: 'approverEmail', label: 'Email', type: 'text', align: 'left' },
   { key: 'status', label: 'Status', type: 'status', align: 'left' }
+];
+
+const GRN_COLUMN_DEFINITIONS: StructuredGrnColumn[] = [
+  { key: 'grnNumber', label: 'GRN Number', type: 'text', align: 'left' },
+  { key: 'grnDate', label: 'GRN Date', type: 'date', align: 'left' },
+  { key: 'status', label: 'Status', type: 'status', align: 'left' },
+  { key: 'projectName', label: 'Project', type: 'text', align: 'left' }
 ];
 
 export function mapStructuredDataToSection(
@@ -51,6 +63,10 @@ export function mapStructuredDataToSection(
     case 'PURCHASE_ORDER_APPROVAL':
       return isPurchaseOrderApprovalData(data)
         ? mapPurchaseOrderApproval(data)
+        : undefined;
+    case 'PURCHASE_ORDER_GRN':
+      return isPurchaseOrderGrnsData(data)
+        ? mapPurchaseOrderGrns(data)
         : undefined;
     default:
       return undefined;
@@ -101,6 +117,41 @@ function mapPurchaseOrderItems(data: PurchaseOrderItemsData): StructuredSection 
       currencyCode: currency
     }
   };
+}
+
+function mapPurchaseOrderGrns(data: PurchaseOrderGrnsData): StructuredSection {
+  const grns = Array.isArray(data.grns) ? data.grns : [];
+  const rows = grns
+    .map(grn => sanitizePurchaseOrderGrn(grn))
+    .filter(row => hasRenderableGrnRow(row));
+  const headerFields: StructuredField[] = [];
+
+  addTextField(headerFields, 'Purchase Order', data.purchaseOrderNo, true);
+
+  return {
+    title: 'Purchase Order GRNs',
+    capabilityType: 'PURCHASE_ORDER',
+    presentationType: 'grns-table',
+    grnsTable: {
+      headerFields,
+      columns: [...GRN_COLUMN_DEFINITIONS],
+      rows,
+      emptyMessage: 'No GRNs found for this purchase order.'
+    }
+  };
+}
+
+function sanitizePurchaseOrderGrn(grn: PurchaseOrderGrnData): StructuredGrnRow {
+  return {
+    grnNumber: hasRenderableString(grn.grnNumber) ? grn.grnNumber.trim() : undefined,
+    grnDate: hasRenderableString(grn.grnDate) ? grn.grnDate.trim() : undefined,
+    status: hasRenderableString(grn.status) ? grn.status.trim() : undefined,
+    projectName: hasRenderableString(grn.projectName) ? grn.projectName.trim() : undefined
+  };
+}
+
+function hasRenderableGrnRow(row: StructuredGrnRow): boolean {
+  return GRN_COLUMN_DEFINITIONS.some(column => hasRenderableCellValue(row[column.key]));
 }
 
 function mapPurchaseOrderApproval(data: PurchaseOrderApprovalData): StructuredSection {

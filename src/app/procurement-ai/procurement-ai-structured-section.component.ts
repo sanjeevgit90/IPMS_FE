@@ -3,11 +3,14 @@ import {
   StructuredApproverColumn,
   StructuredApproverRow,
   StructuredField,
+  StructuredGrnColumn,
+  StructuredGrnRow,
   StructuredItemColumn,
   StructuredItemRow,
   StructuredSection
 } from './models/procurement-structured-response.model';
 import {
+  formatIsoDate,
   formatStructuredAmount,
   formatStructuredField,
   formatUserFriendlyStatus,
@@ -30,6 +33,10 @@ export class ProcurementAiStructuredSectionComponent {
 
   isApproversTable(section: StructuredSection): boolean {
     return section.presentationType === 'approvers-table' && !!section.approversTable;
+  }
+
+  isGrnsTable(section: StructuredSection): boolean {
+    return section.presentationType === 'grns-table' && !!section.grnsTable;
   }
 
   isFieldsSection(section: StructuredSection): boolean {
@@ -73,6 +80,26 @@ export class ProcurementAiStructuredSectionComponent {
   }
 
   approverStatusBadgeClass(row: StructuredApproverRow): string {
+    return getStatusBadgeClass(row.status);
+  }
+
+  formatGrnCellValue(column: StructuredGrnColumn, row: StructuredGrnRow): string {
+    const value = row[column.key];
+
+    if (column.type === 'date') {
+      return formatIsoDate(typeof value === 'string' ? value : String(value ?? ''));
+    }
+
+    if (column.type === 'status') {
+      return formatUserFriendlyStatus(typeof value === 'string' ? value : String(value ?? ''));
+    }
+
+    return value === null || value === undefined || value === ''
+      ? '—'
+      : String(value).trim();
+  }
+
+  grnStatusBadgeClass(row: StructuredGrnRow): string {
     return getStatusBadgeClass(row.status);
   }
 
