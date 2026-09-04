@@ -77,6 +77,19 @@
   margin-bottom: 6px;
 }
 
+.procurement-ai-suggestion-group + .procurement-ai-suggestion-group {
+  margin-top: 10px;
+}
+
+.procurement-ai-suggestion-group-title {
+  color: #6c757d;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  margin: 0 0 6px;
+  text-transform: uppercase;
+}
+
 .procurement-ai-suggestion-list {
   display: flex;
   flex-wrap: wrap;

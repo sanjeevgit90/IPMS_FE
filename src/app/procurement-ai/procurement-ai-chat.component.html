@@ -27,20 +27,25 @@
                         <app-procurement-ai-structured-section [section]="msg.structuredSection">
                         </app-procurement-ai-structured-section>
                       }
-                      @if (!msg.fromUser && !msg.isError && msg.suggestedQuestions?.length) {
+                      @if (!msg.fromUser && !msg.isError && msg.suggestedQuestionGroups?.length) {
                         <div class="procurement-ai-suggestions">
                           <span class="procurement-ai-suggestions-label">Suggested questions:</span>
-                          <div class="procurement-ai-suggestion-list">
-                            @for (question of msg.suggestedQuestions; track question) {
-                              <button
-                                type="button"
-                                class="procurement-ai-suggestion-chip"
-                                [disabled]="isLoading"
-                                (click)="onSuggestedQuestionClick(question)">
-                                {{ question }}
-                              </button>
-                            }
-                          </div>
+                          @for (questionGroup of msg.suggestedQuestionGroups; track questionGroup.group) {
+                            <div class="procurement-ai-suggestion-group">
+                              <h5 class="procurement-ai-suggestion-group-title">{{ questionGroup.group }}</h5>
+                              <div class="procurement-ai-suggestion-list">
+                                @for (question of questionGroup.questions; track question) {
+                                  <button
+                                    type="button"
+                                    class="procurement-ai-suggestion-chip"
+                                    [disabled]="isLoading"
+                                    (click)="onSuggestedQuestionClick(question)">
+                                    {{ question }}
+                                  </button>
+                                }
+                              </div>
+                            </div>
+                          }
                         </div>
                       }
                     </div>

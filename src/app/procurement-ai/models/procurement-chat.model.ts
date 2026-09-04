@@ -5,11 +5,16 @@ export interface ProcurementChatRequest {
   message: string;
 }
 
+export interface SuggestedQuestionGroup {
+  group: string;
+  questions: string[];
+}
+
 export interface ProcurementChatResponse {
   message: string;
   source: string | null;
   data?: AiStructuredResponse | null;
-  suggestedQuestions?: string[];
+  suggestedQuestionGroups?: SuggestedQuestionGroup[];
 }
 
 export interface ChatMessage {
@@ -17,6 +22,6 @@ export interface ChatMessage {
   fromUser: boolean;
   isError?: boolean;
   suppressMessageText?: boolean;
-  suggestedQuestions?: string[];
+  suggestedQuestionGroups?: SuggestedQuestionGroup[];
   structuredSection?: StructuredSection;
 }

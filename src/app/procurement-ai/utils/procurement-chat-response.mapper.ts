@@ -1,4 +1,4 @@
-import { ChatMessage, ProcurementChatResponse } from '../models/procurement-chat.model';
+import { ChatMessage, ProcurementChatResponse, SuggestedQuestionGroup } from '../models/procurement-chat.model';
 import {
   AiStructuredResponse,
   isPurchaseOrderApprovalData,
@@ -22,13 +22,41 @@ export function mapApiResponseToChatMessage(response: ProcurementChatResponse): 
     text: response.message,
     fromUser: false,
     suppressMessageText,
-    suggestedQuestions: normalizeSuggestedQuestions(response.suggestedQuestions),
+    suggestedQuestionGroups: normalizeSuggestedQuestionGroups(response.suggestedQuestionGroups),
     structuredSection: mapStructuredDataToSection(response.data)
   };
 }
-export function normalizeSuggestedQuestions(questions?: string[] | null): string[] | undefined {
-  if (!questions?.length) {
+
+export function normalizeSuggestedQuestionGroups(
+  groups?: SuggestedQuestionGroup[] | null
+): SuggestedQuestionGroup[] | undefined {
+  if (!groups?.length) {
     return undefined;
   }
-  return questions;
+
+  const normalized: SuggestedQuestionGroup[] = [];
+
+  for (const item of groups) {
+    const groupName = item?.group?.trim();
+    if (!groupName) {
+      continue;
+    }
+
+    const questions = Array.isArray(item.questions)
+      ? item.questions
+          .map(question => question?.trim())
+          .filter((question): question is string => !!question)
+      : [];
+
+    if (!questions.length) {
+      continue;
+    }
+
+    normalized.push({
+      group: groupName,
+      questions
+    });
+  }
+
+  return normalized.length ? normalized : undefined;
 }
