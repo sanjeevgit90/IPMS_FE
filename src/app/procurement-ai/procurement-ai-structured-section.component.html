@@ -2,7 +2,56 @@
   <section class="procurement-ai-structured-section" [attr.aria-label]="section.title">
     <h4 class="procurement-ai-structured-title">{{ section.title }}</h4>
 
-    @if (isGrnsTable(section) && section.grnsTable) {
+    @if (isGrnReceiptTable(section) && section.grnReceiptTable) {
+      @if (section.grnReceiptTable.headerFields?.length) {
+        <dl class="procurement-ai-structured-fields procurement-ai-items-header-fields">
+          @for (field of section.grnReceiptTable.headerFields; track field.label) {
+            <div class="procurement-ai-structured-row">
+              <dt>{{ field.label }}</dt>
+              <dd [class.procurement-ai-structured-value-emphasis]="field.emphasize">
+                @if (field.type === 'status') {
+                  <span [class]="statusBadgeClass(field)" [attr.aria-label]="'Status: ' + formatValue(field)">
+                    {{ formatValue(field) }}
+                  </span>
+                } @else {
+                  {{ formatValue(field) }}
+                }
+              </dd>
+            </div>
+          }
+        </dl>
+      }
+
+      @if (!section.grnReceiptTable.rows.length) {
+        <p class="procurement-ai-items-empty">{{ section.grnReceiptTable.emptyMessage }}</p>
+      } @else {
+        <div class="procurement-ai-items-table-wrapper">
+          <table class="table table-sm procurement-ai-items-table procurement-ai-grn-receipt-table">
+            <thead>
+              <tr>
+                @for (column of section.grnReceiptTable.columns; track column.key) {
+                  <th [class.text-end]="column.align === 'right'">{{ column.label }}</th>
+                }
+              </tr>
+            </thead>
+            <tbody>
+              @for (row of section.grnReceiptTable.rows; track $index) {
+                <tr>
+                  @for (column of section.grnReceiptTable.columns; track column.key) {
+                    <td
+                      [class.text-end]="column.align === 'right'"
+                      [class.procurement-ai-receipt-product-cell]="column.key === 'productName'"
+                      [attr.data-label]="column.label">
+                      {{ formatGrnReceiptCellValue(column, row) }}
+                    </td>
+                  }
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    } @else if (isGrnsTable(section) && section.grnsTable) {
       @if (section.grnsTable.headerFields?.length) {
         <dl class="procurement-ai-structured-fields procurement-ai-items-header-fields">
           @for (field of section.grnsTable.headerFields; track field.label) {

@@ -4,6 +4,8 @@ import {
   StructuredApproverRow,
   StructuredField,
   StructuredGrnColumn,
+  StructuredGrnReceiptColumn,
+  StructuredGrnReceiptRow,
   StructuredGrnRow,
   StructuredItemColumn,
   StructuredItemRow,
@@ -37,6 +39,10 @@ export class ProcurementAiStructuredSectionComponent {
 
   isGrnsTable(section: StructuredSection): boolean {
     return section.presentationType === 'grns-table' && !!section.grnsTable;
+  }
+
+  isGrnReceiptTable(section: StructuredSection): boolean {
+    return section.presentationType === 'grn-receipt-table' && !!section.grnReceiptTable;
   }
 
   isFieldsSection(section: StructuredSection): boolean {
@@ -101,6 +107,18 @@ export class ProcurementAiStructuredSectionComponent {
 
   grnStatusBadgeClass(row: StructuredGrnRow): string {
     return getStatusBadgeClass(row.status);
+  }
+
+  formatGrnReceiptCellValue(column: StructuredGrnReceiptColumn, row: StructuredGrnReceiptRow): string {
+    const value = row[column.key];
+
+    if (column.type === 'number') {
+      return value === null || value === undefined ? '—' : String(value);
+    }
+
+    return value === null || value === undefined || value === ''
+      ? '—'
+      : String(value).trim();
   }
 
   statusBadgeClass(field: StructuredField): string {

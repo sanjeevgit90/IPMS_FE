@@ -2,12 +2,15 @@ import {
   AiStructuredResponse,
   isPurchaseOrderApprovalData,
   isPurchaseOrderDetailsData,
+  isPurchaseOrderGrnReceiptData,
   isPurchaseOrderGrnsData,
   isPurchaseOrderItemsData,
   PurchaseOrderApprovalData,
   PurchaseOrderApproverData,
   PurchaseOrderDetailsData,
   PurchaseOrderGrnData,
+  PurchaseOrderGrnReceiptData,
+  PurchaseOrderGrnReceiptProductData,
   PurchaseOrderGrnsData,
   PurchaseOrderItemData,
   PurchaseOrderItemsData
@@ -17,6 +20,8 @@ import {
   StructuredApproverRow,
   StructuredField,
   StructuredGrnColumn,
+  StructuredGrnReceiptColumn,
+  StructuredGrnReceiptRow,
   StructuredGrnRow,
   StructuredItemColumn,
   StructuredItemRow,
@@ -44,6 +49,14 @@ const GRN_COLUMN_DEFINITIONS: StructuredGrnColumn[] = [
   { key: 'projectName', label: 'Project', type: 'text', align: 'left' }
 ];
 
+const GRN_RECEIPT_COLUMN_DEFINITIONS: StructuredGrnReceiptColumn[] = [
+  { key: 'productName', label: 'Product', type: 'text', align: 'left' },
+  { key: 'quantity', label: 'Quantity', type: 'number', align: 'right' },
+  { key: 'receivedQuantity', label: 'Received Quantity', type: 'number', align: 'right' },
+  { key: 'acceptedQuantity', label: 'Accepted Quantity', type: 'number', align: 'right' },
+  { key: 'rejectedQuantity', label: 'Rejected Quantity', type: 'number', align: 'right' }
+];
+
 export function mapStructuredDataToSection(
   data?: AiStructuredResponse | null
 ): StructuredSection | undefined {
@@ -67,6 +80,10 @@ export function mapStructuredDataToSection(
     case 'PURCHASE_ORDER_GRN':
       return isPurchaseOrderGrnsData(data)
         ? mapPurchaseOrderGrns(data)
+        : undefined;
+    case 'PURCHASE_ORDER_GRN_RECEIPT':
+      return isPurchaseOrderGrnReceiptData(data)
+        ? mapPurchaseOrderGrnReceipt(data)
         : undefined;
     default:
       return undefined;
@@ -152,6 +169,49 @@ function sanitizePurchaseOrderGrn(grn: PurchaseOrderGrnData): StructuredGrnRow {
 
 function hasRenderableGrnRow(row: StructuredGrnRow): boolean {
   return GRN_COLUMN_DEFINITIONS.some(column => hasRenderableCellValue(row[column.key]));
+}
+
+function mapPurchaseOrderGrnReceipt(data: PurchaseOrderGrnReceiptData): StructuredSection {
+  const products = Array.isArray(data.products) ? data.products : [];
+  const rows = products
+    .map(product => sanitizePurchaseOrderGrnReceiptProduct(product))
+    .filter(row => hasRenderableGrnReceiptRow(row));
+  const headerFields: StructuredField[] = [];
+
+  addTextField(headerFields, 'GRN Number', data.grnNumber);
+  addStatusField(headerFields, 'Status', data.status);
+
+  const title = hasRenderableString(data.purchaseOrderNo)
+    ? `Material Receipt — PO ${data.purchaseOrderNo.trim()}`
+    : 'Material Receipt';
+
+  return {
+    title,
+    capabilityType: 'PURCHASE_ORDER',
+    presentationType: 'grn-receipt-table',
+    grnReceiptTable: {
+      headerFields,
+      columns: [...GRN_RECEIPT_COLUMN_DEFINITIONS],
+      rows,
+      emptyMessage: 'No product receipt details are available for this purchase order.'
+    }
+  };
+}
+
+function sanitizePurchaseOrderGrnReceiptProduct(
+  product: PurchaseOrderGrnReceiptProductData
+): StructuredGrnReceiptRow {
+  return {
+    productName: hasRenderableString(product.productName) ? product.productName.trim() : undefined,
+    quantity: isValidNumber(product.quantity) ? product.quantity : undefined,
+    receivedQuantity: isValidNumber(product.receivedQuantity) ? product.receivedQuantity : undefined,
+    acceptedQuantity: isValidNumber(product.acceptedQuantity) ? product.acceptedQuantity : undefined,
+    rejectedQuantity: isValidNumber(product.rejectedQuantity) ? product.rejectedQuantity : undefined
+  };
+}
+
+function hasRenderableGrnReceiptRow(row: StructuredGrnReceiptRow): boolean {
+  return GRN_RECEIPT_COLUMN_DEFINITIONS.some(column => hasRenderableCellValue(row[column.key]));
 }
 
 function mapPurchaseOrderApproval(data: PurchaseOrderApprovalData): StructuredSection {

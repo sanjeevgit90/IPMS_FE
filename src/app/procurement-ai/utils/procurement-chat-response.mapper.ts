@@ -2,6 +2,7 @@ import { ChatMessage, ProcurementChatResponse, SuggestedQuestionGroup } from '..
 import {
   AiStructuredResponse,
   isPurchaseOrderApprovalData,
+  isPurchaseOrderGrnReceiptData,
   isPurchaseOrderGrnsData,
   isPurchaseOrderItemsData
 } from '../models/ai-structured-response.model';
@@ -11,7 +12,8 @@ function shouldSuppressMessageText(data?: AiStructuredResponse | null): boolean 
   return !!data && (
     isPurchaseOrderItemsData(data) ||
     isPurchaseOrderApprovalData(data) ||
-    isPurchaseOrderGrnsData(data)
+    isPurchaseOrderGrnsData(data) ||
+    isPurchaseOrderGrnReceiptData(data)
   );
 }
 

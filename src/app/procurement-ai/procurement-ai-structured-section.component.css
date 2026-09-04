@@ -85,6 +85,16 @@
   word-break: break-word;
 }
 
+.procurement-ai-grn-receipt-table {
+  min-width: 640px;
+}
+
+.procurement-ai-receipt-product-cell {
+  min-width: 200px;
+  white-space: normal;
+  word-break: break-word;
+}
+
 @media (max-width: 480px) {
   .procurement-ai-structured-row {
     grid-template-columns: 1fr;

@@ -1,5 +1,10 @@
 export type StructuredFieldType = 'text' | 'status' | 'date' | 'amount' | 'list';
-export type StructuredPresentationType = 'fields' | 'items-table' | 'approvers-table' | 'grns-table';
+export type StructuredPresentationType =
+  | 'fields'
+  | 'items-table'
+  | 'approvers-table'
+  | 'grns-table'
+  | 'grn-receipt-table';
 
 export interface StructuredField {
   label: string;
@@ -73,6 +78,28 @@ export interface StructuredGrnsTable {
   emptyMessage: string;
 }
 
+export interface StructuredGrnReceiptRow {
+  productName?: string;
+  quantity?: number;
+  receivedQuantity?: number;
+  acceptedQuantity?: number;
+  rejectedQuantity?: number;
+}
+
+export interface StructuredGrnReceiptColumn {
+  key: keyof StructuredGrnReceiptRow;
+  label: string;
+  type: 'text' | 'number';
+  align: 'left' | 'right';
+}
+
+export interface StructuredGrnReceiptTable {
+  headerFields?: StructuredField[];
+  columns: StructuredGrnReceiptColumn[];
+  rows: StructuredGrnReceiptRow[];
+  emptyMessage: string;
+}
+
 export interface StructuredSection {
   title: string;
   capabilityType?: string;
@@ -81,4 +108,5 @@ export interface StructuredSection {
   itemsTable?: StructuredItemsTable;
   approversTable?: StructuredApproversTable;
   grnsTable?: StructuredGrnsTable;
+  grnReceiptTable?: StructuredGrnReceiptTable;
 }

@@ -55,6 +55,22 @@ export interface PurchaseOrderGrnsData extends AiStructuredResponse {
   grns?: PurchaseOrderGrnData[];
 }
 
+export interface PurchaseOrderGrnReceiptProductData {
+  productName?: string;
+  quantity?: number;
+  receivedQuantity?: number;
+  acceptedQuantity?: number;
+  rejectedQuantity?: number;
+}
+
+export interface PurchaseOrderGrnReceiptData extends AiStructuredResponse {
+  type: 'PURCHASE_ORDER_GRN_RECEIPT';
+  purchaseOrderNo?: string;
+  grnNumber?: string;
+  status?: string;
+  products?: PurchaseOrderGrnReceiptProductData[];
+}
+
 export function isPurchaseOrderDetailsData(data: AiStructuredResponse): data is PurchaseOrderDetailsData {
   return data.type === 'PURCHASE_ORDER_DETAILS';
 }
@@ -69,4 +85,8 @@ export function isPurchaseOrderApprovalData(data: AiStructuredResponse): data is
 
 export function isPurchaseOrderGrnsData(data: AiStructuredResponse): data is PurchaseOrderGrnsData {
   return data.type === 'PURCHASE_ORDER_GRN';
+}
+
+export function isPurchaseOrderGrnReceiptData(data: AiStructuredResponse): data is PurchaseOrderGrnReceiptData {
+  return data.type === 'PURCHASE_ORDER_GRN_RECEIPT';
 }
