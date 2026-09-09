@@ -26,6 +26,15 @@ import {
   UserProfileSummary
 } from '../models/travel-reimbursement.model';
 
+function dateRangeValidator(group: AbstractControl): ValidationErrors | null {
+  const fromDate = group.get('fromDate')?.value;
+  const toDate = group.get('toDate')?.value;
+  if (fromDate && toDate && new Date(fromDate).getTime() > new Date(toDate).getTime()) {
+    return { dateRange: true };
+  }
+  return null;
+}
+
 @Component({
   selector: 'app-add-travel-reimbursement',
   templateUrl: './add-travel-reimbursement.component.html',
@@ -173,61 +182,54 @@ export class AddTravelReimbursementComponent implements OnInit {
       return;
     }
 
-    const headers = { Authorization: sessionStorage.getItem('token') ?? '' };
-    this.projectMasterService.projectById(projectId, headers).subscribe({
+    this.projectMasterService.projectById(projectId, this.getAuthHeaders()).subscribe({
       next: (resp: ProjectDetails) => {
         this.travelReimbursementForm.patchValue({
           projectName: resp.projectName ?? null,
           projectPin: resp.projectPin ?? null
         });
       },
-      error: (error) => {
-        const errStr = error?.error?.errorDetail?.[0] ?? 'Unable to load project details.';
-        this.dialogService.openConfirmDialog(errStr);
-      }
+      error: (error) => this.showError(error, 'Unable to load project details.')
     });
   }
 
   saveTravelReimbursement(): void {
+    this.submit(false);
+  }
+
+  updateTravelReimbursement(): void {
+    this.submit(true);
+  }
+
+  private submit(isUpdate: boolean): void {
     this.isSubmitted = true;
     this.markAllAsTouched();
     this.travelReimbursementForm.updateValueAndValidity();
+
+    if (isUpdate && !this.entityId) {
+      return;
+    }
 
     if (!this.validateBeforeSubmit()) {
       return;
     }
 
-    const payload = this.buildPayload();
-    const headers = { Authorization: sessionStorage.getItem('token') ?? '' };
+    const payload = this.buildPayload(isUpdate ? this.entityId! : undefined);
+    const headers = this.getAuthHeaders();
     this.showLoading = true;
 
-    this.travelReimbursementService.saveTravelReimbursement(payload, headers).subscribe({
+    const request$ = isUpdate
+      ? this.travelReimbursementService.updateTravelReimbursement(this.entityId!, payload, headers)
+      : this.travelReimbursementService.saveTravelReimbursement(payload, headers);
+
+    const successMessage = isUpdate
+      ? 'Travel reimbursement updated successfully.'
+      : 'Travel reimbursement saved successfully.';
+
+    request$.subscribe({
       next: () => {
         this.showLoading = false;
-        this.dialogService.openConfirmDialog('Travel reimbursement saved successfully.')
-          .afterClosed().subscribe(() => this.router.navigate(['/searchTravelReimbursement']));
-      },
-      error: (error) => this.handleApiError(error)
-    });
-  }
-
-  updateTravelReimbursement(): void {
-    this.isSubmitted = true;
-    this.markAllAsTouched();
-    this.travelReimbursementForm.updateValueAndValidity();
-
-    if (!this.entityId || !this.validateBeforeSubmit()) {
-      return;
-    }
-
-    const payload = this.buildPayload(this.entityId);
-    const headers = { Authorization: sessionStorage.getItem('token') ?? '' };
-    this.showLoading = true;
-
-    this.travelReimbursementService.updateTravelReimbursement(this.entityId, payload, headers).subscribe({
-      next: () => {
-        this.showLoading = false;
-        this.dialogService.openConfirmDialog('Travel reimbursement updated successfully.')
+        this.dialogService.openConfirmDialog(successMessage)
           .afterClosed().subscribe(() => this.router.navigate(['/searchTravelReimbursement']));
       },
       error: (error) => this.handleApiError(error)
@@ -252,7 +254,7 @@ export class AddTravelReimbursementComponent implements OnInit {
       approvedBy: [null, Validators.maxLength(100)],
       approvedSignatureReference: [null, Validators.maxLength(100)],
       items: this.formBuilder.array([], Validators.required)
-    }, { validators: this.dateRangeValidator });
+    }, { validators: dateRangeValidator });
   }
 
   private createItemGroup(item?: TravelReimbursementItem): FormGroup {
@@ -269,32 +271,18 @@ export class AddTravelReimbursementComponent implements OnInit {
     });
   }
 
-  private dateRangeValidator(group: AbstractControl): ValidationErrors | null {
-    const fromDate = group.get('fromDate')?.value;
-    const toDate = group.get('toDate')?.value;
-    if (fromDate && toDate && new Date(fromDate).getTime() > new Date(toDate).getTime()) {
-      return { dateRange: true };
-    }
-    return null;
-  }
-
   private loadProjectList(): void {
-    const headers = { Authorization: sessionStorage.getItem('token') ?? '' };
-    this.travelReimbursementService.getProjectSelectionList(headers).subscribe({
+    this.travelReimbursementService.getProjectSelectionList(this.getAuthHeaders()).subscribe({
       next: (resp) => {
         this.projectList = resp ?? [];
         this.resolveProjectSelectionIfNeeded();
       },
-      error: (error) => {
-        const errStr = error?.error?.errorDetail?.[0] ?? 'Unable to load project list.';
-        this.dialogService.openConfirmDialog(errStr);
-      }
+      error: (error) => this.showError(error, 'Unable to load project list.')
     });
   }
 
   private populateEmployeeFromProfile(): void {
-    const headers = { Authorization: sessionStorage.getItem('token') ?? '' };
-    this.myprofileService.getProfile(null, headers).subscribe({
+    this.myprofileService.getProfile(null, this.getAuthHeaders()).subscribe({
       next: (resp: UserProfileSummary) => {
         const employeeName = `${resp.firstName ?? ''} ${resp.lastName ?? ''}`.trim();
         this.travelReimbursementForm.patchValue({
@@ -303,17 +291,13 @@ export class AddTravelReimbursementComponent implements OnInit {
           preparedBy: employeeName
         });
       },
-      error: (error) => {
-        const errStr = error?.error?.errorDetail?.[0] ?? 'Unable to load user profile.';
-        this.dialogService.openConfirmDialog(errStr);
-      }
+      error: (error) => this.showError(error, 'Unable to load user profile.')
     });
   }
 
   private loadTravelReimbursement(entityId: number, disableOnLoad = false): void {
-    const headers = { Authorization: sessionStorage.getItem('token') ?? '' };
     this.showLoading = true;
-    this.travelReimbursementService.getTravelReimbursementById(entityId, headers).subscribe({
+    this.travelReimbursementService.getTravelReimbursementById(entityId, this.getAuthHeaders()).subscribe({
       next: (resp: TravelReimbursement) => {
         this.showLoading = false;
         this.patchFormFromResponse(resp);
@@ -321,17 +305,12 @@ export class AddTravelReimbursementComponent implements OnInit {
           this.disableAllFields();
         }
       },
-      error: (error) => {
-        this.showLoading = false;
-        this.handleApiError(error);
-      }
+      error: (error) => this.handleApiError(error)
     });
   }
 
   private patchFormFromResponse(resp: TravelReimbursement): void {
-    while (this.itemsFormArray.length) {
-      this.itemsFormArray.removeAt(0);
-    }
+    this.itemsFormArray.clear();
     this.itemBillFiles = [];
 
     this.travelReimbursementForm.patchValue({
@@ -351,15 +330,9 @@ export class AddTravelReimbursementComponent implements OnInit {
       approvedSignatureReference: resp.approvedSignatureReference ?? null
     });
 
-    this.preparedSignatureFiles = resp.preparedSignatureReference
-      ? this.fileuploadService.getSingleFileArray(resp.preparedSignatureReference)
-      : [];
-    this.verifiedSignatureFiles = resp.verifiedSignatureReference
-      ? this.fileuploadService.getSingleFileArray(resp.verifiedSignatureReference)
-      : [];
-    this.approvedSignatureFiles = resp.approvedSignatureReference
-      ? this.fileuploadService.getSingleFileArray(resp.approvedSignatureReference)
-      : [];
+    this.preparedSignatureFiles = this.toFileArray(resp.preparedSignatureReference);
+    this.verifiedSignatureFiles = this.toFileArray(resp.verifiedSignatureReference);
+    this.approvedSignatureFiles = this.toFileArray(resp.approvedSignatureReference);
 
     const items = resp.items ?? [];
     if (items.length) {
@@ -372,15 +345,14 @@ export class AddTravelReimbursementComponent implements OnInit {
   }
 
   private resolveProjectSelectionIfNeeded(): void {
-    const projectName = this.travelReimbursementForm.get('projectName')?.value as string | null;
     const projectPin = this.travelReimbursementForm.get('projectPin')?.value as string | null;
-    if (!projectName || !projectPin || !this.projectList.length) {
+    if (!projectPin || !this.projectList.length) {
       return;
     }
 
     const matchedProject = this.projectList.find(project => {
       const pin = this.extractProjectPin(project.selectionvalue);
-      return pin && projectPin && pin.toLowerCase() === projectPin.toLowerCase();
+      return pin && pin.toLowerCase() === projectPin.toLowerCase();
     });
 
     if (matchedProject) {
@@ -418,15 +390,9 @@ export class AddTravelReimbursementComponent implements OnInit {
       return false;
     }
 
-    if (this.verifiedSignatureFiles.length > 0) {
-      if (!this.fileuploadService.allFilesUploaded(this.verifiedSignatureFiles)) {
-        this.dialogService.openConfirmDialog('Files uploading...');
-        return false;
-      }
-    }
-
-    if (this.approvedSignatureFiles.length > 0) {
-      if (!this.fileuploadService.allFilesUploaded(this.approvedSignatureFiles)) {
+    const optionalSignatures = [this.verifiedSignatureFiles, this.approvedSignatureFiles];
+    for (const files of optionalSignatures) {
+      if (files.length > 0 && !this.fileuploadService.allFilesUploaded(files)) {
         this.dialogService.openConfirmDialog('Files uploading...');
         return false;
       }
@@ -533,6 +499,10 @@ export class AddTravelReimbursementComponent implements OnInit {
       .map(control => control as FormGroup);
   }
 
+  private toFileArray(fileReference?: string | null): UploadedFileRecord[] {
+    return fileReference ? this.fileuploadService.getSingleFileArray(fileReference) : [];
+  }
+
   private toEpoch(value: Date | number | string | null | undefined): number | null {
     if (value === null || value === undefined || value === '') {
       return null;
@@ -547,9 +517,17 @@ export class AddTravelReimbursementComponent implements OnInit {
     return isNaN(parsed.getTime()) ? null : parsed.getTime();
   }
 
+  private getAuthHeaders(): Record<string, string> {
+    return { Authorization: sessionStorage.getItem('token') ?? '' };
+  }
+
+  private showError(error: { error?: { errorDetail?: string[] }; message?: string }, fallback: string): void {
+    const errStr = error?.error?.errorDetail?.[0] ?? error?.message ?? fallback;
+    this.dialogService.openConfirmDialog(errStr);
+  }
+
   private handleApiError(error: { error?: { errorDetail?: string[] }; message?: string }): void {
     this.showLoading = false;
-    const errStr = error?.error?.errorDetail?.[0] ?? error?.message ?? 'Request failed.';
-    this.dialogService.openConfirmDialog(errStr);
+    this.showError(error, 'Request failed.');
   }
 }

@@ -70,7 +70,6 @@ export interface UserProfileSummary {
   entityId?: number | null;
   firstName?: string | null;
   lastName?: string | null;
-  employeeCode?: string | null;
 }
 
 export interface ProjectDetails {

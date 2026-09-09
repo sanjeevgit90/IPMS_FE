@@ -277,7 +277,7 @@
                   </div>
                   <div class="col-sm-4">
                     <div class="form-group">
-                      <label class="d-block mb-1">Prepared Signature *</label>
+                      <!-- <label class="d-block mb-1">Prepared Signature *</label> -->
                       @if (!view) {
                         <app-fileupload [files]="preparedSignatureFiles" maxSize="2048"
                           labelname="Upload Prepared Signature" modulename="userprofile">
@@ -291,15 +291,15 @@
                     </div>
                   </div>
 
-                  <div class="col-sm-4">
+                  <!-- <div class="col-sm-4">
                     <div class="form-group">
                       <mat-form-field class="custom-field">
                         <mat-label>Verified By</mat-label>
                         <input matInput formControlName="verifiedBy" maxlength="100">
                       </mat-form-field>
                     </div>
-                  </div>
-                  <div class="col-sm-4">
+                  </div> -->
+                  <!-- <div class="col-sm-4">
                     <div class="form-group">
                       <label class="d-block mb-1">Verified Signature</label>
                       @if (!view) {
@@ -310,17 +310,17 @@
                         <div class="block">{{ formControls['verifiedSignatureReference'].value }}</div>
                       }
                     </div>
-                  </div>
+                  </div> -->
 
-                  <div class="col-sm-4">
+                  <!-- <div class="col-sm-4">
                     <div class="form-group">
                       <mat-form-field class="custom-field">
                         <mat-label>Approved By</mat-label>
                         <input matInput formControlName="approvedBy" maxlength="100">
                       </mat-form-field>
                     </div>
-                  </div>
-                  <div class="col-sm-4">
+                  </div> -->
+                  <!-- <div class="col-sm-4">
                     <div class="form-group">
                       <label class="d-block mb-1">Approved Signature</label>
                       @if (!view) {
@@ -331,7 +331,7 @@
                         <div class="block">{{ formControls['approvedSignatureReference'].value }}</div>
                       }
                     </div>
-                  </div>
+                  </div> -->
                 </div>
 
                 <div class="submit-section">
