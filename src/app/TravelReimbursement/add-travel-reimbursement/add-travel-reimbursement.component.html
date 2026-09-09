@@ -155,25 +155,27 @@
                 <h3 class="blue-gradient">Expense Items</h3>
                 <div class="travel-expense-table-wrapper">
                   <table class="table table-bordered travel-expense-table">
-                    <thead>
+                    <thead class="travel-expense-table__head">
                       <tr>
-                        <th>Expense Date *</th>
-                        <th>Particular *</th>
-                        <th>Amount *</th>
-                        <th>Remarks</th>
-                        <th>Bill Attached *</th>
-                        <th>Bill File</th>
+                        <th class="col-sno">S.No.</th>
+                        <th class="col-date">Expense Date *</th>
+                        <th class="col-particular">Particular *</th>
+                        <th class="col-amount">Amount *</th>
+                        <th class="col-remarks">Remarks</th>
+                        <th class="col-bill-attached">Bill Attached *</th>
+                        <th class="col-bill-file">Bill File</th>
                         @if (!view) {
-                          <th>Action</th>
+                          <th class="col-action">Action</th>
                         }
                       </tr>
                     </thead>
                     <tbody formArrayName="items">
                       @for (itemGroup of itemsFormArray.controls; track $index; let i = $index) {
                         @if (isItemRowVisible(i)) {
-                          <tr [formGroupName]="i">
-                            <td>
-                              <mat-form-field class="custom-field table-field"
+                          <tr class="travel-expense-row" [formGroupName]="i">
+                            <td class="col-sno text-center">{{ getExpenseItemSerialNumber(i) }}</td>
+                            <td class="col-date">
+                              <mat-form-field class="custom-field table-field table-field--bordered table-field--compact"
                                 [ngClass]="{ 'has-error': isSubmitted && getItemFormGroup(i).get('expenseDate')?.errors }">
                                 <input matInput [matDatepicker]="expensePicker" formControlName="expenseDate">
                                 <mat-datepicker-toggle matSuffix [for]="expensePicker"></mat-datepicker-toggle>
@@ -183,8 +185,8 @@
                                 }
                               </mat-form-field>
                             </td>
-                            <td>
-                              <mat-form-field class="custom-field table-field"
+                            <td class="col-particular">
+                              <mat-form-field class="custom-field table-field table-field--bordered"
                                 [ngClass]="{ 'has-error': isSubmitted && getItemFormGroup(i).get('particular')?.errors }">
                                 <input matInput formControlName="particular" maxlength="100">
                                 @if (isSubmitted && getItemFormGroup(i).get('particular')?.errors?.['required']) {
@@ -192,8 +194,8 @@
                                 }
                               </mat-form-field>
                             </td>
-                            <td>
-                              <mat-form-field class="custom-field table-field"
+                            <td class="col-amount">
+                              <mat-form-field class="custom-field table-field table-field--bordered table-field--compact"
                                 [ngClass]="{ 'has-error': isSubmitted && getItemFormGroup(i).get('amount')?.errors }">
                                 <input matInput type="number" formControlName="amount" maxlength="10">
                                 @if (isSubmitted && getItemFormGroup(i).get('amount')?.errors?.['required']) {
@@ -204,17 +206,16 @@
                                 }
                               </mat-form-field>
                             </td>
-                            <td>
-                              <mat-form-field class="custom-field table-field">
+                            <td class="col-remarks">
+                              <mat-form-field class="custom-field table-field table-field--bordered">
                                 <input matInput formControlName="remarks" maxlength="100">
                               </mat-form-field>
                             </td>
-                            <td>
-                              <mat-form-field class="custom-field table-field"
+                            <td class="col-bill-attached">
+                              <mat-form-field class="custom-field table-field table-field--bordered table-field--compact"
                                 [ngClass]="{ 'has-error': isSubmitted && getItemFormGroup(i).get('billAttached')?.errors }">
                                 <mat-select formControlName="billAttached"
                                   [typeaheadDebounceInterval]="matSelectDuration">
-                                  <mat-option [value]="null">-Select-</mat-option>
                                   @for (option of billAttachedOptions; track option.selectionid) {
                                     <mat-option [value]="option.selectionid">{{ option.selectionvalue }}</mat-option>
                                   }
@@ -224,43 +225,61 @@
                                 }
                               </mat-form-field>
                             </td>
-                            <td>
-                              @if (!view) {
-                                <app-fileupload [files]="itemBillFiles[i]" maxSize="15360"
-                                  labelname="Upload Bill" modulename="billAttachment">
-                                </app-fileupload>
-                                @if (isSubmitted && isBillFileMissing(i)) {
-                                  <div class="error-text">Bill file is required when bill attached is Yes</div>
+                            <td class="col-bill-file">
+                              @if (isBillAttachedYes(i)) {
+                                @if (!view) {
+                                  <app-fileupload [files]="itemBillFiles[i]" maxSize="15360"
+                                    labelname="Upload Bill" modulename="billAttachment">
+                                  </app-fileupload>
+                                  @if (isSubmitted && isBillFileMissing(i)) {
+                                    <div class="error-text">Bill file is required when bill attached is Yes</div>
+                                  }
+                                } @else if (itemGroup.get('billFileName')?.value || itemGroup.get('billFileReference')?.value) {
+                                  <div class="block">{{ itemGroup.get('billFileName')?.value || itemGroup.get('billFileReference')?.value }}</div>
+                                } @else {
+                                  <div class="block">—</div>
                                 }
-                              } @else if (itemGroup.get('billFileName')?.value || itemGroup.get('billFileReference')?.value) {
-                                <div class="block">{{ itemGroup.get('billFileName')?.value || itemGroup.get('billFileReference')?.value }}</div>
                               } @else {
-                                <div class="block">—</div>
+                                <div class="block text-muted">—</div>
                               }
                             </td>
                             @if (!view) {
-                              <td class="text-center">
-                                <button mat-flat-button color="warn" type="button" (click)="removeExpenseItem(i)">
-                                  <mat-icon>delete</mat-icon>
-                                </button>
+                              <td class="col-action text-center">
+                                <div class="travel-expense-row-actions">
+                                  <button mat-icon-button type="button" class="travel-expense-duplicate-btn"
+                                    matTooltip="Duplicate row" (click)="duplicateExpenseItem(i)">
+                                    <mat-icon>content_copy</mat-icon>
+                                  </button>
+                                  <button mat-icon-button color="warn" type="button" matTooltip="Remove row"
+                                    (click)="removeExpenseItem(i)">
+                                    <mat-icon>delete</mat-icon>
+                                  </button>
+                                </div>
                               </td>
                             }
                           </tr>
                         }
                       }
                     </tbody>
-                    <tfoot>
+                    <tfoot class="travel-expense-table__foot">
                       <tr>
-                        <td [attr.colspan]="view ? 5 : 6" class="text-end"><strong>Total Amount</strong></td>
-                        <td [attr.colspan]="view ? 1 : 2"><strong>{{ getTotalAmount() | number: '1.2-2' }}</strong></td>
+                        <td colspan="3" class="text-end travel-expense-total-label"><strong>Total Amount</strong></td>
+                        <td class="col-amount travel-expense-total-value">
+                          <strong>{{ getTotalAmount() | number: '1.2-2' }}</strong>
+                        </td>
+                        <td [attr.colspan]="view ? 3 : 4"></td>
                       </tr>
                     </tfoot>
                   </table>
                 </div>
 
                 @if (!view) {
-                  <div class="submit-section">
-                    <button mat-button type="button" (click)="addExpenseItem()">Add Expense Item +</button>
+                  <div class="submit-section travel-expense-add-section">
+                    <button mat-flat-button color="accent" type="button" class="travel-expense-add-btn"
+                      (click)="addExpenseItem()">
+                      <mat-icon>add_circle</mat-icon>
+                      Add Expense Item
+                    </button>
                   </div>
                 }
 

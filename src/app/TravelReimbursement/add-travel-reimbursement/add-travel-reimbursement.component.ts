@@ -124,6 +124,23 @@ export class AddTravelReimbursementComponent implements OnInit {
     return !this.fileuploadService.hasfile(this.preparedSignatureFiles);
   }
 
+  isBillAttachedYes(index: number): boolean {
+    return this.getItemFormGroup(index).get('billAttached')?.value === 'Y';
+  }
+
+  getExpenseItemSerialNumber(index: number): number {
+    let serial = 0;
+    for (let i = 0; i < this.itemsFormArray.length; i++) {
+      if (this.isItemRowVisible(i)) {
+        serial++;
+        if (i === index) {
+          return serial;
+        }
+      }
+    }
+    return 0;
+  }
+
   isBillFileMissing(index: number): boolean {
     const itemGroup = this.getItemFormGroup(index);
     if (itemGroup.get('billAttached')?.value !== 'Y') {
@@ -153,11 +170,30 @@ export class AddTravelReimbursementComponent implements OnInit {
 
   addExpenseItem(item?: TravelReimbursementItem): void {
     this.itemsFormArray.push(this.createItemGroup(item));
-    this.itemBillFiles.push(
-      item?.billFileReference
-        ? this.fileuploadService.getSingleFileArray(item.billFileReference)
-        : []
-    );
+    this.itemBillFiles.push(this.buildBillFilesForItem(item));
+  }
+
+  duplicateExpenseItem(index: number): void {
+    const source = this.getItemFormGroup(index).getRawValue();
+    const expenseDate = source.expenseDate instanceof Date
+      ? source.expenseDate.getTime()
+      : source.expenseDate;
+
+    const duplicateItem: TravelReimbursementItem = {
+      entityId: null,
+      expenseDate,
+      particular: source.particular,
+      amount: source.amount,
+      remarks: source.remarks,
+      billAttached: source.billAttached,
+      billFileName: source.billFileName,
+      billFileReference: source.billFileReference,
+      isDeleted: false
+    };
+
+    const insertIndex = index + 1;
+    this.itemsFormArray.insert(insertIndex, this.createItemGroup(duplicateItem));
+    this.itemBillFiles.splice(insertIndex, 0, this.copyBillFilesFromRow(index, duplicateItem));
   }
 
   removeExpenseItem(index: number): void {
@@ -257,6 +293,24 @@ export class AddTravelReimbursementComponent implements OnInit {
     }, { validators: dateRangeValidator });
   }
 
+  private buildBillFilesForItem(item?: TravelReimbursementItem): UploadedFileRecord[] {
+    if (item?.billAttached !== 'Y' || !item.billFileReference) {
+      return [];
+    }
+    return this.fileuploadService.getSingleFileArray(item.billFileReference);
+  }
+
+  private copyBillFilesFromRow(index: number, item: TravelReimbursementItem): UploadedFileRecord[] {
+    if (item.billAttached !== 'Y') {
+      return [];
+    }
+
+    const billPath = this.fileuploadService.getFirstFilePath(this.itemBillFiles[index] ?? [])
+      || item.billFileReference;
+
+    return billPath ? this.fileuploadService.getSingleFileArray(billPath) : [];
+  }
+
   private createItemGroup(item?: TravelReimbursementItem): FormGroup {
     return this.formBuilder.group({
       entityId: [item?.entityId ?? null],
@@ -264,7 +318,7 @@ export class AddTravelReimbursementComponent implements OnInit {
       particular: [item?.particular ?? null, [Validators.required, Validators.maxLength(100)]],
       amount: [item?.amount ?? null, [Validators.required, Validators.min(0.01), Validators.max(9999999999)]],
       remarks: [item?.remarks ?? null, Validators.maxLength(100)],
-      billAttached: [item?.billAttached ?? null, Validators.required],
+      billAttached: [item?.billAttached ?? 'N', Validators.required],
       billFileName: [item?.billFileName ?? null, Validators.maxLength(100)],
       billFileReference: [item?.billFileReference ?? null],
       isDeleted: [item?.isDeleted ?? false]
