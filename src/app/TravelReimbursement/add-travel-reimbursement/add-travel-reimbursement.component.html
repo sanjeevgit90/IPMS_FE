@@ -37,7 +37,7 @@
                       <mat-form-field class="custom-field"
                         [ngClass]="{ 'has-error': isSubmitted && formControls['employeeName'].errors }">
                         <mat-label>Employee Name</mat-label>
-                        <input matInput formControlName="employeeName" maxlength="100" readonly>
+                        <input matInput formControlName="employeeName" maxlength="100">
                       </mat-form-field>
                     </div>
                   </div>
@@ -47,7 +47,7 @@
                       <mat-form-field class="custom-field"
                         [ngClass]="{ 'has-error': isSubmitted && formControls['employeeId'].errors }">
                         <mat-label>Employee ID</mat-label>
-                        <input matInput formControlName="employeeId" maxlength="6" readonly>
+                        <input matInput formControlName="employeeId" maxlength="6">
                       </mat-form-field>
                     </div>
                   </div>
@@ -290,7 +290,7 @@
                       <mat-form-field class="custom-field"
                         [ngClass]="{ 'has-error': isSubmitted && formControls['preparedBy'].errors }">
                         <mat-label>Prepared By</mat-label>
-                        <input matInput formControlName="preparedBy" maxlength="100" readonly>
+                        <input matInput formControlName="preparedBy" maxlength="100">
                       </mat-form-field>
                     </div>
                   </div>

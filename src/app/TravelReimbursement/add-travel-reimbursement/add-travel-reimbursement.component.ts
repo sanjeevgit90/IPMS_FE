@@ -274,8 +274,8 @@ export class AddTravelReimbursementComponent implements OnInit {
 
   private createForm(): FormGroup {
     return this.formBuilder.group({
-      employeeName: [{ value: null, disabled: true }, [Validators.maxLength(100)]],
-      employeeId: [{ value: null, disabled: true }],
+      employeeName: [null, [Validators.maxLength(100)]],
+      employeeId: [null, [Validators.maxLength(6)]],
       cityVisited: [null, [Validators.required, Validators.maxLength(100)]],
       selectedProjectId: [null, Validators.required],
       projectName: [null, [Validators.maxLength(100)]],
@@ -283,7 +283,7 @@ export class AddTravelReimbursementComponent implements OnInit {
       bandGrade: [null, [Validators.required, Validators.min(0), Validators.max(99)]],
       fromDate: [null, Validators.required],
       toDate: [null, Validators.required],
-      preparedBy: [{ value: null, disabled: true }, [Validators.maxLength(100)]],
+      preparedBy: [null, [Validators.maxLength(100)]],
       preparedSignatureReference: [null, Validators.maxLength(100)],
       verifiedBy: [null, Validators.maxLength(100)],
       verifiedSignatureReference: [null, Validators.maxLength(100)],
