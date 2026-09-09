@@ -364,6 +364,11 @@
                       <mat-icon>save</mat-icon> Update
                     </button>
                   }
+                  @if (view) {
+                    <button mat-flat-button color="accent" type="button" (click)="exportToExcel()">
+                      <mat-icon>download</mat-icon> Export to Excel
+                    </button>
+                  }
                   <button mat-flat-button color="warn" class="ms-2" type="button" (click)="back()">
                     <mat-icon>cancel</mat-icon> Cancel
                   </button>

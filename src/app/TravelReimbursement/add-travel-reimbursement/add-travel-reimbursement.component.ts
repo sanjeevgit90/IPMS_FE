@@ -14,6 +14,7 @@ import { FileuploadService } from '../../service/fileupload.service';
 import { MyprofileService } from '../../ConfigurationMgmt/myprofile/myprofile.service';
 import { ProjectMasterService } from '../../ProjectMgmt/ProjectMaster/projectmaster.service';
 import { TravelReimbursementService } from '../travel-reimbursement.service';
+import { TravelReimbursementExportService } from '../travel-reimbursement-export.service';
 import { BILL_ATTACHED_OPTIONS } from '../travel-reimbursement.constants';
 import {
   ProjectDetails,
@@ -25,6 +26,10 @@ import {
   UploadedFileRecord,
   UserProfileSummary
 } from '../models/travel-reimbursement.model';
+import {
+  TravelReimbursementExportData,
+  TravelReimbursementExportItem
+} from '../models/travel-reimbursement-export.model';
 
 function dateRangeValidator(group: AbstractControl): ValidationErrors | null {
   const fromDate = group.get('fromDate')?.value;
@@ -78,6 +83,7 @@ export class AddTravelReimbursementComponent implements OnInit {
     private myprofileService: MyprofileService,
     private projectMasterService: ProjectMasterService,
     private fileuploadService: FileuploadService,
+    private travelReimbursementExportService: TravelReimbursementExportService,
     private global: AppGlobals,
     private dialogService: DialogService
   ) {
@@ -235,6 +241,56 @@ export class AddTravelReimbursementComponent implements OnInit {
 
   updateTravelReimbursement(): void {
     this.submit(true);
+  }
+
+  exportToExcel(): void {
+    const exportData = this.buildExportData();
+    if (!exportData) {
+      this.dialogService.openConfirmDialog('Travel reimbursement data is not available for export.');
+      return;
+    }
+
+    this.travelReimbursementExportService.exportTravelReimbursement(exportData).subscribe({
+      error: () => {
+        this.dialogService.openConfirmDialog('Failed to export travel reimbursement to Excel.');
+      }
+    });
+  }
+
+  private buildExportData(): TravelReimbursementExportData | null {
+    if (!this.view || !this.entityId) {
+      return null;
+    }
+
+    const formValue = this.travelReimbursementForm.getRawValue();
+    const items: TravelReimbursementExportItem[] = this.itemsFormArray.controls
+      .filter(control => !control.get('isDeleted')?.value)
+      .map(control => {
+        const itemValue = control.getRawValue();
+        return {
+          expenseDate: this.toEpoch(itemValue.expenseDate),
+          particular: itemValue.particular ?? null,
+          amount: itemValue.amount ?? null,
+          remarks: itemValue.remarks ?? null,
+          billAttached: itemValue.billAttached ?? null
+        };
+      });
+
+    return {
+      entityId: this.entityId,
+      employeeName: formValue.employeeName ?? null,
+      employeeId: formValue.employeeId ?? null,
+      bandGrade: formValue.bandGrade ?? null,
+      cityVisited: formValue.cityVisited ?? null,
+      projectName: formValue.projectName ?? null,
+      projectPin: formValue.projectPin ?? null,
+      fromDate: this.toEpoch(formValue.fromDate),
+      toDate: this.toEpoch(formValue.toDate),
+      preparedBy: formValue.preparedBy ?? null,
+      verifiedBy: formValue.verifiedBy ?? null,
+      approvedBy: formValue.approvedBy ?? null,
+      items
+    };
   }
 
   private submit(isUpdate: boolean): void {
