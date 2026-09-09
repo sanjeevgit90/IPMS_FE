@@ -107,6 +107,28 @@ export class AddTravelReimbursementComponent implements OnInit {
     return this.travelReimbursementForm.controls;
   }
 
+  getItemFormGroup(index: number): FormGroup {
+    return this.itemsFormArray.at(index) as FormGroup;
+  }
+
+  isPreparedSignatureMissing(): boolean {
+    return !this.fileuploadService.hasfile(this.preparedSignatureFiles);
+  }
+
+  isBillFileMissing(index: number): boolean {
+    const itemGroup = this.getItemFormGroup(index);
+    if (itemGroup.get('billAttached')?.value !== 'Y') {
+      return false;
+    }
+
+    const billFiles = this.itemBillFiles[index] ?? [];
+    if (this.fileuploadService.hasfile(billFiles)) {
+      return false;
+    }
+
+    return !itemGroup.get('billFileReference')?.value;
+  }
+
   getTotalAmount(): number {
     return this.itemsFormArray.controls
       .filter(control => !control.get('isDeleted')?.value)
@@ -168,6 +190,7 @@ export class AddTravelReimbursementComponent implements OnInit {
 
   saveTravelReimbursement(): void {
     this.isSubmitted = true;
+    this.markAllAsTouched();
     this.travelReimbursementForm.updateValueAndValidity();
 
     if (!this.validateBeforeSubmit()) {
@@ -190,6 +213,7 @@ export class AddTravelReimbursementComponent implements OnInit {
 
   updateTravelReimbursement(): void {
     this.isSubmitted = true;
+    this.markAllAsTouched();
     this.travelReimbursementForm.updateValueAndValidity();
 
     if (!this.entityId || !this.validateBeforeSubmit()) {
@@ -212,17 +236,17 @@ export class AddTravelReimbursementComponent implements OnInit {
 
   private createForm(): FormGroup {
     return this.formBuilder.group({
-      employeeName: [{ value: null, disabled: true }, [Validators.required, Validators.maxLength(100)]],
-      employeeId: [{ value: null, disabled: true }, [Validators.required]],
+      employeeName: [{ value: null, disabled: true }, [Validators.maxLength(100)]],
+      employeeId: [{ value: null, disabled: true }],
       cityVisited: [null, [Validators.required, Validators.maxLength(100)]],
       selectedProjectId: [null, Validators.required],
-      projectName: [null, [Validators.required, Validators.maxLength(100)]],
-      projectPin: [null, [Validators.required, Validators.maxLength(100)]],
+      projectName: [null, [Validators.maxLength(100)]],
+      projectPin: [null, [Validators.maxLength(100)]],
       bandGrade: [null, [Validators.required, Validators.min(0), Validators.max(99)]],
       fromDate: [null, Validators.required],
       toDate: [null, Validators.required],
-      preparedBy: [{ value: null, disabled: true }, [Validators.required, Validators.maxLength(100)]],
-      preparedSignatureReference: [null, [Validators.required, Validators.maxLength(100)]],
+      preparedBy: [{ value: null, disabled: true }, [Validators.maxLength(100)]],
+      preparedSignatureReference: [null, Validators.maxLength(100)],
       verifiedBy: [null, Validators.maxLength(100)],
       verifiedSignatureReference: [null, Validators.maxLength(100)],
       approvedBy: [null, Validators.maxLength(100)],
@@ -379,26 +403,33 @@ export class AddTravelReimbursementComponent implements OnInit {
       return false;
     }
 
+    const formValue = this.travelReimbursementForm.getRawValue();
+    if (!formValue.projectName || !formValue.projectPin) {
+      this.dialogService.openConfirmDialog('Please select a project.');
+      return false;
+    }
+
     if (!this.fileuploadService.hasfile(this.preparedSignatureFiles)) {
       this.dialogService.openConfirmDialog('Please upload prepared signature.');
       return false;
     }
-
     if (!this.fileuploadService.allFilesUploaded(this.preparedSignatureFiles)) {
-      this.dialogService.openConfirmDialog('Prepared signature is still uploading.');
+      this.dialogService.openConfirmDialog('Files uploading...');
       return false;
     }
 
-    if (this.verifiedSignatureFiles.length
-      && !this.fileuploadService.allFilesUploaded(this.verifiedSignatureFiles)) {
-      this.dialogService.openConfirmDialog('Verified signature is still uploading.');
-      return false;
+    if (this.verifiedSignatureFiles.length > 0) {
+      if (!this.fileuploadService.allFilesUploaded(this.verifiedSignatureFiles)) {
+        this.dialogService.openConfirmDialog('Files uploading...');
+        return false;
+      }
     }
 
-    if (this.approvedSignatureFiles.length
-      && !this.fileuploadService.allFilesUploaded(this.approvedSignatureFiles)) {
-      this.dialogService.openConfirmDialog('Approved signature is still uploading.');
-      return false;
+    if (this.approvedSignatureFiles.length > 0) {
+      if (!this.fileuploadService.allFilesUploaded(this.approvedSignatureFiles)) {
+        this.dialogService.openConfirmDialog('Files uploading...');
+        return false;
+      }
     }
 
     const activeItems = this.getActiveItemControls();
@@ -423,14 +454,31 @@ export class AddTravelReimbursementComponent implements OnInit {
       }
 
       const rowIndex = this.itemsFormArray.controls.indexOf(itemGroup);
+      const billAttached = itemGroup.get('billAttached')?.value;
       const billFiles = this.itemBillFiles[rowIndex] ?? [];
-      if (billFiles.length && !this.fileuploadService.allFilesUploaded(billFiles)) {
-        this.dialogService.openConfirmDialog(`Bill file for item ${index + 1} is still uploading.`);
+      const hasExistingBillReference = !!itemGroup.get('billFileReference')?.value;
+
+      if (billAttached === 'Y' && !this.fileuploadService.hasfile(billFiles) && !hasExistingBillReference) {
+        this.dialogService.openConfirmDialog(`Please upload bill file for item ${index + 1}.`);
+        return false;
+      }
+
+      if (billFiles.length > 0 && !this.fileuploadService.allFilesUploaded(billFiles)) {
+        this.dialogService.openConfirmDialog('Files uploading...');
         return false;
       }
     }
 
     return true;
+  }
+
+  private markAllAsTouched(): void {
+    this.travelReimbursementForm.markAllAsTouched();
+    this.itemsFormArray.controls.forEach(control => {
+      if (!control.get('isDeleted')?.value) {
+        control.markAllAsTouched();
+      }
+    });
   }
 
   private buildPayload(entityId?: number): TravelReimbursementSaveRequest {
@@ -441,9 +489,7 @@ export class AddTravelReimbursementComponent implements OnInit {
     const items: TravelReimbursementItemRequest[] = this.itemsFormArray.controls.map((control, index) => {
       const itemValue = (control as FormGroup).getRawValue();
       const billFiles = this.itemBillFiles[index] ?? [];
-      const billFileReference = billFiles.length
-        ? this.fileuploadService.getFirstFilePath(billFiles)
-        : itemValue.billFileReference;
+      const billFileReference = this.fileuploadService.getFirstFilePath(billFiles) || itemValue.billFileReference;
 
       return {
         entityId: itemValue.entityId ?? null,
@@ -469,15 +515,14 @@ export class AddTravelReimbursementComponent implements OnInit {
       fromDate: fromDate ?? 0,
       toDate: toDate ?? 0,
       preparedBy: formValue.preparedBy,
-      preparedSignatureReference: this.fileuploadService.getFirstFilePath(this.preparedSignatureFiles),
+      preparedSignatureReference: this.fileuploadService.getFirstFilePath(this.preparedSignatureFiles)
+        || formValue.preparedSignatureReference,
       verifiedBy: formValue.verifiedBy ?? null,
-      verifiedSignatureReference: this.verifiedSignatureFiles.length
-        ? this.fileuploadService.getFirstFilePath(this.verifiedSignatureFiles)
-        : null,
+      verifiedSignatureReference: this.fileuploadService.getFirstFilePath(this.verifiedSignatureFiles)
+        || formValue.verifiedSignatureReference,
       approvedBy: formValue.approvedBy ?? null,
-      approvedSignatureReference: this.approvedSignatureFiles.length
-        ? this.fileuploadService.getFirstFilePath(this.approvedSignatureFiles)
-        : null,
+      approvedSignatureReference: this.fileuploadService.getFirstFilePath(this.approvedSignatureFiles)
+        || formValue.approvedSignatureReference,
       items
     };
   }

@@ -174,22 +174,34 @@
                           <tr [formGroupName]="i">
                             <td>
                               <mat-form-field class="custom-field table-field"
-                                [ngClass]="{ 'has-error': isSubmitted && itemGroup.get('expenseDate')?.errors }">
+                                [ngClass]="{ 'has-error': isSubmitted && getItemFormGroup(i).get('expenseDate')?.errors }">
                                 <input matInput [matDatepicker]="expensePicker" formControlName="expenseDate">
                                 <mat-datepicker-toggle matSuffix [for]="expensePicker"></mat-datepicker-toggle>
                                 <mat-datepicker #expensePicker></mat-datepicker>
+                                @if (isSubmitted && getItemFormGroup(i).get('expenseDate')?.errors?.['required']) {
+                                  <mat-error>Expense date is required</mat-error>
+                                }
                               </mat-form-field>
                             </td>
                             <td>
                               <mat-form-field class="custom-field table-field"
-                                [ngClass]="{ 'has-error': isSubmitted && itemGroup.get('particular')?.errors }">
+                                [ngClass]="{ 'has-error': isSubmitted && getItemFormGroup(i).get('particular')?.errors }">
                                 <input matInput formControlName="particular" maxlength="100">
+                                @if (isSubmitted && getItemFormGroup(i).get('particular')?.errors?.['required']) {
+                                  <mat-error>Particular is required</mat-error>
+                                }
                               </mat-form-field>
                             </td>
                             <td>
                               <mat-form-field class="custom-field table-field"
-                                [ngClass]="{ 'has-error': isSubmitted && itemGroup.get('amount')?.errors }">
+                                [ngClass]="{ 'has-error': isSubmitted && getItemFormGroup(i).get('amount')?.errors }">
                                 <input matInput type="number" formControlName="amount" maxlength="10">
+                                @if (isSubmitted && getItemFormGroup(i).get('amount')?.errors?.['required']) {
+                                  <mat-error>Amount is required</mat-error>
+                                }
+                                @if (isSubmitted && getItemFormGroup(i).get('amount')?.errors?.['min']) {
+                                  <mat-error>Amount must be greater than zero</mat-error>
+                                }
                               </mat-form-field>
                             </td>
                             <td>
@@ -199,7 +211,7 @@
                             </td>
                             <td>
                               <mat-form-field class="custom-field table-field"
-                                [ngClass]="{ 'has-error': isSubmitted && itemGroup.get('billAttached')?.errors }">
+                                [ngClass]="{ 'has-error': isSubmitted && getItemFormGroup(i).get('billAttached')?.errors }">
                                 <mat-select formControlName="billAttached"
                                   [typeaheadDebounceInterval]="matSelectDuration">
                                   <mat-option [value]="null">-Select-</mat-option>
@@ -207,13 +219,19 @@
                                     <mat-option [value]="option.selectionid">{{ option.selectionvalue }}</mat-option>
                                   }
                                 </mat-select>
+                                @if (isSubmitted && getItemFormGroup(i).get('billAttached')?.errors?.['required']) {
+                                  <mat-error>Bill attached is required</mat-error>
+                                }
                               </mat-form-field>
                             </td>
                             <td>
                               @if (!view) {
                                 <app-fileupload [files]="itemBillFiles[i]" maxSize="15360"
-                                  labelname="Upload Bill" modulename="travelReimbursementBill">
+                                  labelname="Upload Bill" modulename="billAttachment">
                                 </app-fileupload>
+                                @if (isSubmitted && isBillFileMissing(i)) {
+                                  <div class="error-text">Bill file is required when bill attached is Yes</div>
+                                }
                               } @else if (itemGroup.get('billFileName')?.value || itemGroup.get('billFileReference')?.value) {
                                 <div class="block">{{ itemGroup.get('billFileName')?.value || itemGroup.get('billFileReference')?.value }}</div>
                               } @else {
@@ -261,9 +279,12 @@
                     <div class="form-group">
                       <label class="d-block mb-1">Prepared Signature *</label>
                       @if (!view) {
-                        <app-fileupload [files]="preparedSignatureFiles" maxSize="15360"
-                          labelname="Upload Prepared Signature" modulename="travelReimbursementSignature">
+                        <app-fileupload [files]="preparedSignatureFiles" maxSize="2048"
+                          labelname="Upload Prepared Signature" modulename="userprofile">
                         </app-fileupload>
+                        @if (isSubmitted && isPreparedSignatureMissing()) {
+                          <div class="error-text">Prepared signature is required</div>
+                        }
                       } @else if (formControls['preparedSignatureReference'].value) {
                         <div class="block">{{ formControls['preparedSignatureReference'].value }}</div>
                       }
@@ -282,8 +303,8 @@
                     <div class="form-group">
                       <label class="d-block mb-1">Verified Signature</label>
                       @if (!view) {
-                        <app-fileupload [files]="verifiedSignatureFiles" maxSize="15360"
-                          labelname="Upload Verified Signature" modulename="travelReimbursementSignature">
+                        <app-fileupload [files]="verifiedSignatureFiles" maxSize="2048"
+                          labelname="Upload Verified Signature" modulename="userprofile">
                         </app-fileupload>
                       } @else if (formControls['verifiedSignatureReference'].value) {
                         <div class="block">{{ formControls['verifiedSignatureReference'].value }}</div>
@@ -303,8 +324,8 @@
                     <div class="form-group">
                       <label class="d-block mb-1">Approved Signature</label>
                       @if (!view) {
-                        <app-fileupload [files]="approvedSignatureFiles" maxSize="15360"
-                          labelname="Upload Approved Signature" modulename="travelReimbursementSignature">
+                        <app-fileupload [files]="approvedSignatureFiles" maxSize="2048"
+                          labelname="Upload Approved Signature" modulename="userprofile">
                         </app-fileupload>
                       } @else if (formControls['approvedSignatureReference'].value) {
                         <div class="block">{{ formControls['approvedSignatureReference'].value }}</div>

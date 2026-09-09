@@ -92,18 +92,17 @@
                       <mat-icon>mouse</mat-icon> Action
                     </button>
                     <mat-menu #menu="matMenu" class="actionmenu">
-                      @if (travelReimbursementView) {
+                     
                         <a mat-menu-item matTooltip="View this record"
                           [routerLink]="['/updateTravelReimbursement', row.entityId, 'view']">
                           <mat-icon aria-hidden="false">visibility</mat-icon> View
                         </a>
-                      }
-                      @if (travelReimbursementEdit) {
+                    
                         <a mat-menu-item matTooltip="Edit this record"
                           [routerLink]="['/updateTravelReimbursement', row.entityId, 'edit']">
                           <mat-icon aria-hidden="false" class="m-0">edit</mat-icon> Edit
                         </a>
-                      }
+                      
                     </mat-menu>
                   </td>
                 </ng-container>

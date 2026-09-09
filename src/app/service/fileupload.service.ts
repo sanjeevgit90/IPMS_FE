@@ -10,6 +10,7 @@ export class FileuploadService {
   constructor(private _http: HttpClient, private _global: AppGlobals) { }
 
   hasfile(fileUpload) {
+    
 
     if (fileUpload.length > 0) {
       if (fileUpload[0].uploadStatus == "SUCCESS") { return true; }
@@ -257,10 +258,10 @@ export class FileuploadService {
         apiname = "ipms/grn/uploadlrcopy";
         break;
       case 'travelReimbursementBill':
-        apiname = "fileupload";
+        apiname = "ipms/prs/uploadAttachedBill";
         break;
       case 'travelReimbursementSignature':
-        apiname = "fileupload";
+        apiname = "ipms/userprofile/uploadProfileImage";
         break;
     }
     return this._http.post<any>(this._global.baseAPIUrl + apiname, formData, {

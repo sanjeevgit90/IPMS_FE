@@ -34,9 +34,20 @@
             ],
             "scripts": [],
             "browser": "src/main.ts",
-            "allowedCommonJsDependencies": ["highcharts", "xlsx", "mat-table-exporter", "cdk-table-exporter"]
+            "allowedCommonJsDependencies": [
+              "highcharts",
+              "xlsx",
+              "mat-table-exporter",
+              "cdk-table-exporter"
+            ]
           },
           "configurations": {
+            "development": {
+              "optimization": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "extractLicenses": false
+            },
             "production": {
               "fileReplacements": [
                 {
@@ -68,14 +79,15 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "buildTarget": "ipms_fe:build"
-          },
           "configurations": {
+            "development": {
+              "buildTarget": "ipms_fe:build:development"
+            },
             "production": {
               "buildTarget": "ipms_fe:build:production"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
