@@ -1,60 +1,71 @@
+<mat-card class="upload-border ipms-file-upload">
+  <mat-card-content class="upload-cont ipms-file-upload__body">
+    @if (errormsg) {
+      <div class="ipms-file-upload__alert" role="alert">
+        <mat-icon aria-hidden="true">error_outline</mat-icon>
+        <span>{{ errormsg }}</span>
+      </div>
+    }
 
+    @if (files != null && files.length === 0) {
+      <div class="ipms-file-upload__placeholder attachment-field">
+        <mat-icon class="ipms-file-upload__placeholder-icon" aria-hidden="true">cloud_upload</mat-icon>
+        <span class="ipms-file-upload__placeholder-text">{{ labelname }}</span>
+      </div>
+    }
 
-<mat-card class="upload-border">
-
-
-  <mat-card-content class="upload-cont">
-    <ul class="upload-style">
-
-
-      <li>
-        {{errormsg}}
-      </li>
-
-      @if (files != null) {
-        <li>
-          @if (files.length==0) {
-            <div class="attachment-field">
-              {{labelname}}
-            </div>
-          }
-        </li>
-      }
-
-      @for (file of files; track file) {
-        <li>
-          <div class="row">
-            <div class="col-sm-1">
-              <img src="assets/Images/file-icon.png" alt="icon"
-                title="icon">
+    @if (files != null && files.length > 0) {
+      <ul class="upload-style ipms-file-upload__list">
+        @for (file of files; track file) {
+          <li class="ipms-file-upload__item"
+            [class.ipms-file-upload__item--success]="file.uploadStatus === 'SUCCESS'"
+            [class.ipms-file-upload__item--failed]="file.uploadStatus === 'FAILED'">
+            <div class="ipms-file-upload__item-main">
+              <div class="ipms-file-upload__item-icon-wrap">
+                <img src="assets/Images/file-icon.png" alt="" class="ipms-file-upload__file-icon">
               </div>
-              <div class="col-sm-11">
-                <span>
-                  <a href="{{file.uploadedFilePath}}" target="_blank">{{file.data.name}}</a>  &nbsp;&nbsp;&nbsp;
-                  {{(file.data.size/1024) | number:'1.0-0'}} kb
-                </span>
-                <span style="float: right;">
-                  <mat-icon class="remove-file" (click)="removeFile(file)"> close</mat-icon>
-                </span>
-                <mat-progress-bar [value]="file.progress">
-                </mat-progress-bar>
-                <span class="file-label">
-                  {{file.progress}} % done
-                </span>
+              <div class="ipms-file-upload__item-info">
+                <div class="ipms-file-upload__item-header">
+                  <a class="ipms-file-upload__file-name" href="{{ file.uploadedFilePath }}" target="_blank">
+                    {{ file.data.name }}
+                  </a>
+                  <span class="ipms-file-upload__file-size">{{ (file.data.size / 1024) | number: '1.0-0' }} KB</span>
+                  <button type="button" class="ipms-file-upload__remove remove-file" (click)="removeFile(file)"
+                    aria-label="Remove file">
+                    <mat-icon>close</mat-icon>
+                  </button>
+                </div>
+
+                @if (file.uploadStatus === 'FAILED') {
+                  <p class="ipms-file-upload__status ipms-file-upload__status--error">
+                    <mat-icon aria-hidden="true">cancel</mat-icon>
+                    Upload failed. Please try again.
+                  </p>
+                } @else if (file.uploadStatus === 'SUCCESS' || file.progress === 100) {
+                  <p class="ipms-file-upload__status ipms-file-upload__status--success">
+                    <mat-icon aria-hidden="true">check_circle</mat-icon>
+                    <span class="file-label">Upload complete</span>
+                  </p>
+                } @else {
+                  <mat-progress-bar class="ipms-file-upload__progress" mode="determinate"
+                    [value]="file.progress || 0"></mat-progress-bar>
+                  <span class="file-label ipms-file-upload__progress-label">{{ file.progress || 0 }}% complete</span>
+                }
               </div>
             </div>
           </li>
         }
       </ul>
-    </mat-card-content>
-    <mat-card-actions class="card-action">
-      <a mat-flat-button color="warn" (click)="onClick()" class="attachment-upload">
-        <mat-icon>file_upload</mat-icon>
-        Upload
-      </a>
-    </mat-card-actions>
-  </mat-card>
+    }
+  </mat-card-content>
 
-  <input type="file" #fileUpload id="fileUpload" name="fileUpload"
-    multiple="multiple" accept="image/*" style="display:none;"/>
+  <mat-card-actions class="card-action ipms-file-upload__actions">
+    <a mat-flat-button color="warn" (click)="onClick()" class="attachment-upload ipms-file-upload__btn">
+      <mat-icon>file_upload</mat-icon>
+      Upload
+    </a>
+  </mat-card-actions>
+</mat-card>
 
+<input type="file" #fileUpload id="fileUpload" name="fileUpload" multiple="multiple" accept="image/*"
+  style="display:none;">

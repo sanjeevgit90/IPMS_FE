@@ -10,6 +10,7 @@ import { of } from 'rxjs';
 @Component({
     selector: 'app-fileupload',
     templateUrl: './fileupload.component.html',
+    styleUrls: ['./fileupload.component.css'],
     providers: [FileuploadService, AppGlobals, DialogService],
     standalone: false
 })

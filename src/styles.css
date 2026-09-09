@@ -144,8 +144,6 @@ a:focus {
 } */
 
 .padding-zero {padding: 0px;}
-.attachment-field {margin-left: -15px;}
-.attachment-upload {margin-left: -7px !important; }
 .badge-class {right: 10px;  position: absolute;}
 .menubtn {
 	position: fixed;
@@ -314,17 +312,9 @@ label {
 }
 .nav-tabs li {border-right: solid 1px #ddd;}
 .nav-tabs button {padding: 6px 15px;}
-.remove-file {height: 18px; margin-top: 0px;  cursor: pointer; color: red;}
-.upload-cont {    margin-bottom: 18px !important;  margin-top: 18px !important;}
 .mat-flat-button.mat-primary[disabled], .mat-flat-button.mat-accent[disabled], .mat-flat-button.mat-warn[disabled], .mat-flat-button[disabled][disabled], .mat-raised-button.mat-primary[disabled], .mat-raised-button.mat-accent[disabled], .mat-raised-button.mat-warn[disabled], .mat-raised-button[disabled][disabled], .mat-fab.mat-primary[disabled], .mat-fab.mat-accent[disabled], .mat-fab.mat-warn[disabled], .mat-fab[disabled][disabled], .mat-mini-fab.mat-primary[disabled], .mat-mini-fab.mat-accent[disabled], .mat-mini-fab.mat-warn[disabled], .mat-mini-fab[disabled][disabled] {
 	 pointer-events: none;
 }
-.upload-border {border-bottom: solid 1px #a9a7a7 !important; margin-bottom: 15px; border-radius: 0px !important; box-shadow: none !important;
-	padding: 0px 0px 12px 15px !important;}
-.card-action {padding:0px !important}
-.upload-style {margin: 0px; padding: 0px;}
-.upload-style li {list-style: none; margin-bottom:10px ;}
-.file-label {color: #d42b91;}
 
 .form-group {
     margin-bottom: 0.5rem;
@@ -8770,11 +8760,8 @@ body {
 	color: #741051;
 }
 
-.pro-overview .card-body .upload-border {
+.pro-overview .card-body .ipms-file-upload.upload-border {
 	margin-top: 1.25rem;
-	padding-top: 0.75rem !important;
-	border-bottom: none !important;
-	border-top: 1px solid #e5e7eb !important;
 }
 
 /* --- Required field banner --- */
