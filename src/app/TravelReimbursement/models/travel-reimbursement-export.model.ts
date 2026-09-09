@@ -4,6 +4,7 @@ export interface TravelReimbursementExportItem {
   amount: number | null;
   remarks: string | null;
   billAttached: string | null;
+  billFileName: string | null;
 }
 
 export interface TravelReimbursementExportData {
@@ -19,5 +20,6 @@ export interface TravelReimbursementExportData {
   preparedBy: string | null;
   verifiedBy: string | null;
   approvedBy: string | null;
+  totalAmount: number;
   items: TravelReimbursementExportItem[];
 }

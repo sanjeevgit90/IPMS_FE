@@ -37,6 +37,7 @@
             "allowedCommonJsDependencies": [
               "highcharts",
               "xlsx",
+              "exceljs",
               "mat-table-exporter",
               "cdk-table-exporter"
             ]

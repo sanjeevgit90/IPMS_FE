@@ -1,164 +1,368 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, from, throwError } from 'rxjs';
+import { Observable, forkJoin, from, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
-import * as XLSX from 'xlsx';
+import * as ExcelJS from 'exceljs';
 import { TravelReimbursementExportData, TravelReimbursementExportItem } from './models/travel-reimbursement-export.model';
+
+type BorderStyle = ExcelJS.BorderStyle;
+
+interface SheetLayout {
+  titleRow: number;
+  infoStartRow: number;
+  tableHeaderRow: number;
+  dataStartRow: number;
+  totalRow: number;
+  signatureLabelRow: number;
+  signatureNameRow: number;
+  lastRow: number;
+  lastCol: number;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class TravelReimbursementExportService {
 
-  private readonly templatePath = 'assets/templates/travel-reimbursement-expense-report.xlsx';
-  private readonly sheetName = 'Domestic';
+  private readonly sheetName = 'Travel Reimbursement';
+  private readonly logoPath = 'assets/Images/letterhead/AurionPro-logo1.png';
 
-  private readonly dataStartRow = 13;
-  private readonly fixedTotalRow = 26;
-  private readonly fixedSignatureLabelRow = 30;
-  private readonly fixedSignatureValueRow = 31;
-  private readonly fixedNotesTitleRow = 33;
-  private readonly templateDataRowCount = 13;
+  private readonly fontFamily = 'Calibri';
+  private readonly dateNumFmt = 'dd-mm-yyyy';
+  private readonly amountNumFmt = '#,##0.00';
+
+  private readonly thinBorder: Partial<ExcelJS.Border> = { style: 'thin' as BorderStyle, color: { argb: 'FF808080' } };
+  private readonly mediumBorder: Partial<ExcelJS.Border> = { style: 'medium' as BorderStyle, color: { argb: 'FF404040' } };
 
   constructor(private http: HttpClient) { }
 
   exportTravelReimbursement(data: TravelReimbursementExportData): Observable<void> {
-    return this.http.get(this.templatePath, { responseType: 'arraybuffer' }).pipe(
-      switchMap((buffer) => from(this.generateWorkbook(buffer, data))),
+    return forkJoin({
+      logo: this.http.get(this.logoPath, { responseType: 'arraybuffer' })
+    }).pipe(
+      switchMap(({ logo }) => from(this.generateWorkbook(logo, data))),
       catchError(() => throwError(() => new Error('Failed to export travel reimbursement to Excel.')))
     );
   }
 
-  private async generateWorkbook(buffer: ArrayBuffer, data: TravelReimbursementExportData): Promise<void> {
-    const workbook = XLSX.read(buffer, { type: 'array', cellStyles: true });
-    const worksheet = workbook.Sheets[this.sheetName];
+  private async generateWorkbook(logoBuffer: ArrayBuffer, data: TravelReimbursementExportData): Promise<void> {
+    const workbook = new ExcelJS.Workbook();
+    workbook.creator = 'IPMS';
+    workbook.created = new Date();
 
-    if (!worksheet) {
-      throw new Error(`Worksheet "${this.sheetName}" was not found in the export template.`);
-    }
-
-    this.populateHeader(worksheet, data);
-    this.clearTemplateDataRows(worksheet);
-
-    const activeItems = data.items ?? [];
-    activeItems.forEach((item, index) => {
-      this.populateExpenseRow(worksheet, this.dataStartRow + index, item);
+    const worksheet = workbook.addWorksheet(this.sheetName, {
+      pageSetup: {
+        paperSize: 9,
+        orientation: 'landscape',
+        fitToPage: true,
+        fitToWidth: 1,
+        fitToHeight: 0,
+        margins: {
+          left: 0.4,
+          right: 0.4,
+          top: 0.5,
+          bottom: 0.5,
+          header: 0.3,
+          footer: 0.3
+        },
+        showGridLines: false
+      },
+      views: [{ showGridLines: false }]
     });
 
-    const totalAmount = this.calculateTotalAmount(activeItems);
-    const totalRow = activeItems.length > this.templateDataRowCount
-      ? this.dataStartRow + activeItems.length + 1
-      : this.fixedTotalRow;
+    this.configureColumns(worksheet);
+    this.addLogo(workbook, worksheet, logoBuffer);
 
-    this.populateTotalRow(worksheet, totalRow, totalAmount);
-    if (totalRow !== this.fixedTotalRow) {
-      this.clearFixedSignatureAndNotes(worksheet);
+    const activeItems = data.items ?? [];
+    const layout = this.buildDocumentLayout(activeItems.length);
+
+    this.populateTitle(worksheet, layout);
+    this.populateEmployeeInfo(worksheet, layout, data);
+    this.populateTableHeader(worksheet, layout);
+    this.populateExpenseRows(worksheet, layout, activeItems);
+
+    this.populateTotalRow(worksheet, layout, data.totalAmount);
+    this.populateSignatureSection(worksheet, layout, data);
+    this.applyPrintSettings(worksheet, layout);
+
+    const buffer = await workbook.xlsx.writeBuffer();
+    this.downloadWorkbook(buffer, this.buildFilename(data));
+  }
+
+  private configureColumns(worksheet: ExcelJS.Worksheet): void {
+    worksheet.columns = [
+      { key: 'date', width: 13 },
+      { key: 'particular', width: 32 },
+      { key: 'amount', width: 14 },
+      { key: 'remarks', width: 28 },
+      { key: 'billAttached', width: 14 },
+      { key: 'billFileName', width: 28 }
+    ];
+  }
+
+  private addLogo(workbook: ExcelJS.Workbook, worksheet: ExcelJS.Worksheet, logoBuffer: ArrayBuffer): void {
+    const imageId = workbook.addImage({
+      buffer: logoBuffer,
+      extension: 'png'
+    });
+
+    worksheet.getRow(1).height = 18;
+    worksheet.getRow(2).height = 18;
+    worksheet.getRow(3).height = 18;
+
+    worksheet.addImage(imageId, {
+      tl: { col: 4.15, row: 0.15 },
+      ext: { width: 155, height: 46 }
+    });
+  }
+
+  private buildDocumentLayout(itemCount: number): SheetLayout {
+    const tableHeaderRow = 11;
+    const dataStartRow = tableHeaderRow + 1;
+    const dataEndRow = dataStartRow + Math.max(itemCount, 1) - 1;
+    const totalRow = dataEndRow + 2;
+    const signatureLabelRow = totalRow + 2;
+    const signatureNameRow = signatureLabelRow + 1;
+
+    return {
+      titleRow: 5,
+      infoStartRow: 6,
+      tableHeaderRow,
+      dataStartRow,
+      totalRow,
+      signatureLabelRow,
+      signatureNameRow,
+      lastRow: signatureNameRow + 1,
+      lastCol: 6
+    };
+  }
+
+  private populateTitle(worksheet: ExcelJS.Worksheet, layout: SheetLayout): void {
+    worksheet.mergeCells(layout.titleRow, 1, layout.titleRow, layout.lastCol);
+    const titleCell = worksheet.getCell(layout.titleRow, 1);
+    titleCell.value = 'TRAVEL REIMBURSEMENT';
+    titleCell.font = { name: this.fontFamily, size: 16, bold: true, color: { argb: 'FF1F3864' } };
+    titleCell.alignment = { horizontal: 'center', vertical: 'middle' };
+    worksheet.getRow(layout.titleRow).height = 28;
+  }
+
+  private populateEmployeeInfo(
+    worksheet: ExcelJS.Worksheet,
+    layout: SheetLayout,
+    data: TravelReimbursementExportData
+  ): void {
+    const infoRows: Array<Array<{ label: string; value: string | number }>> = [
+      [
+        { label: 'Reimbursement No.', value: this.displayValue(data.entityId) },
+        { label: 'Employee Name', value: this.displayValue(data.employeeName) }
+      ],
+      [
+        { label: 'Employee ID', value: this.displayValue(data.employeeId) },
+        { label: 'Band / Grade', value: this.displayValue(data.bandGrade) }
+      ],
+      [
+        { label: 'City Visited', value: this.displayValue(data.cityVisited) },
+        { label: 'Project Name', value: this.displayValue(data.projectName) }
+      ],
+      [
+        { label: 'Project PIN', value: this.displayValue(data.projectPin) },
+        { label: 'Travel Period', value: this.formatTravelPeriod(data.fromDate, data.toDate) }
+      ]
+    ];
+
+    infoRows.forEach((pairs, index) => {
+      const rowNumber = layout.infoStartRow + index;
+      const row = worksheet.getRow(rowNumber);
+      row.height = 20;
+
+      this.setInfoPair(worksheet, rowNumber, 1, 2, pairs[0].label, pairs[0].value);
+      this.setInfoPair(worksheet, rowNumber, 4, 2, pairs[1].label, pairs[1].value);
+    });
+  }
+
+  private setInfoPair(
+    worksheet: ExcelJS.Worksheet,
+    rowNumber: number,
+    labelCol: number,
+    valueSpan: number,
+    label: string,
+    value: string | number
+  ): void {
+    const labelCell = worksheet.getCell(rowNumber, labelCol);
+    labelCell.value = `${label}:`;
+    labelCell.font = { name: this.fontFamily, size: 10, bold: true };
+    labelCell.alignment = { horizontal: 'left', vertical: 'middle' };
+
+    const valueStartCol = labelCol + 1;
+    const valueEndCol = valueStartCol + valueSpan - 1;
+    worksheet.mergeCells(rowNumber, valueStartCol, rowNumber, valueEndCol);
+    const valueCell = worksheet.getCell(rowNumber, valueStartCol);
+    valueCell.value = value;
+    valueCell.font = { name: this.fontFamily, size: 10 };
+    valueCell.alignment = { horizontal: 'left', vertical: 'middle', wrapText: true };
+  }
+
+  private populateTableHeader(worksheet: ExcelJS.Worksheet, layout: SheetLayout): void {
+    const headers = ['Date', 'Particular', 'Amount', 'Remarks', 'Bill Attached', 'Bill File Name'];
+    const row = worksheet.getRow(layout.tableHeaderRow);
+    row.height = 22;
+
+    headers.forEach((header, index) => {
+      const cell = row.getCell(index + 1);
+      cell.value = header;
+      cell.font = { name: this.fontFamily, size: 11, bold: true, color: { argb: 'FF1F3864' } };
+      cell.fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: 'FFE9EDF4' }
+      };
+      cell.alignment = {
+        horizontal: index === 2 ? 'center' : index === 4 ? 'center' : 'center',
+        vertical: 'middle',
+        wrapText: true
+      };
+      this.applyCellBorder(cell, this.mediumBorder);
+    });
+  }
+
+  private populateExpenseRows(
+    worksheet: ExcelJS.Worksheet,
+    layout: SheetLayout,
+    items: TravelReimbursementExportItem[]
+  ): void {
+    const rowsToRender = items.length > 0 ? items : [this.createEmptyExpenseItem()];
+
+    rowsToRender.forEach((item, index) => {
+      const rowNumber = layout.dataStartRow + index;
+      const row = worksheet.getRow(rowNumber);
+      const rowHeight = this.calculateRowHeight(item);
+      row.height = rowHeight;
+
+      this.setExpenseCell(worksheet, rowNumber, 1, this.toExcelDate(item.expenseDate), 'date');
+      this.setExpenseCell(worksheet, rowNumber, 2, this.displayValue(item.particular), 'text');
+      this.setExpenseCell(worksheet, rowNumber, 3, this.toNumber(item.amount), 'amount');
+      this.setExpenseCell(worksheet, rowNumber, 4, this.displayValue(item.remarks), 'text');
+      this.setExpenseCell(worksheet, rowNumber, 5, this.displayBillAttached(item.billAttached), 'center');
+      this.setExpenseCell(worksheet, rowNumber, 6, this.displayValue(item.billFileName), 'text');
+    });
+  }
+
+  private setExpenseCell(
+    worksheet: ExcelJS.Worksheet,
+    rowNumber: number,
+    colNumber: number,
+    value: string | number | Date | null,
+    kind: 'date' | 'amount' | 'text' | 'center'
+  ): void {
+    const cell = worksheet.getCell(rowNumber, colNumber);
+    cell.value = value === '' ? null : value;
+    cell.font = { name: this.fontFamily, size: 10 };
+    cell.border = this.fullBorder(this.thinBorder);
+
+    if (kind === 'date') {
+      cell.numFmt = this.dateNumFmt;
+      cell.alignment = { horizontal: 'center', vertical: 'middle' };
+      return;
     }
-    this.populateSignatureSection(worksheet, totalRow, data);
-    this.populateNotesSection(worksheet, totalRow);
-    this.updateSheetRange(worksheet);
 
-    XLSX.writeFile(workbook, this.buildFilename(data));
-  }
-
-  private populateHeader(worksheet: XLSX.WorkSheet, data: TravelReimbursementExportData): void {
-    this.setCellAddress(worksheet, 'A6', `Emp. Name: ${this.displayValue(data.employeeName)}`);
-    this.setCellAddress(worksheet, 'A7', `Emp. ID: ${this.displayValue(data.employeeId)}`);
-    this.setCellAddress(worksheet, 'D7', `Band: ${this.displayValue(data.bandGrade)}`);
-    this.setCellAddress(worksheet, 'F7', 'Grade:');
-    this.setCellAddress(worksheet, 'A8', `City Visited: ${this.displayValue(data.cityVisited)}`);
-    this.setCellAddress(worksheet, 'A9', `Project Name:- ${this.displayValue(data.projectName)}`);
-    this.setCellAddress(worksheet, 'A10', `Project PIN:-  ${this.displayValue(data.projectPin)}`);
-    this.setCellAddress(worksheet, 'A11', 'From Date :');
-    this.setCellAddress(worksheet, 'B11', this.toExcelDate(data.fromDate), 'n');
-    this.setCellAddress(worksheet, 'C11', 'To Date:');
-    this.setCellAddress(worksheet, 'D11', this.toExcelDate(data.toDate), 'n');
-  }
-
-  private clearTemplateDataRows(worksheet: XLSX.WorkSheet): void {
-    for (let row = this.dataStartRow; row < this.dataStartRow + this.templateDataRowCount; row++) {
-      this.clearCellAt(worksheet, row, 0);
-      this.clearCellAt(worksheet, row, 1);
-      this.clearCellAt(worksheet, row, 5);
-      this.clearCellAt(worksheet, row, 6);
-      this.clearCellAt(worksheet, row, 7);
+    if (kind === 'amount') {
+      cell.numFmt = this.amountNumFmt;
+      cell.alignment = { horizontal: 'right', vertical: 'middle' };
+      return;
     }
 
-    this.clearCellAt(worksheet, this.fixedTotalRow, 1);
-    this.clearCellAt(worksheet, this.fixedTotalRow, 5);
-  }
-
-  private populateExpenseRow(worksheet: XLSX.WorkSheet, row: number, item: TravelReimbursementExportItem): void {
-    this.setCellAt(worksheet, row, 0, this.toExcelDate(item.expenseDate), 'n');
-    this.setCellAt(worksheet, row, 1, this.displayValue(item.particular));
-    this.setCellAt(worksheet, row, 5, this.toNumber(item.amount), 'n');
-    this.setCellAt(worksheet, row, 6, this.displayValue(item.remarks));
-    this.setCellAt(worksheet, row, 7, this.displayBillAttached(item.billAttached));
-  }
-
-  private populateTotalRow(worksheet: XLSX.WorkSheet, row: number, totalAmount: number): void {
-    if (row !== this.fixedTotalRow) {
-      this.clearCellAt(worksheet, this.fixedTotalRow, 1);
-      this.clearCellAt(worksheet, this.fixedTotalRow, 5);
+    if (kind === 'center') {
+      cell.alignment = { horizontal: 'center', vertical: 'middle' };
+      return;
     }
 
-    this.setCellAt(worksheet, row, 1, 'Balance Amount Receivable/Payable:');
-    this.setCellAt(worksheet, row, 5, totalAmount, 'n');
+    cell.alignment = { horizontal: 'left', vertical: 'middle', wrapText: true };
+  }
+
+  private populateTotalRow(worksheet: ExcelJS.Worksheet, layout: SheetLayout, totalAmount: number): void {
+    const row = worksheet.getRow(layout.totalRow);
+    row.height = 24;
+
+    worksheet.mergeCells(layout.totalRow, 1, layout.totalRow, 2);
+    const labelCell = worksheet.getCell(layout.totalRow, 1);
+    labelCell.value = 'TOTAL AMOUNT';
+    labelCell.font = { name: this.fontFamily, size: 12, bold: true, color: { argb: 'FF1F3864' } };
+    labelCell.alignment = { horizontal: 'right', vertical: 'middle' };
+    this.applyCellBorder(labelCell, this.mediumBorder);
+
+    worksheet.mergeCells(layout.totalRow, 3, layout.totalRow, layout.lastCol);
+    const amountCell = worksheet.getCell(layout.totalRow, 3);
+    amountCell.value = totalAmount;
+    amountCell.numFmt = this.amountNumFmt;
+    amountCell.font = { name: this.fontFamily, size: 12, bold: true };
+    amountCell.alignment = { horizontal: 'right', vertical: 'middle' };
+    amountCell.fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: 'FFF4F6F9' }
+    };
+    this.applyCellBorder(amountCell, this.mediumBorder);
+
+    for (let col = 4; col <= layout.lastCol; col++) {
+      const borderCell = worksheet.getCell(layout.totalRow, col);
+      this.applyCellBorder(borderCell, this.mediumBorder);
+      borderCell.fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: 'FFF4F6F9' }
+      };
+    }
   }
 
   private populateSignatureSection(
-    worksheet: XLSX.WorkSheet,
-    totalRow: number,
+    worksheet: ExcelJS.Worksheet,
+    layout: SheetLayout,
     data: TravelReimbursementExportData
   ): void {
-    const labelRow = totalRow === this.fixedTotalRow
-      ? this.fixedSignatureLabelRow
-      : totalRow + 4;
-    const valueRow = labelRow + 1;
-
-    this.setCellAt(worksheet, labelRow, 0, 'Prepared By: ');
-    this.setCellAt(worksheet, labelRow, 3, 'Verified By: ');
-    this.setCellAt(worksheet, labelRow, 6, 'Approved By: ');
-
-    this.setCellAt(worksheet, valueRow, 0, 'Name & Signature');
-    this.setCellAt(worksheet, valueRow, 1, this.displayValue(data.preparedBy));
-    this.setCellAt(worksheet, valueRow, 3, 'Name & Signature');
-    this.setCellAt(worksheet, valueRow, 6, 'Name & Signature');
-    this.setCellAt(worksheet, valueRow, 7, this.displayValue(data.approvedBy));
-  }
-
-  private clearFixedSignatureAndNotes(worksheet: XLSX.WorkSheet): void {
-    for (let row = this.fixedSignatureLabelRow; row <= this.fixedNotesTitleRow + 5; row++) {
-      for (let col = 0; col <= 7; col++) {
-        this.clearCellAt(worksheet, row, col);
-      }
-    }
-  }
-
-  private populateNotesSection(worksheet: XLSX.WorkSheet, totalRow: number): void {
-    const notesTitleRow = totalRow === this.fixedTotalRow
-      ? this.fixedNotesTitleRow
-      : totalRow + 7;
-    const notes: string[] = [
-      'FILL SEPARATE FORMS FOR DIFFERENT TRIPS. ',
-      'ATTACH COPIES OF BOARDING PASS/TRAIN TICKETS.',
-      'ATTACH LIST OF DATES AND AMOUNTS RECEIVED FROM THE COMPANY.',
-      'ALL BILLS/RECEIPTS ARE TO BE ATTACHED.',
-      'FOR PER DIEM CLAIM ATTACH SEPARATE FORM WITH TIME SHEET DULY APPROVED AND VERIFIED BY PM & HR'
+    const headers = ['Prepared By', 'Signature', 'Verified By', 'Signature', 'Approved By', 'Signature'];
+    const names = [
+      this.displayValue(data.preparedBy),
+      '',
+      this.displayValue(data.verifiedBy),
+      '',
+      this.displayValue(data.approvedBy),
+      ''
     ];
 
-    this.setCellAt(worksheet, notesTitleRow, 0, 'Notes');
-    notes.forEach((note, index) => {
-      this.setCellAt(worksheet, notesTitleRow + 1 + index, 0, index + 1, 'n');
-      this.setCellAt(worksheet, notesTitleRow + 1 + index, 1, note);
+    const labelRow = worksheet.getRow(layout.signatureLabelRow);
+    labelRow.height = 20;
+    headers.forEach((header, index) => {
+      const cell = labelRow.getCell(index + 1);
+      cell.value = header;
+      cell.font = { name: this.fontFamily, size: 10, bold: true };
+      cell.alignment = { horizontal: 'center', vertical: 'middle' };
+      this.applyCellBorder(cell, this.thinBorder);
+    });
+
+    const nameRow = worksheet.getRow(layout.signatureNameRow);
+    nameRow.height = 36;
+    names.forEach((name, index) => {
+      const cell = nameRow.getCell(index + 1);
+      cell.value = name;
+      cell.font = { name: this.fontFamily, size: 10 };
+      cell.alignment = { horizontal: 'center', vertical: 'bottom' };
+      this.applyCellBorder(cell, this.thinBorder);
+
+      if (index % 2 === 1) {
+        cell.border = {
+          top: this.thinBorder,
+          left: this.thinBorder,
+          right: this.thinBorder,
+          bottom: { style: 'medium' as BorderStyle, color: { argb: 'FF404040' } }
+        };
+      }
     });
   }
 
-  private calculateTotalAmount(items: TravelReimbursementExportItem[]): number {
-    return items.reduce((sum, item) => {
-      const amount = this.toNumber(item.amount);
-      return sum + (isNaN(amount) ? 0 : amount);
-    }, 0);
+  private applyPrintSettings(worksheet: ExcelJS.Worksheet, layout: SheetLayout): void {
+    const lastColLetter = this.columnLetter(layout.lastCol);
+    worksheet.pageSetup.printArea = `A1:${lastColLetter}${layout.lastRow}`;
+    worksheet.pageSetup.printTitlesRow = `${layout.tableHeaderRow}:${layout.tableHeaderRow}`;
   }
 
   buildFilename(data: TravelReimbursementExportData): string {
@@ -172,6 +376,56 @@ export class TravelReimbursementExportService {
     return this.sanitizeFilename(`Travel-Reimbursement-${employeeName}-${datePart}.xlsx`);
   }
 
+  private createEmptyExpenseItem(): TravelReimbursementExportItem {
+    return {
+      expenseDate: null,
+      particular: null,
+      amount: null,
+      remarks: null,
+      billAttached: null,
+      billFileName: null
+    };
+  }
+
+  private calculateRowHeight(item: TravelReimbursementExportItem): number {
+    const textLengths = [
+      this.displayValue(item.particular).length,
+      this.displayValue(item.remarks).length,
+      this.displayValue(item.billFileName).length
+    ];
+    const maxLines = Math.max(
+      1,
+      ...textLengths.map(length => Math.ceil(length / 28))
+    );
+    return Math.min(72, 18 + (maxLines - 1) * 12);
+  }
+
+  private formatTravelPeriod(fromDate: number | null, toDate: number | null): string {
+    const from = this.formatDisplayDate(fromDate);
+    const to = this.formatDisplayDate(toDate);
+    if (!from && !to) {
+      return '';
+    }
+    if (from && to) {
+      return `${from} to ${to}`;
+    }
+    return from || to;
+  }
+
+  private formatDisplayDate(epoch: number | null): string {
+    if (!epoch) {
+      return '';
+    }
+    const date = new Date(epoch);
+    if (isNaN(date.getTime())) {
+      return '';
+    }
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}-${month}-${year}`;
+  }
+
   private sanitizeFilename(value: string): string {
     return value.replace(/[<>:"/\\|?*]+/g, '').trim() || 'Export';
   }
@@ -180,12 +434,7 @@ export class TravelReimbursementExportService {
     if (!epoch) {
       return 'date';
     }
-
-    const date = new Date(epoch);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear();
-    return `${day}-${month}-${year}`;
+    return this.formatDisplayDate(epoch);
   }
 
   private displayValue(value: string | number | null | undefined): string {
@@ -210,65 +459,47 @@ export class TravelReimbursementExportService {
     return isNaN(parsed) ? 0 : parsed;
   }
 
-  private toExcelDate(epoch: number | null | undefined): number | '' {
+  private toExcelDate(epoch: number | null | undefined): Date | null {
     if (!epoch) {
-      return '';
+      return null;
     }
-
     const date = new Date(epoch);
-    if (isNaN(date.getTime())) {
-      return '';
+    return isNaN(date.getTime()) ? null : date;
+  }
+
+  private applyCellBorder(cell: ExcelJS.Cell, border: Partial<ExcelJS.Border>): void {
+    cell.border = this.fullBorder(border);
+  }
+
+  private fullBorder(border: Partial<ExcelJS.Border>): Partial<ExcelJS.Borders> {
+    return {
+      top: border,
+      left: border,
+      right: border,
+      bottom: border
+    };
+  }
+
+  private columnLetter(columnNumber: number): string {
+    let letter = '';
+    let current = columnNumber;
+    while (current > 0) {
+      const remainder = (current - 1) % 26;
+      letter = String.fromCharCode(65 + remainder) + letter;
+      current = Math.floor((current - 1) / 26);
     }
-
-    const utcDate = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
-    return (utcDate - Date.UTC(1899, 11, 30)) / 86400000;
+    return letter;
   }
 
-  private setCellAddress(
-    worksheet: XLSX.WorkSheet,
-    address: string,
-    value: string | number,
-    type: 's' | 'n' = 's'
-  ): void {
-    if (value === '') {
-      delete worksheet[address];
-      return;
-    }
-
-    worksheet[address] = { t: type, v: value };
-  }
-
-  private setCellAt(
-    worksheet: XLSX.WorkSheet,
-    row: number,
-    col: number,
-    value: string | number,
-    type: 's' | 'n' = 's'
-  ): void {
-    const address = XLSX.utils.encode_cell({ r: row, c: col });
-    this.setCellAddress(worksheet, address, value, type);
-  }
-
-  private clearCellAt(worksheet: XLSX.WorkSheet, row: number, col: number): void {
-    const address = XLSX.utils.encode_cell({ r: row, c: col });
-    delete worksheet[address];
-  }
-
-  private updateSheetRange(worksheet: XLSX.WorkSheet): void {
-    const cellAddresses = Object.keys(worksheet).filter((key) => !key.startsWith('!'));
-    if (!cellAddresses.length) {
-      return;
-    }
-
-    const range = { s: { r: Number.MAX_SAFE_INTEGER, c: Number.MAX_SAFE_INTEGER }, e: { r: 0, c: 0 } };
-    cellAddresses.forEach((address) => {
-      const decoded = XLSX.utils.decode_cell(address);
-      range.s.r = Math.min(range.s.r, decoded.r);
-      range.s.c = Math.min(range.s.c, decoded.c);
-      range.e.r = Math.max(range.e.r, decoded.r);
-      range.e.c = Math.max(range.e.c, decoded.c);
+  private downloadWorkbook(buffer: ExcelJS.Buffer, filename: string): void {
+    const blob = new Blob([buffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     });
-
-    worksheet['!ref'] = XLSX.utils.encode_range(range);
+    const url = window.URL.createObjectURL(blob);
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.download = filename;
+    anchor.click();
+    window.URL.revokeObjectURL(url);
   }
 }

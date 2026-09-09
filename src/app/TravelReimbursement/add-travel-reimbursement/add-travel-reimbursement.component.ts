@@ -272,7 +272,8 @@ export class AddTravelReimbursementComponent implements OnInit {
           particular: itemValue.particular ?? null,
           amount: itemValue.amount ?? null,
           remarks: itemValue.remarks ?? null,
-          billAttached: itemValue.billAttached ?? null
+          billAttached: itemValue.billAttached ?? null,
+          billFileName: itemValue.billFileName ?? itemValue.billFileReference ?? null
         };
       });
 
@@ -289,6 +290,7 @@ export class AddTravelReimbursementComponent implements OnInit {
       preparedBy: formValue.preparedBy ?? null,
       verifiedBy: formValue.verifiedBy ?? null,
       approvedBy: formValue.approvedBy ?? null,
+      totalAmount: this.getTotalAmount(),
       items
     };
   }
