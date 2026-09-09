@@ -180,6 +180,8 @@ import { AddProjectMappingComponent } from './ProjectMgmt/ProjectMapping/addproj
 import { CourierDetailsComponent } from './AssetMgmt/DeliveryChallan/courierDetails/courierDetails.component';
 import { ProcurementAiChatComponent } from './procurement-ai/procurement-ai-chat.component';
 import { ProcurementAiStructuredSectionComponent } from './procurement-ai/procurement-ai-structured-section.component';
+import { TravelReimbursementComponent } from './TravelReimbursement/travel-reimbursement.component';
+import { AddTravelReimbursementComponent } from './TravelReimbursement/add-travel-reimbursement/add-travel-reimbursement.component';
 
 @NgModule({ declarations: [
         AppComponent,
@@ -314,7 +316,9 @@ import { ProcurementAiStructuredSectionComponent } from './procurement-ai/procur
         ProjectMappingComponent, AddProjectMappingComponent,
         CourierDetailsComponent,
         ProcurementAiChatComponent,
-        ProcurementAiStructuredSectionComponent
+        ProcurementAiStructuredSectionComponent,
+        TravelReimbursementComponent,
+        AddTravelReimbursementComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         AppRoutingModule,

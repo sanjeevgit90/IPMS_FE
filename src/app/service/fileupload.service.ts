@@ -256,6 +256,12 @@ export class FileuploadService {
       case 'grnlrcopy':
         apiname = "ipms/grn/uploadlrcopy";
         break;
+      case 'travelReimbursementBill':
+        apiname = "fileupload";
+        break;
+      case 'travelReimbursementSignature':
+        apiname = "fileupload";
+        break;
     }
     return this._http.post<any>(this._global.baseAPIUrl + apiname, formData, {
       headers: header,

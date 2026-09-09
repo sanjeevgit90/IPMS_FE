@@ -1,0 +1,24 @@
+.travel-expense-table-wrapper {
+  overflow-x: auto;
+  margin-bottom: 12px;
+}
+
+.travel-expense-table {
+  min-width: 1100px;
+  margin-bottom: 0;
+}
+
+.travel-expense-table th,
+.travel-expense-table td {
+  vertical-align: top;
+  white-space: normal;
+}
+
+.travel-expense-table .table-field {
+  width: 100%;
+  min-width: 120px;
+}
+
+.travel-expense-table .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}

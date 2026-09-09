@@ -1,0 +1,338 @@
+@if (showLoading) {
+  <app-loader></app-loader>
+}
+<form [formGroup]="travelReimbursementForm">
+  <div class="main-wrapper">
+    <app-header></app-header>
+    <app-leftmenu></app-leftmenu>
+    <div class="page-wrapper">
+      <div class="content container-fluid">
+        <div class="page-header">
+          <div class="row align-items-center">
+            <div class="col">
+              <h3 class="page-title">{{ PageTitle }}</h3>
+              <ul class="breadcrumb">
+                <li class="breadcrumb-item">
+                  <a routerLink="/Dashboard">Dashboard</a>
+                </li>
+                <li class="breadcrumb-item">
+                  <a routerLink="/searchTravelReimbursement">Travel Reimbursement</a>
+                </li>
+                <li class="breadcrumb-item active">{{ PageTitle }}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-content">
+          <div class="pro-overview tab-pane fade show active">
+            <div class="card">
+              <div class="card-body">
+                <div class="col-md-12 mandatory">*Fields are Mandatory</div>
+
+                <h3 class="blue-gradient">Employee &amp; Travel Details</h3>
+                <div class="row">
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <mat-form-field class="custom-field"
+                        [ngClass]="{ 'has-error': isSubmitted && formControls['employeeName'].errors }">
+                        <mat-label>Employee Name</mat-label>
+                        <input matInput formControlName="employeeName" maxlength="100" readonly>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <mat-form-field class="custom-field"
+                        [ngClass]="{ 'has-error': isSubmitted && formControls['employeeId'].errors }">
+                        <mat-label>Employee ID</mat-label>
+                        <input matInput formControlName="employeeId" maxlength="6" readonly>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <mat-form-field class="custom-field"
+                        [ngClass]="{ 'has-error': isSubmitted && formControls['cityVisited'].errors }">
+                        <mat-label>City Visited</mat-label>
+                        <input matInput formControlName="cityVisited" maxlength="100">
+                        @if (isSubmitted && formControls['cityVisited'].errors) {
+                          <mat-error>City visited is required</mat-error>
+                        }
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <mat-form-field class="custom-field"
+                        [ngClass]="{ 'has-error': isSubmitted && formControls['selectedProjectId'].errors }">
+                        <mat-label>Project</mat-label>
+                        <mat-select formControlName="selectedProjectId"
+                          [typeaheadDebounceInterval]="matSelectDuration"
+                          (selectionChange)="onProjectChange($event.value)">
+                          <mat-option [value]="null">-Select Project-</mat-option>
+                          @for (project of projectList; track project.selectionid) {
+                            <mat-option [value]="project.selectionid" [matTooltip]="project.selectionvalue">
+                              {{ project.selectionvalue }}
+                            </mat-option>
+                          }
+                        </mat-select>
+                        @if (isSubmitted && formControls['selectedProjectId'].errors) {
+                          <mat-error>Project is required</mat-error>
+                        }
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <mat-form-field class="custom-field">
+                        <mat-label>Project Name</mat-label>
+                        <input matInput formControlName="projectName" maxlength="100" readonly>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <mat-form-field class="custom-field">
+                        <mat-label>Project Pin</mat-label>
+                        <input matInput formControlName="projectPin" maxlength="100" readonly>
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <mat-form-field class="custom-field"
+                        [ngClass]="{ 'has-error': isSubmitted && formControls['bandGrade'].errors }">
+                        <mat-label>Band Grade</mat-label>
+                        <input matInput type="number" formControlName="bandGrade" maxlength="2">
+                        @if (isSubmitted && formControls['bandGrade'].errors) {
+                          <mat-error>Band grade is required</mat-error>
+                        }
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <mat-form-field class="custom-field"
+                        [ngClass]="{ 'has-error': isSubmitted && (formControls['fromDate'].errors || travelReimbursementForm.errors?.['dateRange']) }">
+                        <mat-label>From Date</mat-label>
+                        <input matInput [matDatepicker]="fromDatePicker" formControlName="fromDate">
+                        <mat-datepicker-toggle matSuffix [for]="fromDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #fromDatePicker></mat-datepicker>
+                        @if (isSubmitted && formControls['fromDate'].errors) {
+                          <mat-error>From date is required</mat-error>
+                        }
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <mat-form-field class="custom-field"
+                        [ngClass]="{ 'has-error': isSubmitted && (formControls['toDate'].errors || travelReimbursementForm.errors?.['dateRange']) }">
+                        <mat-label>To Date</mat-label>
+                        <input matInput [matDatepicker]="toDatePicker" formControlName="toDate">
+                        <mat-datepicker-toggle matSuffix [for]="toDatePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #toDatePicker></mat-datepicker>
+                        @if (isSubmitted && formControls['toDate'].errors?.['required']) {
+                          <mat-error>To date is required</mat-error>
+                        }
+                        @if (isSubmitted && travelReimbursementForm.errors?.['dateRange']) {
+                          <mat-error>To date cannot be earlier than from date</mat-error>
+                        }
+                      </mat-form-field>
+                    </div>
+                  </div>
+                </div>
+
+                <h3 class="blue-gradient">Expense Items</h3>
+                <div class="travel-expense-table-wrapper">
+                  <table class="table table-bordered travel-expense-table">
+                    <thead>
+                      <tr>
+                        <th>Expense Date *</th>
+                        <th>Particular *</th>
+                        <th>Amount *</th>
+                        <th>Remarks</th>
+                        <th>Bill Attached *</th>
+                        <th>Bill File</th>
+                        @if (!view) {
+                          <th>Action</th>
+                        }
+                      </tr>
+                    </thead>
+                    <tbody formArrayName="items">
+                      @for (itemGroup of itemsFormArray.controls; track $index; let i = $index) {
+                        @if (isItemRowVisible(i)) {
+                          <tr [formGroupName]="i">
+                            <td>
+                              <mat-form-field class="custom-field table-field"
+                                [ngClass]="{ 'has-error': isSubmitted && itemGroup.get('expenseDate')?.errors }">
+                                <input matInput [matDatepicker]="expensePicker" formControlName="expenseDate">
+                                <mat-datepicker-toggle matSuffix [for]="expensePicker"></mat-datepicker-toggle>
+                                <mat-datepicker #expensePicker></mat-datepicker>
+                              </mat-form-field>
+                            </td>
+                            <td>
+                              <mat-form-field class="custom-field table-field"
+                                [ngClass]="{ 'has-error': isSubmitted && itemGroup.get('particular')?.errors }">
+                                <input matInput formControlName="particular" maxlength="100">
+                              </mat-form-field>
+                            </td>
+                            <td>
+                              <mat-form-field class="custom-field table-field"
+                                [ngClass]="{ 'has-error': isSubmitted && itemGroup.get('amount')?.errors }">
+                                <input matInput type="number" formControlName="amount" maxlength="10">
+                              </mat-form-field>
+                            </td>
+                            <td>
+                              <mat-form-field class="custom-field table-field">
+                                <input matInput formControlName="remarks" maxlength="100">
+                              </mat-form-field>
+                            </td>
+                            <td>
+                              <mat-form-field class="custom-field table-field"
+                                [ngClass]="{ 'has-error': isSubmitted && itemGroup.get('billAttached')?.errors }">
+                                <mat-select formControlName="billAttached"
+                                  [typeaheadDebounceInterval]="matSelectDuration">
+                                  <mat-option [value]="null">-Select-</mat-option>
+                                  @for (option of billAttachedOptions; track option.selectionid) {
+                                    <mat-option [value]="option.selectionid">{{ option.selectionvalue }}</mat-option>
+                                  }
+                                </mat-select>
+                              </mat-form-field>
+                            </td>
+                            <td>
+                              @if (!view) {
+                                <app-fileupload [files]="itemBillFiles[i]" maxSize="15360"
+                                  labelname="Upload Bill" modulename="travelReimbursementBill">
+                                </app-fileupload>
+                              } @else if (itemGroup.get('billFileName')?.value || itemGroup.get('billFileReference')?.value) {
+                                <div class="block">{{ itemGroup.get('billFileName')?.value || itemGroup.get('billFileReference')?.value }}</div>
+                              } @else {
+                                <div class="block">—</div>
+                              }
+                            </td>
+                            @if (!view) {
+                              <td class="text-center">
+                                <button mat-flat-button color="warn" type="button" (click)="removeExpenseItem(i)">
+                                  <mat-icon>delete</mat-icon>
+                                </button>
+                              </td>
+                            }
+                          </tr>
+                        }
+                      }
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <td [attr.colspan]="view ? 5 : 6" class="text-end"><strong>Total Amount</strong></td>
+                        <td [attr.colspan]="view ? 1 : 2"><strong>{{ getTotalAmount() | number: '1.2-2' }}</strong></td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+
+                @if (!view) {
+                  <div class="submit-section">
+                    <button mat-button type="button" (click)="addExpenseItem()">Add Expense Item +</button>
+                  </div>
+                }
+
+                <h3 class="blue-gradient">Approval Details</h3>
+                <div class="row">
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <mat-form-field class="custom-field"
+                        [ngClass]="{ 'has-error': isSubmitted && formControls['preparedBy'].errors }">
+                        <mat-label>Prepared By</mat-label>
+                        <input matInput formControlName="preparedBy" maxlength="100" readonly>
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <label class="d-block mb-1">Prepared Signature *</label>
+                      @if (!view) {
+                        <app-fileupload [files]="preparedSignatureFiles" maxSize="15360"
+                          labelname="Upload Prepared Signature" modulename="travelReimbursementSignature">
+                        </app-fileupload>
+                      } @else if (formControls['preparedSignatureReference'].value) {
+                        <div class="block">{{ formControls['preparedSignatureReference'].value }}</div>
+                      }
+                    </div>
+                  </div>
+
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <mat-form-field class="custom-field">
+                        <mat-label>Verified By</mat-label>
+                        <input matInput formControlName="verifiedBy" maxlength="100">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <label class="d-block mb-1">Verified Signature</label>
+                      @if (!view) {
+                        <app-fileupload [files]="verifiedSignatureFiles" maxSize="15360"
+                          labelname="Upload Verified Signature" modulename="travelReimbursementSignature">
+                        </app-fileupload>
+                      } @else if (formControls['verifiedSignatureReference'].value) {
+                        <div class="block">{{ formControls['verifiedSignatureReference'].value }}</div>
+                      }
+                    </div>
+                  </div>
+
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <mat-form-field class="custom-field">
+                        <mat-label>Approved By</mat-label>
+                        <input matInput formControlName="approvedBy" maxlength="100">
+                      </mat-form-field>
+                    </div>
+                  </div>
+                  <div class="col-sm-4">
+                    <div class="form-group">
+                      <label class="d-block mb-1">Approved Signature</label>
+                      @if (!view) {
+                        <app-fileupload [files]="approvedSignatureFiles" maxSize="15360"
+                          labelname="Upload Approved Signature" modulename="travelReimbursementSignature">
+                        </app-fileupload>
+                      } @else if (formControls['approvedSignatureReference'].value) {
+                        <div class="block">{{ formControls['approvedSignatureReference'].value }}</div>
+                      }
+                    </div>
+                  </div>
+                </div>
+
+                <div class="submit-section">
+                  @if (add) {
+                    <button mat-flat-button color="primary" type="button" (click)="saveTravelReimbursement()">
+                      <mat-icon>save</mat-icon> Save
+                    </button>
+                  }
+                  @if (edit) {
+                    <button mat-flat-button color="primary" type="button" (click)="updateTravelReimbursement()">
+                      <mat-icon>save</mat-icon> Update
+                    </button>
+                  }
+                  <button mat-flat-button color="warn" class="ms-2" type="button" (click)="back()">
+                    <mat-icon>cancel</mat-icon> Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

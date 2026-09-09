@@ -1,0 +1,123 @@
+@if (showLoading) {
+  <app-loader></app-loader>
+}
+<form>
+  <div class="main-wrapper">
+    <app-header></app-header>
+    <app-leftmenu></app-leftmenu>
+    <div class="page-wrapper">
+      <div class="content container-fluid">
+        <div class="page-header">
+          <div class="row align-items-center">
+            <div class="col">
+              <h3 class="page-title">{{ PageTitle }}</h3>
+              <ul class="breadcrumb">
+                <li class="breadcrumb-item">
+                  <a routerLink="/Dashboard">Dashboard</a>
+                </li>
+                <li class="breadcrumb-item active">{{ PageTitle }}</li>
+              </ul>
+            </div>
+            <div class="col-auto float-right ml-auto">
+              @if (travelReimbursementAdd) {
+                <button mat-flat-button color="accent" class="ms-2" (click)="addTravelReimbursement()">
+                  <mat-icon aria-hidden="false">add</mat-icon> Add Travel Reimbursement
+                </button>
+              }
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-content">
+          <div class="pro-overview tab-pane fade show active">
+            <div class="card">
+              <div class="row align-items-center">
+                <div class="col">
+                  <div class="total-rec">Total Records: {{ totalRecords }}</div>
+                </div>
+                <div class="col-auto float-right ml-auto">
+                  <mat-form-field class="search-input">
+                    <input matInput (keyup)="applyFilter($event)" placeholder="Search..." #input>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <table mat-table [dataSource]="travelReimbursementList" matSort class="mat-elevation-z8">
+                <ng-container matColumnDef="employeeName">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Employee Name</th>
+                  <td mat-cell *matCellDef="let row" data-label="Employee Name">
+                    <div class="block">{{ row.employeeName }}</div>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="projectName">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Project Name</th>
+                  <td mat-cell *matCellDef="let row" data-label="Project Name">
+                    <div class="block">{{ row.projectName }}</div>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="cityVisited">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>City Visited</th>
+                  <td mat-cell *matCellDef="let row" data-label="City Visited">
+                    <div class="block">{{ row.cityVisited }}</div>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="fromDate">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>From Date</th>
+                  <td mat-cell *matCellDef="let row" data-label="From Date">
+                    <div class="block">{{ row.fromDate | date: 'dd/MM/yyyy' }}</div>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="toDate">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>To Date</th>
+                  <td mat-cell *matCellDef="let row" data-label="To Date">
+                    <div class="block">{{ row.toDate | date: 'dd/MM/yyyy' }}</div>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="totalAmount">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Amount</th>
+                  <td mat-cell *matCellDef="let row" data-label="Total Amount">
+                    <div class="block">{{ row.totalAmount | number: '1.2-2' }}</div>
+                  </td>
+                </ng-container>
+
+                <ng-container matColumnDef="action">
+                  <th mat-header-cell *matHeaderCellDef>Action</th>
+                  <td mat-cell *matCellDef="let row">
+                    <button mat-flat-button color="accent" [matMenuTriggerFor]="menu">
+                      <mat-icon>mouse</mat-icon> Action
+                    </button>
+                    <mat-menu #menu="matMenu" class="actionmenu">
+                      @if (travelReimbursementView) {
+                        <a mat-menu-item matTooltip="View this record"
+                          [routerLink]="['/updateTravelReimbursement', row.entityId, 'view']">
+                          <mat-icon aria-hidden="false">visibility</mat-icon> View
+                        </a>
+                      }
+                      @if (travelReimbursementEdit) {
+                        <a mat-menu-item matTooltip="Edit this record"
+                          [routerLink]="['/updateTravelReimbursement', row.entityId, 'edit']">
+                          <mat-icon aria-hidden="false" class="m-0">edit</mat-icon> Edit
+                        </a>
+                      }
+                    </mat-menu>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
+
+              <mat-paginator [pageSizeOptions]="itemPerPage" [pageSize]="pageSizedisplay" showFirstLastButtons>
+              </mat-paginator>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

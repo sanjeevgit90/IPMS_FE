@@ -145,6 +145,8 @@ import { AddProjectMappingComponent } from './ProjectMgmt/ProjectMapping/addproj
 
 import { PoFullfillmentReportComponent} from './OrderMgmt/Reports/po-fullfillment-report/po-fullfillment-report.component';
 import { ProjectMappingComponent } from './ProjectMgmt/ProjectMapping/project-mapping.component';
+import { TravelReimbursementComponent } from './TravelReimbursement/travel-reimbursement.component';
+import { AddTravelReimbursementComponent } from './TravelReimbursement/add-travel-reimbursement/add-travel-reimbursement.component';
 
 
 const routes: Routes = [
@@ -396,6 +398,10 @@ const routes: Routes = [
   { path: "projectMapping/:id", canActivate: [AuthGuard], component: ProjectMappingComponent },
   
   { path: "addProjectMapping/:id", canActivate: [AuthGuard], component: AddProjectMappingComponent },
+
+  { path: "searchTravelReimbursement", canActivate: [AuthGuard], component: TravelReimbursementComponent },
+  { path: "addTravelReimbursement", canActivate: [AuthGuard], component: AddTravelReimbursementComponent },
+  { path: "updateTravelReimbursement/:id/:page", canActivate: [AuthGuard], component: AddTravelReimbursementComponent },
 ];
 
 @NgModule({
