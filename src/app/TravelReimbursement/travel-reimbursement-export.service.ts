@@ -110,6 +110,8 @@ export class TravelReimbursementExportService {
   }
 
   private addLogo(workbook: ExcelJS.Workbook, worksheet: ExcelJS.Worksheet, logoBuffer: ArrayBuffer): void {
+    const logoWidth = 155;
+    const logoHeight = 46;
     const imageId = workbook.addImage({
       buffer: logoBuffer,
       extension: 'png'
@@ -119,10 +121,35 @@ export class TravelReimbursementExportService {
     worksheet.getRow(2).height = 18;
     worksheet.getRow(3).height = 18;
 
+    const logoStartCol = this.getRightAlignedImageColumn(worksheet, 6, logoWidth);
+
     worksheet.addImage(imageId, {
-      tl: { col: 4.15, row: 0.15 },
-      ext: { width: 155, height: 46 }
+      tl: { col: logoStartCol, row: 0.15 },
+      ext: { width: logoWidth, height: logoHeight }
     });
+  }
+
+  private getRightAlignedImageColumn(worksheet: ExcelJS.Worksheet, lastCol: number, imageWidthPx: number): number {
+    const pixelsPerWidthUnit = 7;
+    let totalWidthPx = 0;
+
+    for (let col = 1; col <= lastCol; col++) {
+      totalWidthPx += (worksheet.getColumn(col).width ?? 10) * pixelsPerWidthUnit;
+    }
+
+    const leftPx = Math.max(0, totalWidthPx - imageWidthPx);
+    let accumulatedPx = 0;
+
+    for (let col = 1; col <= lastCol; col++) {
+      const columnWidthPx = (worksheet.getColumn(col).width ?? 10) * pixelsPerWidthUnit;
+      if (accumulatedPx + columnWidthPx >= leftPx) {
+        const offsetInCol = (leftPx - accumulatedPx) / columnWidthPx;
+        return col - 1 + offsetInCol;
+      }
+      accumulatedPx += columnWidthPx;
+    }
+
+    return lastCol - 1;
   }
 
   private buildDocumentLayout(itemCount: number): SheetLayout {
