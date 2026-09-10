@@ -126,7 +126,7 @@ export class TravelReimbursementExportService {
   }
 
   private buildDocumentLayout(itemCount: number): SheetLayout {
-    const tableHeaderRow = 11;
+    const tableHeaderRow = 10;
     const dataStartRow = tableHeaderRow + 1;
     const dataEndRow = dataStartRow + Math.max(itemCount, 1) - 1;
     const totalRow = dataEndRow + 2;
@@ -134,8 +134,8 @@ export class TravelReimbursementExportService {
     const signatureNameRow = signatureLabelRow + 1;
 
     return {
-      titleRow: 5,
-      infoStartRow: 6,
+      titleRow: 4,
+      infoStartRow: 5,
       tableHeaderRow,
       dataStartRow,
       totalRow,
@@ -349,7 +349,7 @@ export class TravelReimbursementExportService {
     });
 
     const nameRow = worksheet.getRow(layout.signatureNameRow);
-    nameRow.height = 36;
+    nameRow.height = 56;
     names.forEach((name, index) => {
       const cell = nameRow.getCell(index + 1);
       cell.value = name;
