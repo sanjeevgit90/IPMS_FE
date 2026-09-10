@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Location } from '@angular/common';
 import {
   AbstractControl,
   FormArray,
@@ -89,7 +90,8 @@ export class AddTravelReimbursementComponent implements OnInit, OnDestroy {
     private travelReimbursementExportService: TravelReimbursementExportService,
     private http: HttpClient,
     private global: AppGlobals,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private location: Location
   ) {
     this.travelReimbursementForm = this.createForm();
   }
@@ -225,7 +227,8 @@ export class AddTravelReimbursementComponent implements OnInit, OnDestroy {
   }
 
   back(): void {
-    this.router.navigate(['/searchTravelReimbursement']);
+    // this.router.navigate(['/searchTravelReimbursement']);
+    this.location.back();
   }
 
   addExpenseItem(item?: TravelReimbursementItem): void {
