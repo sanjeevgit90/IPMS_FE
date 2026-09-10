@@ -68,7 +68,6 @@ export class AddTravelReimbursementComponent implements OnInit {
   billAttachedOptions = BILL_ATTACHED_OPTIONS;
   projectList: SelectionOption[] = [];
 
-  preparedSignatureFiles: UploadedFileRecord[] = [];
   verifiedSignatureFiles: UploadedFileRecord[] = [];
   approvedSignatureFiles: UploadedFileRecord[] = [];
   itemBillFiles: UploadedFileRecord[][] = [];
@@ -124,10 +123,6 @@ export class AddTravelReimbursementComponent implements OnInit {
 
   getItemFormGroup(index: number): FormGroup {
     return this.itemsFormArray.at(index) as FormGroup;
-  }
-
-  isPreparedSignatureMissing(): boolean {
-    return !this.fileuploadService.hasfile(this.preparedSignatureFiles);
   }
 
   isBillAttachedYes(index: number): boolean {
@@ -342,7 +337,6 @@ export class AddTravelReimbursementComponent implements OnInit {
       fromDate: [null, Validators.required],
       toDate: [null, Validators.required],
       preparedBy: [null, [Validators.maxLength(100)]],
-      preparedSignatureReference: [null, Validators.maxLength(100)],
       verifiedBy: [null, Validators.maxLength(100)],
       verifiedSignatureReference: [null, Validators.maxLength(100)],
       approvedBy: [null, Validators.maxLength(100)],
@@ -435,14 +429,12 @@ export class AddTravelReimbursementComponent implements OnInit {
       fromDate: resp.fromDate ? new Date(resp.fromDate) : null,
       toDate: resp.toDate ? new Date(resp.toDate) : null,
       preparedBy: resp.preparedBy ?? null,
-      preparedSignatureReference: resp.preparedSignatureReference ?? null,
       verifiedBy: resp.verifiedBy ?? null,
       verifiedSignatureReference: resp.verifiedSignatureReference ?? null,
       approvedBy: resp.approvedBy ?? null,
       approvedSignatureReference: resp.approvedSignatureReference ?? null
     });
 
-    this.preparedSignatureFiles = this.toFileArray(resp.preparedSignatureReference);
     this.verifiedSignatureFiles = this.toFileArray(resp.verifiedSignatureReference);
     this.approvedSignatureFiles = this.toFileArray(resp.approvedSignatureReference);
 
@@ -490,15 +482,6 @@ export class AddTravelReimbursementComponent implements OnInit {
     const formValue = this.travelReimbursementForm.getRawValue();
     if (!formValue.projectName || !formValue.projectPin) {
       this.dialogService.openConfirmDialog('Please select a project.');
-      return false;
-    }
-
-    if (!this.fileuploadService.hasfile(this.preparedSignatureFiles)) {
-      this.dialogService.openConfirmDialog('Please upload prepared signature.');
-      return false;
-    }
-    if (!this.fileuploadService.allFilesUploaded(this.preparedSignatureFiles)) {
-      this.dialogService.openConfirmDialog('Files uploading...');
       return false;
     }
 
@@ -593,8 +576,6 @@ export class AddTravelReimbursementComponent implements OnInit {
       fromDate: fromDate ?? 0,
       toDate: toDate ?? 0,
       preparedBy: formValue.preparedBy,
-      preparedSignatureReference: this.fileuploadService.getFirstFilePath(this.preparedSignatureFiles)
-        || formValue.preparedSignatureReference,
       verifiedBy: formValue.verifiedBy ?? null,
       verifiedSignatureReference: this.fileuploadService.getFirstFilePath(this.verifiedSignatureFiles)
         || formValue.verifiedSignatureReference,

@@ -294,22 +294,6 @@
                       </mat-form-field>
                     </div>
                   </div>
-                  <div class="col-sm-4">
-                    <div class="form-group">
-                      <!-- <label class="d-block mb-1">Prepared Signature *</label> -->
-                      @if (!view) {
-                        <app-fileupload [files]="preparedSignatureFiles" maxSize="2048"
-                          labelname="Upload Prepared Signature" modulename="userprofile">
-                        </app-fileupload>
-                        @if (isSubmitted && isPreparedSignatureMissing()) {
-                          <div class="error-text">Prepared signature is required</div>
-                        }
-                      } @else if (formControls['preparedSignatureReference'].value) {
-                        <div class="block">{{ formControls['preparedSignatureReference'].value }}</div>
-                      }
-                    </div>
-                  </div>
-
                   <!-- <div class="col-sm-4">
                     <div class="form-group">
                       <mat-form-field class="custom-field">
