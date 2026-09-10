@@ -294,6 +294,17 @@
                       </mat-form-field>
                     </div>
                   </div>
+                  <div class="col-sm-4">
+                    <div class="form-group travel-signature-field">
+                      <label class="d-block mb-1">Signature</label>
+                      @if (preparedSignatureImageUrl) {
+                        <img [src]="preparedSignatureImageUrl" alt="Prepared signature"
+                          class="travel-signature-image">
+                      } @else {
+                        <div class="text-muted">—</div>
+                      }
+                    </div>
+                  </div>
                   <!-- <div class="col-sm-4">
                     <div class="form-group">
                       <mat-form-field class="custom-field">

@@ -18,6 +18,7 @@ export interface TravelReimbursementExportData {
   fromDate: number | null;
   toDate: number | null;
   preparedBy: string | null;
+  preparedSignatureReference: string | null;
   verifiedBy: string | null;
   approvedBy: string | null;
   totalAmount: number;

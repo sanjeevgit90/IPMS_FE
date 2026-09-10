@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, forkJoin, from, throwError } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, forkJoin, from, of, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import * as ExcelJS from 'exceljs';
+import { AppGlobals } from '../global/app.global';
 import { TravelReimbursementExportData, TravelReimbursementExportItem } from './models/travel-reimbursement-export.model';
+
+type ImageExtension = 'png' | 'jpeg' | 'gif';
 
 type BorderStyle = ExcelJS.BorderStyle;
 
@@ -42,18 +45,34 @@ export class TravelReimbursementExportService {
     'FOR PER DIEM CLAIM ATTACH SEPARATE FORM WITH TIME SHEET DULY APPROVED AND VERIFIED BY PM & HR'
   ];
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private global: AppGlobals
+  ) { }
 
   exportTravelReimbursement(data: TravelReimbursementExportData): Observable<void> {
+    const signatureUrl = this.resolveFileUrl(data.preparedSignatureReference);
+    const signatureRequest = signatureUrl
+      ? this.http.get(signatureUrl, {
+        responseType: 'arraybuffer',
+        headers: this.getAuthHeaders()
+      }).pipe(catchError(() => of(null)))
+      : of(null);
+
     return forkJoin({
-      logo: this.http.get(this.logoPath, { responseType: 'arraybuffer' })
+      logo: this.http.get(this.logoPath, { responseType: 'arraybuffer' }),
+      signature: signatureRequest
     }).pipe(
-      switchMap(({ logo }) => from(this.generateWorkbook(logo, data))),
+      switchMap(({ logo, signature }) => from(this.generateWorkbook(logo, signature, data))),
       catchError(() => throwError(() => new Error('Failed to export travel reimbursement to Excel.')))
     );
   }
 
-  private async generateWorkbook(logoBuffer: ArrayBuffer, data: TravelReimbursementExportData): Promise<void> {
+  private async generateWorkbook(
+    logoBuffer: ArrayBuffer,
+    preparedSignatureBuffer: ArrayBuffer | null,
+    data: TravelReimbursementExportData
+  ): Promise<void> {
     const workbook = new ExcelJS.Workbook();
     workbook.creator = 'IPMS';
     workbook.created = new Date();
@@ -90,7 +109,7 @@ export class TravelReimbursementExportService {
     this.populateExpenseRows(worksheet, layout, activeItems);
 
     this.populateTotalRow(worksheet, layout, data.totalAmount);
-    this.populateSignatureSection(worksheet, layout, data);
+    this.populateSignatureSection(workbook, worksheet, layout, data, preparedSignatureBuffer);
     const lastRow = this.populateNotesSection(worksheet, layout);
     this.applyPrintSettings(worksheet, layout, lastRow);
 
@@ -352,9 +371,11 @@ export class TravelReimbursementExportService {
   }
 
   private populateSignatureSection(
+    workbook: ExcelJS.Workbook,
     worksheet: ExcelJS.Worksheet,
     layout: SheetLayout,
-    data: TravelReimbursementExportData
+    data: TravelReimbursementExportData,
+    preparedSignatureBuffer: ArrayBuffer | null
   ): void {
     const headers = ['Prepared By', 'Signature', 'Verified By', 'Signature', 'Approved By', 'Signature'];
     const names = [
@@ -394,6 +415,65 @@ export class TravelReimbursementExportService {
         };
       }
     });
+
+    this.addPreparedSignatureImage(
+      workbook,
+      worksheet,
+      layout,
+      preparedSignatureBuffer,
+      data.preparedSignatureReference
+    );
+  }
+
+  private addPreparedSignatureImage(
+    workbook: ExcelJS.Workbook,
+    worksheet: ExcelJS.Worksheet,
+    layout: SheetLayout,
+    preparedSignatureBuffer: ArrayBuffer | null,
+    preparedSignatureReference: string | null
+  ): void {
+    if (!preparedSignatureBuffer || !preparedSignatureReference) {
+      return;
+    }
+
+    const imageId = workbook.addImage({
+      buffer: preparedSignatureBuffer,
+      extension: this.getImageExtension(preparedSignatureReference)
+    });
+
+    worksheet.addImage(imageId, {
+      tl: { col: 1.08, row: layout.signatureNameRow - 1 + 0.12 },
+      ext: { width: 105, height: 38 }
+    });
+  }
+
+  private resolveFileUrl(fileReference: string | null | undefined): string | null {
+    if (!fileReference) {
+      return null;
+    }
+
+    if (fileReference.startsWith('http://') || fileReference.startsWith('https://')) {
+      return fileReference;
+    }
+
+    const normalizedPath = fileReference.startsWith('/') ? fileReference.substring(1) : fileReference;
+    return `${this.global.baseUrl}${normalizedPath}`;
+  }
+
+  private getImageExtension(fileReference: string): ImageExtension {
+    const lowerReference = fileReference.toLowerCase();
+    if (lowerReference.endsWith('.jpg') || lowerReference.endsWith('.jpeg')) {
+      return 'jpeg';
+    }
+    if (lowerReference.endsWith('.gif')) {
+      return 'gif';
+    }
+    return 'png';
+  }
+
+  private getAuthHeaders(): HttpHeaders {
+    const token = sessionStorage.getItem('token');
+    return new HttpHeaders(token ? { Authorization: token } : {});
   }
 
   private populateNotesSection(worksheet: ExcelJS.Worksheet, layout: SheetLayout): number {

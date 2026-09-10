@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import {
   AbstractControl,
   FormArray,
@@ -54,7 +55,7 @@ function dateRangeValidator(group: AbstractControl): ValidationErrors | null {
   ],
   standalone: false
 })
-export class AddTravelReimbursementComponent implements OnInit {
+export class AddTravelReimbursementComponent implements OnInit, OnDestroy {
 
   PageTitle = 'Add Travel Reimbursement';
   showLoading = false;
@@ -71,6 +72,9 @@ export class AddTravelReimbursementComponent implements OnInit {
   verifiedSignatureFiles: UploadedFileRecord[] = [];
   approvedSignatureFiles: UploadedFileRecord[] = [];
   itemBillFiles: UploadedFileRecord[][] = [];
+  preparedSignatureImageUrl: string | null = null;
+  savedPreparedSignatureReference: string | null = null;
+  private preparedSignatureObjectUrl: string | null = null;
 
   travelReimbursementForm: FormGroup;
 
@@ -83,6 +87,7 @@ export class AddTravelReimbursementComponent implements OnInit {
     private projectMasterService: ProjectMasterService,
     private fileuploadService: FileuploadService,
     private travelReimbursementExportService: TravelReimbursementExportService,
+    private http: HttpClient,
     private global: AppGlobals,
     private dialogService: DialogService
   ) {
@@ -113,6 +118,10 @@ export class AddTravelReimbursementComponent implements OnInit {
     }
   }
 
+  ngOnDestroy(): void {
+    this.revokePreparedSignatureObjectUrl();
+  }
+
   get itemsFormArray(): FormArray {
     return this.travelReimbursementForm.get('items') as FormArray;
   }
@@ -123,6 +132,56 @@ export class AddTravelReimbursementComponent implements OnInit {
 
   getItemFormGroup(index: number): FormGroup {
     return this.itemsFormArray.at(index) as FormGroup;
+  }
+
+  resolveFileReference(fileReference: string | null | undefined): string | null {
+    if (!fileReference) {
+      return null;
+    }
+
+    const normalizedReference = fileReference.replace(/\\/g, '/');
+    if (normalizedReference.startsWith('http://') || normalizedReference.startsWith('https://')) {
+      return normalizedReference;
+    }
+
+    const uploadFileIndex = normalizedReference.indexOf('/uploadFile/');
+    if (uploadFileIndex >= 0) {
+      const relativePath = normalizedReference.substring(uploadFileIndex + 1);
+      return `${this.global.baseUrl}${relativePath}`;
+    }
+
+    const normalizedPath = normalizedReference.startsWith('/') ? normalizedReference.substring(1) : normalizedReference;
+    return `${this.global.baseUrl}${normalizedPath}`;
+  }
+
+  private loadPreparedSignatureImage(fileReference: string | null | undefined): void {
+    this.revokePreparedSignatureObjectUrl();
+    this.preparedSignatureImageUrl = null;
+
+    const resolvedUrl = this.resolveFileReference(fileReference);
+    if (!resolvedUrl) {
+      return;
+    }
+
+    this.http.get(resolvedUrl, {
+      responseType: 'blob',
+      headers: this.getAuthHeaders()
+    }).subscribe({
+      next: (blob) => {
+        this.preparedSignatureObjectUrl = URL.createObjectURL(blob);
+        this.preparedSignatureImageUrl = this.preparedSignatureObjectUrl;
+      },
+      error: () => {
+        this.preparedSignatureImageUrl = null;
+      }
+    });
+  }
+
+  private revokePreparedSignatureObjectUrl(): void {
+    if (this.preparedSignatureObjectUrl) {
+      URL.revokeObjectURL(this.preparedSignatureObjectUrl);
+      this.preparedSignatureObjectUrl = null;
+    }
   }
 
   isBillAttachedYes(index: number): boolean {
@@ -283,6 +342,7 @@ export class AddTravelReimbursementComponent implements OnInit {
       fromDate: this.toEpoch(formValue.fromDate),
       toDate: this.toEpoch(formValue.toDate),
       preparedBy: formValue.preparedBy ?? null,
+      preparedSignatureReference: this.savedPreparedSignatureReference,
       verifiedBy: formValue.verifiedBy ?? null,
       approvedBy: formValue.approvedBy ?? null,
       totalAmount: this.getTotalAmount(),
@@ -396,6 +456,9 @@ export class AddTravelReimbursementComponent implements OnInit {
           employeeName,
           preparedBy: employeeName
         });
+        if (this.add) {
+          this.loadPreparedSignatureImage(resp.profileImage);
+        }
       },
       error: (error) => this.showError(error, 'Unable to load user profile.')
     });
@@ -418,6 +481,9 @@ export class AddTravelReimbursementComponent implements OnInit {
   private patchFormFromResponse(resp: TravelReimbursement): void {
     this.itemsFormArray.clear();
     this.itemBillFiles = [];
+
+    this.savedPreparedSignatureReference = resp.preparedSignatureReference ?? null;
+    this.loadPreparedSignatureImage(resp.preparedSignatureReference);
 
     this.travelReimbursementForm.patchValue({
       employeeName: resp.employeeName ?? null,
