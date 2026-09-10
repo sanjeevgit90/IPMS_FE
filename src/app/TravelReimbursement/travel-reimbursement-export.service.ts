@@ -314,6 +314,7 @@ export class TravelReimbursementExportService {
 
     for (let col = 4; col <= layout.lastCol; col++) {
       const borderCell = worksheet.getCell(layout.totalRow, col);
+      borderCell.alignment = { vertical: 'middle' };
       this.applyCellBorder(borderCell, this.mediumBorder);
       borderCell.fill = {
         type: 'pattern',
@@ -354,7 +355,7 @@ export class TravelReimbursementExportService {
       const cell = nameRow.getCell(index + 1);
       cell.value = name;
       cell.font = { name: this.fontFamily, size: 10 };
-      cell.alignment = { horizontal: 'center', vertical: 'bottom' };
+      cell.alignment = { horizontal: 'center', vertical: 'middle' };
       this.applyCellBorder(cell, this.thinBorder);
 
       if (index % 2 === 1) {
@@ -402,7 +403,7 @@ export class TravelReimbursementExportService {
       const noteCell = worksheet.getCell(rowNumber, 2);
       noteCell.value = note;
       noteCell.font = { name: this.fontFamily, size: 10 };
-      noteCell.alignment = { horizontal: 'left', vertical: 'top', wrapText: true };
+      noteCell.alignment = { horizontal: 'left', vertical: 'middle', wrapText: true };
       this.applyCellBorder(noteCell, this.thinBorder);
     });
 
