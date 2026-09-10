@@ -102,6 +102,10 @@ export interface TravelReimbursementRejectRequest {
   remark?: string | null;
 }
 
+export interface TravelReimbursementRejectDialogData {
+  reimbursementId: number;
+}
+
 export interface UploadedFileRecord {
   data?: { name: string; size: number };
   inProgress?: boolean;

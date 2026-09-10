@@ -1,0 +1,46 @@
+@if (showLoading) {
+  <app-loader></app-loader>
+}
+<form [formGroup]="rejectForm">
+  <mat-dialog-content class="mat-typography">
+    <div class="page-header">
+      <div class="row align-items-center">
+        <div class="col">
+          <h3 class="page-title">{{ pageTitle }}</h3>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content">
+      <div class="pro-overview tab-pane fade show active">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <mat-form-field class="custom-field w-100">
+                    <mat-label>Remark</mat-label>
+                    <textarea matInput formControlName="remark" maxlength="200"
+                      placeholder="Enter remark"></textarea>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <div class="clearfix"></div>
+  <mat-dialog-actions>
+    <div class="submit-section">
+      <button mat-flat-button color="warn" type="button" (click)="reject()">
+        <mat-icon aria-hidden="false">cancel</mat-icon> Reject
+      </button>
+      <button mat-flat-button color="accent" type="button" (click)="cancel()">
+        <mat-icon aria-hidden="false">close</mat-icon> Cancel
+      </button>
+    </div>
+  </mat-dialog-actions>
+</form>

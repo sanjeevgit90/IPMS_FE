@@ -147,7 +147,7 @@ import { PoFullfillmentReportComponent} from './OrderMgmt/Reports/po-fullfillmen
 import { ProjectMappingComponent } from './ProjectMgmt/ProjectMapping/project-mapping.component';
 import { TravelReimbursementComponent } from './TravelReimbursement/travel-reimbursement.component';
 import { AddTravelReimbursementComponent } from './TravelReimbursement/add-travel-reimbursement/add-travel-reimbursement.component';
-import { TravelReimbursementApprovalTaskComponent } from './TravelReimbursement/travel-reimbursement.constants';
+import { TravelReimbursementApprovalTaskComponent } from './TravelReimbursement/travel-reimbursement-approval-task.component';
 
 
 const routes: Routes = [
