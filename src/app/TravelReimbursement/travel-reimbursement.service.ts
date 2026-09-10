@@ -6,6 +6,8 @@ import {
   SelectionOption,
   SendForApprovalRequest,
   TravelReimbursement,
+  TravelReimbursementApprovalTask,
+  TravelReimbursementRejectRequest,
   TravelReimbursementSaveRequest
 } from './models/travel-reimbursement.model';
 
@@ -57,6 +59,30 @@ export class TravelReimbursementService {
     headers: HttpHeaders | Record<string, string>
   ): Observable<TravelReimbursement> {
     const url = this.global.baseAPIUrl + 'ipms/travelreimbursement/sendforapproval/' + reimbursementId;
+    return this.http.post<TravelReimbursement>(url, body, { headers });
+  }
+
+  getPendingApprovalTasks(
+    headers: HttpHeaders | Record<string, string>
+  ): Observable<TravelReimbursementApprovalTask[]> {
+    const url = this.global.baseAPIUrl + 'ipms/travelreimbursement/getpendingtasks';
+    return this.http.get<TravelReimbursementApprovalTask[]>(url, { headers });
+  }
+
+  approveTravelReimbursement(
+    reimbursementId: number,
+    headers: HttpHeaders | Record<string, string>
+  ): Observable<TravelReimbursement> {
+    const url = this.global.baseAPIUrl + 'ipms/travelreimbursement/approve/' + reimbursementId;
+    return this.http.post<TravelReimbursement>(url, {}, { headers });
+  }
+
+  rejectTravelReimbursement(
+    reimbursementId: number,
+    body: TravelReimbursementRejectRequest,
+    headers: HttpHeaders | Record<string, string>
+  ): Observable<TravelReimbursement> {
+    const url = this.global.baseAPIUrl + 'ipms/travelreimbursement/reject/' + reimbursementId;
     return this.http.post<TravelReimbursement>(url, body, { headers });
   }
 }

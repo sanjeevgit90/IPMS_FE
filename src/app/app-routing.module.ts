@@ -147,6 +147,7 @@ import { PoFullfillmentReportComponent} from './OrderMgmt/Reports/po-fullfillmen
 import { ProjectMappingComponent } from './ProjectMgmt/ProjectMapping/project-mapping.component';
 import { TravelReimbursementComponent } from './TravelReimbursement/travel-reimbursement.component';
 import { AddTravelReimbursementComponent } from './TravelReimbursement/add-travel-reimbursement/add-travel-reimbursement.component';
+import { TravelReimbursementApprovalTaskComponent } from './TravelReimbursement/travel-reimbursement.constants';
 
 
 const routes: Routes = [
@@ -400,6 +401,7 @@ const routes: Routes = [
   { path: "addProjectMapping/:id", canActivate: [AuthGuard], component: AddProjectMappingComponent },
 
   { path: "searchTravelReimbursement", canActivate: [AuthGuard], component: TravelReimbursementComponent },
+  { path: "searchTravelReimbursementApprovalTask", canActivate: [AuthGuard], component: TravelReimbursementApprovalTaskComponent },
   { path: "addTravelReimbursement", canActivate: [AuthGuard], component: AddTravelReimbursementComponent },
   { path: "updateTravelReimbursement/:id/:page", canActivate: [AuthGuard], component: AddTravelReimbursementComponent },
 ];

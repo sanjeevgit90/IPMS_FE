@@ -183,6 +183,10 @@ import { ProcurementAiStructuredSectionComponent } from './procurement-ai/procur
 import { TravelReimbursementComponent } from './TravelReimbursement/travel-reimbursement.component';
 import { AddTravelReimbursementComponent } from './TravelReimbursement/add-travel-reimbursement/add-travel-reimbursement.component';
 import { TravelReimbursementSendForApprovalDialogComponent } from './TravelReimbursement/travel-reimbursement.component';
+import {
+  TravelReimbursementApprovalTaskComponent,
+  TravelReimbursementRejectDialogComponent
+} from './TravelReimbursement/travel-reimbursement.constants';
 
 @NgModule({ declarations: [
         AppComponent,
@@ -320,7 +324,9 @@ import { TravelReimbursementSendForApprovalDialogComponent } from './TravelReimb
         ProcurementAiStructuredSectionComponent,
         TravelReimbursementComponent,
         AddTravelReimbursementComponent,
-        TravelReimbursementSendForApprovalDialogComponent
+        TravelReimbursementSendForApprovalDialogComponent,
+        TravelReimbursementApprovalTaskComponent,
+        TravelReimbursementRejectDialogComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         AppRoutingModule,

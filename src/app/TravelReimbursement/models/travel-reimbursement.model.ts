@@ -83,6 +83,25 @@ export interface SendForApprovalRequest {
   approverUserId: number;
 }
 
+export interface TravelReimbursementApprovalTask {
+  taskId?: number | null;
+  reimbursementId?: number | null;
+  employeeName?: string | null;
+  employeeId?: number | null;
+  cityVisited?: string | null;
+  projectName?: string | null;
+  projectPin?: string | null;
+  bandGrade?: number | null;
+  fromDate?: number | null;
+  toDate?: number | null;
+  totalAmount?: number | null;
+  approvalStatus?: string | null;
+}
+
+export interface TravelReimbursementRejectRequest {
+  remark?: string | null;
+}
+
 export interface UploadedFileRecord {
   data?: { name: string; size: number };
   inProgress?: boolean;
