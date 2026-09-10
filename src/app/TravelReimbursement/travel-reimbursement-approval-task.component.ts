@@ -20,11 +20,8 @@ export class TravelReimbursementApprovalTaskComponent implements OnInit {
 
   displayedColumns: string[] = [
     'employeeName',
-    'employeeId',
     'cityVisited',
     'projectName',
-    'projectPin',
-    'bandGrade',
     'fromDate',
     'toDate',
     'totalAmount',
