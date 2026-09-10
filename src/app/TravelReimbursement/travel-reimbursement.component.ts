@@ -30,6 +30,7 @@ export class TravelReimbursementComponent implements OnInit {
     'fromDate',
     'toDate',
     'totalAmount',
+    'approvalStatus',
     'action'
   ];
 
@@ -75,6 +76,11 @@ export class TravelReimbursementComponent implements OnInit {
   }
 
   canSendForApproval(row: TravelReimbursement): boolean {
+    const status = row.approvalStatus?.toUpperCase();
+    return status === 'DRAFT' || status === 'REJECTED';
+  }
+
+   canEdit(row: TravelReimbursement): boolean {
     const status = row.approvalStatus?.toUpperCase();
     return status === 'DRAFT' || status === 'REJECTED';
   }
