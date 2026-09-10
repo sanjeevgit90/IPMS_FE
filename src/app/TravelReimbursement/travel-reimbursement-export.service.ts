@@ -34,6 +34,14 @@ export class TravelReimbursementExportService {
   private readonly thinBorder: Partial<ExcelJS.Border> = { style: 'thin' as BorderStyle, color: { argb: 'FF808080' } };
   private readonly mediumBorder: Partial<ExcelJS.Border> = { style: 'medium' as BorderStyle, color: { argb: 'FF404040' } };
 
+  private readonly exportNotes: string[] = [
+    'FILL SEPARATE FORMS FOR DIFFERENT TRIPS.',
+    'ATTACH COPIES OF BOARDING PASS/TRAIN TICKETS.',
+    'ATTACH LIST OF DATES AND AMOUNTS RECEIVED FROM THE COMPANY.',
+    'ALL BILLS/RECEIPTS ARE TO BE ATTACHED.',
+    'FOR PER DIEM CLAIM ATTACH SEPARATE FORM WITH TIME SHEET DULY APPROVED AND VERIFIED BY PM & HR'
+  ];
+
   constructor(private http: HttpClient) { }
 
   exportTravelReimbursement(data: TravelReimbursementExportData): Observable<void> {
@@ -83,7 +91,8 @@ export class TravelReimbursementExportService {
 
     this.populateTotalRow(worksheet, layout, data.totalAmount);
     this.populateSignatureSection(worksheet, layout, data);
-    this.applyPrintSettings(worksheet, layout);
+    const lastRow = this.populateNotesSection(worksheet, layout);
+    this.applyPrintSettings(worksheet, layout, lastRow);
 
     const buffer = await workbook.xlsx.writeBuffer();
     this.downloadWorkbook(buffer, this.buildFilename(data));
@@ -359,9 +368,65 @@ export class TravelReimbursementExportService {
     });
   }
 
-  private applyPrintSettings(worksheet: ExcelJS.Worksheet, layout: SheetLayout): void {
+  private populateNotesSection(worksheet: ExcelJS.Worksheet, layout: SheetLayout): number {
+    const notesTitleRow = layout.signatureNameRow + 2;
+    const notesEndRow = notesTitleRow + this.exportNotes.length;
+
+    worksheet.mergeCells(notesTitleRow, 1, notesTitleRow, layout.lastCol);
+    const titleCell = worksheet.getCell(notesTitleRow, 1);
+    titleCell.value = 'Notes';
+    titleCell.font = { name: this.fontFamily, size: 10, bold: true, color: { argb: 'FF1F3864' } };
+    titleCell.fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: 'FFE9EDF4' }
+    };
+    titleCell.alignment = { horizontal: 'left', vertical: 'middle' };
+    this.applyCellBorder(titleCell, this.mediumBorder);
+    worksheet.getRow(notesTitleRow).height = 22;
+
+    const mergedDescriptionWidth = this.getMergedColumnWidth(worksheet, 2, layout.lastCol);
+
+    this.exportNotes.forEach((note, index) => {
+      const rowNumber = notesTitleRow + 1 + index;
+      const row = worksheet.getRow(rowNumber);
+      row.height = this.calculateNoteRowHeight(note, mergedDescriptionWidth);
+
+      const numberCell = worksheet.getCell(rowNumber, 1);
+      numberCell.value = index + 1;
+      numberCell.font = { name: this.fontFamily, size: 10 };
+      numberCell.alignment = { horizontal: 'center', vertical: 'middle' };
+      this.applyCellBorder(numberCell, this.thinBorder);
+
+      worksheet.mergeCells(rowNumber, 2, rowNumber, layout.lastCol);
+      const noteCell = worksheet.getCell(rowNumber, 2);
+      noteCell.value = note;
+      noteCell.font = { name: this.fontFamily, size: 10 };
+      noteCell.alignment = { horizontal: 'left', vertical: 'top', wrapText: true };
+      this.applyCellBorder(noteCell, this.thinBorder);
+    });
+
+    return notesEndRow;
+  }
+
+  private getMergedColumnWidth(worksheet: ExcelJS.Worksheet, startCol: number, endCol: number): number {
+    let totalWidth = 0;
+    for (let col = startCol; col <= endCol; col++) {
+      const column = worksheet.getColumn(col);
+      totalWidth += column.width ?? 10;
+    }
+    return totalWidth;
+  }
+
+  private calculateNoteRowHeight(noteText: string, mergedColumnWidth: number): number {
+    const charsPerLine = Math.max(35, Math.floor(mergedColumnWidth * 1.05));
+    const lines = Math.max(1, Math.ceil(noteText.length / charsPerLine));
+    return Math.min(72, 16 + lines * 12);
+  }
+
+  private applyPrintSettings(worksheet: ExcelJS.Worksheet, layout: SheetLayout, lastRow: number): void {
     const lastColLetter = this.columnLetter(layout.lastCol);
-    worksheet.pageSetup.printArea = `A1:${lastColLetter}${layout.lastRow}`;
+    worksheet.pageSetup.printArea = `A1:${lastColLetter}${lastRow}`;
     worksheet.pageSetup.printTitlesRow = `${layout.tableHeaderRow}:${layout.tableHeaderRow}`;
   }
 
