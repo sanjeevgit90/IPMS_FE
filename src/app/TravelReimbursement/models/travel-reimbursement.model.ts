@@ -26,6 +26,7 @@ export interface TravelReimbursement {
   fromDate?: number | null;
   toDate?: number | null;
   totalAmount?: number | null;
+  approvalStatus?: string | null;
   preparedBy?: string | null;
   preparedSignatureReference?: string | null;
   verifiedBy?: string | null;
@@ -76,6 +77,10 @@ export interface UserProfileSummary {
 export interface ProjectDetails {
   projectName?: string | null;
   projectPin?: string | null;
+}
+
+export interface SendForApprovalRequest {
+  approverUserId: number;
 }
 
 export interface UploadedFileRecord {

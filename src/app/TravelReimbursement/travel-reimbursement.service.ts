@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { AppGlobals } from '../global/app.global';
 import {
   SelectionOption,
+  SendForApprovalRequest,
   TravelReimbursement,
   TravelReimbursementSaveRequest
 } from './models/travel-reimbursement.model';
@@ -48,5 +49,14 @@ export class TravelReimbursementService {
   getProjectSelectionList(headers: HttpHeaders | Record<string, string>): Observable<SelectionOption[]> {
     const url = this.global.baseAPIUrl + 'ipms/project/selectionlist';
     return this.http.get<SelectionOption[]>(url, { headers });
+  }
+
+  sendForApproval(
+    reimbursementId: number,
+    body: SendForApprovalRequest,
+    headers: HttpHeaders | Record<string, string>
+  ): Observable<TravelReimbursement> {
+    const url = this.global.baseAPIUrl + 'ipms/travelreimbursement/sendforapproval/' + reimbursementId;
+    return this.http.post<TravelReimbursement>(url, body, { headers });
   }
 }

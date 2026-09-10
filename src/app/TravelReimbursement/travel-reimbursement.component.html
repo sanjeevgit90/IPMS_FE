@@ -100,6 +100,13 @@
                           [routerLink]="['/updateTravelReimbursement', row.entityId, 'edit']">
                           <mat-icon aria-hidden="false" class="m-0">edit</mat-icon> Edit
                         </a>
+
+                      @if (canSendForApproval(row)) {
+                        <button mat-menu-item matTooltip="Send this record for approval"
+                          (click)="openSendForApprovalDialog(row)">
+                          <mat-icon aria-hidden="false">send</mat-icon> Send For Approval
+                        </button>
+                      }
                       
                     </mat-menu>
                   </td>

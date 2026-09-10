@@ -182,6 +182,7 @@ import { ProcurementAiChatComponent } from './procurement-ai/procurement-ai-chat
 import { ProcurementAiStructuredSectionComponent } from './procurement-ai/procurement-ai-structured-section.component';
 import { TravelReimbursementComponent } from './TravelReimbursement/travel-reimbursement.component';
 import { AddTravelReimbursementComponent } from './TravelReimbursement/add-travel-reimbursement/add-travel-reimbursement.component';
+import { TravelReimbursementSendForApprovalDialogComponent } from './TravelReimbursement/travel-reimbursement.component';
 
 @NgModule({ declarations: [
         AppComponent,
@@ -318,7 +319,8 @@ import { AddTravelReimbursementComponent } from './TravelReimbursement/add-trave
         ProcurementAiChatComponent,
         ProcurementAiStructuredSectionComponent,
         TravelReimbursementComponent,
-        AddTravelReimbursementComponent
+        AddTravelReimbursementComponent,
+        TravelReimbursementSendForApprovalDialogComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         AppRoutingModule,
