@@ -222,8 +222,11 @@ export class AddTravelReimbursementComponent implements OnInit, OnDestroy {
   }
 
   getBillFileDisplayName(index: number): string | null {
+    debugger;
     const itemGroup = this.getItemFormGroup(index);
-    const billFileName = itemGroup.get('billFileName')?.value;
+    
+    const billFileName = itemGroup.get('billFileName')?.value.substring(37);
+    
     if (billFileName) {
       return billFileName;
     }
@@ -379,6 +382,7 @@ export class AddTravelReimbursementComponent implements OnInit, OnDestroy {
 
   exportToExcel(): void {
     const exportData = this.buildExportData();
+    console.log('Export Data:', exportData); // Debugging line to check the export data
     if (!exportData) {
       this.dialogService.openConfirmDialog('Travel reimbursement data is not available for export.');
       return;
@@ -407,7 +411,7 @@ export class AddTravelReimbursementComponent implements OnInit, OnDestroy {
           amount: itemValue.amount ?? null,
           remarks: itemValue.remarks ?? null,
           billAttached: itemValue.billAttached ?? null,
-          billFileName: itemValue.billFileName ?? null,
+          billFileName: itemValue.billFileName?.substring(37) ?? null,
           billFileReference: itemValue.billFileReference ?? null
         };
       });
