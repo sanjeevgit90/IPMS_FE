@@ -98,14 +98,14 @@
                       <button mat-menu-item matTooltip="View this record" (click)="viewTask(row)">
                         <mat-icon aria-hidden="false">visibility</mat-icon> View
                       </button>
-                      @if (isPending(row)) {
+                      <!-- @if (isPending(row)) {
                         <button mat-menu-item matTooltip="Approve this record" (click)="approveTask(row)">
                           <mat-icon aria-hidden="false">check_circle</mat-icon> Approve
                         </button>
                         <button mat-menu-item matTooltip="Reject this record" (click)="openRejectDialog(row)">
                           <mat-icon aria-hidden="false">cancel</mat-icon> Reject
                         </button>
-                      }
+                      } -->
                     </mat-menu>
                   </td>
                 </ng-container>
