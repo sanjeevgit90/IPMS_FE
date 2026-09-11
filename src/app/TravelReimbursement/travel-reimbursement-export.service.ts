@@ -51,9 +51,16 @@ export class TravelReimbursementExportService {
   ) { }
 
   exportTravelReimbursement(data: TravelReimbursementExportData): Observable<void> {
-    const signatureUrl = this.resolveFileUrl(data.preparedSignatureReference);
-    const signatureRequest = signatureUrl
-      ? this.http.get(signatureUrl, {
+    const preparedSignatureUrl = this.resolveFileUrl(data.preparedSignatureReference);
+    const approvedSignatureUrl = this.resolveFileUrl(data.approvedSignatureReference);
+    const preparedSignatureRequest = preparedSignatureUrl
+      ? this.http.get(preparedSignatureUrl, {
+        responseType: 'arraybuffer',
+        headers: this.getAuthHeaders()
+      }).pipe(catchError(() => of(null)))
+      : of(null);
+    const approvedSignatureRequest = approvedSignatureUrl
+      ? this.http.get(approvedSignatureUrl, {
         responseType: 'arraybuffer',
         headers: this.getAuthHeaders()
       }).pipe(catchError(() => of(null)))
@@ -61,9 +68,11 @@ export class TravelReimbursementExportService {
 
     return forkJoin({
       logo: this.http.get(this.logoPath, { responseType: 'arraybuffer' }),
-      signature: signatureRequest
+      preparedSignature: preparedSignatureRequest,
+      approvedSignature: approvedSignatureRequest
     }).pipe(
-      switchMap(({ logo, signature }) => from(this.generateWorkbook(logo, signature, data))),
+      switchMap(({ logo, preparedSignature, approvedSignature }) =>
+        from(this.generateWorkbook(logo, preparedSignature, approvedSignature, data))),
       catchError(() => throwError(() => new Error('Failed to export travel reimbursement to Excel.')))
     );
   }
@@ -71,6 +80,7 @@ export class TravelReimbursementExportService {
   private async generateWorkbook(
     logoBuffer: ArrayBuffer,
     preparedSignatureBuffer: ArrayBuffer | null,
+    approvedSignatureBuffer: ArrayBuffer | null,
     data: TravelReimbursementExportData
   ): Promise<void> {
     const workbook = new ExcelJS.Workbook();
@@ -109,7 +119,14 @@ export class TravelReimbursementExportService {
     this.populateExpenseRows(worksheet, layout, activeItems);
 
     this.populateTotalRow(worksheet, layout, data.totalAmount);
-    this.populateSignatureSection(workbook, worksheet, layout, data, preparedSignatureBuffer);
+    this.populateSignatureSection(
+      workbook,
+      worksheet,
+      layout,
+      data,
+      preparedSignatureBuffer,
+      approvedSignatureBuffer
+    );
     const lastRow = this.populateNotesSection(worksheet, layout);
     this.applyPrintSettings(worksheet, layout, lastRow);
 
@@ -406,7 +423,8 @@ export class TravelReimbursementExportService {
     worksheet: ExcelJS.Worksheet,
     layout: SheetLayout,
     data: TravelReimbursementExportData,
-    preparedSignatureBuffer: ArrayBuffer | null
+    preparedSignatureBuffer: ArrayBuffer | null,
+    approvedSignatureBuffer: ArrayBuffer | null
   ): void {
     const headers = ['Prepared By', 'Signature', 'Verified By', 'Signature', 'Approved By', 'Signature'];
     const names = [
@@ -447,33 +465,43 @@ export class TravelReimbursementExportService {
       }
     });
 
-    this.addPreparedSignatureImage(
+    this.addSignatureImage(
       workbook,
       worksheet,
       layout,
       preparedSignatureBuffer,
-      data.preparedSignatureReference
+      data.preparedSignatureReference,
+      1.08
+    );
+    this.addSignatureImage(
+      workbook,
+      worksheet,
+      layout,
+      approvedSignatureBuffer,
+      data.approvedSignatureReference,
+      5.08
     );
   }
 
-  private addPreparedSignatureImage(
+  private addSignatureImage(
     workbook: ExcelJS.Workbook,
     worksheet: ExcelJS.Worksheet,
     layout: SheetLayout,
-    preparedSignatureBuffer: ArrayBuffer | null,
-    preparedSignatureReference: string | null
+    signatureBuffer: ArrayBuffer | null,
+    signatureReference: string | null,
+    columnPosition: number
   ): void {
-    if (!preparedSignatureBuffer || !preparedSignatureReference) {
+    if (!signatureBuffer || !signatureReference) {
       return;
     }
 
     const imageId = workbook.addImage({
-      buffer: preparedSignatureBuffer,
-      extension: this.getImageExtension(preparedSignatureReference)
+      buffer: signatureBuffer,
+      extension: this.getImageExtension(signatureReference)
     });
 
     worksheet.addImage(imageId, {
-      tl: { col: 1.08, row: layout.signatureNameRow - 1 + 0.12 },
+      tl: { col: columnPosition, row: layout.signatureNameRow - 1 + 0.12 },
       ext: { width: 105, height: 38 }
     });
   }

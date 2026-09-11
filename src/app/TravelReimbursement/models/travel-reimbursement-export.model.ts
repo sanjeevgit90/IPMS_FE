@@ -22,6 +22,7 @@ export interface TravelReimbursementExportData {
   preparedSignatureReference: string | null;
   verifiedBy: string | null;
   approvedBy: string | null;
+  approvedSignatureReference: string | null;
   totalAmount: number;
   items: TravelReimbursementExportItem[];
 }

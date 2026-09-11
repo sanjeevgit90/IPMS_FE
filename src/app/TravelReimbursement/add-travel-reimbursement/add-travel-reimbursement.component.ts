@@ -99,6 +99,9 @@ export class AddTravelReimbursementComponent implements OnInit, OnDestroy {
   preparedSignatureImageUrl: string | null = null;
   savedPreparedSignatureReference: string | null = null;
   private preparedSignatureObjectUrl: string | null = null;
+  approvedSignatureImageUrl: string | null = null;
+  savedApprovedSignatureReference: string | null = null;
+  private approvedSignatureObjectUrl: string | null = null;
 
   fromApprovalTaskFlow = false;
   approvalStatus: string | null = null;
@@ -152,6 +155,7 @@ export class AddTravelReimbursementComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.revokePreparedSignatureObjectUrl();
+    this.revokeApprovedSignatureObjectUrl();
   }
 
   get itemsFormArray(): FormArray {
@@ -213,6 +217,36 @@ export class AddTravelReimbursementComponent implements OnInit, OnDestroy {
     if (this.preparedSignatureObjectUrl) {
       URL.revokeObjectURL(this.preparedSignatureObjectUrl);
       this.preparedSignatureObjectUrl = null;
+    }
+  }
+
+  private loadApprovedSignatureImage(fileReference: string | null | undefined): void {
+    this.revokeApprovedSignatureObjectUrl();
+    this.approvedSignatureImageUrl = null;
+
+    const resolvedUrl = this.resolveFileReference(fileReference);
+    if (!resolvedUrl) {
+      return;
+    }
+
+    this.http.get(resolvedUrl, {
+      responseType: 'blob',
+      headers: this.getAuthHeaders()
+    }).subscribe({
+      next: (blob) => {
+        this.approvedSignatureObjectUrl = URL.createObjectURL(blob);
+        this.approvedSignatureImageUrl = this.approvedSignatureObjectUrl;
+      },
+      error: () => {
+        this.approvedSignatureImageUrl = null;
+      }
+    });
+  }
+
+  private revokeApprovedSignatureObjectUrl(): void {
+    if (this.approvedSignatureObjectUrl) {
+      URL.revokeObjectURL(this.approvedSignatureObjectUrl);
+      this.approvedSignatureObjectUrl = null;
     }
   }
 
@@ -519,6 +553,7 @@ export class AddTravelReimbursementComponent implements OnInit, OnDestroy {
       preparedSignatureReference: this.savedPreparedSignatureReference,
       verifiedBy: formValue.verifiedBy ?? null,
       approvedBy: formValue.approvedBy ?? null,
+      approvedSignatureReference: this.savedApprovedSignatureReference,
       totalAmount: this.getTotalAmount(),
       items
     };
@@ -659,6 +694,8 @@ export class AddTravelReimbursementComponent implements OnInit, OnDestroy {
     this.approvalStatus = resp.approvalStatus ?? null;
     this.savedPreparedSignatureReference = resp.preparedSignatureReference ?? null;
     this.loadPreparedSignatureImage(resp.preparedSignatureReference);
+    this.savedApprovedSignatureReference = resp.approvedSignatureReference ?? null;
+    this.loadApprovedSignatureImage(resp.approvedSignatureReference);
 
     this.travelReimbursementForm.patchValue({
       employeeName: resp.employeeName ?? null,

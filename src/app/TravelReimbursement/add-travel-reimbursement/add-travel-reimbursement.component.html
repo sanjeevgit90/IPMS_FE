@@ -294,7 +294,7 @@
 
                 <h3 class="blue-gradient">Approval Details</h3>
                 <div class="row">
-                  <div class="col-sm-4">
+                  <div class="col-sm-3">
                     <div class="form-group">
                       <mat-form-field class="custom-field"
                         [ngClass]="{ 'has-error': isSubmitted && formControls['preparedBy'].errors }">
@@ -303,7 +303,7 @@
                       </mat-form-field>
                     </div>
                   </div>
-                  <div class="col-sm-4">
+                  <div class="col-sm-3">
                     <div class="form-group travel-signature-field">
                       <label class="d-block mb-1">Signature</label>
                       @if (preparedSignatureImageUrl) {
@@ -314,7 +314,7 @@
                       }
                     </div>
                   </div>
-                  <!-- <div class="col-sm-4">
+                  <!-- <div class="col-sm-3">
                     <div class="form-group">
                       <mat-form-field class="custom-field">
                         <mat-label>Verified By</mat-label>
@@ -322,7 +322,7 @@
                       </mat-form-field>
                     </div>
                   </div> -->
-                  <!-- <div class="col-sm-4">
+                  <!-- <div class="col-sm-3">
                     <div class="form-group">
                       <label class="d-block mb-1">Verified Signature</label>
                       @if (!view) {
@@ -335,26 +335,27 @@
                     </div>
                   </div> -->
 
-                  <!-- <div class="col-sm-4">
-                    <div class="form-group">
-                      <mat-form-field class="custom-field">
-                        <mat-label>Approved By</mat-label>
-                        <input matInput formControlName="approvedBy" maxlength="100">
-                      </mat-form-field>
+                  @if (view) {
+                    <div class="col-sm-3">
+                      <div class="form-group">
+                        <mat-form-field class="custom-field">
+                          <mat-label>Approved By</mat-label>
+                          <input matInput formControlName="approvedBy" maxlength="100">
+                        </mat-form-field>
+                      </div>
                     </div>
-                  </div> -->
-                  <!-- <div class="col-sm-4">
-                    <div class="form-group">
-                      <label class="d-block mb-1">Approved Signature</label>
-                      @if (!view) {
-                        <app-fileupload [files]="approvedSignatureFiles" maxSize="2048"
-                          labelname="Upload Approved Signature" modulename="userprofile">
-                        </app-fileupload>
-                      } @else if (formControls['approvedSignatureReference'].value) {
-                        <div class="block">{{ formControls['approvedSignatureReference'].value }}</div>
-                      }
+                    <div class="col-sm-3">
+                      <div class="form-group travel-signature-field">
+                        <label class="d-block mb-1">Signature</label>
+                        @if (approvedSignatureImageUrl) {
+                          <img [src]="approvedSignatureImageUrl" alt="Approved signature"
+                            class="travel-signature-image">
+                        } @else {
+                          <div class="text-muted">—</div>
+                        }
+                      </div>
                     </div>
-                  </div> -->
+                  }
                 </div>
 
                 <div class="submit-section">
