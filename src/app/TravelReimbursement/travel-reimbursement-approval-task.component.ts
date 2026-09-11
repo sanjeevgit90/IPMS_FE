@@ -8,6 +8,7 @@ import { AppGlobals } from '../global/app.global';
 import { DialogService } from '../service/dialog.service';
 import { TravelReimbursementService } from './travel-reimbursement.service';
 import { TravelReimbursementApprovalTask } from './models/travel-reimbursement.model';
+import { TRAVEL_REIMBURSEMENT_APPROVAL_TASK_SESSION_KEY } from './travel-reimbursement.constants';
 import { TravelReimbursementRejectDialogComponent } from './travel-reimbursement-reject-dialog.component';
 
 @Component({
@@ -90,7 +91,13 @@ export class TravelReimbursementApprovalTaskComponent implements OnInit {
     if (!row.reimbursementId) {
       return;
     }
-    this.router.navigate(['/updateTravelReimbursement', row.reimbursementId, 'view']);
+    sessionStorage.setItem(
+      TRAVEL_REIMBURSEMENT_APPROVAL_TASK_SESSION_KEY,
+      String(row.reimbursementId)
+    );
+    this.router.navigate(['/updateTravelReimbursement', row.reimbursementId, 'view'], {
+      state: { source: 'APPROVAL_TASK' }
+    });
   }
 
   approveTask(row: TravelReimbursementApprovalTask): void {

@@ -10,6 +10,7 @@ import {
   Validators
 } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AppGlobals } from '../../global/app.global';
 import { DialogService } from '../../service/dialog.service';
 import { FileuploadService } from '../../service/fileupload.service';
@@ -17,7 +18,11 @@ import { MyprofileService } from '../../ConfigurationMgmt/myprofile/myprofile.se
 import { ProjectMasterService } from '../../ProjectMgmt/ProjectMaster/projectmaster.service';
 import { TravelReimbursementService } from '../travel-reimbursement.service';
 import { TravelReimbursementExportService } from '../travel-reimbursement-export.service';
-import { BILL_ATTACHED_OPTIONS } from '../travel-reimbursement.constants';
+import {
+  BILL_ATTACHED_OPTIONS,
+  TRAVEL_REIMBURSEMENT_APPROVAL_TASK_SESSION_KEY
+} from '../travel-reimbursement.constants';
+import { TravelReimbursementRejectDialogComponent } from '../travel-reimbursement-reject-dialog.component';
 import {
   ProjectDetails,
   SelectionOption,
@@ -95,6 +100,11 @@ export class AddTravelReimbursementComponent implements OnInit, OnDestroy {
   savedPreparedSignatureReference: string | null = null;
   private preparedSignatureObjectUrl: string | null = null;
 
+  fromApprovalTaskFlow = false;
+  approvalStatus: string | null = null;
+  showApprovalActions = false;
+  successMessage = '';
+
   travelReimbursementForm: FormGroup;
 
   constructor(
@@ -109,7 +119,8 @@ export class AddTravelReimbursementComponent implements OnInit, OnDestroy {
     private http: HttpClient,
     private global: AppGlobals,
     private dialogService: DialogService,
-    private location: Location
+    private location: Location,
+    private dialog: MatDialog
   ) {
     this.travelReimbursementForm = this.createForm();
   }
@@ -132,6 +143,7 @@ export class AddTravelReimbursementComponent implements OnInit, OnDestroy {
       this.add = false;
       this.view = true;
       this.entityId = Number(id);
+      this.fromApprovalTaskFlow = this.isOpenedFromApprovalTaskFlow(this.entityId);
       this.loadTravelReimbursement(this.entityId, true);
     } else {
       this.addExpenseItem();
@@ -307,8 +319,85 @@ export class AddTravelReimbursementComponent implements OnInit, OnDestroy {
   }
 
   back(): void {
-    // this.router.navigate(['/searchTravelReimbursement']);
+    if (this.fromApprovalTaskFlow) {
+      this.navigateToApprovalTaskList();
+      return;
+    }
     this.location.back();
+  }
+
+  approveTravelReimbursement(): void {
+    if (!this.entityId || !this.showApprovalActions) {
+      return;
+    }
+
+    const headers = this.getAuthHeaders();
+    this.showLoading = true;
+    this.travelReimbursementService.approveTravelReimbursement(this.entityId, headers).subscribe({
+      next: () => {
+        this.showLoading = false;
+        this.successMessage = 'Travel Reimbursement approved successfully.';
+        this.dialogService.openConfirmDialog(this.successMessage)
+          .afterClosed().subscribe(() => this.navigateToApprovalTaskList());
+      },
+      error: (error) => this.handleApiError(error)
+    });
+  }
+
+  openRejectDialog(): void {
+    if (!this.entityId || !this.showApprovalActions) {
+      return;
+    }
+
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '50%';
+    dialogConfig.data = { reimbursementId: this.entityId };
+
+    this.dialog.open(TravelReimbursementRejectDialogComponent, dialogConfig)
+      .afterClosed()
+      .subscribe((refresh) => {
+        if (refresh) {
+          this.navigateToApprovalTaskList();
+        }
+      });
+  }
+
+  private isOpenedFromApprovalTaskFlow(entityId: number): boolean {
+    const approvalTaskId = sessionStorage.getItem(TRAVEL_REIMBURSEMENT_APPROVAL_TASK_SESSION_KEY);
+    return approvalTaskId === String(entityId);
+  }
+
+  private verifyApproverAccess(): void {
+    if (!this.entityId || !this.fromApprovalTaskFlow) {
+      this.showApprovalActions = false;
+      return;
+    }
+
+    if (this.approvalStatus?.toUpperCase() !== 'PENDING') {
+      this.showApprovalActions = false;
+      return;
+    }
+
+    this.travelReimbursementService.getPendingApprovalTasks(this.getAuthHeaders()).subscribe({
+      next: (tasks) => {
+        const isAssignedApprover = (tasks ?? []).some(
+          task => task.reimbursementId === this.entityId
+        );
+        this.showApprovalActions = this.fromApprovalTaskFlow
+          && this.approvalStatus?.toUpperCase() === 'PENDING'
+          && isAssignedApprover;
+      },
+      error: () => {
+        this.showApprovalActions = false;
+      }
+    });
+  }
+
+  private navigateToApprovalTaskList(): void {
+    sessionStorage.removeItem(TRAVEL_REIMBURSEMENT_APPROVAL_TASK_SESSION_KEY);
+    this.router.navigate(['/searchTravelReimbursementApprovalTask']);
   }
 
   addExpenseItem(item?: TravelReimbursementItem): void {
@@ -567,6 +656,7 @@ export class AddTravelReimbursementComponent implements OnInit, OnDestroy {
     this.itemsFormArray.clear();
     this.itemBillFiles = [];
 
+    this.approvalStatus = resp.approvalStatus ?? null;
     this.savedPreparedSignatureReference = resp.preparedSignatureReference ?? null;
     this.loadPreparedSignatureImage(resp.preparedSignatureReference);
 
@@ -597,6 +687,12 @@ export class AddTravelReimbursementComponent implements OnInit, OnDestroy {
     }
 
     this.resolveProjectSelectionIfNeeded();
+
+    if (this.view && this.fromApprovalTaskFlow) {
+      this.verifyApproverAccess();
+    } else {
+      this.showApprovalActions = false;
+    }
   }
 
   private resolveProjectSelectionIfNeeded(): void {

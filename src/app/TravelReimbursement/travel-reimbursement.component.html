@@ -98,10 +98,10 @@
                     </button>
                     <mat-menu #menu="matMenu" class="actionmenu">
                      
-                        <a mat-menu-item matTooltip="View this record"
-                          [routerLink]="['/updateTravelReimbursement', row.entityId, 'view']">
+                        <button mat-menu-item matTooltip="View this record"
+                          (click)="viewTravelReimbursement(row)">
                           <mat-icon aria-hidden="false">visibility</mat-icon> View
-                        </a>
+                        </button>
                       @if (canEdit(row)) {
                         <a mat-menu-item matTooltip="Edit this record"
                           [routerLink]="['/updateTravelReimbursement', row.entityId, 'edit']">

@@ -9,6 +9,7 @@ import { AppGlobals } from '../global/app.global';
 import { DialogService } from '../service/dialog.service';
 import { SharedService } from '../service/shared.service';
 import { TravelReimbursementService } from './travel-reimbursement.service';
+import { TRAVEL_REIMBURSEMENT_APPROVAL_TASK_SESSION_KEY } from './travel-reimbursement.constants';
 import { SelectionOption, TravelReimbursement } from './models/travel-reimbursement.model';
 
 export interface SendForApprovalDialogData {
@@ -73,6 +74,14 @@ export class TravelReimbursementComponent implements OnInit {
 
   addTravelReimbursement(): void {
     this.router.navigate(['/addTravelReimbursement']);
+  }
+
+  viewTravelReimbursement(row: TravelReimbursement): void {
+    if (!row.entityId) {
+      return;
+    }
+    sessionStorage.removeItem(TRAVEL_REIMBURSEMENT_APPROVAL_TASK_SESSION_KEY);
+    this.router.navigate(['/updateTravelReimbursement', row.entityId, 'view']);
   }
 
   canSendForApproval(row: TravelReimbursement): boolean {
