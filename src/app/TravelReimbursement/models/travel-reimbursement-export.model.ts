@@ -5,6 +5,7 @@ export interface TravelReimbursementExportItem {
   remarks: string | null;
   billAttached: string | null;
   billFileName: string | null;
+  billFileReference: string | null;
 }
 
 export interface TravelReimbursementExportData {

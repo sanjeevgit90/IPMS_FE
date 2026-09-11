@@ -42,6 +42,24 @@ function dateRangeValidator(group: AbstractControl): ValidationErrors | null {
   return null;
 }
 
+function bandGradeValidator(control: AbstractControl): ValidationErrors | null {
+  const value = control.value;
+  if (value === null || value === undefined || value === '') {
+    return null;
+  }
+
+  const numericValue = Number(value);
+  if (!Number.isInteger(numericValue) || numericValue < 0 || numericValue > 99) {
+    return { bandGradeRange: true };
+  }
+
+  if (String(value).replace(/^-/, '').length > 2) {
+    return { bandGradeDigits: true };
+  }
+
+  return null;
+}
+
 @Component({
   selector: 'app-add-travel-reimbursement',
   templateUrl: './add-travel-reimbursement.component.html',
@@ -203,6 +221,65 @@ export class AddTravelReimbursementComponent implements OnInit, OnDestroy {
     return 0;
   }
 
+  getBillFileDisplayName(index: number): string | null {
+    const itemGroup = this.getItemFormGroup(index);
+    const billFileName = itemGroup.get('billFileName')?.value;
+    if (billFileName) {
+      return billFileName;
+    }
+
+    const billFileReference = itemGroup.get('billFileReference')?.value;
+    if (!billFileReference) {
+      return null;
+    }
+
+    const files = this.fileuploadService.getSingleFileArray(billFileReference);
+    return files[0]?.data?.name ?? null;
+  }
+
+  canOpenBillFile(index: number): boolean {
+    return !!this.getItemFormGroup(index).get('billFileReference')?.value;
+  }
+
+  openBillFile(index: number): void {
+    const fileReference = this.getItemFormGroup(index).get('billFileReference')?.value;
+    const resolvedUrl = this.resolveFileReference(fileReference);
+    if (!resolvedUrl) {
+      return;
+    }
+
+    this.http.get(resolvedUrl, {
+      responseType: 'blob',
+      headers: this.getAuthHeaders()
+    }).subscribe({
+      next: (blob) => {
+        const objectUrl = URL.createObjectURL(blob);
+        window.open(objectUrl, '_blank');
+        setTimeout(() => URL.revokeObjectURL(objectUrl), 60000);
+      },
+      error: () => {
+        this.dialogService.openConfirmDialog('Unable to open bill file.');
+      }
+    });
+  }
+
+  onBandGradeInput(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    let value = input.value.replace(/\D/g, '');
+    if (value.length > 2) {
+      value = value.substring(0, 2);
+    }
+    if (value !== '' && Number(value) > 99) {
+      value = '99';
+    }
+
+    input.value = value;
+    this.travelReimbursementForm.get('bandGrade')?.setValue(
+      value === '' ? null : Number(value),
+      { emitEvent: true }
+    );
+  }
+
   isBillFileMissing(index: number): boolean {
     const itemGroup = this.getItemFormGroup(index);
     if (itemGroup.get('billAttached')?.value !== 'Y') {
@@ -330,7 +407,8 @@ export class AddTravelReimbursementComponent implements OnInit, OnDestroy {
           amount: itemValue.amount ?? null,
           remarks: itemValue.remarks ?? null,
           billAttached: itemValue.billAttached ?? null,
-          billFileName: itemValue.billFileName ?? itemValue.billFileReference ?? null
+          billFileName: itemValue.billFileName ?? null,
+          billFileReference: itemValue.billFileReference ?? null
         };
       });
 
@@ -396,7 +474,7 @@ export class AddTravelReimbursementComponent implements OnInit, OnDestroy {
       selectedProjectId: [null, Validators.required],
       projectName: [null, [Validators.maxLength(100)]],
       projectPin: [null, [Validators.maxLength(100)]],
-      bandGrade: [null, [Validators.required, Validators.min(0), Validators.max(99)]],
+      bandGrade: [null, [Validators.required, Validators.min(0), Validators.max(99), bandGradeValidator]],
       fromDate: [null, Validators.required],
       toDate: [null, Validators.required],
       preparedBy: [null, [Validators.maxLength(100)]],

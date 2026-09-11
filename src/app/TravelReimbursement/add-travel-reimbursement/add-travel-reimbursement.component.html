@@ -110,9 +110,13 @@
                       <mat-form-field class="custom-field"
                         [ngClass]="{ 'has-error': isSubmitted && formControls['bandGrade'].errors }">
                         <mat-label>Band Grade</mat-label>
-                        <input matInput type="number" formControlName="bandGrade" maxlength="2">
-                        @if (isSubmitted && formControls['bandGrade'].errors) {
+                        <input matInput type="text" formControlName="bandGrade" maxlength="2"
+                          inputmode="numeric" (input)="onBandGradeInput($event)">
+                        @if (isSubmitted && formControls['bandGrade'].errors?.['required']) {
                           <mat-error>Band grade is required</mat-error>
+                        }
+                        @if (isSubmitted && (formControls['bandGrade'].errors?.['min'] || formControls['bandGrade'].errors?.['max'] || formControls['bandGrade'].errors?.['bandGradeRange'] || formControls['bandGrade'].errors?.['bandGradeDigits'])) {
+                          <mat-error>Band grade must be between 0 and 99</mat-error>
                         }
                       </mat-form-field>
                     </div>
@@ -234,8 +238,13 @@
                                   @if (isSubmitted && isBillFileMissing(i)) {
                                     <div class="error-text">Bill file is required when bill attached is Yes</div>
                                   }
-                                } @else if (itemGroup.get('billFileName')?.value || itemGroup.get('billFileReference')?.value) {
-                                  <div class="block">{{ itemGroup.get('billFileName')?.value || itemGroup.get('billFileReference')?.value }}</div>
+                                } @else if (getBillFileDisplayName(i)) {
+                                  @if (canOpenBillFile(i)) {
+                                    <a class="ipms-file-upload__file-name" href="javascript:void(0)"
+                                      (click)="openBillFile(i)">{{ getBillFileDisplayName(i) }}</a>
+                                  } @else {
+                                    <div class="block">{{ getBillFileDisplayName(i) }}</div>
+                                  }
                                 } @else {
                                   <div class="block">—</div>
                                 }

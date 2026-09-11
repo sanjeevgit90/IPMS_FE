@@ -119,12 +119,12 @@ export class TravelReimbursementExportService {
 
   private configureColumns(worksheet: ExcelJS.Worksheet): void {
     worksheet.columns = [
-      { key: 'date', width: 13 },
-      { key: 'particular', width: 32 },
-      { key: 'amount', width: 14 },
-      { key: 'remarks', width: 28 },
+      { key: 'date', width: 14 },
+      { key: 'particular', width: 38 },
+      { key: 'amount', width: 15 },
+      { key: 'remarks', width: 34 },
       { key: 'billAttached', width: 14 },
-      { key: 'billFileName', width: 28 }
+      { key: 'billFileName', width: 36 }
     ];
   }
 
@@ -228,7 +228,7 @@ export class TravelReimbursementExportService {
     infoRows.forEach((pairs, index) => {
       const rowNumber = layout.infoStartRow + index;
       const row = worksheet.getRow(rowNumber);
-      row.height = 20;
+      row.height = 22;
 
       this.setInfoPair(worksheet, rowNumber, 1, 2, pairs[0].label, pairs[0].value);
       this.setInfoPair(worksheet, rowNumber, 4, 2, pairs[1].label, pairs[1].value);
@@ -298,8 +298,39 @@ export class TravelReimbursementExportService {
       this.setExpenseCell(worksheet, rowNumber, 3, this.toNumber(item.amount), 'amount');
       this.setExpenseCell(worksheet, rowNumber, 4, this.displayValue(item.remarks), 'text');
       this.setExpenseCell(worksheet, rowNumber, 5, this.displayBillAttached(item.billAttached), 'center');
-      this.setExpenseCell(worksheet, rowNumber, 6, this.displayValue(item.billFileName), 'text');
+      this.setBillFileCell(worksheet, rowNumber, 6, item);
     });
+  }
+
+  private setBillFileCell(
+    worksheet: ExcelJS.Worksheet,
+    rowNumber: number,
+    colNumber: number,
+    item: TravelReimbursementExportItem
+  ): void {
+    const cell = worksheet.getCell(rowNumber, colNumber);
+    const displayName = this.getBillFileDisplayName(item);
+    const fileUrl = this.resolveFileUrl(item.billFileReference);
+
+    if (displayName && fileUrl) {
+      cell.value = {
+        text: displayName,
+        hyperlink: fileUrl,
+        tooltip: displayName
+      };
+      cell.font = {
+        name: this.fontFamily,
+        size: 10,
+        underline: true,
+        color: { argb: 'FF0563C1' }
+      };
+    } else {
+      cell.value = displayName || null;
+      cell.font = { name: this.fontFamily, size: 10 };
+    }
+
+    cell.border = this.fullBorder(this.thinBorder);
+    cell.alignment = { horizontal: 'left', vertical: 'middle', wrapText: true };
   }
 
   private setExpenseCell(
@@ -403,7 +434,7 @@ export class TravelReimbursementExportService {
       const cell = nameRow.getCell(index + 1);
       cell.value = name;
       cell.font = { name: this.fontFamily, size: 10 };
-      cell.alignment = { horizontal: 'center', vertical: 'middle' };
+      cell.alignment = { horizontal: 'center', vertical: 'middle', wrapText: true };
       this.applyCellBorder(cell, this.thinBorder);
 
       if (index % 2 === 1) {
@@ -452,12 +483,37 @@ export class TravelReimbursementExportService {
       return null;
     }
 
-    if (fileReference.startsWith('http://') || fileReference.startsWith('https://')) {
-      return fileReference;
+    const normalizedReference = fileReference.replace(/\\/g, '/');
+    if (normalizedReference.startsWith('http://') || normalizedReference.startsWith('https://')) {
+      return normalizedReference;
     }
 
-    const normalizedPath = fileReference.startsWith('/') ? fileReference.substring(1) : fileReference;
+    const uploadFileIndex = normalizedReference.indexOf('/uploadFile/');
+    if (uploadFileIndex >= 0) {
+      const relativePath = normalizedReference.substring(uploadFileIndex + 1);
+      return `${this.global.baseUrl}${relativePath}`;
+    }
+
+    const normalizedPath = normalizedReference.startsWith('/') ? normalizedReference.substring(1) : normalizedReference;
     return `${this.global.baseUrl}${normalizedPath}`;
+  }
+
+  private getBillFileDisplayName(item: TravelReimbursementExportItem): string {
+    if (item.billFileName) {
+      return this.displayValue(item.billFileName);
+    }
+
+    if (!item.billFileReference) {
+      return '';
+    }
+
+    const normalizedReference = item.billFileReference.replace(/\\/g, '/');
+    const lastSlash = normalizedReference.lastIndexOf('/');
+    const name = normalizedReference.substring(lastSlash + 1);
+    if (name.length >= 37) {
+      return normalizedReference.substring(lastSlash + 38);
+    }
+    return name;
   }
 
   private getImageExtension(fileReference: string): ImageExtension {
@@ -556,21 +612,23 @@ export class TravelReimbursementExportService {
       amount: null,
       remarks: null,
       billAttached: null,
-      billFileName: null
+      billFileName: null,
+      billFileReference: null
     };
   }
 
   private calculateRowHeight(item: TravelReimbursementExportItem): number {
+    const columnCharLimits = [38, 34, 36];
     const textLengths = [
       this.displayValue(item.particular).length,
       this.displayValue(item.remarks).length,
-      this.displayValue(item.billFileName).length
+      this.getBillFileDisplayName(item).length
     ];
     const maxLines = Math.max(
       1,
-      ...textLengths.map(length => Math.ceil(length / 28))
+      ...textLengths.map((length, index) => Math.ceil(length / columnCharLimits[index]))
     );
-    return Math.min(72, 18 + (maxLines - 1) * 12);
+    return Math.min(90, 20 + (maxLines - 1) * 14);
   }
 
   private formatTravelPeriod(fromDate: number | null, toDate: number | null): string {
