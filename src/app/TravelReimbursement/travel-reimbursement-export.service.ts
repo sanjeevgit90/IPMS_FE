@@ -36,6 +36,7 @@ export class TravelReimbursementExportService {
 
   private readonly thinBorder: Partial<ExcelJS.Border> = { style: 'thin' as BorderStyle, color: { argb: 'FF808080' } };
   private readonly mediumBorder: Partial<ExcelJS.Border> = { style: 'medium' as BorderStyle, color: { argb: 'FF404040' } };
+  private readonly thickOutsideBorder: Partial<ExcelJS.Border> = { style: 'medium' as BorderStyle, color: { argb: 'FF404040' } };
 
   private readonly exportNotes: string[] = [
     'FILL SEPARATE FORMS FOR DIFFERENT TRIPS.',
@@ -128,6 +129,7 @@ export class TravelReimbursementExportService {
       approvedSignatureBuffer
     );
     const lastRow = this.populateNotesSection(worksheet, layout);
+    this.applyPrintableAreaOutsideBorder(worksheet, lastRow, layout.lastCol);
     this.applyPrintSettings(worksheet, layout, lastRow);
 
     const buffer = await workbook.xlsx.writeBuffer();
@@ -225,7 +227,7 @@ export class TravelReimbursementExportService {
   ): void {
     const infoRows: Array<Array<{ label: string; value: string | number }>> = [
       [
-        { label: 'Reimbursement No.', value: this.displayValue(data.entityId) },
+        { label: 'Claim No.', value: this.displayValue(data.entityId) },
         { label: 'Employee Name', value: this.displayValue(data.employeeName) }
       ],
       [
@@ -614,6 +616,36 @@ export class TravelReimbursementExportService {
     const charsPerLine = Math.max(35, Math.floor(mergedColumnWidth * 1.05));
     const lines = Math.max(1, Math.ceil(noteText.length / charsPerLine));
     return Math.min(72, 16 + lines * 12);
+  }
+
+  private applyPrintableAreaOutsideBorder(
+    worksheet: ExcelJS.Worksheet,
+    lastRow: number,
+    lastCol: number
+  ): void {
+    for (let row = 1; row <= lastRow; row++) {
+      for (let col = 1; col <= lastCol; col++) {
+        const isTop = row === 1;
+        const isBottom = row === lastRow;
+        const isLeft = col === 1;
+        const isRight = col === lastCol;
+
+        if (!isTop && !isBottom && !isLeft && !isRight) {
+          continue;
+        }
+
+        const cell = worksheet.getCell(row, col);
+        const existingBorder = cell.border ?? {};
+
+        cell.border = {
+          top: isTop ? this.thickOutsideBorder : existingBorder.top,
+          left: isLeft ? this.thickOutsideBorder : existingBorder.left,
+          bottom: isBottom ? this.thickOutsideBorder : existingBorder.bottom,
+          right: isRight ? this.thickOutsideBorder : existingBorder.right,
+          diagonal: existingBorder.diagonal
+        };
+      }
+    }
   }
 
   private applyPrintSettings(worksheet: ExcelJS.Worksheet, layout: SheetLayout, lastRow: number): void {
