@@ -374,6 +374,11 @@
                       <mat-icon>download</mat-icon> Export to Excel
                     </button>
                   }
+                  @if (canSendForApprovalFromView()) {
+                    <button mat-flat-button color="primary" type="button" (click)="openSendForApprovalDialog()">
+                      <mat-icon>send</mat-icon> Send For Approval
+                    </button>
+                  }
                   @if (view && showApprovalActions) {
                     <button mat-flat-button color="primary" type="button" (click)="approveTravelReimbursement()">
                       <mat-icon>check_circle</mat-icon> Approve

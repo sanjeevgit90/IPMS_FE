@@ -106,6 +106,27 @@ export interface TravelReimbursementRejectDialogData {
   reimbursementId: number;
 }
 
+export interface TravelReimbursementHistoryDialogData {
+  reimbursementId: number;
+  employeeName?: string | null;
+}
+
+export interface TravelReimbursementHistoryItem {
+  approvalStatus?: string | null;
+  status?: string | null;
+  action?: string | null;
+  actionBy?: string | null;
+  actionedBy?: string | null;
+  updatedBy?: string | null;
+  createdBy?: string | null;
+  actionDate?: number | null;
+  actionedOn?: number | null;
+  updatedDate?: number | null;
+  createdDate?: number | null;
+  remark?: string | null;
+  remarks?: string | null;
+}
+
 export interface UploadedFileRecord {
   data?: { name: string; size: number };
   inProgress?: boolean;

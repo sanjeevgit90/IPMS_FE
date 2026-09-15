@@ -7,6 +7,7 @@ import {
   SendForApprovalRequest,
   TravelReimbursement,
   TravelReimbursementApprovalTask,
+  TravelReimbursementHistoryItem,
   TravelReimbursementRejectRequest,
   TravelReimbursementSaveRequest
 } from './models/travel-reimbursement.model';
@@ -84,5 +85,13 @@ export class TravelReimbursementService {
   ): Observable<TravelReimbursement> {
     const url = this.global.baseAPIUrl + 'ipms/travelreimbursement/reject/' + reimbursementId;
     return this.http.post<TravelReimbursement>(url, body, { headers });
+  }
+
+  getTravelReimbursementHistory(
+    reimbursementId: number,
+    headers: HttpHeaders | Record<string, string>
+  ): Observable<TravelReimbursementHistoryItem[]> {
+    const url = this.global.baseAPIUrl + 'ipms/travelreimbursement/gethistory/' + reimbursementId;
+    return this.http.get<TravelReimbursementHistoryItem[]>(url, { headers });
   }
 }

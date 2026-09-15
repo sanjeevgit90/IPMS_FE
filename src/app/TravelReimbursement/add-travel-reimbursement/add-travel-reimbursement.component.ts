@@ -24,6 +24,9 @@ import {
 } from '../travel-reimbursement.constants';
 import { TravelReimbursementRejectDialogComponent } from '../travel-reimbursement-reject-dialog.component';
 import {
+  TravelReimbursementSendForApprovalDialogComponent
+} from '../travel-reimbursement.component';
+import {
   ProjectDetails,
   SelectionOption,
   TravelReimbursement,
@@ -376,6 +379,33 @@ export class AddTravelReimbursementComponent implements OnInit, OnDestroy {
       },
       error: (error) => this.handleApiError(error)
     });
+  }
+
+  canSendForApprovalFromView(): boolean {
+    if (!this.view || this.fromApprovalTaskFlow || !this.entityId) {
+      return false;
+    }
+    return this.approvalStatus?.toUpperCase() === 'DRAFT';
+  }
+
+  openSendForApprovalDialog(): void {
+    if (!this.canSendForApprovalFromView() || !this.entityId) {
+      return;
+    }
+
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '50%';
+    dialogConfig.data = { reimbursementId: this.entityId };
+
+    this.dialog.open(TravelReimbursementSendForApprovalDialogComponent, dialogConfig)
+      .afterClosed()
+      .subscribe((refresh) => {
+        if (refresh && this.entityId) {
+          this.loadTravelReimbursement(this.entityId, true);
+        }
+      });
   }
 
   openRejectDialog(): void {

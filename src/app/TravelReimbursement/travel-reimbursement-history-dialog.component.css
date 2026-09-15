@@ -1,0 +1,20 @@
+.travel-reimbursement-history-dialog {
+  max-height: 70vh;
+}
+
+.history-context {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.history-remarks-cell {
+  white-space: normal;
+  word-break: break-word;
+  max-width: 280px;
+}
+
+@media (max-width: 767px) {
+  .history-remarks-cell {
+    max-width: 160px;
+  }
+}
