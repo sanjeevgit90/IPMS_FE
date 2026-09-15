@@ -185,6 +185,7 @@ import { AddTravelReimbursementComponent } from './TravelReimbursement/add-trave
 import { TravelReimbursementSendForApprovalDialogComponent } from './TravelReimbursement/travel-reimbursement.component';
 import { TravelReimbursementApprovalTaskComponent } from './TravelReimbursement/travel-reimbursement-approval-task.component';
 import { TravelReimbursementRejectDialogComponent } from './TravelReimbursement/travel-reimbursement-reject-dialog.component';
+import { TravelReimbursementHistoryDialogComponent } from './TravelReimbursement/travel-reimbursement-history-dialog.component';
 
 @NgModule({ declarations: [
         AppComponent,
@@ -324,7 +325,8 @@ import { TravelReimbursementRejectDialogComponent } from './TravelReimbursement/
         AddTravelReimbursementComponent,
         TravelReimbursementSendForApprovalDialogComponent,
         TravelReimbursementApprovalTaskComponent,
-        TravelReimbursementRejectDialogComponent
+        TravelReimbursementRejectDialogComponent,
+        TravelReimbursementHistoryDialogComponent
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         AppRoutingModule,

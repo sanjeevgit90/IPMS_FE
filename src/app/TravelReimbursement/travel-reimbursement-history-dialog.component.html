@@ -1,0 +1,62 @@
+@if (showLoading) {
+  <app-loader></app-loader>
+}
+<mat-dialog-content class="mat-typography travel-reimbursement-history-dialog">
+  <div class="page-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <h3 class="page-title">{{ pageTitle }}</h3>
+        @if (contextLine) {
+          <p class="history-context mb-0">{{ contextLine }}</p>
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="tab-content">
+    <div class="pro-overview tab-pane fade show active">
+      <div class="card">
+        <div class="card-body table-responsive">
+          @if (!showLoading && historyList.length === 0) {
+            <p class="mb-0">No history found for this travel reimbursement.</p>
+          }
+          @if (historyList.length > 0) {
+            <table mat-table [dataSource]="historyList" class="mat-elevation-z8 w-100 travel-history-table">
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>Status / Action</th>
+                <td mat-cell *matCellDef="let row">{{ getStatusLabel(row) }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="actionBy">
+                <th mat-header-cell *matHeaderCellDef>Action By</th>
+                <td mat-cell *matCellDef="let row">{{ getActionBy(row) }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="actionDate">
+                <th mat-header-cell *matHeaderCellDef>Action Date</th>
+                <td mat-cell *matCellDef="let row">{{ getActionDate(row) | date: 'dd/MM/yyyy' }}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="remarks">
+                <th mat-header-cell *matHeaderCellDef>Remarks</th>
+                <td mat-cell *matCellDef="let row" class="history-remarks-cell">{{ getRemarks(row) }}</td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<div class="clearfix"></div>
+<mat-dialog-actions>
+  <div class="submit-section">
+    <button mat-flat-button color="accent" type="button" (click)="close()">
+      <mat-icon aria-hidden="false">close</mat-icon> Close
+    </button>
+  </div>
+</mat-dialog-actions>

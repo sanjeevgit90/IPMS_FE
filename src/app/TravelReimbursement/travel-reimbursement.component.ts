@@ -11,6 +11,7 @@ import { SharedService } from '../service/shared.service';
 import { TravelReimbursementService } from './travel-reimbursement.service';
 import { TRAVEL_REIMBURSEMENT_APPROVAL_TASK_SESSION_KEY } from './travel-reimbursement.constants';
 import { SelectionOption, TravelReimbursement } from './models/travel-reimbursement.model';
+import { TravelReimbursementHistoryDialogComponent } from './travel-reimbursement-history-dialog.component';
 
 export interface SendForApprovalDialogData {
   reimbursementId: number;
@@ -112,6 +113,24 @@ export class TravelReimbursementComponent implements OnInit {
           this.loadList();
         }
       });
+  }
+
+  openHistoryDialog(row: TravelReimbursement): void {
+    if (!row.entityId) {
+      return;
+    }
+
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = false;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '90%';
+    dialogConfig.maxWidth = '960px';
+    dialogConfig.data = {
+      reimbursementId: row.entityId,
+      employeeName: row.employeeName
+    };
+
+    this.dialog.open(TravelReimbursementHistoryDialogComponent, dialogConfig);
   }
 
   loadList(): void {

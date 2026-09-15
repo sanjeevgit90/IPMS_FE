@@ -114,7 +114,10 @@
                           <mat-icon aria-hidden="false">send</mat-icon> Send For Approval
                         </button>
                       }
-                      
+                      <button mat-menu-item matTooltip="View approval history"
+                        (click)="openHistoryDialog(row)">
+                        <mat-icon aria-hidden="false">history</mat-icon> History
+                      </button>
                     </mat-menu>
                   </td>
                 </ng-container>
