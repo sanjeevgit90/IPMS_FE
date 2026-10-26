@@ -247,6 +247,13 @@ export class DashboardComponent implements OnInit {
           }, {
             name: 'Vendor Invoice Pending',
             y: this.dashboardData.pendingprs
+          },
+        {
+            name: 'GRN Approved',
+            y: this.dashboardData?.approvedgrn
+          }, {
+            name: 'GRN Pending',
+            y: this.dashboardData?.pendinggrn
           }]
         }
       ]
