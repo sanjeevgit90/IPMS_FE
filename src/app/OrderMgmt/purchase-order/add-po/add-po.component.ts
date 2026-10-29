@@ -23,6 +23,7 @@ import { map, startWith } from 'rxjs/operators';
 export class AddPoComponent implements OnInit {
 
   filteredProjectList: any = [];
+  enableRcField: any;
 
   constructor(private formBuilder: UntypedFormBuilder, private router: Router, private route: ActivatedRoute, private http: HttpClient, private purchaseOrderService: PurchaseOrderService,
     private _global: AppGlobals, private dialogService: DialogService, private sharedService: SharedService, private rateContractService: RateContractService,
@@ -150,7 +151,9 @@ export class AddPoComponent implements OnInit {
     //this.addPoForm.get('suppliersReference').disable();
     //this.addPoForm.get('discountAmt').disable();
     //this.addPoForm.get('otherReference').disable();
+    
     this.addPoForm.get('supplierName').disable();
+   
     this.addPoForm.get('supplierDetails').disable();
     this.addPoForm.get('buyerName').disable();
     //this.addPoForm.get('invoiceToAddress').disable();
@@ -158,6 +161,14 @@ export class AddPoComponent implements OnInit {
     //this.addPoForm.get('shipToAddress').disable();
     //this.addPoForm.get('termsConditions').disable();
     //this.addPoForm.get('includeTerms').disable();
+
+     if (this.enableRcField == this._global.enableRcFields) {
+      this.addPoForm.get('supplierName').enable();
+      this.addPoForm.get('supplierDetails').enable();
+      this.addPoForm.get('buyerName').enable();
+      this.addPoForm.get('billToAddress').enable();
+   
+    }
   }
 
   // Disabled Function
@@ -629,6 +640,8 @@ export class AddPoComponent implements OnInit {
   // get selected rate contract
   rateContractData: any = {};
   getRateContractById = function (rcId) {
+    this.enableRcField = rcId;
+    this.disableFieldsForRc();
     debugger;
     //sessionStorage.removeItem("rcId");
     if (rcId == null)

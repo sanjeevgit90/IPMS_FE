@@ -16,7 +16,8 @@ export class DashboardService {
     ) { } 
 
   getCount(header) {
-    var url = this._global.baseAPIUrl + 'ipms/user/getMyDashboardCount';
+    var url = this._global.baseAPIUrl + 'ipms/user/getMyDashboardCount'; //New API for Dashboard Count
+    //  var url = this._global.baseAPIUrl + 'ipms/user/getDashboardCount'; //Old API for Dashboard Count
     //return this._http.get(url, { headers: header })
     return this._http.get(url, { headers: header }).pipe(catchError(this.exceptionhandlerService.handleError));
   }

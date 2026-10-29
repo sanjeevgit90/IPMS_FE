@@ -9,10 +9,10 @@ import { ProductDetailsService } from '../../../OrderMgmt/product-details/produc
 import { HsnMasterService } from '../../../AssetMgmt/HsnMaster/hsn-master.service';
 
 @Component({
-    selector: 'app-add-product-details',
-    templateUrl: './add-product-details.component.html',
-    providers: [ProductDetailsService, AppGlobals, DialogService, SharedService, HsnMasterService],
-    standalone: false
+  selector: 'app-add-product-details',
+  templateUrl: './add-product-details.component.html',
+  providers: [ProductDetailsService, AppGlobals, DialogService, SharedService, HsnMasterService],
+  standalone: false
 })
 export class AddProductDetailsComponent implements OnInit {
 
@@ -202,7 +202,7 @@ export class AddProductDetailsComponent implements OnInit {
     const headers = { "Authorization": sessionStorage.getItem("token") };
     this.showLoading = true;
     //this.sharedService.getAllProduct(headers).subscribe(resp => {
-    this.sharedService.getAllProductByOrg(sessionStorage.getItem("poOrgId"),headers).subscribe(resp => {
+    this.sharedService.getAllProductByOrg(sessionStorage.getItem("poOrgId"), headers).subscribe(resp => {
       debugger;
       this.productList = resp;
       this.showLoading = false;
@@ -374,11 +374,11 @@ export class AddProductDetailsComponent implements OnInit {
 
     this.disabledField();
     this.getHsnList();
-
-    if (sessionStorage.getItem("rcId") == null) {
+    const rcId = sessionStorage.getItem('rcId');
+    if (rcId === null || rcId === this._global.enableRcFields) {
       this.getProductList();
     } else {
-      this.getRcProductList(sessionStorage.getItem("rcId"));
+      this.getRcProductList(rcId);
     }
   }
 
