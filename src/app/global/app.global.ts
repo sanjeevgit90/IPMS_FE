@@ -153,5 +153,5 @@ export class AppGlobals {
     ]
 
     readonly poRcWorkflow: string = "PO_BY_RC_APPROVAL";
-    readonly enableRcFields: any = "992911";
+    readonly enableRcFields: any = "992961";
 }
