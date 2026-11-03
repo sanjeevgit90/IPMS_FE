@@ -9,10 +9,10 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 //import * as HighCharts from 'highcharts';
 import * as Highcharts from 'highcharts';
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.css'],
   providers: [DashboardService, DialogService, AppGlobals],
   standalone: false
 })

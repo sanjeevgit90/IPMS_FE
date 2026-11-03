@@ -1,0 +1,167 @@
+/* New floating header (matches the mockup). Plain CSS. */
+
+.header.aurion-header {
+  --sidebar-width: 240px;   /* set this to your real left menu width */
+  --header-gap: 16px;
+
+  position: fixed;
+  top: 12px;
+  left: calc(var(--sidebar-width) + var(--header-gap));
+  right: var(--header-gap);
+  height: 64px;
+  z-index: 1030;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 24px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 18px;
+  background: linear-gradient(100deg, #1b8a8f 0%, #14606f 45%, #0d3b4a 100%);
+  box-shadow: 0 10px 28px rgba(13, 59, 74, 0.28);
+}
+
+/* ---------- Brand ---------- */
+.aurion-header .aurion-header-brand {
+  display: flex;
+  align-items: center;
+  margin-right: auto;
+}
+
+.aurion-header .aurion-header-brand img {
+  height: 40px;
+  width: auto;
+  padding: 0;
+}
+
+/* ---------- District select (TL) ---------- */
+.aurion-header .tl-district {
+  margin-right: auto;
+}
+
+.aurion-header .tl-district .form-group {
+  margin: 0;
+}
+
+/* ---------- Right actions ---------- */
+.aurion-header .aurion-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.aurion-header .aurion-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+
+.aurion-header .aurion-icon-btn:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.aurion-header .aurion-icon-btn .material-icons {
+  font-size: 20px;
+  line-height: 1;
+}
+
+/* ---------- User ---------- */
+.aurion-header .aurion-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0;
+  color: #fff;
+  text-decoration: none;
+}
+
+.aurion-header .aurion-user::after {
+  display: none;               /* hide bootstrap caret, we use our own icon */
+}
+
+.aurion-header .aurion-user .user-name {
+  font-size: 14px !important;
+  font-weight: 400;
+  line-height: 1.2;
+  color: #fff;
+}
+
+.aurion-header .aurion-user .user-img {
+  position: relative;
+  display: inline-block;
+  width: 38px;
+  height: 38px;
+  margin-top: -28px;
+}
+
+.aurion-header .aurion-user .user-img img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+}
+
+.aurion-header .aurion-user .status {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+}
+
+.aurion-header .aurion-user .status.online {
+  background: #2ecc71;
+}
+
+.aurion-header .aurion-user-caret {
+  font-size: 20px;
+  opacity: 0.85;
+}
+
+/* ---------- Dropdown ---------- */
+.aurion-header .dropdown-menu {
+  margin-top: 10px;
+  border: 0;
+  border-radius: 12px;
+  box-shadow: 0 12px 28px rgba(31, 37, 71, 0.18);
+  padding: 6px;
+}
+
+.aurion-header .dropdown-menu .dropdown-item {
+  border-radius: 8px;
+  font-size: 13.5px;
+  color: #1f2547;
+  cursor: pointer;
+}
+
+.aurion-header .dropdown-menu .dropdown-item:hover {
+  background: #eceafd;
+  color: #4f46e5;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 991.98px) {
+  .header.aurion-header {
+    left: var(--header-gap);   /* sidebar collapses on small screens */
+    padding: 0 16px;
+  }
+
+  .aurion-header .aurion-user .user-name,
+  .aurion-header .aurion-user-caret {
+    display: none;
+  }
+}
