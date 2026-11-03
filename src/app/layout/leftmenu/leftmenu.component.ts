@@ -11,6 +11,10 @@ import { Router, ActivatedRoute } from '@angular/router';
     standalone: false
 })
 export class LeftmenuComponent implements OnInit {
+username: any;
+logout() {
+throw new Error('Method not implemented.');
+}
   constructor(private sharedService: SharedService, private router: Router, private route: ActivatedRoute, private _global: AppGlobals) { }
   public isOpen = false;
   public isMenuOpen() {

@@ -1,105 +1,71 @@
-
 <!-- Header -->
-<div class="header">
+<div class="header aurion-header">
 
-  <!-- Logo -->
-  <div class="header-left">
-
-    <img src="assets/Images/home-logo.png"  alt="">
-
-
+  <!-- Brand -->
+  <div class="aurion-header-brand">
+    <img src="assets/Images/letterhead/AurionPro-logo1.png" alt="Aurionpro" title="Aurionpro">
   </div>
-  <!-- /Logo -->
+  <!-- /Brand -->
 
-  <div class="Aurionpro-logo-inner">
-    <!-- <img src="assets/Images/Aurionpro-logo.png" alt="Logo" title="Logo"> -->
-    <img src="assets/Images/letterhead/AurionPro-logo1.png" height="70" alt="Logo" title="Logo" class="p-0">
-
-  </div>
-
-  <!-- <a id="toggle_btn"> <span class="bar-icon"> <span></span> <span></span> <span></span> </span> </a> <a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="glyphicon glyphicon-menu-hamburger"></i></a>
-  -->
-  <!-- Header Menu -->
-
+  <!-- District selector (Team Lead only) -->
   @if (roleTL) {
     <div class="tl-district">
       <div class="form-group">
         <mat-form-field>
-          <mat-select [(ngModel)]="district"  [ngModelOptions]="{standalone: true}"
+          <mat-select [(ngModel)]="district" [ngModelOptions]="{standalone: true}"
             (selectionChange)="selectDistrict(district)">
             @for (districtdata of tldistict; track districtdata) {
-              <mat-option
-                value="{{districtdata.id.geographyname}}">
-              {{districtdata.id.geographyname}}</mat-option>
+              <mat-option value="{{districtdata.id.geographyname}}">  
+                {{districtdata.id.geographyname}}
+              </mat-option>
             }
           </mat-select>
         </mat-form-field>
       </div>
     </div>
   }
-  <ul class="nav user-menu">
 
+  <!-- Right side -->
+  <ul class="nav user-menu aurion-header-actions">
 
+    <!-- Home shortcut (change the route if your dashboard path is different) -->
+    <li class="nav-item">
+      <a class="aurion-icon-btn" routerLink="/dashboard" title="Dashboard">
+        <i class="material-icons">home</i>
+      </a>
+    </li>
 
+    <!-- User -->
+    <li class="nav-item dropdown main-drop">
+      <a href="#" class="dropdown-toggle nav-link aurion-user" data-toggle="dropdown" aria-expanded="false">
+        <span class="user-name">{{username}}</span>
+        <span class="user-img">
+          <img src="assets/Images/duumy.jpg" alt="">
+          <span class="status online"></span>
+        </span>
+        <i class="material-icons aurion-user-caret">expand_more</i>
+      </a>
+      <div class="dropdown-menu dropdown-menu-right">
+        <a class="dropdown-item" routerLink="/profile">My Profile</a>
+        <a class="dropdown-item" routerLink="/changepassword">Change Password</a>
+        <a class="dropdown-item" (click)="logout()">Logout</a>
+      </div>
+    </li>
+  </ul>
+  <!-- /Right side -->
 
-
-    <li class="nav-item dropdown has-arrow main-drop"> <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown"> <span class="user-img"><img src="assets/Images/duumy.jpg" alt=""> <span class="status online"></span></span>
-    <span> {{username}}</span>
-  </a>
-  <div class="dropdown-menu">
-    <a class="dropdown-item" routerLink="/profile">My Profile</a>
-    <a class="dropdown-item" routerLink="/changepassword">Change Password</a>
-    <!-- <a class="dropdown-item" href="settings.html">Settings</a>  -->
-    <a class="dropdown-item" (click)="logout()">Logout</a> </div>
-  </li>
-</ul>
-<!-- /Header Menu -->
-
-<!-- Mobile Menu -->
-<div class="dropdown mobile-user-menu"> <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="glyphicon glyphicon-option-vertical"></i></a>
-<div class="dropdown-menu dropdown-menu-right"> <a class="dropdown-item" href="profile.html">My Profile</a> <a class="dropdown-item" href="settings.html">Settings</a> <a class="dropdown-item" href="http://gsgassetsdev.aurionpro.com/HRMS">Logout</a> </div>
-</div>
-<!-- /Mobile Menu -->
+  <!-- Mobile Menu -->
+  <div class="dropdown mobile-user-menu">
+    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+      <i class="glyphicon glyphicon-option-vertical"></i>
+    </a>
+    <div class="dropdown-menu dropdown-menu-right">
+      <a class="dropdown-item" routerLink="/profile">My Profile</a>
+      <a class="dropdown-item" routerLink="/changepassword">Change Password</a>
+      <a class="dropdown-item" (click)="logout()">Logout</a>
+    </div>
+  </div>
+  <!-- /Mobile Menu -->
 
 </div>
 <!-- /Header -->
-
-<!-- <p class="timeout"><strong>{{idleState}}</strong></p>  -->
-
-
-
-<script type="text/javascript">
-  $("#profilepopup").popover({
-  title: '',
-  html: true,
-  placement: 'bottom',
-  trigger: 'manual',
-  delay: {
-  "show": 300,
-  "hide": 500
-  },
-  content: $(".alert_list").html()
-  });
-
-  $('#profilepopup').mouseover(function() {
-  $('#profilepopup').popover('show');
-  });
-
-  $(document).on('mouseleave', '.popover', function() {
-  $('#profilepopup').popover('hide');
-  });
-</script>
-<script type="text/javascript">
-  $(document).ready(function(){
-  $('#mobile_btn').click(function(){
-  debugger;
-  $("#sidebar").animate({
-  width: "toggle"
-  });
-  //$('.menu-responsive').addClass('menu-responsive-right');
-  });
-
-
-
-  })
-</script>

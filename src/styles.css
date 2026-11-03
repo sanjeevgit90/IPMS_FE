@@ -12,7 +12,7 @@ html {
 body {
 	font-family:"Arial"; font-size: 14px;
 	color: #1f1f1f;
-	background-color: #f7f7f7;
+	background-color: #fffbfb;
 }
 h1,
 h2,
@@ -70,12 +70,12 @@ a:focus {
     z-index: 9;
 }
 .highcharts-credits {display: none;}
-.menu-icon {margin-top: 10px !important; margin-right: 10px !important;}
+.menu-icon {margin-top: 10px !important; margin-right: 10px !important; color: #64748B !important;}
 #columnChart {border:solid 1px #ccc}
 #pieChart {border:solid 1px #ccc}
-.activemenu {background: #f44336; color: #fff !important;}
-.activemenu .mat-icon.mat-accent {color: #fff;}
-.activemenu .menulist a {color: #fff !important;}
+.activemenu {background: #EEF2FF; color: #4F46E5 !important; border-radius: 50px; font-weight: 400;}
+.activemenu .mat-icon.mat-accent {color: #4F46E5 !important;}
+.activemenu .menulist a {color: #4F46E5 !important;}
 .no-compare {text-align: center; line-height: 90px;}
 .cd-products-table .features {
 	position: absolute;    z-index: 1;
@@ -252,12 +252,17 @@ padding-top: 3px; padding-bottom: 3px;}
 .sidebar-menu .menulist {
 	width: 100%;
     line-height: 40px;
-    border-bottom: solid 1px #ddd;
-    padding: 0px 0px 0px 15px;
+    /* border-bottom: solid 1px #ddd; */
+    padding: 6px 0px 0px 15px;
+	cursor: pointer;
 }
 
-.sidebar-menu .menulist a {color: #000;}
-.sidebar-menu .menulist:hover {background: #f1f1f1; color: #000;}
+.sidebar-menu .menulist a {color: #64748B; font-size: 15px;}
+.sidebar-menu .menulist:hover a span{color: #4F46E5 !important;}
+.sidebar-menu .menulist:hover {background: #EEF2FF; color: #4F46E5 !important; border-radius: 50px;}
+.sidebar-menu .menulist:hover .mat-icon.mat-accent {
+    color: rgb(79, 70, 229) !important;
+}
 .sidebar-menu .menulist:hover a {color: #000 !important;}
 .export-btn {margin-left: 15px !important;}
 
@@ -295,7 +300,18 @@ table.mat-table {width: 100%;}
 .timeline-content .empName {color: #616161; font-weight: bold; margin: 0px}
 .timeline-content .empRole {color: #616161; font-weight: normal; margin: 0px}
 .timeout {position: absolute; top: 20px; z-index: 9; text-align: center; width: 100%; color: #fff;}
-.login-container {background: url(assets/images/login-bg.png) no-repeat 20px 30px}
+.login-container {
+	/* background: url(assets/images/login-bg.png) no-repeat */
+	 width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    background: url("assets/images/login-bg.png") no-repeat left center;
+    background-size: 54% 100%;
+    overflow: hidden;
+}
 .mandatory {text-align: right; color: red; font-size: 12px;}
 .error {background:#ef1b2f; font-size: 12px; padding:2px 12px 2px 35px ; color: #fff; border-radius: 5px; margin-bottom: 15px;}
 .success {background: #c6fbc8;
@@ -1115,9 +1131,13 @@ table.dataTable thead > tr > td.sorting {
 	border-radius: 3px;
 	transform-origin: left top 0;
 	box-shadow: inherit;
-	background-color:rgb(164 42 71);min-width: 200px;
+	background-color:#fff;
+	padding: 20px !important;
+	min-width: 200px;
 }
-.dropdown-menu a {padding: 7px 20px; font-size: 14px; border-bottom: solid 1px #de3d63; color: #fff;}
+.dropdown-menu a {padding: 7px 20px; font-size: 14px; border-bottom: solid 1px #f1ebec; 
+	color: #64748B;
+}
 .navbar-nav .open .dropdown-menu {
 	background-color: #fff;
 	border: 1px solid rgba(0, 0, 0, 0.1);
@@ -1675,7 +1695,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#741051', end
     background-color: #fff;
     border-right: 1px solid #ddd;
     bottom: 0;
-    left: 0;
+	top: 0 !important;
+    left: 4px;
     margin-top: 0;
     position: fixed;
     top: 70px;
@@ -2028,55 +2049,75 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#741051', end
     flex-wrap: wrap;
     justify-content: center;
     width: 100%;
+	position: absolute;
+    right: 354px;
+    top: 12px;
 }
 .account-content {
 	padding: 20px 0; height: 560px;
 }
 .account-title {
-    font-size: 26px !important;
-    font-weight: 500;
+    font-size: 19px !important;
+    font-weight: 600 !important;
     margin-bottom: 5px;
-    text-align: center;
+    text-align: left;
 }
 .account-subtitle {
     color: #3f68ff;
     font-size: 18px;
     margin-bottom: 30px;
-    text-align: center;
+    text-align: left;
 }
 .account-box {
-	background-color: #fff;
+	/* background-color: #fff;
     border: 1px solid #ededed;
-    border-radius: 4px;
-    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 4px; */
+    /* box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2); */
     margin: 0 auto;
     overflow: hidden;
-    width: 480px; float: right;
+    width: 480px; 
+	float: right;
+	position: absolute;
+	right: 70px;
+	top: 174px;
 }
 .account-wrapper {
-	padding: 30px;
+	/* padding: 30px; */
 }
 .account-logo {
 	margin-bottom: 30px;
 	text-align: right;
+	position: absolute;
+    right: 360px;
+    top: 69px;
+}
+.login-container input:-webkit-autofill,
+.login-container input:-webkit-autofill:hover,
+.login-container input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+    -webkit-text-fill-color: #333333 !important;
+	-webkit-background-clip: #fff !important;
 }
 .account-box .form-group {
 	margin-bottom: 25px;
 }
 .account-box .account-btn {
-	background: #ff9b44;
-	background: -moz-linear-gradient(left, #ff9b44 0%, #fc6075 100%);
-	background: -webkit-linear-gradient(left, #ff9b44 0%, #fc6075 100%);
-	background: -ms-linear-gradient(left, #ff9b44 0%, #fc6075 100%);
-	background: linear-gradient(to right, #ff9b44 0%, #fc6075 100%);
-	border: 0;
-    border-radius: 4px;
-    display: block;
-    font-size: 22px;
-    padding: 10px 26px;
-    width: 100%;
+	width: 100%;
+    padding: 20px 20px;
+    border: none;
+    border-radius: 34px;
+    background: linear-gradient(100deg, #299b94 0%, #63f5e9 100%);
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
-.account-box .account-btn:hover,
+.account-box .account-btn:hover{
+	background: linear-gradient(100deg, #187e78 0%, #35d9ce 100%);
+    box-shadow: 0 5px 15px rgba(41, 155, 148, 0.30);
+    transform: translateY(-2px);
+}
 .account-box .account-btn:focus {
 	border: 0;
 	opacity: 0.8;
@@ -2084,13 +2125,17 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#741051', end
 .account-box .form-control {
     background-color: #fbfbfb;
     border: 1px solid #e3e3e3;
-    border-radius: 4px;
-    height: 46px;
+    border-radius: 34px;
+    height: 54px;
+}
+.account-box .form-control:hover {
+	border: 1px solid #299b94;
+	box-shadow: 0 5px 15px rgba(41, 155, 148, 0.30);
 }
 .account-box label {
-	color: #1f1f1f;
-	font-size: 15px;
-	font-weight: normal;
+	color: #8c8c8d;
+    font-size: 14px;
+    font-weight: normal;
     margin-bottom: 5px;
 }
 .account-logo img {
@@ -3350,6 +3395,17 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#741051', end
 	position: absolute;
 	top: 50%;
 	width: 0;
+}
+::ng-deep .dropdown-toggle::after {
+    display: inline-block;
+    margin-left: 0.6em;
+    content: "";
+    width: 10px;
+    height: 10px;
+    border-right: 2px solid #111;
+    border-bottom: 2px solid #111;
+    transform: rotate(45deg);
+    vertical-align: 0.25em;
 }
 .form-focus .select2-container--default.select2-container--open .select2-selection--single .select2-selection__arrow b {
 	border-color: transparent transparent #ccc;
