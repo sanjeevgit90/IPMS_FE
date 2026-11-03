@@ -27,7 +27,6 @@
   display: flex;
   align-items: center;
   gap: 14px;
-  padding-top: 24px;
 }
 
 .dashboard-page-header .dashboard-title-icon {
