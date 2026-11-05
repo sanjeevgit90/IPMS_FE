@@ -447,7 +447,7 @@ table.mat-table {width: 100%;}
 
 .mat-flat-button {margin-right: 3px !important;}	
 	
-.total-rec {padding: 0px 10px; color: #a42a46;}	
+.total-rec {padding: 0px 10px; color: #19848a;}	
 .Aurionpro-logo-inner { display: inline;}
 .Aurionpro-logo-inner img {margin-top: 6px; filter: brightness(100);}
 .preview-btn {background: #f62d51 !important;    color: #fff !important;
@@ -1013,7 +1013,7 @@ table.dataTable thead > tr > td.sorting {
 }
 .bg-success,
 .badge-success {
-	background-color: #55ce63 !important;
+	background-color: #55ce63;
 }
 .bg-info,
 .badge-info {
@@ -1025,7 +1025,7 @@ table.dataTable thead > tr > td.sorting {
 }
 .bg-danger,
 .badge-danger {
-	background-color: #f62d51 !important;
+	background-color: #f62d51;
 }
 .bg-white {
 	background-color: #fff;
