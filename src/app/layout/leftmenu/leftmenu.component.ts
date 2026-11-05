@@ -16,6 +16,7 @@ username: any;
 logout() {
 throw new Error('Method not implemented.');
 }
+openIndex: number | null = null;
   constructor(private sharedService: SharedService, private router: Router, private route: ActivatedRoute, private _global: AppGlobals) { }
   public isOpen = false;
   public isMenuOpen() {
@@ -51,5 +52,13 @@ throw new Error('Method not implemented.');
       this.menuList = menuObj;
       console.log(this.menuList);
     }
+    this.menuList.forEach((m, i) => {
+    if (m.childmenu.some(c => this.router.url.includes(c.urlpath))) {
+      this.openIndex = i;
+    }
+  });
   }
+  toggleSubMenu(i: number) {
+  this.openIndex = this.openIndex === i ? null : i;
+}
 }
