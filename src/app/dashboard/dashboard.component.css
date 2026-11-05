@@ -245,7 +245,7 @@
 .dashboard-rc-table th.mat-mdc-header-cell,
 .dashboard-rc-table th.mat-header-cell {
   background: var(--primary-soft);
-  color: var(--text-dark);
+  color: #fff;
   font-size: 13px;
   font-weight: 600;
   border-bottom: 0;

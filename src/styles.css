@@ -142,7 +142,13 @@ body {
 }
 .mat-mdc-button.mat-warn, .mat-mdc-unelevated-button.mat-warn, .mat-mdc-raised-button.mat-warn, .mat-mdc-outlined-button.mat-warn, .mat-tonal-button.mat-warn{
 	border-radius: 30px;
-	background-color: #0d3d4c !important;
+	background-color: #000 !important;
+}
+.mat-mdc-text-field-wrapper{
+	height: 50px !important;
+}
+.mdc-text-field--filled{
+	height: 50px !important;
 }
 .mat-mdc-button.mat-accent, .mat-mdc-unelevated-button.mat-accent, .mat-mdc-raised-button.mat-accent, .mat-mdc-outlined-button.mat-accent, .mat-tonal-button.mat-accent{
 	background-color: #1a878d !important;
@@ -410,7 +416,7 @@ padding-top: 3px; padding-bottom: 3px;}
 	cursor: pointer;
 }
 
-.sidebar-menu .menulist a {color: #403d3d; font-size: 15px;}
+.sidebar-menu .menulist a {color: #403d3d; font-size: 14px;}
 .sidebar-menu .menulist:hover a span{color: #4F46E5 !important;}
 .sidebar-menu .menulist:hover {background: #EEF2FF; color: #4F46E5 !important; border-radius: 50px;}
 .sidebar-menu .menulist:hover .mat-icon.mat-accent {
@@ -529,10 +535,13 @@ label {
 }
 th.mat-mdc-header-cell, td.mat-cell, td.mat-footer-cell {padding: 0px 10px !important;}
 .mat-mdc-header-cell {
-    color: #000;
-    background: #f6f6f6 !important; border-top: solid 1px #ccc !important;
+    color: #ffffff;
+    background: #000000 !important; border-top: solid 1px #ccc !important;
     font-weight: bold;
     font-size: 14px;
+}
+.mdc-notched-outline{
+	height: 80% !important;
 }
 th .mat-mdc-header-cell {
     color: #000;
@@ -1239,21 +1248,29 @@ table.dataTable thead > tr > td.sorting {
     color: #fff;
 }
 .btn-custom {
-	background: #ff9b44;
-	background: -moz-linear-gradient(left, #ff9b44 0%, #fc6075 100%);
-	background: -webkit-linear-gradient(left, #ff9b44 0%, #fc6075 100%);
-	background: -ms-linear-gradient(left, #ff9b44 0%, #fc6075 100%);
-	background: linear-gradient(to right, #ff9b44 0%, #fc6075 100%);
+	background: #14606f;
+	background: -moz-linear-gradient(left, #14606f 0%, #0d3b4a 100%);
+	background: -webkit-linear-gradient(left, #14606f 0%, #0d3b4a 100%);
+	background: -ms-linear-gradient(left, #14606f 0%, #0d3b4a 100%);
+	background: linear-gradient(
+      100deg,
+      #1b8a8f 0%,
+      #14606f 45%,
+      #0d3b4a 100%);
 	color: #fff; position: relative;
+	border-radius: 50px;
 }
 .btn-custom.focus,
 .btn-custom:focus,
 .btn-custom:hover {
-	background: #ff9b44;
-	background: -moz-linear-gradient(left, #ff9b44 0%, #fc6075 100%);
-	background: -webkit-linear-gradient(left, #ff9b44 0%, #fc6075 100%);
-	background: -ms-linear-gradient(left, #ff9b44 0%, #fc6075 100%);
-	background: linear-gradient(to right, #ff9b44 0%, #fc6075 100%);
+	background: #35d9ce;
+	background: -moz-linear-gradient(left, #35d9ce 0%, #187e78 100%);
+	background: -webkit-linear-gradient(left, #35d9ce 0%, #187e78 100%);
+	background: -ms-linear-gradient(left, #35d9ce 0%, #187e78 100%);
+	background: linear-gradient(
+      100deg,
+      #187e78 0%,
+      #35d9ce 100%);
 	color: #fff;
 }
 .pagination > .active > a, 
@@ -2261,9 +2278,13 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#741051', end
     padding: 20px 20px;
     border: none;
     border-radius: 34px;
-    background: linear-gradient(100deg, #299b94 0%, #63f5e9 100%);
+    background: linear-gradient(
+      100deg,
+      #1b8a8f 0%,
+      #14606f 45%,
+      #0d3b4a 100%);
     color: #ffffff;
-    font-size: 14px;
+    font-size: 18px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;

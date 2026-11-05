@@ -1,57 +1,69 @@
-<a (click)="isMenuOpen()" class="menubtn"> <span class="bar-icon"> <span></span> <span></span> <span></span> </span>
-</a> <a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="glyphicon glyphicon-menu-hamburger"></i></a>
+<a (click)="isMenuOpen()" class="menubtn">
+  <span class="bar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </span>
+</a>
+
+<a id="mobile_btn" class="mobile_btn" href="#sidebar">
+  <i class="glyphicon glyphicon-menu-hamburger"></i>
+</a>
+
 <div class="sidebar" id="sidebar" [class.visited]="isOpen == true">
   <div class="sidebar-inner slimscroll">
     <img src="assets/Images/home-logo.png" alt="" class="img-fluid px-3 pt-2 pb-2 mb-2 shadow rounded bg-logo">
+
     <div id="sidebar-menu" class="sidebar-menu">
       @for (MenuDataList of menuList; track MenuDataList; let i = $index) {
-        <div [routerLinkActive]="['activemenu']">
-          @if (MenuDataList.childmenu.length==0) {
-            <div class="menulist">
+        <div>
+
+          <!-- Menu without children -->
+          @if (MenuDataList.childmenu.length == 0) {
+            <div class="menulist" [routerLinkActive]="['activemenu']">
               <a routerLink="/{{MenuDataList.urlpath}}" [routerLinkActive]="['activemenu']">
-                @if (MenuDataList.description!=null) {
+                @if (MenuDataList.description != null) {
                   <mat-icon color="accent" class="menu-icon">{{MenuDataList.description}}</mat-icon>
                 }
-                @if (MenuDataList.description==null) {
+                @if (MenuDataList.description == null) {
                   <mat-icon color="accent" class="menu-icon">keyboard_arrow_right</mat-icon>
                 }
                 <span>{{MenuDataList.displayname}}</span>
               </a>
             </div>
           }
-          @if (MenuDataList.childmenu.length>0) {
-            <div class="menulist dropdown-toggle" data-toggle="dropdown">
-              <a [routerLinkActive]="['activemenu']">
-                @if (MenuDataList.description!=null) {
+
+          <!-- Menu with children (accordion) -->
+          @if (MenuDataList.childmenu.length > 0) {
+            <div class="menulist has-child" [class.open]="openIndex === i" (click)="toggleSubMenu(i)">
+              <a>
+                @if (MenuDataList.description != null) {
                   <mat-icon color="accent" class="menu-icon">{{MenuDataList.description}}</mat-icon>
                 }
-                @if (MenuDataList.description==null) {
+                @if (MenuDataList.description == null) {
                   <mat-icon color="accent" class="menu-icon">keyboard_arrow_right</mat-icon>
                 }
                 <span>{{MenuDataList.displayname}}</span>
+                <mat-icon class="arrow">expand_more</mat-icon>
               </a>
             </div>
+
+            <div class="submenu" [class.show]="openIndex === i">
+  <div class="submenu-inner">
+    @for (childMenu of MenuDataList.childmenu; track childMenu; let j = $index) {
+      <a class="submenu-item"
+         [style.--i]="j"
+         routerLink="/{{childMenu.urlpath}}"
+         [routerLinkActive]="['activemenu']">
+        {{childMenu.displayname}}
+      </a>
+    }
+  </div>
+</div>
           }
-          @if (MenuDataList.childmenu.length>0) {
-            <div class="dropdown-menu">
-              @for (childMenu of MenuDataList.childmenu; track childMenu) {
-                <a class="dropdown-item"
-                routerLink="/{{childMenu.urlpath}}" [routerLinkActive]="['activemenu']">{{childMenu.displayname}}</a>
-              }
-            </div>
-          }
+
         </div>
       }
     </div>
   </div>
 </div>
-<script type="text/javascript">
-  $(document).ready(function () {
-  $(window).resize(function () {
-  var viewportWidth = $(window).width();
-  if (viewportWidth > 320) {
-  $("#slide-out").removeAttr("style");
-}
-});
-})
-</script>
