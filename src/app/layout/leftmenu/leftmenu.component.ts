@@ -7,6 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 @Component({
     selector: 'app-leftmenu',
     templateUrl: './leftmenu.component.html',
+    styleUrls: ['./leftmenu.component.css'],
     providers: [SharedService, AppGlobals],
     standalone: false
 })

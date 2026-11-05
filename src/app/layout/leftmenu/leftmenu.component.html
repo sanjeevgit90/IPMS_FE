@@ -2,7 +2,7 @@
 </a> <a id="mobile_btn" class="mobile_btn" href="#sidebar"><i class="glyphicon glyphicon-menu-hamburger"></i></a>
 <div class="sidebar" id="sidebar" [class.visited]="isOpen == true">
   <div class="sidebar-inner slimscroll">
-    <img src="assets/Images/home-logo.png" alt="" class="img-fluid px-3 pt-2">
+    <img src="assets/Images/home-logo.png" alt="" class="img-fluid px-3 pt-2 pb-2 mb-2 shadow rounded bg-logo">
     <div id="sidebar-menu" class="sidebar-menu">
       @for (MenuDataList of menuList; track MenuDataList; let i = $index) {
         <div [routerLinkActive]="['activemenu']">
