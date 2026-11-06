@@ -11,9 +11,14 @@
 </a>
 
 <div class="sidebar" id="sidebar" [class.visited]="isOpen == true">
-  <div class="sidebar-inner slimscroll">
-    <img src="assets/Images/home-logo.png" alt="" class="img-fluid px-3 pt-2 pb-2 mb-2 shadow rounded bg-logo">
+  <div class="sidebar-inner">
+        <!-- Brand (fixed) -->
+    <div class="sidebar-brand">
+      <img src="assets/Images/home-logo.png" alt=""
+           class="img-fluid px-3 pt-2 pb-2 shadow rounded bg-logo">
+    </div>
 
+    <!-- Menu (scrollable) -->
     <div id="sidebar-menu" class="sidebar-menu">
       @for (MenuDataList of menuList; track MenuDataList; let i = $index) {
         <div>
