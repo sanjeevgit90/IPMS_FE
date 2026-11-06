@@ -1,0 +1,60 @@
+.bg-logo{
+    background-color: #edfeff !important; 
+}
+.has-child a {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.25s ease, padding-left 0.25s ease;
+}
+.has-child:hover a {
+  background: rgba(255, 255, 255, 0.06);
+}
+/* Arrow rotation */
+.has-child .arrow {
+  margin-left: auto;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  padding-top: 7px;
+}
+
+.has-child.open .arrow {
+  transform: rotate(180deg);
+}
+
+.submenu {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  background: rgb(238 242 255);
+  border-radius: 8px;
+}
+
+.submenu.show {
+  grid-template-rows: 1fr;
+}
+
+.submenu-inner {
+  overflow: hidden;
+  min-height: 0;
+  /* padding: 12px 0; */
+}
+.submenu-item:first-child{
+    padding-top: 20px;
+}
+.submenu-item:last-child{
+    padding-bottom: 20px;
+}
+.submenu-item {
+  display: block;
+  padding: 8px 20px 8px 47px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.submenu-item:hover,
+.submenu-item.activemenu {
+  background: rgba(255, 255, 255, 0.1);
+}
+.mat-icon{
+    height: 32px;
+}
