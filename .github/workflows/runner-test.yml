@@ -1,0 +1,20 @@
+
+name: Frontend Runner Test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  runner-test:
+    runs-on: [self-hosted, Windows, X64]
+
+    steps:
+      - name: Verify Runner
+        shell: powershell
+        run: |
+          Write-Host "Frontend runner picked up the job successfully."
+          Write-Host "Computer Name: $env:COMPUTERNAME"
+          Write-Host "User: $env:USERNAME"
+          Write-Host "Workspace: $env:GITHUB_WORKSPACE"
+          node --version
+          npm --version
