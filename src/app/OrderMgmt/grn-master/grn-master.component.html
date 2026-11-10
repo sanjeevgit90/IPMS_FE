@@ -101,7 +101,7 @@
                   </div>
                 </div>
 
-
+                <div class="table-responsive">
                 <table mat-table [dataSource]="GrnMasterData" matSort class="mat-elevation-z8">
                   <ng-container matColumnDef="grnNumber">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> GRN No </th>
@@ -175,6 +175,7 @@
                   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                 </table>
+                </div>
                 <mat-paginator [pageSize]="pageSizedisplay" [pageSizeOptions]="itemPerPage"
                   showFirstLastButtons>
                 </mat-paginator>
