@@ -412,7 +412,7 @@ padding-top: 3px; padding-bottom: 3px;}
 	width: 100%;
     line-height: 40px;
     /* border-bottom: solid 1px #ddd; */
-    padding: 6px 0px 0px 15px;
+    padding: 3px 0px 0px 15px;
 	cursor: pointer;
 }
 
@@ -2145,6 +2145,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#741051', end
 	border: 1px solid #ededed;
 	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.2);
 	margin-bottom: 30px;
+	margin-top: 10px;
 }
 .card-title {
 	color: #1f1f1f;
@@ -8337,6 +8338,15 @@ ul.comment-list li ul.children {
 	.nav-tabs-justified.nav-tabs-top > li > a:focus {
 		border-width: 2px 0 0 0;
 	}
+	 .page-wrapper {
+        margin-left: 260px;
+        transition: margin-left 0.4s ease;
+    }
+}
+@media (max-width: 767px) {
+    .page-wrapper {
+        margin-left: 0 !important;
+    }
 }
 @media only screen and (max-width: 1199.98px) {
 	.page-title-box {
