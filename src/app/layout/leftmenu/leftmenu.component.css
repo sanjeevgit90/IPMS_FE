@@ -1,92 +1,503 @@
-.bg-logo{
-    background-color: #edfeff !important; 
+
+/* =========================================
+   COMMON STYLES
+========================================= */
+
+.bg-logo {
+    background-color: #edfeff !important;
 }
+
+.mat-icon {
+    height: 32px;
+    width: 22px;
+    line-height: 22px;
+}
+
+/* =========================================
+   SIDEBAR MAIN
+========================================= */
+
 .sidebar {
-  height: 100vh;
-  position: fixed;   /* likely already set by your theme */
-  top: 0;
-  left: 0;
+    height: 100vh;
+    width: 260px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    overflow: hidden;
+    background: #fff;
+
+    transform: translateX(0);
+
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+    will-change: transform;
 }
+
+/* =========================================
+   SIDEBAR INNER
+========================================= */
+
 .sidebar-inner {
-  display: flex;
-  flex-direction: column;
-  height: 100%;          /* sidebar must have a fixed height, e.g. 100vh */
-  overflow: hidden;      /* wrapper itself never scrolls */
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
 }
+
+/* =========================================
+   SIDEBAR BRAND / LOGO
+========================================= */
 
 .sidebar-brand {
-  flex: 0 0 auto;        /* never shrinks, never scrolls */
-  margin-bottom: 8px;
-  background: #fff;      /* match your sidebar background so menu text doesn't show behind it */
-  position: relative;
-  z-index: 2;
+    flex: 0 0 auto;
+    margin-bottom: 8px;
+    background: #fff;
+    position: relative;
+    z-index: 2;
+
+    opacity: 1;
+    transform: translateY(0);
 }
 
+.sidebar-brand img {
+    transition: transform 0.35s ease;
+}
+
+.sidebar-brand img:hover {
+    transform: scale(1.02);
+}
+
+/* =========================================
+   SIDEBAR MENU SCROLL
+========================================= */
+
 .sidebar-menu {
-  flex: 1 1 auto;
-  min-height: 0;         /* required so flex child can actually scroll */
-  overflow-y: auto;
-  overflow-x: hidden;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 5px 10px;
 }
-.sidebar-menu::-webkit-scrollbar { width: 5px; }
+
+.sidebar-menu::-webkit-scrollbar {
+    width: 5px;
+}
+
 .sidebar-menu::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 4px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
 }
-.has-child a {
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  transition: background-color 0.25s ease, padding-left 0.25s ease;
+
+.sidebar-menu::-webkit-scrollbar-track {
+    background: transparent;
 }
-.has-child:hover a {
-  background: rgba(255, 255, 255, 0.06);
+
+/* =========================================
+   MENU GROUP
+========================================= */
+
+.menu-group {
+    opacity: 1;
+    transform: translateX(0);
 }
-/* Arrow rotation */
+
+/* Animate only when sidebar opens on mobile */
+
+@media (max-width: 767px) {
+
+    .sidebar.visited .menu-group {
+        animation: menuSlideIn 0.4s ease both;
+    }
+
+    .sidebar.visited .menu-group:nth-child(1) {
+        animation-delay: 0.08s;
+    }
+
+    .sidebar.visited .menu-group:nth-child(2) {
+        animation-delay: 0.13s;
+    }
+
+    .sidebar.visited .menu-group:nth-child(3) {
+        animation-delay: 0.18s;
+    }
+
+    .sidebar.visited .menu-group:nth-child(4) {
+        animation-delay: 0.23s;
+    }
+
+    .sidebar.visited .menu-group:nth-child(5) {
+        animation-delay: 0.28s;
+    }
+
+    .sidebar.visited .menu-group:nth-child(6) {
+        animation-delay: 0.33s;
+    }
+
+    .sidebar.visited .menu-group:nth-child(7) {
+        animation-delay: 0.38s;
+    }
+
+    .sidebar.visited .menu-group:nth-child(8) {
+        animation-delay: 0.43s;
+    }
+
+    .sidebar.visited .menu-group:nth-child(n+9) {
+        animation-delay: 0.48s;
+    }
+
+}
+
+@keyframes menuSlideIn {
+
+    from {
+        opacity: 0;
+        transform: translateX(-15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+}
+
+/* =========================================
+   MENU ITEMS
+========================================= */
+
+.menulist {
+    margin-bottom: 4px;
+}
+
+.menulist > a {
+    display: flex;
+    align-items: center;
+    /* gap: 8px; */
+    cursor: pointer;
+    padding: 6px 0px;
+    border-radius: 6px;
+    text-decoration: none;
+
+    transition:
+        background-color 0.25s ease,
+        padding-left 0.3s ease,
+        color 0.25s ease;
+}
+
+/* Menu hover */
+
+.menulist > a:hover {
+    /* background: rgba(0, 82, 165, 0.07); */
+    padding-left: 17px;
+}
+
+/* Menu icon */
+
+.menu-icon {
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.menulist > a:hover .menu-icon {
+    transform: scale(1.12);
+}
+
+/* Menu text */
+
+.menulist > a span {
+    transition: color 0.25s ease;
+}
+
+/* =========================================
+   ACTIVE MENU
+========================================= */
+
+.menulist.activemenu,
+.menulist > a.activemenu {
+    background: #eaf4ff;
+    border-radius: 50px;
+    color: #0052a5;
+}
+
+.menulist > a.activemenu {
+    font-weight: 600;
+}
+
+/* =========================================
+   PARENT MENU / ACCORDION
+========================================= */
+
+.has-child {
+    cursor: pointer;
+}
+
+.has-child > a {
+    display: flex;
+    align-items: center;
+}
+
+/* Arrow animation */
+
 .has-child .arrow {
-  margin-left: auto;
-  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  padding-top: 7px;
+    margin-left: auto;
+    flex-shrink: 0;
+
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .has-child.open .arrow {
-  transform: rotate(180deg);
+    transform: rotate(180deg);
 }
 
+/* Parent hover */
+
+.has-child:hover > a {
+    /* background: rgba(0, 82, 165, 0.07); */
+}
+
+/* =========================================
+   SUBMENU ANIMATION
+========================================= */
+
 .submenu {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  background: rgb(238 242 255);
-  border-radius: 8px;
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+
+    background: rgb(238, 242, 255);
+    border-radius: 8px;
+
+    transition:
+        grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.3s ease;
 }
 
 .submenu.show {
-  grid-template-rows: 1fr;
+    grid-template-rows: 1fr;
+    opacity: 1;
 }
 
 .submenu-inner {
-  overflow: hidden;
-  min-height: 0;
-  /* padding: 12px 0; */
-}
-.submenu-item:first-child{
-    padding-top: 20px;
-}
-.submenu-item:last-child{
-    padding-bottom: 20px;
-}
-.submenu-item {
-  display: block;
-  padding: 8px 20px 8px 47px;
-  color: inherit;
-  text-decoration: none;
+    overflow: hidden;
+    min-height: 0;
 }
 
-.submenu-item:hover,
-.submenu-item.activemenu {
-  background: rgba(255, 255, 255, 0.1);
+/* Submenu item */
+
+.submenu-item {
+    display: block;
+    padding: 8px 20px 8px 47px;
+
+    color: inherit;
+    text-decoration: none;
+
+    opacity: 0;
+    transform: translateY(-8px);
+
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease,
+        background-color 0.25s ease,
+        padding-left 0.25s ease;
 }
-.mat-icon{
-    height: 32px;
+
+/* Submenu show animation */
+
+.submenu.show .submenu-item {
+    opacity: 1;
+    transform: translateY(0);
+
+    transition-delay: calc(var(--i, 0) * 50ms);
+}
+
+/* First submenu */
+
+.submenu-item:first-child {
+    padding-top: 20px;
+}
+
+/* Last submenu */
+
+.submenu-item:last-child {
+    padding-bottom: 20px;
+}
+
+/* Submenu hover */
+
+.submenu-item:hover {
+    background: rgba(255, 255, 255, 0.8);
+    padding-left: 52px;
+    color: #0052a5;
+}
+
+/* Active submenu */
+
+.submenu-item.activemenu {
+    background: rgba(233, 233, 235, 0.8);
+    color: #0052a5;
+    font-weight: 600;
+}
+
+/* =========================================
+   HAMBURGER BUTTON
+========================================= */
+
+.menubtn {
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    width: 40px;
+    height: 40px;
+
+    cursor: pointer;
+
+    position: fixed;
+    top: 12px;
+    left: 15px;
+
+    z-index: 1102;
+
+    background: #fff;
+    border-radius: 6px;
+
+    text-decoration: none;
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.bar-icon {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 24px;
+}
+
+.bar-icon span {
+    display: block;
+    width: 24px;
+    height: 2px;
+
+    background: #0052a5;
+    border-radius: 5px;
+
+    transition:
+        transform 0.35s ease,
+        opacity 0.25s ease,
+        width 0.3s ease;
+}
+
+/* Hamburger hover */
+
+.menubtn:hover .bar-icon span:nth-child(2) {
+    width: 17px;
+}
+
+/* Hamburger to close */
+
+.menubtn.active .bar-icon span:first-child {
+    transform: translateY(7px) rotate(45deg);
+}
+
+.menubtn.active .bar-icon span:nth-child(2) {
+    opacity: 0;
+    transform: translateX(-8px);
+}
+
+.menubtn.active .bar-icon span:last-child {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+/* =========================================
+   MOBILE OVERLAY
+========================================= */
+
+.sidebar-overlay {
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.35);
+
+    z-index: 999;
+
+    animation: overlayFade 0.3s ease;
+}
+
+@keyframes overlayFade {
+
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+
+}
+
+/* =========================================
+   DESKTOP RESPONSIVE
+========================================= */
+
+@media (min-width: 768px) {
+
+    .sidebar {
+        width: 260px;
+        transform: translateX(0) !important;
+    }
+
+    .menubtn {
+        display: none !important;
+    }
+
+    .sidebar-overlay {
+        display: none !important;
+    }
+
+}
+
+/* =========================================
+   MOBILE RESPONSIVE
+========================================= */
+
+@media (max-width: 767px) {
+
+    .sidebar {
+        width: 260px;
+
+        transform: translateX(-100%);
+
+        z-index: 1100;
+    }
+
+    .sidebar.visited {
+        transform: translateX(0);
+    }
+
+    .menubtn {
+        display: flex;
+    }
+
+    .sidebar-brand {
+        padding-top: 50px;
+    }
+
+}
+
+/* =========================================
+   REDUCED MOTION ACCESSIBILITY
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .sidebar,
+    .sidebar *,
+    .menubtn *,
+    .sidebar-overlay {
+        animation: none !important;
+        transition: none !important;
+    }
+
 }
