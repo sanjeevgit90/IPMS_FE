@@ -1,6 +1,56 @@
-<div  style="position:fixed;width:100%;height:100%;left:0;top:0; background: rgba(0, 0, 0, 0.3);z-index:99999">
+<!-- <div  style="position:fixed;width:100%;height:100%;left:0;top:0; background: rgba(0, 0, 0, 0.3);z-index:99999">
     <div style="width:auto;height:auto;left:45%;top:45%;position:absolute;">
       <img src="assets/Images/ajax-loader.gif" alt="loader" style="width: 100px"> 
     </div>
   </div>
-  
+   -->
+  <div class="ipms-loader-overlay">
+  <div class="ipms-loader-box">
+    <svg class="ipms-spinner" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 260">
+      <defs>
+        <filter id="loaderShadow" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#0f172a" flood-opacity="0.28" />
+        </filter>
+      </defs>
+
+      <g filter="url(#loaderShadow)">
+        <!-- Outer Subtle Rim -->
+        <circle cx="130" cy="130" r="115" fill="none" stroke="#94a3b8" stroke-width="1.5" stroke-opacity="0.4" />
+
+        <!-- Clockwise Rotating Multi-Color Segmented Ring (Matches image_78c120.png) -->
+        <g class="loader-spin-cw">
+          <!-- Cyan Top-Left -->
+          <path d="M 33,147 A 98,98 0 0,1 118,33" fill="none" stroke="#38bdf8" stroke-width="17" />
+          <!-- Indigo/Purple Top-Right -->
+          <path d="M 118,33 A 98,98 0 0,1 217,85" fill="none" stroke="#4f46e5" stroke-width="17" />
+          <!-- Magenta/Pink Right -->
+          <path d="M 217,85 A 98,98 0 0,1 221,166" fill="none" stroke="#ec4899" stroke-width="17" />
+          <!-- Red Bottom-Right -->
+          <path d="M 221,166 A 98,98 0 0,1 160,223" fill="none" stroke="#ef4444" stroke-width="17" />
+          <!-- Orange Bottom -->
+          <path d="M 160,223 A 98,98 0 0,1 86,217" fill="none" stroke="#f97316" stroke-width="17" />
+          <!-- Royal Blue Bottom-Left -->
+          <path d="M 86,217 A 98,98 0 0,1 33,147" fill="none" stroke="#3b82f6" stroke-width="17" />
+
+          <!-- Outer Gear Teeth -->
+          <circle cx="130" cy="130" r="108" fill="none" stroke="#60a5fa" stroke-width="6" stroke-dasharray="10 13" opacity="0.8" />
+        </g>
+
+        <!-- Counter-Clockwise Rotating Inner Gear Teeth -->
+        <g class="loader-spin-ccw">
+          <circle cx="130" cy="130" r="85" fill="none" stroke="#cbd5e1" stroke-width="9" stroke-dasharray="10 8" />
+        </g>
+
+        <!-- Center White Hub with Side Dots & IPMS Text -->
+        <g class="loader-pulse">
+          <circle cx="130" cy="130" r="78" fill="#f1f5f9" />
+          <circle cx="130" cy="130" r="60" fill="#ffffff" stroke="#e2e8f0" stroke-width="2" />
+          <circle cx="58" cy="130" r="6.5" fill="#ffffff" />
+          <circle cx="202" cy="130" r="6.5" fill="#ffffff" />
+          <text x="130" y="141" text-anchor="middle" class="ipms-loader-text">IPMS</text>
+        </g>
+      </g>
+    </svg>
+    <div class="loading-caption">Loading...</div>
+  </div>
+</div>
