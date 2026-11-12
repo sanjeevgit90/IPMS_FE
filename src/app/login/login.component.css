@@ -1,0 +1,121 @@
+.login-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Matches your exact 54% 100% left-aligned background layout */
+.login-bg-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 54%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.main-wrapper {
+  position: relative;
+  z-index: 1;
+}
+
+/* Typography matching your original banner */
+.svg-title {
+  
+  font-weight: 700;
+  font-size: 18.5px;
+  letter-spacing: 0.2px;
+}
+
+.svg-desc {
+  
+  font-weight: 400;
+  font-size: 14px;
+  fill: #f1f5f9;
+}
+
+.svg-hub-text {
+  
+  font-weight: 800;
+  font-size: 33px;
+  fill: #e11d48;
+  letter-spacing: 1px;
+}
+
+/* Corporate Animations */
+.svg-spin-slow {
+  transform-origin: 440px 375px;
+  animation: spinCW 26s linear infinite;
+}
+
+.svg-spin-reverse {
+  transform-origin: 440px 375px;
+  animation: spinCCW 18s linear infinite;
+}
+
+.svg-pulse-hub {
+  transform-origin: 440px 375px;
+  animation: hubPulse 3.8s ease-in-out infinite;
+}
+
+.svg-flow-up {
+  stroke-dasharray: 7 5;
+  animation: dashFlowUp 1.5s linear infinite;
+}
+
+.svg-flow-down {
+  stroke-dasharray: 7 5;
+  animation: dashFlowDown 1.5s linear infinite;
+}
+
+.svg-twinkle {
+  animation: twinkleAnim 3s ease-in-out infinite;
+}
+
+.svg-float-1 { animation: floatNode 4.8s ease-in-out infinite; }
+.svg-float-2 { animation: floatNode 4.8s ease-in-out 0.8s infinite; }
+.svg-float-3 { animation: floatNode 4.8s ease-in-out 1.6s infinite; }
+.svg-float-4 { animation: floatNode 4.8s ease-in-out 2.4s infinite; }
+.svg-float-5 { animation: floatNode 4.8s ease-in-out 3.2s infinite; }
+.svg-float-6 { animation: floatNode 4.8s ease-in-out 4.0s infinite; }
+
+@keyframes spinCW {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes spinCCW {
+  from { transform: rotate(360deg); }
+  to   { transform: rotate(0deg); }
+}
+
+@keyframes hubPulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.03); }
+}
+
+@keyframes dashFlowUp {
+  from { stroke-dashoffset: 0; }
+  to   { stroke-dashoffset: 24; }
+}
+
+@keyframes dashFlowDown {
+  from { stroke-dashoffset: 24; }
+  to   { stroke-dashoffset: 0; }
+}
+
+@keyframes floatNode {
+  0%, 100% { transform: translateY(0px); }
+  50%      { transform: translateY(-5px); }
+}
+
+@keyframes twinkleAnim {
+  0%, 100% { opacity: 0.4; }
+  50%      { opacity: 1; }
+}
