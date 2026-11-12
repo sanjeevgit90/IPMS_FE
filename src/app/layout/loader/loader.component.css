@@ -1,0 +1,77 @@
+/* Fullscreen Semi-Transparent Backdrop */
+.ipms-loader-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.ipms-loader-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.ipms-spinner {
+  width: 130px;
+  height: 130px;
+}
+
+.ipms-loader-text {
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 800;
+  font-size: 31px;
+  fill: #e11d48;
+  letter-spacing: 1px;
+}
+
+.loading-caption {
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  animation: textFade 1.5s ease-in-out infinite;
+}
+
+/* Smooth Loader Animations */
+.loader-spin-cw {
+  transform-origin: 130px 130px;
+  animation: spinCW 2.4s linear infinite;
+}
+
+.loader-spin-ccw {
+  transform-origin: 130px 130px;
+  animation: spinCCW 3.2s linear infinite;
+}
+
+.loader-pulse {
+  transform-origin: 130px 130px;
+  animation: corePulse 1.6s ease-in-out infinite;
+}
+
+@keyframes spinCW {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes spinCCW {
+  from { transform: rotate(360deg); }
+  to   { transform: rotate(0deg); }
+}
+
+@keyframes corePulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.04); }
+}
+
+@keyframes textFade {
+  0%, 100% { opacity: 0.6; }
+  50%      { opacity: 1; }
+}
