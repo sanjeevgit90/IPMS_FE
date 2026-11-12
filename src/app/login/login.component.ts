@@ -10,6 +10,7 @@ import { DialogService } from '../service/dialog.service';
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
+    styleUrls: ['./login.component.css'],
     providers: [LoginService, AppGlobals, PoTaskService, DialogService],
     standalone: false
 })
