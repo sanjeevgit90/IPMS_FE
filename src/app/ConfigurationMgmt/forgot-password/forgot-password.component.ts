@@ -10,6 +10,7 @@ import { DialogService } from 'src/app/service/dialog.service';
 @Component({
     selector: 'app-forgot-password',
     templateUrl: './forgot-password.component.html',
+     styleUrls: ['./forgot-password.component.css'],
     providers: [ForgotPasswordService, AppGlobals, DialogService, SharedService],
     standalone: false
 })

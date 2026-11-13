@@ -10,6 +10,7 @@ import { DialogService } from 'src/app/service/dialog.service';
 @Component({
     selector: 'app-change-password',
     templateUrl: './change-password.component.html',
+    styleUrls: ['./change-password.component.css'],
     providers: [ChangePasswordService, AppGlobals, DialogService, SharedService],
     standalone: false
 })
