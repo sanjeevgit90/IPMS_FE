@@ -345,26 +345,18 @@
 
 .menubtn {
     display: none;
-
     align-items: center;
     justify-content: center;
-
     width: 40px;
     height: 40px;
-
     cursor: pointer;
-
     position: fixed;
-    top: 12px;
-    left: 15px;
-
+    top: 18px;
+    left: 189px;
     z-index: 1102;
-
     background: #fff;
     border-radius: 6px;
-
     text-decoration: none;
-
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
@@ -398,7 +390,7 @@
 /* Hamburger to close */
 
 .menubtn.active .bar-icon span:first-child {
-    transform: translateY(7px) rotate(45deg);
+    transform: translateY(16px) rotate(45deg);
 }
 
 .menubtn.active .bar-icon span:nth-child(2) {

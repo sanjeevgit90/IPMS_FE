@@ -10,6 +10,7 @@ import { DialogService } from 'src/app/service/dialog.service';
 @Component({
     selector: 'app-reset-password',
     templateUrl: './reset-password.component.html',
+    styleUrls: ['./reset-password.component.css'],
     providers: [ResetPasswordService, AppGlobals, DialogService, SharedService],
     standalone: false
 })
