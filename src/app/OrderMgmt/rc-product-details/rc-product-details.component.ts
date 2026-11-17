@@ -14,6 +14,7 @@ import { PoTaskService } from '../../OrderMgmt/purchase-order-task/po-task.servi
 @Component({
     selector: 'app-rc-product-details',
     templateUrl: './rc-product-details.component.html',
+    styleUrl: './rc-product-details.component.css',
     providers: [RcProductDetailsService, AppGlobals, DialogService, SharedService, PoTaskService],
     standalone: false
 })

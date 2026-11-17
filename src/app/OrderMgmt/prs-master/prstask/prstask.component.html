@@ -154,10 +154,10 @@
                   </th>
                   <td mat-cell *matCellDef="let TaskRecord">
                     @if (!history && TaskRecord.stageName !='PO TEAM') {
-                      <a class="btn btn-danger" matTooltip="action this record"
+                      <a mat-flat-button color="accent" matTooltip="action this record"
                         (click)="action(TaskRecord.taskid)" title="action">
-                        Action
-                      </a>
+                        <mat-icon>mouse</mat-icon> Action
+                    </a>
                     }
                     @if (!history && TaskRecord.stageName=='PO TEAM') {
                       <a mat-flat-button color="accent" matTooltip="action this record"

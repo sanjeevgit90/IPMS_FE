@@ -143,7 +143,7 @@
                     </mat-form-field>
                   </div>
                 </div>
-
+                <div class="table-responsive">
                 <table mat-table [dataSource]="RCListData" matSort class="mat-elevation-z8">
 
                   <!--  PO No. Column -->
@@ -264,6 +264,7 @@
                 <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
               </table>
+              </div>
               <mat-paginator [pageSize]="pageSizedisplay" [pageSizeOptions]="itemPerPage"
                 showFirstLastButtons>
               </mat-paginator>

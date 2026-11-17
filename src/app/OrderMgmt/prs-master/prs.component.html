@@ -115,7 +115,7 @@
                   </div>
                 </div>
 
-
+                <div class="table-responsive">
                 <table mat-table [dataSource]="PrsListData" matSort class="mat-elevation-z8">
                   <ng-container matColumnDef="prsNo">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header> PRS No. / PRS Date </th>
@@ -246,6 +246,7 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
           </table>
+        </div>
           <mat-paginator [pageSize]="pageSizedisplay" [pageSizeOptions]="itemPerPage"
             showFirstLastButtons>
           </mat-paginator>
