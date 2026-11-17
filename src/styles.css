@@ -8995,7 +8995,7 @@ body {
 	font-weight: 600;
 	color: #3f51b5;
 	margin: 1.5rem 0 1rem;
-	padding: 0.5rem 0 0.5rem 0.75rem;
+	padding: 0.1rem 0 0.1rem 0.75rem;
 	border-left: 3px solid #3f51b5;
 	/* border-bottom: 1px solid #e5e7eb; */
 	line-height: 1.4;
@@ -9228,6 +9228,12 @@ body {
 }
 .mdc-text-field__input{
 	height: 28px !important;
+}
+.pro-overview > .mat-mdc-form-field{
+	width: 100% !important;
+}
+.mat-mdc-dialog-actions{
+	justify-content: center !important;
 }
 .pro-overview .submit-section .mdc-button,
 .pro-overview1 .submit-section .mdc-button,

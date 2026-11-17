@@ -39,215 +39,245 @@
         <div class="tab-content">
 
           <!-- Add Family -->
-          <div class="pro-overview tab-pane fade show active">
-            <div class="card">
+          
+<div class="pro-overview tab-pane fade show active rc-product-overview">
 
-              <div class="row">
-                <div class="total-rec prod-rec col-sm-12 ">Total Records: {{totalRecords}}</div>
+  <div class="rc-product-wrapper">
 
-                @for (produtcard of ProductDetailsCard; track produtcard) {
-                  <div class="col-sm-6 productlist">
-                    <mat-card class="example-card">
-                      <mat-card-header>
-                        <mat-card-title>
-                          {{produtcard.product}}
-                        </mat-card-title>
-                      </mat-card-header>
-                      <mat-card-content>
-                        <div class="row">
-                          <div class="col-sm-6"><span>HSN Code:</span>{{produtcard.hsnId}}</div>
-                          <div class="col-sm-6"><span>CGST:</span>{{produtcard.cgstAmount | number : '1.2-2'}} ({{produtcard.cgst}}%)</div>
-                          <div class="col-sm-6"><span>Rate:</span>{{produtcard.rate}}</div>
-                          <div class="col-sm-6"><span>SGST:</span>{{produtcard.sgstAmount | number : '1.2-2'}} ({{produtcard.cgst}}%)</div>
-                          <div class="col-sm-6"><span>QTY.:</span>{{produtcard.quantity}}</div>
-                          <div class="col-sm-6"><span>IGST:</span>{{produtcard.igstAmount | number : '1.2-2'}} ({{produtcard.cgst}}%)</div>
-                          <div class="col-sm-6"><span>Amount:</span>{{produtcard.amount}}</div>
-                          <div class="col-sm-6"><span>Total Disc.:</span>{{produtcard.totalDiscount}}</div>
-                          <div class="col-sm-6"><span>Total Amt:</span>{{produtcard.totalAmount}}</div>
-                          <div class="col-sm-6"><span>Final Amt:</span>{{produtcard.finalAmount}}</div>
-                          <div class="col-sm-12"><span>Desc:</span>{{produtcard.description}}</div>
-                        </div>
-                      </mat-card-content>
-                      <mat-card-actions>
-                        <button mat-flat-button color="primary" matTooltip="Edit this record"
-                          (click)="editProduct(produtcard.entityId)" title="Edit"> Edit
-                          <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
-                        </button>
-                        <button mat-flat-button color="warn" matTooltip="Delete this record"
-                          (click)="deleteProduct(produtcard.entityId)" title="Delete"> Delete
-                          <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
-                        </button>
-                      </mat-card-actions>
-                    </mat-card>
-                  </div>
-                }
+    <!-- Product Summary Header -->
+     <div class="total-records">
+        <span class="record-dot"></span>
+        <span>Total Records</span>
+        <strong>{{totalRecords}}</strong>
+      </div>
+    <!-- <div class="rc-product-summary">
+      <div class="summary-info">
+        <div class="summary-icon">
+          <mat-icon>inventory_2</mat-icon>
+        </div>
+        <div>
+          <h5>Product Information</h5>
+          <p>Manage your RC product details and pricing information</p>
+        </div>
+      </div>
+
+      
+    </div> -->
+
+    <!-- Product Cards -->
+    <div class="row g-3 rc-product-grid">
+
+      @for (produtcard of ProductDetailsCard; track produtcard) {
+
+        <div class="col-xl-6 col-lg-6 col-md-12 productlist">
+
+          <div class="rc-product-card">
+
+            <!-- Card Header -->
+            <div class="product-card-header">
+
+              <div class="product-heading">
+                <div class="product-icon">
+                  <mat-icon>inventory_2</mat-icon>
+                </div>
+
+                <div class="product-title-wrap">
+                  <h5>{{produtcard.product}}</h5>
+                </div>
               </div>
 
-              <!-- Search Table -->
-              <!-- <div class="total-rec">Total Records: {{totalRecords}}</div> -->
+              <!-- <div class="product-menu-icon">
+                <mat-icon>more_horiz</mat-icon>
+              </div> -->
 
-              <table mat-table [dataSource]="ProductDetailsList" matSort class="mat-elevation-z8"
-                style="display: none;">
+            </div>
 
-                <!--  Product Column -->
-                <ng-container matColumnDef="product">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Product </th>
-                  <td mat-cell *matCellDef="let ProductDetailsList">
-                    <div class="block"> {{ProductDetailsList.product}} </div>
-                  </td>
-                </ng-container>
+            <!-- Product Details -->
+            <div class="product-card-body">
 
-                <!--  Hsn Column -->
-                <ng-container matColumnDef="hsnId">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> HSN </th>
-                  <td mat-cell *matCellDef="let ProductDetailsList">
-                    <div class="block"> {{ProductDetailsList.hsnId}} </div>
-                  </td>
-                </ng-container>
+              <div class="product-details-grid">
 
-                <!--  CGST Column -->
-                <ng-container matColumnDef="cgst">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> CGST </th>
-                  <td mat-cell *matCellDef="let ProductDetailsList">
-                    <div class="block"> {{ProductDetailsList.cgst}} </div>
-                  </td>
-                </ng-container>
+                <div class="product-detail-item">
+                  <span class="detail-label">HSN Code</span>
+                  <span class="detail-value">{{produtcard.hsnId}}</span>
+                </div>
 
-                <!--  SGST Column -->
-                <ng-container matColumnDef="sgst">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> SGST </th>
-                  <td mat-cell *matCellDef="let ProductDetailsList">
-                    <div class="block"> {{ProductDetailsList.sgst}} </div>
-                  </td>
-                </ng-container>
+                <div class="product-detail-item">
+                  <span class="detail-label">Rate</span>
+                  <span class="detail-value">{{produtcard.rate}}</span>
+                </div>
 
-                <!--  IGST Column -->
-                <ng-container matColumnDef="igst">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> IGST </th>
-                  <td mat-cell *matCellDef="let ProductDetailsList">
-                    <div class="block"> {{ProductDetailsList.igst}} </div>
-                  </td>
-                </ng-container>
+                <div class="product-detail-item">
+                  <span class="detail-label">Quantity</span>
+                  <span class="detail-value">{{produtcard.quantity}}</span>
+                </div>
 
-                <!--  CGST Amount Column -->
-                <ng-container matColumnDef="cgstAmount">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> CGST Amount </th>
-                  <td mat-cell *matCellDef="let ProductDetailsList">
-                    <div class="block"> {{ProductDetailsList.cgstAmount | number : '1.2-2'}} </div>
-                  </td>
-                </ng-container>
+                <div class="product-detail-item">
+                  <span class="detail-label">Amount</span>
+                  <span class="detail-value">{{produtcard.amount}}</span>
+                </div>
 
-                <!--  SGST Amount Column -->
-                <ng-container matColumnDef="sgstAmount">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> SGST Amount </th>
-                  <td mat-cell *matCellDef="let ProductDetailsList">
-                    <div class="block"> {{ProductDetailsList.sgstAmount | number : '1.2-2'}} </div>
-                  </td>
-                </ng-container>
+                <div class="product-detail-item">
+                  <span class="detail-label">CGST</span>
+                  <span class="detail-value">
+                    {{produtcard.cgstAmount | number : '1.2-2'}}
+                    <small>({{produtcard.cgst}}%)</small>
+                  </span>
+                </div>
 
-                <!--  IGST Amount Column -->
-                <ng-container matColumnDef="igstAmount">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> IGST Amount </th>
-                  <td mat-cell *matCellDef="let ProductDetailsList">
-                    <div class="block"> {{ProductDetailsList.igstAmount | number : '1.2-2'}} </div>
-                  </td>
-                </ng-container>
+                <div class="product-detail-item">
+                  <span class="detail-label">SGST</span>
+                  <span class="detail-value">
+                    {{produtcard.sgstAmount | number : '1.2-2'}}
+                    <small>({{produtcard.sgst}}%)</small>
+                  </span>
+                </div>
 
-                <!--  Final Amount Column -->
-                <ng-container matColumnDef="finalAmount">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Final Amount </th>
-                  <td mat-cell *matCellDef="let ProductDetailsList">
-                    <div class="block"> {{ProductDetailsList.finalAmount | number : '1.2-2'}} </div>
-                  </td>
-                </ng-container>
+                <div class="product-detail-item">
+                  <span class="detail-label">IGST</span>
+                  <span class="detail-value">
+                    {{produtcard.igstAmount | number : '1.2-2'}}
+                    <small>({{produtcard.igst}}%)</small>
+                  </span>
+                </div>
 
+                <div class="product-detail-item">
+                  <span class="detail-label">Total Discount</span>
+                  <span class="detail-value discount-value">
+                    {{produtcard.totalDiscount}}
+                  </span>
+                </div>
 
+                <div class="product-detail-item">
+                  <span class="detail-label">Total Amount</span>
+                  <span class="detail-value">{{produtcard.totalAmount}}</span>
+                </div>
 
+                  <!--<div class="product-detail-item">
+                    <span class="detail-label">Description</span>
+                    <span class="detail-value">{{produtcard.description}}</span>
+                  </div> -->
+              </div>
 
+              
+              <div class="product-description">
+                <span class="detail-label">Description</span>
+                <p>{{produtcard.description || 'No description available'}}</p>
+              </div>
 
-                <!-- Action Column -->
-                <ng-container matColumnDef="action">
-                  <th mat-header-cell *matHeaderCellDef> Action </th>
-                  <td mat-cell *matCellDef="let ProductDetailsList">
-                    <!-- <a class="btn btn-info" matTooltip="Edit this record"
-                    [routerLink]="['UpdateProductDetails', ProductDetailsList.entityId,'edit']" title="Edit">
-                    <mat-icon aria-hidden="false" >edit</mat-icon>
-                  </a> -->
+            </div>
 
-                  <button mat-flat-button color="primary" matTooltip="Edit this record"
-                    (click)="editProduct(ProductDetailsList.entityId)" title="Edit">
-                    <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
-                  </button>
+            <!-- Final Amount -->
+            <div class="product-total-section">
 
-                  <button mat-flat-button color="warn" matTooltip="Delete this record"
-                    (click)="deleteProduct(ProductDetailsList.entityId)" title="Delete">
-                    <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
-                  </button>
-                </td>
-              </ng-container>
+              <div class="total-amount-info">
+                <span>Final Amount</span>
+                <!-- <small>Including applicable taxes and discounts</small> -->
+              </div>
 
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
-            <!-- <mat-paginator [pageSize]="pageSizedisplay" [pageSizeOptions]="itemPerPage"
-            showFirstLastButtons>
-          </mat-paginator> -->
+              <div class="final-amount">
+                {{produtcard.finalAmount | number : '1.2-2'}}
+              </div>
+
+            </div>
+
+            <!-- Card Actions -->
+            <div class="product-card-footer">
+
+              <button
+                type="button"
+                class="rc-btn rc-btn-edit"
+                matTooltip="Edit this record"
+                (click)="editProduct(produtcard.entityId)"
+                title="Edit">
+
+                <mat-icon>edit</mat-icon>
+                <span>Edit Product</span>
+
+              </button>
+
+              <button
+                type="button"
+                class="rc-btn rc-btn-delete"
+                matTooltip="Delete this record"
+                (click)="deleteProduct(produtcard.entityId)"
+                title="Delete">
+
+                <mat-icon>delete_outline</mat-icon>
+                <span>Delete</span>
+
+              </button>
+
+            </div>
+
+          </div>
+
         </div>
 
-        @if (additionalTerms=='false' && totalRecords>0) {
-          <div>
-            @if (taskId==null) {
-              <button mat-flat-button color="accent" (click)="saveTask()">
-                Send For Approval
-              </button>
-            }
-            @if (taskId!=null) {
-              <button mat-flat-button color="accent" (click)="reSendTask()">
-                Re-send For Approval
-              </button>
-            }
-          </div>
-        }
+      }
 
-
-        <!-- <div class="card" *ngIf="workflowDiv">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-sm-4">
-              <div class="form-group">
-                <mat-form-field>
-                  <mat-label>Workflow Type</mat-label>
-                  <mat-select [(ngModel)]="TaskData.workflowType" name="workflowType" required>
-                    <mat-option>-Select-</mat-option>
-                    <mat-option value="TYPE A">TYPE A</mat-option>
-                    <mat-option value="TYPE B">TYPE B</mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-            </div>
-            <div class="col-sm-8">
-              <div class="form-group">
-                <mat-form-field class="custom-field">
-                  <mat-label>Remarks</mat-label>
-                  <textarea matInput cols="55" rows="4" name="remark" type="text"
-                    placeholder="Please enter remarks."
-                    [(ngModel)]="TaskData.remark" maxlength="250">
-                  </textarea>
-                </mat-form-field>
-              </div>
-            </div>
-            <div class="submit-section">
-              <button mat-flat-button color="primary" (click)="saveTask()">
-                Submit
-              </button>
-              <button mat-flat-button color="warn" (click)="closeTask()">
-                Cancel
-              </button>
-            </div>
+      @if (totalRecords === 0) {
+        <div class="col-12">
+          <div class="rc-empty-state">
+            <mat-icon>inventory_2</mat-icon>
+            <h5>No Products Found</h5>
+            <p>There are no product details available.</p>
           </div>
         </div>
-      </div> -->
+      }
+
     </div>
+
+    <!-- Approval Section -->
+    @if (additionalTerms == 'false' && totalRecords > 0) {
+
+      <div class="rc-approval-section">
+
+        <div class="approval-info">
+          <div class="approval-icon">
+            <mat-icon>verified_user</mat-icon>
+          </div>
+
+          <div>
+            <h6>Ready for Approval?</h6>
+            <p>Review your product details before sending them for approval.</p>
+          </div>
+        </div>
+
+        <div class="approval-actions">
+
+          @if (taskId == null) {
+            <button
+              type="button"
+              class="rc-btn rc-btn-approval"
+              (click)="saveTask()">
+
+              <mat-icon>send</mat-icon>
+              Send For Approval
+            </button>
+          }
+
+          @if (taskId != null) {
+            <button
+              type="button"
+              class="rc-btn rc-btn-approval"
+              (click)="reSendTask()">
+
+              <mat-icon>refresh</mat-icon>
+              Re-send For Approval
+            </button>
+          }
+
+        </div>
+
+      </div>
+
+    }
+
+  </div>
+
+</div>
+
   </div>
 </div>
 </div>
