@@ -39,133 +39,255 @@
         <div class="tab-content">
 
           <!-- Add Family -->
-          <div class="pro-overview tab-pane fade show active">
-            <div class="card">
-              <div class="row align-items-center">
-                <div class="col">
-                  <div class="total-rec">Total Records: {{totalRecords}}</div>
-                </div>
-                <div class="col-auto float-right ml-auto">
-                  <mat-form-field class="search-input">
+          <div class="pro-overview tab-pane fade show active rc-product-overview">
+            <div class="rc-product-wrapper">
+              <!-- Product Summary Header -->
+     
+    <div class="rc-product-summary">
+      <div class="summary-info">
+         <mat-form-field class="search-input">
                     <input matInput (keyup)="applyFilter($event)" placeholder="Search..." #input>
                   </mat-form-field>
+      </div>
+<div class="total-records">
+        <span class="record-dot"></span>
+        <span>Total Records</span>
+        <strong>{{totalRecords}}</strong>
+      </div>
+      
+    </div>
+            
+              <!-- Product Cards -->
+    <div class="row g-3 rc-product-grid">
+
+      @for (produtcard of ProductDetailsList.filteredData; track produtcard) {
+
+        <div class="col-xl-6 col-lg-6 col-md-12 productlist">
+
+          <div class="rc-product-card">
+
+            <!-- Card Header -->
+            <div class="product-card-header">
+
+              <div class="product-heading">
+                <div class="product-icon">
+                  <mat-icon>inventory_2</mat-icon>
+                </div>
+
+                <div class="product-title-wrap">
+                  <h5>{{produtcard.product}}</h5>
                 </div>
               </div>
-              <div class="row">
 
+              <!-- <div class="product-menu-icon">
+                <mat-icon>more_horiz</mat-icon>
+              </div> -->
 
-                @for (produtcard of ProductDetailsList.filteredData; track produtcard) {
-                  <div class="col-sm-6 productlist">
-                    <mat-card class="example-card">
-                      <mat-card-header>
-                        <mat-card-title>
-                          {{produtcard.product}}
-                        </mat-card-title>
-                      </mat-card-header>
-                      <mat-card-content>
-                        <div class="row">
-                          <div class="col-sm-6"><span>HSN Code:</span>{{produtcard.hsnId}}</div>
-                          <div class="col-sm-6"><span>CGST:</span>{{produtcard.cgstAmount}} ({{produtcard.cgst}}%)</div>
-                          <div class="col-sm-6"><span>Rate:</span>{{produtcard.rate}}</div>
-                          <div class="col-sm-6"><span>SGST:</span>{{produtcard.sgstAmount}} ({{produtcard.sgst}}%)</div>
-                          <div class="col-sm-6"><span>QTY.:</span>{{produtcard.quantity}}</div>
-                          <div class="col-sm-6"><span>IGST:</span>{{produtcard.igstAmount}} ({{produtcard.igst}}%)</div>
-                          <div class="col-sm-6"><span>Amount:</span>{{produtcard.amount}}</div>
-                          <div class="col-sm-6"><span>Total
-                          Dsc.:</span>{{produtcard.totalDiscount}}</div>
-                          <div class="col-sm-6"><span>Total Amt:</span>{{produtcard.totalAmount}}
-                        </div>
-                        <div class="col-sm-6"><span>Final Amt:</span>{{produtcard.finalAmount}}
-                      </div>
-                      <div class="col-sm-12"><span>Desc:</span>{{produtcard.description}}
-                    </div>
-                  </div>
-                </mat-card-content>
-                <mat-card-actions>
-                  <button mat-flat-button color="primary" matTooltip="Edit this record"
-                    (click)="editProduct(produtcard.entityId)" title="Edit" class="me-3"> Edit
-                    <mat-icon aria-hidden="false" class="m-0">edit</mat-icon>
-                  </button>
-                  <button mat-flat-button color="warn" matTooltip="Delete this record"
-                    (click)="deleteProduct(produtcard.entityId)" title="Delete"> Delete
-                    <mat-icon aria-hidden="false" class="m-0">delete</mat-icon>
-                  </button>
-                </mat-card-actions>
-              </mat-card>
             </div>
-          }
+
+            <!-- Product Details -->
+            <div class="product-card-body">
+
+              <div class="product-details-grid">
+
+                <div class="product-detail-item">
+                  <span class="detail-label">HSN Code</span>
+                  <span class="detail-value">{{produtcard.hsnId}}</span>
+                </div>
+
+                <div class="product-detail-item">
+                  <span class="detail-label">Rate</span>
+                  <span class="detail-value">{{produtcard.rate}}</span>
+                </div>
+
+                <div class="product-detail-item">
+                  <span class="detail-label">Quantity</span>
+                  <span class="detail-value">{{produtcard.quantity}}</span>
+                </div>
+
+                <div class="product-detail-item">
+                  <span class="detail-label">Amount</span>
+                  <span class="detail-value">{{produtcard.amount}}</span>
+                </div>
+
+                <div class="product-detail-item">
+                  <span class="detail-label">CGST</span>
+                  <span class="detail-value">
+                    {{produtcard.cgstAmount | number : '1.2-2'}}
+                    <small>({{produtcard.cgst}}%)</small>
+                  </span>
+                </div>
+
+                <div class="product-detail-item">
+                  <span class="detail-label">SGST</span>
+                  <span class="detail-value">
+                    {{produtcard.sgstAmount | number : '1.2-2'}}
+                    <small>({{produtcard.sgst}}%)</small>
+                  </span>
+                </div>
+
+                <div class="product-detail-item">
+                  <span class="detail-label">IGST</span>
+                  <span class="detail-value">
+                    {{produtcard.igstAmount | number : '1.2-2'}}
+                    <small>({{produtcard.igst}}%)</small>
+                  </span>
+                </div>
+
+                <div class="product-detail-item">
+                  <span class="detail-label">Total Discount</span>
+                  <span class="detail-value discount-value">
+                    {{produtcard.totalDiscount}}
+                  </span>
+                </div>
+
+                <div class="product-detail-item">
+                  <span class="detail-label">Total Amount</span>
+                  <span class="detail-value">{{produtcard.totalAmount}}</span>
+                </div>
+
+              </div>
+
+              <!-- Description -->
+              <div class="product-description">
+                <span class="detail-label">Description</span>
+                <p>{{produtcard.description || 'No description available'}}</p>
+              </div>
+
+            </div> 
+
+            <!-- Final Amount -->
+            <div class="product-total-section">
+
+              <div class="total-amount-info">
+                <span>Final Amount</span>
+              </div>
+
+              <div class="final-amount">
+                {{produtcard.finalAmount | number : '1.2-2'}}
+              </div>
+
+            </div>
+
+            <!-- Card Actions -->
+            <div class="product-card-footer">
+
+              <button
+                type="button"
+                class="rc-btn rc-btn-edit"
+                matTooltip="Edit this record"
+                (click)="editProduct(produtcard.entityId)"
+                title="Edit">
+
+                <mat-icon>edit</mat-icon>
+                <span>Edit Product</span>
+
+              </button>
+
+              <button
+                type="button"
+                class="rc-btn rc-btn-delete"
+                matTooltip="Delete this record"
+                (click)="deleteProduct(produtcard.entityId)"
+                title="Delete">
+
+                <mat-icon>delete_outline</mat-icon>
+                <span>Delete</span>
+
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      }
+
+      @if (totalRecords === 0) {
+        <div class="col-12">
+          <div class="rc-empty-state">
+          
+            <h5>No Products Found</h5>
+            <p>There are no product details available.</p>
+          </div>
+        </div>
+      }
+
+    </div>
+
+    
+  <!-- Approval Section -->
+  @if (!additionalTerms && totalRecords > 0) {
+
+    <div class="rc-list-approval">
+
+      <div class="rc-list-approval-info">
+
+        <div class="rc-list-approval-icon">
+          <mat-icon>verified_user</mat-icon>
+        </div>
+
+        <div>
+          <h6>Ready for Approval?</h6>
+          <p>Review your product details before submitting for approval.</p>
         </div>
 
       </div>
 
-      @if (!additionalTerms && totalRecords>0) {
-        <div>
-          <div class="submit-section1">
-            @if (taskId==null) {
-            <button mat-flat-button color="accent" (click)="saveTask()">
-              <mat-icon>send</mat-icon> Send For Approval
-            </button>
-            }
-            @if (taskId!=null) {
-            <button mat-flat-button color="accent" (click)="saveTask()">
-              <mat-icon>send</mat-icon> Re-send For Approval
-            </button>
-            }
-          </div>
-          @if (workflowDiv) {
-            <!-- <div class="card">
-              <div class="card-body">
-                <div class="row"> -->
-                  @if (rcId==null) {
-                    <!-- <div class="col-sm-4">
-                      <div class="form-group">
-                        <mat-form-field>
-                          <mat-label>Workflow</mat-label>
-                          <mat-select [(ngModel)]="TaskData.workflowName" name="workflowName" [typeaheadDebounceInterval]="matSelectDuration"
-                            required>
-                            <mat-option>-Select-</mat-option> -->
-                            <!-- <mat-option value="TYPE A">TYPE A</mat-option>
-                            <mat-option value="TYPE B">TYPE B</mat-option> -->
-                            <!-- @for (work of workflowList; track work) {
-                              <mat-option
-                                value="{{work.selectionid}}">
-                                {{work.selectionvalue}}
-                              </mat-option>
-                            } -->
-                          <!-- </mat-select>
-                        </mat-form-field>
-                      </div>
-                    </div> -->
-                  }
-                  <!-- <div class="col-sm-12">
-                    <div class="form-group">
-                      <mat-form-field>
-                        <mat-label>Remarks</mat-label>
-                        <textarea matInput cols="55" rows="4" name="remark" type="text"
-                          placeholder="Please enter remarks."
-                          [(ngModel)]="TaskData.remark" maxlength="250" required>
-                        </textarea>
-                      </mat-form-field>
-                    </div>
-                  </div> -->
-                <!-- </div>
-                <div class="submit-section">
-                  <button mat-flat-button color="primary" (click)="saveTask()">
-                    Submit
-                  </button>                  
-                  <button mat-flat-button color="warn" (click)="closeTask()">
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            </div> -->
-          }
-        </div>
+      <div class="rc-list-approval-action">
+
+        @if (taskId == null) {
+
+          <button
+            type="button"
+            class="rc-list-btn rc-list-submit"
+            (click)="saveTask()">
+
+            <mat-icon>send</mat-icon>
+            Send For Approval
+
+          </button>
+
+        }
+
+        @if (taskId != null) {
+
+          <button
+            type="button"
+            class="rc-list-btn rc-list-submit"
+            (click)="saveTask()">
+
+            <mat-icon>refresh</mat-icon>
+            Re-send For Approval
+
+          </button>
+
+        }
+
+      </div>
+
+    </div>
+
+  }
+
+  <!-- Workflow Section -->
+  @if (workflowDiv) {
+
+    <div class="rc-list-workflow">
+
+      @if (rcId == null) {
+       
       }
+
+    </div>
+
+  }
 
 
     </div>
   </div>
+</div>
 </div>
 </div>
 </div>
