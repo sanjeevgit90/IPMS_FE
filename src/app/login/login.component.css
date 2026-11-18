@@ -118,3 +118,15 @@
   0%, 100% { opacity: 0.4; }
   50%      { opacity: 1; }
 }
+#blinking-button{    
+border: 0px solid #6C8003;
+}
+@keyframes blink {
+  0%, 100% {background: linear-gradient(100deg,#1b8a8f,#14606f 45%,#0d3b4a);}
+  50% {background: linear-gradient(100deg,#0d3b4a,#14606f 45%,#1b8a8f);}
+}
+#blinking-button {
+  background:linear-gradient(100deg,#1b8a8f,#14606f 45%,#0d3b4a);
+  color: white;
+  animation: blink 3s linear infinite;
+}
