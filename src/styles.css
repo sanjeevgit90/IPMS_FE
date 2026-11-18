@@ -957,6 +957,19 @@ table.dataTable thead > tr > td.sorting {
 	.dashboard-chart-panel {
 		height: 260px;
 	}
+	.account-box{
+		right: 0px !important;
+		top:65px !important
+	}
+	.login-bg-svg{
+		width: 100% !important;
+		height: auto !important;
+		top: 422px !important;
+	}
+	.account-logo{
+		top: 0 !important;
+		left: 0 !important;
+	}
 }
 
 .text-ellipsis {
