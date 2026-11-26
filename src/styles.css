@@ -9240,7 +9240,10 @@ body {
 	border-radius: 0 0 8px 8px;
 }
 .mdc-text-field__input{
-	height: 28px !important;
+	/* height: 200px; */
+}
+.h-textarea{
+	height: 200px !important;
 }
 .pro-overview > .mat-mdc-form-field{
 	width: 100% !important;
