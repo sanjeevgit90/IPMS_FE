@@ -179,12 +179,12 @@ export class ProductDetailsComponent implements OnInit {
     //   this.dialogService.openConfirmDialog("Please select workflow.");
     //   return;
     // }
-    // if (this.TaskData.remark == null || this.TaskData.remark == "") {
-    //   this.dialogService.openConfirmDialog("Please enter remark.");
-    //   return;
-    // }
+    if (this.TaskData.remark == null || this.TaskData.remark == "") {
+      this.dialogService.openConfirmDialog("Please enter remark.");
+      return;
+    }
     this.TaskData.workflowName = "PO_APPROVAL_TYPE_A";
-    this.TaskData.remark = "PO Submitted";
+    // this.TaskData.remark = "PO Submitted";
     this.TaskData.poId = this.route.snapshot.params.id;
     this.TaskData.poRcFlag = "PO";
     this.showLoading = true;

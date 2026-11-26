@@ -219,7 +219,16 @@
     
   <!-- Approval Section -->
   @if (!additionalTerms && totalRecords > 0) {
-
+    <div class="col-sm-12">
+      <div class="form-group">
+        <mat-form-field class="w-100">
+          <mat-label>Remarks</mat-label>
+          <textarea matInput cols="55" rows="4" name="remark" type="text" placeholder="Please enter remarks."
+            [(ngModel)]="TaskData.remark" maxlength="250" required>
+                            </textarea>
+        </mat-form-field>
+      </div>
+    </div>
     <div class="rc-list-approval">
 
       <div class="rc-list-approval-info">
@@ -236,7 +245,7 @@
       </div>
 
       <div class="rc-list-approval-action">
-
+        
         @if (taskId == null) {
 
           <button
