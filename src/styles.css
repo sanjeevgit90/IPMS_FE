@@ -344,7 +344,7 @@ a:focus {
 .viewPO {background: #fff;
     box-shadow: 0px 1px 5px 5px #00000014;
     margin: 10px 0px 10px 20px;}
-.po-action {margin-top: 10px; background: #fff; box-shadow: 0px 1px 5px 5px #00000014; padding: 10px;}
+.po-action {margin-top: 10px; background: #fff; box-shadow: 0px 1px 5px 5px #00000014; padding: 3px;}
 .po-action button {width: 100%; font-size: 1em; margin-bottom: 15px;
 padding-top: 3px; padding-bottom: 3px;}
 
@@ -9252,7 +9252,7 @@ body {
 .pro-overview1 .submit-section .mdc-button,
 .pro-overview .submit-section .btn,
 .pro-overview1 .submit-section .btn {
-	margin: 0 !important;
+	margin: 7px 3px !important;
 	min-width: 120px;
 }
 
