@@ -220,15 +220,17 @@
   <!-- Approval Section -->
   @if (!additionalTerms && totalRecords > 0) {
     
-    <div class="col-sm-12">
+    <div class="rc-product-summary mt-2">
+    <div class="col-sm-12 mt-3">
       <div class="form-group">
-        <mat-form-field class="w-100">
+        <mat-form-field class="w-100 h-textarea">
           <mat-label>Remarks</mat-label>
           <textarea matInput cols="55" rows="4" name="remark" type="text" placeholder="Please enter remarks."
             [(ngModel)]="TaskData.remark" maxlength="250" required>
                             </textarea>
         </mat-form-field>
       </div>
+    </div>
     </div>
     <div class="rc-list-approval">
 
