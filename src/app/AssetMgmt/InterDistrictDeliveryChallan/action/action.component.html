@@ -105,7 +105,7 @@
                 <div class="row mt-4">
                   <div class="col-sm-12">
                     <div class="form-group">
-                      <mat-form-field style="width: 100% !important;"
+                      <mat-form-field class="w-100 h-textarea"
                         [ngClass]="{ 'has-error': isSubmitted && formControls.remark.errors }">
                         <textarea matInput name="remark" maxlength="200" [(ngModel)]="ActionData.remark"
                         formControlName="remark" placeholder="Enter Remark" [value]="ActionData.remark"></textarea>
