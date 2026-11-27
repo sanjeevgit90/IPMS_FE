@@ -231,9 +231,16 @@ export class ProductDetailsComponent implements OnInit {
     debugger;
     this.isSubmitted = true;
     const headers = { "Authorization": sessionStorage.getItem("token") };
-    this.showLoading = true;
+    
     //this.TaskEntityData.poRcFlag = this.route.snapshot.params.poRcFlag;
+    this.TaskEntityData.workflowName = "PO_APPROVAL_TYPE_A";
+    if (this.TaskData.remark == null || this.TaskData.remark == "") {
+      this.dialogService.openConfirmDialog("Please enter remark.");
+      return;
+    }
+    this.TaskEntityData.remark = this.TaskData.remark;
     this.TaskEntityData.approvalStatus = "APPROVED";
+    this.showLoading = true;
     this.poTaskService.processTask(this.TaskEntityData, headers).subscribe(resp => {
       debugger;
       this.showLoading = false;

@@ -219,9 +219,10 @@
     
   <!-- Approval Section -->
   @if (!additionalTerms && totalRecords > 0) {
+    
     <div class="col-sm-12">
       <div class="form-group">
-        <mat-form-field class="w-100 h-textarea">
+        <mat-form-field class="w-100">
           <mat-label>Remarks</mat-label>
           <textarea matInput cols="55" rows="4" name="remark" type="text" placeholder="Please enter remarks."
             [(ngModel)]="TaskData.remark" maxlength="250" required>
@@ -265,7 +266,7 @@
           <button
             type="button"
             class="rc-list-btn rc-list-submit"
-            (click)="saveTask()">
+            (click)="reSendTask()">
 
             <mat-icon>refresh</mat-icon>
             Re-send For Approval
