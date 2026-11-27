@@ -9245,6 +9245,10 @@ body {
 .h-textarea{
 	height: 200px !important;
 }
+.h-textarea .mat-mdc-text-field-wrapper{
+	border: 1px solid #0000002d !important;
+	border-radius: 10px !important;
+}
 .pro-overview > .mat-mdc-form-field{
 	width: 100% !important;
 }
